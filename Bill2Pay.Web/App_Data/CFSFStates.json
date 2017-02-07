@@ -1,0 +1,127 @@
+﻿[
+  {
+    "State": "AL",
+    "Code": "01"
+  },
+  {
+    "State": "AZ",
+    "Code": "04"
+  },
+  {
+    "State": "AR",
+    "Code": "05"
+  },
+  {
+    "State": "CA",
+    "Code": "06"
+  },
+  {
+    "State": "CO",
+    "Code": "07"
+  },
+  {
+    "State": "CT",
+    "Code": "08"
+  },
+  {
+    "State": "DE",
+    "Code": "10"
+  },
+  {
+    "State": "GA",
+    "Code": "13"
+  },
+  {
+    "State": "HI",
+    "Code": "15"
+  },
+  {
+    "State": "ID",
+    "Code": "16"
+  },
+  {
+    "State": "IN",
+    "Code": "18"
+  },
+  {
+    "State": "KS",
+    "Code": "20"
+  },
+  {
+    "State": "LA",
+    "Code": "22"
+  },
+  {
+    "State": "ME",
+    "Code": "23"
+  },
+  {
+    "State": "MD",
+    "Code": "24"
+  },
+  {
+    "State": "MA",
+    "Code": "25"
+  },
+  {
+    "State": "MI",
+    "Code": "26"
+  },
+  {
+    "State": "MN",
+    "Code": "27"
+  },
+  {
+    "State": "MS",
+    "Code": "28"
+  },
+  {
+    "State": "MO",
+    "Code": "29"
+  },
+  {
+    "State": "MT",
+    "Code": "30"
+  },
+  {
+    "State": "NE",
+    "Code": "31"
+  },
+  {
+    "State": "NJ",
+    "Code": "34"
+  },
+  {
+    "State": "NM",
+    "Code": "35"
+  },
+  {
+    "State": "NC",
+    "Code": "37"
+  },
+  {
+    "State": "ND",
+    "Code": "38"
+  },
+  {
+    "State": "OH",
+    "Code": "39"
+  },
+  {
+    "State": "SC",
+    "Code": "45"
+  },
+  {
+    "State": "VT",
+    "Code": "50"
+  },
+  {
+    "State": "VA",
+    "Code": "51"
+  },
+  {
+    "State": "WI",
+    "Code": "55"
+  }
+
+]
