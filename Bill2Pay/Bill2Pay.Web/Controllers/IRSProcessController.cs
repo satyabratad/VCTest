@@ -74,7 +74,7 @@ namespace Bill2Pay.Web.Controllers
             }
             else if (!string.IsNullOrEmpty(Request.Form["irstest"]))
             {
-                return RedirectToAction("IRSTest");
+                return RedirectToAction("IRSFireTestFile");
             }
             else if (!string.IsNullOrEmpty(Request.Form["irs"]))
             {
@@ -91,15 +91,13 @@ namespace Bill2Pay.Web.Controllers
         }
 
 
-        public ActionResult IRSTest()
+        public ActionResult IRSFireTestFile()
         {
-            //Mrinal
-           
             List<string> selectedMerchants = (List<string>)TempData["CheckedMerchantList"];
             GenerateTaxFile taxFile = new GenerateTaxFile(true, 2016, 1, selectedMerchants);
 
             taxFile.ReadFromSchemaFile();
-            return RedirectToAction("Index", "Home");
+            return View();
         }
 
         public ActionResult IRS()

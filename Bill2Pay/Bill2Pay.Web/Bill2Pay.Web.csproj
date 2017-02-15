@@ -357,6 +357,7 @@
     <Content Include="Views\Import\Tin.cshtml" />
     <Content Include="Views\Import\Transaction.cshtml" />
     <Content Include="Views\Shared\_SelectYear.cshtml" />
+    <Content Include="Views\IRSProcess\IRSFireTestFile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
