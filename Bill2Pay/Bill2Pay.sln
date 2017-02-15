@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bill2Pay.Model", "Bill2Pay.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bill2Pay.GenerateIRSFile", "Bill2Pay.GenerateIRSFile\Bill2Pay.GenerateIRSFile.csproj", "{F85B0A62-95F3-46C3-87F0-A16D881CB0AD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bill2Pay.ExceptionLogger", "Bill2Pay.ExceptionLogger\Bill2Pay.ExceptionLogger.csproj", "{FB7BE443-BA1C-44CB-BD5C-8A8FEF3B61FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,22 @@ Global
 		{F85B0A62-95F3-46C3-87F0-A16D881CB0AD}.Release|x64.Build.0 = Release|Any CPU
 		{F85B0A62-95F3-46C3-87F0-A16D881CB0AD}.Release|x86.ActiveCfg = Release|Any CPU
 		{F85B0A62-95F3-46C3-87F0-A16D881CB0AD}.Release|x86.Build.0 = Release|Any CPU
+		{FB7BE443-BA1C-44CB-BD5C-8A8FEF3B61FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB7BE443-BA1C-44CB-BD5C-8A8FEF3B61FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB7BE443-BA1C-44CB-BD5C-8A8FEF3B61FE}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{FB7BE443-BA1C-44CB-BD5C-8A8FEF3B61FE}.Debug|ARM.Build.0 = Debug|Any CPU
+		{FB7BE443-BA1C-44CB-BD5C-8A8FEF3B61FE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FB7BE443-BA1C-44CB-BD5C-8A8FEF3B61FE}.Debug|x64.Build.0 = Debug|Any CPU
+		{FB7BE443-BA1C-44CB-BD5C-8A8FEF3B61FE}.Debug|x86.ActiveCfg = Debug|x86
+		{FB7BE443-BA1C-44CB-BD5C-8A8FEF3B61FE}.Debug|x86.Build.0 = Debug|x86
+		{FB7BE443-BA1C-44CB-BD5C-8A8FEF3B61FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB7BE443-BA1C-44CB-BD5C-8A8FEF3B61FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB7BE443-BA1C-44CB-BD5C-8A8FEF3B61FE}.Release|ARM.ActiveCfg = Release|Any CPU
+		{FB7BE443-BA1C-44CB-BD5C-8A8FEF3B61FE}.Release|ARM.Build.0 = Release|Any CPU
+		{FB7BE443-BA1C-44CB-BD5C-8A8FEF3B61FE}.Release|x64.ActiveCfg = Release|Any CPU
+		{FB7BE443-BA1C-44CB-BD5C-8A8FEF3B61FE}.Release|x64.Build.0 = Release|Any CPU
+		{FB7BE443-BA1C-44CB-BD5C-8A8FEF3B61FE}.Release|x86.ActiveCfg = Release|x86
+		{FB7BE443-BA1C-44CB-BD5C-8A8FEF3B61FE}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
