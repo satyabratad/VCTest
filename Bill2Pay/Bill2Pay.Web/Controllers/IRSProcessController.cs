@@ -23,9 +23,10 @@ namespace Bill2Pay.Web.Controllers
         // GET: IRSProcess
         public ActionResult Index(int? ID)
         {
-            int year = DateTime.Now.Year;
+            
+            var year = DateTime.Now.Year - 1;
             // ID - > Year
-            if(ID!=null)
+            if (ID!=null)
             {
                 year =(int) ID;
             }

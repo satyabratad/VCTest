@@ -1,16 +1,15 @@
 ﻿@model IEnumerable<Bill2Pay.Model.ImportDetail>
   
-
 <script>
-    function GetSelectedMerchant(accno)
-    {
+    //alert('aaaaaaaaaaaaaaaaaaaaa');
+    function GetSelectedMerchant(accno) {
         //alert(accno);
         //alert($('#checkedAccountNo').val());
         var strAcnos = $('#checkedAccountNo').val();
         //alert(strAcnos);
         var acno=JSON.parse(strAcnos);
         //alert(acno.length);
-        
+
         for(var i=0;i<acno.length;i++)
         {
 
@@ -27,15 +26,15 @@
                 }
             }
         }
-          
+
         strAcnos=JSON.stringify(acno);
         //alert(strAcnos);
         $('#checkedAccountNo').val(strAcnos);
         //alert($('#checkedAccountNo').val());
 
-       
     }
 </script>
+
 
 <div class="row">
     @using (Html.BeginForm("Process", "IRSProcess", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -79,7 +78,7 @@
                         {
                         <tr>
                             <td>
-                                <input id="chkAccountNo" onclick="GetSelectedMerchant(@item.AccountNo);" type="checkbox" />&nbsp;
+                                <input id="chkAccountNo" onclick="GetSelectedMerchant('@item.AccountNo');" type="checkbox" />&nbsp;
 
                                 <a href="@Url.Action("Details",new { accno = item.AccountNo })">
                                     <i class="fa fa-vcard-o fa-lg" title="Generate 1099-K Copies"></i>
@@ -92,11 +91,11 @@
                             <td>@item.MerchantCategoryCode</td>
                             <td>
                                 @{ 
-                                    if (@item.TINCheckStatus == "1")
+                                    if (@item.TINCheckStatus == "0")
                                     {
                                         <img style="width:25px; height:25px" src="@Url.Content("~/Images/true.png")" />
                                     }
-                                    else if (@item.TINCheckStatus == "0")
+                                    else if (@item.TINCheckStatus != "0" && ! string.IsNullOrEmpty(@item.TINCheckStatus))
                                     {
                                         <img style="width:25px; height:25px" src="@Url.Content("~/Images/false.png")" />
                                     }
