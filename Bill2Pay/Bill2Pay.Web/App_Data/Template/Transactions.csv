@@ -1,0 +1,1 @@
+TINType,PayeeTIN,PayeeAccountNumber,PayeeOfficeCode,CardPresentTransactions,FederalIncomeTaxWithheld,StateIncomeTaxWithheld,TransactionAmount,TransactionDate,TransactionType,PayeeFirstName,PayeeSecondName,PayeeMailingAddress,PayeeCity,PayeeState,PayeeZIP,FilerIndicatorType,PaymentIndicatorType,MCC

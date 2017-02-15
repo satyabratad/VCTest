@@ -1,0 +1,126 @@
+﻿@model IEnumerable<Bill2Pay.Model.ImportDetail>
+  
+
+<script>
+    function GetSelectedMerchant(accno)
+    {
+        //alert(accno);
+        //alert($('#checkedAccountNo').val());
+        var strAcnos = $('#checkedAccountNo').val();
+        //alert(strAcnos);
+        var acno=JSON.parse(strAcnos);
+        //alert(acno.length);
+        
+        for(var i=0;i<acno.length;i++)
+        {
+
+           // alert(acno[i].accno);
+            if(acno[i].AccountNo==accno)
+            {
+                if(acno[i].IsChecked=='0')
+                {
+                    acno[i].IsChecked='1';
+                }
+                else
+                {
+                    acno[i].IsChecked='0';
+                }
+            }
+        }
+          
+        strAcnos=JSON.stringify(acno);
+        //alert(strAcnos);
+        $('#checkedAccountNo').val(strAcnos);
+        //alert($('#checkedAccountNo').val());
+
+       
+    }
+</script>
+
+<div class="row">
+    @using (Html.BeginForm("Process", "IRSProcess", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    { 
+        @Html.AntiForgeryToken()
+
+        @Html.Hidden("checkedAccountNo",(object)@ViewBag.lstmerchantAcc)
+        <div class="col-md-12">
+            <div class="col-md-2 text-bold left-justified">Select Year</div>
+            <div class="col-md-4">
+                @*@Html.DropDownList("ddlYear", (IEnumerable<SelectListItem>)ViewBag.lstPaymentYear, "Select")*@
+                @*<select>
+                    <option>-- Select Year --</option>
+                    <option>2016</option>
+                    <option>2017</option>
+                    <option>2018</option>
+                </select>*@
+                @Html.Partial("_SelectYear")
+            </div>
+            <br />
+            <hr />
+        </div>
+
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th class="btn-primary">#</th>
+                            <th class="btn-primary">Account Number</th>
+                            <th class="btn-primary">TIN</th>
+                            <th class="btn-primary">Merchant Name</th>
+                            <th class="btn-primary">Address</th>
+                            <th class="btn-primary">MCC</th>
+                            <th class="btn-primary">Status</th>
+                           
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>
+                                <input id="chkAccountNo" onclick="GetSelectedMerchant(@item.AccountNo);" type="checkbox" />&nbsp;
+
+                                <a href="@Url.Action("Details",new { accno = item.AccountNo })">
+                                    <i class="fa fa-vcard-o fa-lg" title="Generate 1099-K Copies"></i>
+                                </a>
+                            </td>
+                            <td>@item.AccountNo</td>
+                            <td>@item.TIN </td>
+                            <td>@item.FirstPayeeName  </td>
+                            <td>@item.PayeeMailingAddress </td>
+                            <td>@item.MerchantCategoryCode</td>
+                            <td>
+                                @{ 
+                                    if (@item.TINCheckStatus == "1")
+                                    {
+                                        <img style="width:25px; height:25px" src="@Url.Content("~/Images/true.png")" />
+                                    }
+                                    else if (@item.TINCheckStatus == "0")
+                                    {
+                                        <img style="width:25px; height:25px" src="@Url.Content("~/Images/false.png")" />
+                                    }
+                                }
+                            </td>
+                            
+                        </tr>
+                        }
+
+
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <hr />
+
+            
+            <input class="btn  btn-primary" type="submit" name="tinmatching" value="Generate TIN Matching Input" />
+            <input class="btn  btn-primary" type="submit" name="irstest" value="Generate IRS FIRE Test Input" />
+            <input class="btn  btn-primary" type="submit" name="irs" value="Generate TIN IRS FIRE Input" />
+            <input class="btn  btn-primary" type="submit" name="irscorrection" value="Generate IRS FIRE Correction Input" />
+        </div>
+    }
+</div>

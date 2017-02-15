@@ -1,0 +1,114 @@
+﻿@{
+    ViewBag.Title = "1099 K Details";
+}
+
+<div class="row">
+    <div ng-app="tabPanel" ng-controller="tabPanelCtrl as ctrl" ng-click="tabChange($event)">
+        <div class="col-md-12">
+            <ul class="nav nav-tabs page-tabs">
+                <li  ng-class="{'active':ctrl.tabSelected=='#copy-a'}"><a href="#copy-a">Copy A</a></li>
+                <li ng-class="{'active':ctrl.tabSelected=='#copy-1'}"><a href="#copy-1">Copy 1</a></li>
+                <li ng-class="{'active':ctrl.tabSelected=='#copy-b'}"><a href="#copy-b">Copy B</a></li>
+                <li ng-class="{'active':ctrl.tabSelected=='#copy-2'}"><a href="#copy-2">Copy 2</a></li>
+                <li ng-class="{'active':ctrl.tabSelected=='#copy-c'}"><a href="#copy-c">Copy C</a></li>
+            </ul>
+            
+        </div>
+        <div class="col-md-12">
+            <br />
+            <div id="copy-a" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-a'"><span  style="float:right;" class="fa fa-print fa-lg" title="Print to PDF"></span>
+                <div class="copy-a">
+                    <div > <span style="position:absolute; left:25px; top:65px"> [FILER's Name]</span> 
+                           <span style="position:absolute; left:25px; top:90px"> [FILER's Address]</span> 
+                           <span style="position:absolute; left:25px; top:110px"> [FILER's City], [FILER's State]</span>
+                           <span style="position:absolute; left:25px; top:130px"> [FILER's Country]</span>
+                           <span style="position:absolute; left:25px; top:150px"> [FILER's ZipCode]</span>
+                           <span style="position:absolute; left:25px; top:170px"> [FILER's Phone]</span>
+                    </div>
+                    <div>
+                        <span style="position:absolute; left:185px; top:213px" class="fa fa-check"></span>
+                        <span style="position:absolute; left:370px; top:213px"  class="fa fa-check"></span>
+                        <span style="position:absolute; left:185px; top:238px"  class="fa fa-check"></span>
+                        <span style="position:absolute; left:370px; top:238px"  class="fa fa-check"></span>
+                    </div>
+                    
+                    <div >
+                        <span style="position:absolute; left:395px; top:50px"> [FILER's Federal Id No]</span>
+                        <span style="position:absolute; left:395px; top:90px"> [PAYEE's Taxpayer Id]</span>
+                        <span style="position:absolute; left:410px; top:150px"> [Gross Amount]</span>
+                    </div>
+                    <div>
+                        <span style="position:absolute; left:25px; top:270px"> [PAYEE's Name]</span>
+                        <span style="position:absolute; left:25px; top:325px"> [PAYEE's Street Address]</span>
+                        <span style="position:absolute; left:25px; top:400px"> [PAYEE's City], [PAYEE's State], [PAYEE's Country]</span>
+                    </div>
+                    <div>
+                        <span style="position:absolute; left:25px; top:440px"> [PSE's Name]</span>
+                        <span style="position:absolute; left:25px; top:460px"> [PSE's Phone]</span>
+                        <span style="position:absolute; left:25px; top:500px"> [Account Number]</span>
+                        
+                    </div>
+                    <div>
+                        <span style="position:absolute; left:410px; top:195px"> [CNP Amount]</span>
+                        <span style="position:absolute; left:550px; top:195px"> [MCC]</span>
+                        <span style="position:absolute; left:410px; top:235px"> [TransactionCount]</span>
+                        <span style="position:absolute; left:560px; top:240px"> [Federal Income Tax]</span>
+                        <span style="position:absolute; left:410px; top:278px"> [Jan Amt]</span>
+                        <span style="position:absolute; left:560px; top:278px"> [Fed Amt]</span>
+                        <span style="position:absolute; left:410px; top:312px"> [Mar Amt]</span>
+                        <span style="position:absolute; left:560px; top:312px"> [Apr Amt]</span>
+                        <span style="position:absolute; left:410px; top:350px"> [May Amt]</span>
+                        <span style="position:absolute; left:560px; top:350px"> [Jun Amt]</span>
+                        <span style="position:absolute; left:410px; top:387px"> [Jul Amt]</span>
+                        <span style="position:absolute; left:560px; top:387px"> [Aug Amt]</span>
+                        <span style="position:absolute; left:410px; top:425px"> [Sep Amt]</span>
+                        <span style="position:absolute; left:560px; top:425px"> [Oct Amt]</span>
+                        <span style="position:absolute; left:410px; top:460px"> [Nov Amt]</span>
+                        <span style="position:absolute; left:560px; top:460px"> [Dec Amt]</span>
+                    </div>
+
+                    <div>
+                        <span style="position:absolute; left:410px; top:490px"> [State]</span>
+                        <span style="position:absolute; left:560px; top:490px"> [State Id No]</span>
+                        <span style="position:absolute; left:715px; top:497px"> [State I T Withheld]</span>
+
+                    </div>
+                </div>
+            </div>
+            <div id="copy-1" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-1'"><span style="float:right;" class="fa fa-print fa-lg" title="Print to PDF"></span>
+                <div class="copy-1">
+
+                </div>
+            </div>
+            <div id="copy-b" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-b'"><span style="float:right;" class="fa fa-print fa-lg" title="Print to PDF"></span>
+                <div class="copy-b">
+
+                </div>
+            </div>
+            <div id="copy-2" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-2'"><span style="float:right;" class="fa fa-print fa-lg" title="Print to PDF"></span>
+                <div class="copy-2">
+
+                </div>
+            </div>
+            <div id="copy-c" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-c'"><span style="float:right;" class="fa fa-print fa-lg" title="Print to PDF"></span>
+                <div class="copy-c">
+
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <script>
+        var app = angular.module("tabPanel", []);
+        app.controller("tabPanelCtrl", function ($scope) {
+            var self = this;
+            self.tabSelected = "#copy-a";
+            $scope.tabChange = function (e) {
+                if (e.target.nodeName === 'A') {
+                    self.tabSelected = e.target.getAttribute("href");
+                    e.preventDefault();
+                }
+            }
+        })
+    </script>
+</div>
