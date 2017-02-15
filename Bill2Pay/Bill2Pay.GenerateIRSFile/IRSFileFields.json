@@ -576,7 +576,7 @@
           "Length": 8,
           "Default": "0",
           "Alternate": "",
-          "Type": "Alphanumeric",
+          "Type": "Numeric",
           "Data": "",
           "Alignment": "Right"
         },
@@ -679,7 +679,7 @@
           "Name": "Payer’s Office Code",
           "Position": "41-44",
           "Length": 4,
-          "Default": "abcd",
+          "Default": "",
           "Alternate": "",
           "Type": "Alphanumeric",
           "Data": "PayerOfficeCode",
@@ -716,6 +716,17 @@
           "Alignment": "Right"
         },
         {
+          "Name": "Payment Amount 3",
+          "Position": "79-90",
+          "Length": 12,
+          "Default": " ",
+          "Alternate": "",
+          "Type": "AlphaNumeric",
+          "Data": "",
+          "Alignment": "Right"
+        },
+        
+        {
           "Name": "Payment Amount 4",
           "Position": "79-90",
           "Length": 12,
@@ -751,7 +762,7 @@
           "Length": 12,
           "Default": "",
           "Alternate": "",
-          "Type": "FebruaryAmount",
+          "Type": "Numeric",
           "Data": "MarchAmount",
           "Alignment": "Right"
         },
@@ -1081,7 +1092,7 @@
           "Length": 12,
           "Default": "",
           "Alternate": "",
-          "Type": "Alphanumeric",
+          "Type": "Numeric",
           "Data": "LocalWithHolding",
           "Alignment": "Right"
         },
@@ -1158,6 +1169,16 @@
           "Default": "0",
           "Alternate": "",
           "Type": "Numeric",
+          "Data": "",
+          "Alignment": "Right"
+        },
+        {
+          "Name": "Control Total 3",
+          "Position": "34-51",
+          "Length": 18,
+          "Default": " ",
+          "Alternate": "",
+          "Type": "AlphaNumeric",
           "Data": "",
           "Alignment": "Right"
         },
@@ -1307,7 +1328,7 @@
           "Length": 8,
           "Default": "0",
           "Alternate": "",
-          "Type": "Alphanumeric",
+          "Type": "Numeric",
           "Data": "",
           "Alignment": "Right"
         },
@@ -1383,6 +1404,16 @@
           "Default": "0",
           "Alternate": "",
           "Type": "Numeric",
+          "Data": "",
+          "Alignment": "Right"
+        },
+        {
+          "Name": "Control Total 3",
+          "Position": "34-51",
+          "Length": 18,
+          "Default": " ",
+          "Alternate": "",
+          "Type": "AlphaNumeric",
           "Data": "",
           "Alignment": "Right"
         },
@@ -1634,7 +1665,7 @@
         {
           "Name": "Blank",
           "Position": "50-57",
-          "Length": 8,
+          "Length": 19,
           "Default": " ",
           "Alternate": "",
           "Type": "Alphanumeric",

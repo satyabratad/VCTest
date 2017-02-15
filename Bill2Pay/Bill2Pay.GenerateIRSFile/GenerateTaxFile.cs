@@ -22,7 +22,7 @@ namespace Bill2Pay.GenerateIRSFile
         int recordSequenceNumber = 1;
         ApplicationDbContext dbContext = null;
         List<ImportDetail> detailTableData = null;
-        List<ImportSummary> summaryTableData= null;
+        ImportSummary summaryTableData= null;
         string amount = string.Empty;
         decimal januaryAmount, februaryAmount, marchAmount, aprilAmount, mayAmount, juneAmount, julyAmount, augustAmount, septemberAmount, octoberAmount, novemberAmount, decemberAmount = 0;
         decimal grossAmount, cnpTransactionAmount, federalWithHoldingAmount, stateWithHolding, localWithHolding=0;
@@ -49,7 +49,8 @@ namespace Bill2Pay.GenerateIRSFile
             //                select new { detail = SubmissionDetail, summary = SubmissionSummary };
 
             detailTableData = dbContext.ImportDetails.ToList();
-            summaryTableData = dbContext.ImportSummary.ToList();
+            summaryTableData = dbContext.ImportSummary.OrderByDescending(x=>x.Id).First();
+            numberofPayee = detailTableData.Count();
         } 
 
         private void GenerateTRecord()
@@ -71,6 +72,10 @@ namespace Bill2Pay.GenerateIRSFile
                         fileData.Append(GetFieldValue(item));
                         recordSequenceNumber++;
                         break;
+                    case "TOTAL NUMBER OF PAYEES":
+                        item.Default= numberofPayee.ToString();
+                        fileData.Append(GetFieldValue(item));
+                        break;
                     default:
                         fileData.Append(GetFieldValue(item));
                         break;
@@ -90,7 +95,7 @@ namespace Bill2Pay.GenerateIRSFile
                         fileData.Append(GetFieldValue(item));
                         recordSequenceNumber++;
                         break;
-                    case "COMBINED FEDERAL/ STATE FILING PROGRAM":
+                    case "COMBINED FEDERAL/STATE FILING PROGRAM":
                         fileData.Append(GetFieldValue(item,Model.ValueType.Alternate));
                         break;
                     default:
@@ -103,7 +108,6 @@ namespace Bill2Pay.GenerateIRSFile
         {
             foreach (var data in detailTableData)
             {
-                numberofPayee++;
                 Records bRecords = records.FirstOrDefault(x => x.RecordType == "B");
                 foreach (Field item in bRecords.Fields)
                 {
@@ -126,6 +130,9 @@ namespace Bill2Pay.GenerateIRSFile
                             amount = GetFieldValue(item, dataValue: data);
                             cnpTransactionAmount = cnpTransactionAmount+ Convert.ToDecimal(amount);
                             fileData.Append(FormatAmount(amount, item));
+                            break;
+                        case "PAYMENT AMOUNT 3":
+                            fileData.Append(GetFieldValue(item));
                             break;
                         case "PAYMENT AMOUNT 4":
                             amount = GetFieldValue(item, dataValue: data);
@@ -236,6 +243,9 @@ namespace Bill2Pay.GenerateIRSFile
                         amount = GetFieldValue(item);
                         fileData.Append(FormatAmount(amount, item));
                         break;
+                    case "CONTROL TOTAL 3":
+                        fileData.Append(GetFieldValue(item));
+                        break;
                     case "CONTROL TOTAL 4":
                         item.Default = federalWithHoldingAmount.ToString();
                         amount = GetFieldValue(item);
@@ -334,6 +344,9 @@ namespace Bill2Pay.GenerateIRSFile
                         amount = GetFieldValue(item);
                         fileData.Append(FormatAmount(amount, item));
                         break;
+                    case "CONTROL TOTAL 3":
+                        fileData.Append(GetFieldValue(item));
+                        break;
                     case "CONTROL TOTAL 4":
                         item.Default = federalWithHoldingAmount.ToString();
                         amount = GetFieldValue(item);
@@ -428,17 +441,13 @@ namespace Bill2Pay.GenerateIRSFile
                         fileData.Append(GetFieldValue(item));
                         recordSequenceNumber++;
                         break;
-                    case "NUMBER OF PAYEES":
+                    case "TOTAL NUMBER OF PAYEES":
                         item.Default = numberofPayee.ToString();
                         fileData.Append(GetFieldValue(item));
                         break;
-
                     default:
                         fileData.Append(GetFieldValue(item));
                         break;
-
-
-
                 }
             }
         }
@@ -452,12 +461,12 @@ namespace Bill2Pay.GenerateIRSFile
                     System.Reflection.PropertyInfo pi = summaryTableData.GetType().GetProperty(field.Data.Trim());
                     if (pi != null)
                     {
-                        value = (String)(pi.GetValue(summaryTableData, null));
+                        value = (pi.GetValue(summaryTableData, null)).ToString();
                     }
                     else
                     {
                         pi = detailTableData.GetType().GetProperty(field.Data.Trim());
-                        value = (String)(pi.GetValue(detailTableData, null));
+                        value =(pi.GetValue(detailTableData, null)).ToString();
                     }
                 }
                 else
@@ -465,7 +474,15 @@ namespace Bill2Pay.GenerateIRSFile
                     System.Reflection.PropertyInfo pi = dataValue.GetType().GetProperty(field.Data.Trim());
                     if (pi != null)
                     {
-                        value = (String)(pi.GetValue(dataValue, null));
+                        if (pi.GetValue(dataValue, null) != null)
+                            value = (pi.GetValue(dataValue, null)).ToString();
+                        else
+                        {
+                            if (field.Type == FieldType.Alphanumeric)
+                                value = "";
+                            else
+                                value = "0";
+                        }
                     }
                 }
             }
@@ -502,7 +519,7 @@ private void PopulateSubmissionSummary()
         {
             //TODO : Read from config file;
             //var path = string.Format(@"{0}\App_Data", HostingEnvironment.ApplicationPhysicalPath);
-            var json = File.ReadAllText(@"C:\B2Pay Project\B2P\Bill2Pay.GenerateIRSFile\IRSFileFields.json");
+            var json = File.ReadAllText(@"C:\B2P\Bill2Pay.GenerateIRSFile\IRSFileFields.json");
             
             records= JsonConvert.DeserializeObject<List<Records>>(json);
 
