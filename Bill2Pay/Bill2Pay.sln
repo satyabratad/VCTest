@@ -73,13 +73,4 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(VaultVsipSolution-v2) = preSolution
-		VaultHost = http://jaxb2pdev01/VaultService
-		VaultRepositoryID = 20
-		VaultRepositoryGUID = 5aac9cfd-3f3c-44d0-b486-065b4416204b
-		ProjectCount = 3
-		ProjectRelativeDiskPath1 = Bill2Pay.Web\Bill2Pay.Web.csproj
-		ProjectRelativeDiskPath2 = Bill2Pay.Model\Bill2Pay.Model.csproj
-		ProjectRelativeDiskPath3 = Bill2Pay.GenerateIRSFile\Bill2Pay.GenerateIRSFile.csproj
-	EndGlobalSection
 EndGlobal

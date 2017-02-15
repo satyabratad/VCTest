@@ -33,10 +33,10 @@ namespace Bill2Pay.GenerateIRSFile
         
         //SubmissionDetail submissionDetail = new SubmissionDetail();
         //SubmissionStatus submissionStatus = new SubmissionStatus();
-        SubmissionSummary submissionSummary = new SubmissionSummary();
+        //SubmissionSummary submissionSummary = new SubmissionSummary();
         //PSEMaster pseMaster = new PSEMaster();
 
-        public GenerateTaxFile(bool testFile, int year, long userId)
+        public GenerateTaxFile(bool testFile, int year, long userId, List<string> selectedAccountNo)
         {
             testFileIndicator = testFile;
             paymentYear = year;
@@ -48,8 +48,12 @@ namespace Bill2Pay.GenerateIRSFile
             //                join SubmissionSummary in dbContext.SubmissionSummary on SubmissionDetail.SubmissionSummary.Id equals SubmissionSummary.Id
             //                select new { detail = SubmissionDetail, summary = SubmissionSummary };
 
-            detailTableData = dbContext.ImportDetails.ToList();
-            summaryTableData = dbContext.ImportSummary.OrderByDescending(x=>x.Id).First();
+            summaryTableData = dbContext.ImportSummary.OrderByDescending(x => x.Id).First();
+            detailTableData = dbContext.ImportDetails.Where(x => selectedAccountNo.Contains(x.AccountNo)).ToList();
+
+            //Where(x => ids.Contains(x.Attribute("id").Value));
+
+            
             numberofPayee = detailTableData.Count();
         } 
 
@@ -503,14 +507,16 @@ namespace Bill2Pay.GenerateIRSFile
             return field.PadValue(value);
         }
 
-private void PopulateSubmissionSummary()
+        private void PopulateSubmissionSummary()
         {
-            
+
+            var submissionSummary = new SubmissionSummary();
             submissionSummary.PaymentYear = 1234;
+            
             //submissionSummary.CreatedUser = 1;
 
 
-            dbContext.SubmissionSummary.Add(submissionSummary);
+            //dbContext.SubmissionSummary.Add(submissionSummary);
             //dbContext.SaveChanges();
             
             
@@ -520,37 +526,51 @@ private void PopulateSubmissionSummary()
             //TODO : Read from config file;
             //var path = string.Format(@"{0}\App_Data", HostingEnvironment.ApplicationPhysicalPath);
             var json = File.ReadAllText(@"C:\B2P\Bill2Pay.GenerateIRSFile\IRSFileFields.json");
-            
-            records= JsonConvert.DeserializeObject<List<Records>>(json);
+            string path = @"C:\B2P\IRSInputFile.txt";
+
+            records = JsonConvert.DeserializeObject<List<Records>>(json);
 
             GenerateETaxFile();
+
+                // Delete the file if it exists.
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+
+                // Create the file.
+                using (FileStream fs = File.Create(path))
+                {
+                    Byte[] info = new UTF8Encoding(true).GetBytes(fileData.ToString());
+                    fs.Write(info, 0, info.Length);
+                }
 
             #region "commented"
             //var result = (Records)JsonConvert.DeserializeObject(json, typeof(Records));
 
-    //        Records []x= new Records[2];
+            //        Records []x= new Records[2];
 
-    //Model.Field fl = new Model.Field();
-    //        x[0] = new Records();
-    //        x[0].Fields = new List<Model.Field>();
-                
-    //        fl.Name = "Name1";
-    //        x[0].Fields.Add(fl);
-    //        fl.Name = "Name2";
-    //        x[0].Fields.Add(fl);
-    //        fl.Name = "Name3";
-    //        x[0].Fields.Add(fl);
+            //Model.Field fl = new Model.Field();
+            //        x[0] = new Records();
+            //        x[0].Fields = new List<Model.Field>();
 
-    //        x[1] = new Records();
-    //        x[1].Fields = new List<Model.Field>();
-    //        fl.Name = "Name4";
-    //        x[1].Fields.Add(fl);
-    //        fl.Name = "Name5";
-    //        x[1].Fields.Add(fl);
-    //        fl.Name = "Name6";
-    //        x[1].Fields.Add(fl);
+            //        fl.Name = "Name1";
+            //        x[0].Fields.Add(fl);
+            //        fl.Name = "Name2";
+            //        x[0].Fields.Add(fl);
+            //        fl.Name = "Name3";
+            //        x[0].Fields.Add(fl);
 
-    //        var result = JsonConvert.SerializeObject(x);
+            //        x[1] = new Records();
+            //        x[1].Fields = new List<Model.Field>();
+            //        fl.Name = "Name4";
+            //        x[1].Fields.Add(fl);
+            //        fl.Name = "Name5";
+            //        x[1].Fields.Add(fl);
+            //        fl.Name = "Name6";
+            //        x[1].Fields.Add(fl);
+
+            //        var result = JsonConvert.SerializeObject(x);
             #endregion
         }
         private void GenerateETaxFile()
