@@ -43,12 +43,26 @@ namespace Bill2Pay.Model
         {
             get
             {
-                if(instence == null)
+                if (instence == null)
                 {
                     instence = new ApplicationDbContext();
+
+                }
+
+                if (instence.Database.Connection.State != System.Data.ConnectionState.Open)
+                {
+                    instence.Database.Connection.Open();
                 }
 
                 return instence;
+            }
+        }
+
+        public void SetTimeout(int minute)
+        {
+            if (instence == null)
+            {
+                instence.Database.CommandTimeout = 60 * minute;
             }
         }
     }

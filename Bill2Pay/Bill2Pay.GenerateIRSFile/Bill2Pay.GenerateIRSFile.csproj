@@ -42,6 +42,7 @@
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -77,6 +78,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Bill2Pay.ExceptionLogger\Bill2Pay.ExceptionLogger.csproj">
+      <Project>{fb7be443-ba1c-44cb-bd5c-8a8fef3b61fe}</Project>
+      <Name>Bill2Pay.ExceptionLogger</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Bill2Pay.Model\Bill2Pay.Model.csproj">
       <Project>{5b18de1a-bb5f-4a86-b789-ec2849c5b634}</Project>
       <Name>Bill2Pay.Model</Name>

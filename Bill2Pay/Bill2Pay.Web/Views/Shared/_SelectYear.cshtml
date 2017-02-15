@@ -1,27 +1,15 @@
-﻿<select id="ddlPaymentYear" onchange="ChangeYear(this)">
-    <option>-- Select Year --</option>
-    <option value="2016">2016</option>
-    <option value="2017">2017</option>
-    <option value="2018">2018</option>
+﻿<select onchange="SelectYear(this)">
+    <option value="-1">-- Select Year --</option>
+    <option value="2016" @Bill2Pay.Web.MenuGenerator.IsSelected(2016)>2016</option>
+    <option value="2017" @Bill2Pay.Web.MenuGenerator.IsSelected(2017)>2017</option>
+    <option value="2018" @Bill2Pay.Web.MenuGenerator.IsSelected(2018)>2018</option>
 </select>
 
-
 <script>
-    function ChangeYear(oBj) {
-
-        var temp = '@Url.Content("~/IRSProcess/Index/")' + oBj.options[oBj.selectedIndex].value;
-        //alert(temp);
-        window.location.href  = temp;
+    SelectYear = function (oBj) {
+        var y = $(oBj).val();
+        if (y > 0) {
+            location.href = '@Bill2Pay.Web.MenuGenerator.CurrentUrl' + y;
+        }
     }
-
-
-
-     $(document).ready(function () {
-       // alert('hello');
-        var selectedyear = '@ViewBag.SelectedYear';
-        //alert(selectedyear);
-         $('#ddlPaymentYear').val('selectedyear');
-         
-
-    });
 </script>

@@ -11,7 +11,8 @@ namespace Bill2Pay.Web.Controllers
     {
         public ActionResult Index()
         {
-            return RedirectToAction("Index","IRSProcess");
+            var year = DateTime.Now.Year - 1;
+            return RedirectToAction("Index","IRSProcess", new { id = year });
         }
 
         public ActionResult About()

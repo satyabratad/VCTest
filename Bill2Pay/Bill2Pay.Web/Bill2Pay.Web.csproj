@@ -203,10 +203,6 @@
     <Compile Include="Utility\MenuGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Bill2PayDatabase.mdf" />
-    <Content Include="App_Data\Bill2PayDatabase_log.ldf">
-      <DependentUpon>Bill2PayDatabase.mdf</DependentUpon>
-    </Content>
     <Content Include="App_Data\Extra_Table.sql" />
     <Content Include="App_Data\PostImportDataProcessing.sql" />
     <Content Include="App_Data\PreImportDataProcessing.sql" />
