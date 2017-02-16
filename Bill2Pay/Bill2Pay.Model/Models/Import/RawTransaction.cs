@@ -8,7 +8,7 @@ namespace Bill2Pay.Model
         public string TINType { get; set; }
 
         [MaxLength(255)]
-        public string PayeeTIN { get; set; }
+        public string PayeeTIN { get; set; } 
 
         [MaxLength(255)]
         public string PayeeAccountNumber { get; set; }
