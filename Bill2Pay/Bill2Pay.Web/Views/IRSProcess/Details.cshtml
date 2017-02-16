@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Bill2Pay.Model
+@Model SubmissionDetail
+@{
     ViewBag.Title = "1099 K Details";
 }
 
@@ -6,33 +8,40 @@
     <div ng-app="tabPanel" ng-controller="tabPanelCtrl as ctrl" ng-click="tabChange($event)">
         <div class="col-md-12">
             <ul class="nav nav-tabs page-tabs">
-                <li  ng-class="{'active':ctrl.tabSelected=='#copy-a'}"><a href="#copy-a">Copy A</a></li>
+                <li ng-class="{'active':ctrl.tabSelected=='#copy-a'}"><a href="#copy-a">Copy A</a></li>
                 <li ng-class="{'active':ctrl.tabSelected=='#copy-1'}"><a href="#copy-1">Copy 1</a></li>
                 <li ng-class="{'active':ctrl.tabSelected=='#copy-b'}"><a href="#copy-b">Copy B</a></li>
                 <li ng-class="{'active':ctrl.tabSelected=='#copy-2'}"><a href="#copy-2">Copy 2</a></li>
                 <li ng-class="{'active':ctrl.tabSelected=='#copy-c'}"><a href="#copy-c">Copy C</a></li>
             </ul>
-            
+
         </div>
         <div class="col-md-12">
             <br />
-            <div id="copy-a" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-a'"><span  style="float:right;" class="fa fa-print fa-lg" title="Print to PDF"></span>
+            <div id="copy-a" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-a'">
+                @using (Html.BeginForm("CopyA", "Print", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <button style="float:right;" type="submit" class="btn " title="Print to PDF">
+                        <span  class="fa fa-print fa-lg" ></span></button>
+                }
                 <div class="copy-a">
-                    <div > <span style="position:absolute; left:25px; top:65px"> [FILER's Name]</span> 
-                           <span style="position:absolute; left:25px; top:90px"> [FILER's Address]</span> 
-                           <span style="position:absolute; left:25px; top:110px"> [FILER's City], [FILER's State]</span>
-                           <span style="position:absolute; left:25px; top:130px"> [FILER's Country]</span>
-                           <span style="position:absolute; left:25px; top:150px"> [FILER's ZipCode]</span>
-                           <span style="position:absolute; left:25px; top:170px"> [FILER's Phone]</span>
+                    <div>
+                        <span style="position:absolute; left:25px; top:65px"> [FILER's Name]</span>
+                        <span style="position:absolute; left:25px; top:90px"> [FILER's Address]</span>
+                        <span style="position:absolute; left:25px; top:110px"> [FILER's City], [FILER's State]</span>
+                        <span style="position:absolute; left:25px; top:130px"> [FILER's Country]</span>
+                        <span style="position:absolute; left:25px; top:150px"> [FILER's ZipCode]</span>
+                        <span style="position:absolute; left:25px; top:170px"> [FILER's Phone]</span>
                     </div>
                     <div>
                         <span style="position:absolute; left:185px; top:213px" class="fa fa-check"></span>
-                        <span style="position:absolute; left:370px; top:213px"  class="fa fa-check"></span>
-                        <span style="position:absolute; left:185px; top:238px"  class="fa fa-check"></span>
-                        <span style="position:absolute; left:370px; top:238px"  class="fa fa-check"></span>
+                        <span style="position:absolute; left:370px; top:213px" class="fa fa-check"></span>
+                        <span style="position:absolute; left:185px; top:238px" class="fa fa-check"></span>
+                        <span style="position:absolute; left:370px; top:238px" class="fa fa-check"></span>
                     </div>
-                    
-                    <div >
+
+                    <div>
                         <span style="position:absolute; left:395px; top:50px"> [FILER's Federal Id No]</span>
                         <span style="position:absolute; left:395px; top:90px"> [PAYEE's Taxpayer Id]</span>
                         <span style="position:absolute; left:410px; top:150px"> [Gross Amount]</span>
@@ -46,7 +55,7 @@
                         <span style="position:absolute; left:25px; top:440px"> [PSE's Name]</span>
                         <span style="position:absolute; left:25px; top:460px"> [PSE's Phone]</span>
                         <span style="position:absolute; left:25px; top:500px"> [Account Number]</span>
-                        
+
                     </div>
                     <div>
                         <span style="position:absolute; left:410px; top:195px"> [CNP Amount]</span>
@@ -74,30 +83,58 @@
 
                     </div>
                 </div>
-            </div>
-            <div id="copy-1" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-1'"><span style="float:right;" class="fa fa-print fa-lg" title="Print to PDF"></span>
+</div>
+            <div id="copy-1" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-1'">
+                @using (Html.BeginForm("Copy1", "Print", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <button style="float:right;" type="submit" class="btn " title="Print to PDF">
+                        <span class="fa fa-print fa-lg"></span>
+                    </button>
+                }
                 <div class="copy-1">
 
                 </div>
             </div>
-            <div id="copy-b" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-b'"><span style="float:right;" class="fa fa-print fa-lg" title="Print to PDF"></span>
+            <div id="copy-b" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-b'">
+                @using (Html.BeginForm("CopyB", "Print", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <button style="float:right;" type="submit" class="btn " title="Print to PDF">
+                        <span class="fa fa-print fa-lg"></span>
+                    </button>
+                }
                 <div class="copy-b">
 
                 </div>
             </div>
-            <div id="copy-2" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-2'"><span style="float:right;" class="fa fa-print fa-lg" title="Print to PDF"></span>
+            <div id="copy-2" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-2'">
+                @using (Html.BeginForm("Copy2", "Print", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <button style="float:right;" type="submit" class="btn " title="Print to PDF">
+                        <span class="fa fa-print fa-lg"></span>
+                    </button>
+                }
                 <div class="copy-2">
 
                 </div>
             </div>
-            <div id="copy-c" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-c'"><span style="float:right;" class="fa fa-print fa-lg" title="Print to PDF"></span>
+            <div id="copy-c" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-c'">
+                @using (Html.BeginForm("CopyC", "Print", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <button style="float:right;" type="submit" class="btn " title="Print to PDF">
+                        <span class="fa fa-print fa-lg"></span>
+                    </button>
+                }
                 <div class="copy-c">
 
                 </div>
             </div>
         </div>
     </div>
-   
+
     <script>
         var app = angular.module("tabPanel", []);
         app.controller("tabPanelCtrl", function ($scope) {
