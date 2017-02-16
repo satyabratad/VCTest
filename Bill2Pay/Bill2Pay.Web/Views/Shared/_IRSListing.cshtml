@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Bill2Pay.Model.ImportDetail>
+﻿@model IEnumerable<Bill2Pay.Model.MerchantListVM>
   
 <script>
     //alert('aaaaaaaaaaaaaaaaaaaaa');
@@ -38,25 +38,11 @@
 
 <div class="row">
     @using (Html.BeginForm("Process", "IRSProcess", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-    { 
+    {
         @Html.AntiForgeryToken()
 
-        @Html.Hidden("checkedAccountNo",(object)@ViewBag.lstmerchantAcc)
-        <div class="col-md-12">
-            <div class="col-md-2 text-bold left-justified">Select Year</div>
-            <div class="col-md-4">
-                @*@Html.DropDownList("ddlYear", (IEnumerable<SelectListItem>)ViewBag.lstPaymentYear, "Select")*@
-                @*<select>
-                    <option>-- Select Year --</option>
-                    <option>2016</option>
-                    <option>2017</option>
-                    <option>2018</option>
-                </select>*@
-                @Html.Partial("_SelectYear")
-            </div>
-            <br />
-            <hr />
-        </div>
+        @Html.Hidden("checkedAccountNo", (object)@ViewBag.lstmerchantAcc)
+        @Html.Partial("_SelectYear")
 
         <div class="col-md-12">
             <div class="table-responsive">
@@ -69,7 +55,8 @@
                             <th class="btn-primary">Merchant Name</th>
                             <th class="btn-primary">Address</th>
                             <th class="btn-primary">MCC</th>
-                            <th class="btn-primary">Status</th>
+                            <th class="btn-primary">TIN Status</th>
+                            <th class="btn-primary">IRS Status</th>
                            
                         </tr>
                     </thead>
@@ -78,32 +65,64 @@
                         {
                         <tr>
                             <td>
-                                <input id="chkAccountNo" onclick="GetSelectedMerchant('@item.AccountNo');" type="checkbox" />&nbsp;
+                                <input id="chkAccountNo" onclick="GetSelectedMerchant('@item.ImportDetails.AccountNo');" type="checkbox" />&nbsp;
+                                @{
+                                    if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                                    {
+                                        <a href="@Url.Action("Details", new { Id = item.ImportDetails.AccountNo })">
+                                            <i class="fa fa-vcard-o fa-lg" title="Generate 1099-K Copies"></i>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a >
+                                            <i class="fa fa-vcard-o fa-lg" title="Generate 1099-K Copies"></i>
+                                        </a>
+                                    }
+                                }
+                                
 
-                                <a href="@Url.Action("Details",new { accno = item.AccountNo })">
-                                    <i class="fa fa-vcard-o fa-lg" title="Generate 1099-K Copies"></i>
-                                </a>
                             </td>
-                            <td>@item.AccountNo</td>
-                            <td>@item.TIN </td>
-                            <td>@item.FirstPayeeName  </td>
-                            <td>@item.PayeeMailingAddress </td>
-                            <td>@item.MerchantCategoryCode</td>
+                            <td>@item.ImportDetails.AccountNo</td>
+                            <td>@item.ImportDetails.TIN </td>
+                            <td>@item.ImportDetails.FirstPayeeName  </td>
+                            <td>@item.ImportDetails.PayeeMailingAddress </td>
+                            <td>@item.ImportDetails.MerchantCategoryCode</td>
                             <td>
                                 @{ 
-                                    if (@item.TINCheckStatus == "0")
+                                    if (@item.ImportDetails.TINCheckStatus == "0")
                                     {
                                         <img style="width:25px; height:25px" src="@Url.Content("~/Images/true.png")" />
                                     }
-                                    else if (@item.TINCheckStatus != "0" && ! string.IsNullOrEmpty(@item.TINCheckStatus))
+                                    else if (@item.ImportDetails.TINCheckStatus != "0" && !string.IsNullOrEmpty(@item.ImportDetails.TINCheckStatus))
                                     {
                                         <img style="width:25px; height:25px" src="@Url.Content("~/Images/false.png")" />
+                                    }
+
+                                }
+                                                      
+
+                            </td>
+                            <td>
+                                @{
+
+                                    if (@item.SubmissionStatus != null)
+                                    {
+                                        @*@item.SubmissionStatus.Status.Name*@
+                                if (@item.SubmissionStatus.StatusId == 2)
+                                {
+                                            <img style="width:25px; height:25px" title="Submitted" src="@Url.Content("~/Images/Like.png")" />
+                                }
+                                        @*else if (@item.ImportDetails.TINCheckStatus != "0" && !string.IsNullOrEmpty(@item.ImportDetails.TINCheckStatus))
+                                        {
+                                            <img style="width:25px; height:25px" src="@Url.Content("~/Images/false.png")" />
+                                        }*@
                                     }
                                 }
                             </td>
                             
                         </tr>
-                        }
+                                    }
 
 
                         
@@ -115,11 +134,16 @@
         <div class="col-md-12">
             <hr />
 
-            
-            <input class="btn  btn-primary" type="submit" name="tinmatching" value="Generate TIN Matching Input" />
-            <input class="btn  btn-primary" type="submit" name="irstest" value="Generate IRS FIRE Test Input" />
-            <input class="btn  btn-primary" type="submit" name="irs" value="Generate TIN IRS FIRE Input" />
-            <input class="btn  btn-primary" type="submit" name="irscorrection" value="Generate IRS FIRE Correction Input" />
+            @{
+                if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                    <input class="btn  btn-primary" type="submit" name="tinmatching" value="Generate TIN Matching Input" />
+                    <input class="btn  btn-primary" type="submit" name="irstest" value="Generate IRS FIRE Test Input" />
+                    <input class="btn  btn-primary" type="submit" name="irs" value="Generate IRS FIRE Input" />
+                    <input class="btn  btn-primary" type="submit" name="irscorrection" value="Generate IRS FIRE Correction Input" />
+                }
+
+            }
         </div>
     }
 </div>

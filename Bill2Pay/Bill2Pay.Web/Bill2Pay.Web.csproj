@@ -247,7 +247,9 @@
     <Content Include="Images\CopyA.png" />
     <Content Include="Images\copyb.png" />
     <Content Include="Images\copyc.png" />
+    <Content Include="Images\dislike.png" />
     <Content Include="Images\false.png" />
+    <Content Include="Images\like.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\true.png" />
     <Content Include="Images\user.jpg" />
@@ -411,7 +413,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50868</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

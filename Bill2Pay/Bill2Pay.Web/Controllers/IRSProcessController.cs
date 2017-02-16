@@ -19,42 +19,51 @@ namespace Bill2Pay.Web.Controllers
             dbContext = new ApplicationDbContext();
         }
 
-        
+
         // GET: IRSProcess
         public ActionResult Index(int? ID)
         {
-            
+
             var year = DateTime.Now.Year - 1;
             // ID - > Year
-            if (ID!=null)
+            if (ID != null)
             {
-                year =(int) ID;
+                year = (int)ID;
             }
 
-            var merchantlst = dbContext.ImportDetails
-                                .Include("ImportSummary")
-                                .Where(i=>i.ImportSummary.PaymentYear==year)                         
-                                .ToList();
+         
+
+            var merchantlst = (dbContext.ImportDetails
+                            .Include("ImportSummary")
+                            .GroupJoin(dbContext.SubmissionStatus,
+                            imp => imp.AccountNo,
+                            stat => stat.AccountNumber,
+                            (imp, stat) => new MerchantListVM() { ImportDetails = imp, SubmissionStatus = stat.FirstOrDefault() })
+                            .Where(x => x.ImportDetails.ImportSummary.PaymentYear == year)
+                            ).ToList();
+ 
+
+
 
             var merchantAccList = dbContext.ImportDetails.Select(p =>
-                                 new MerchantVM 
+                                 new MerchantVM
                                  {
                                      AccountNo = p.AccountNo,
                                      IsChecked = 0
                                  }).ToList();
 
             ViewBag.SelectedYear = year;
-            ViewBag.lstmerchantAcc =  JsonConvert.SerializeObject(merchantAccList);
+            ViewBag.lstmerchantAcc = JsonConvert.SerializeObject(merchantAccList);
 
-                return View(merchantlst);
+            return View(merchantlst);
         }
 
-        public ActionResult Details()
+        public ActionResult Details(string Id)
         {
             return View();
         }
 
-       
+
 
         [HttpPost]
         public ActionResult Process(string btnPressed)
@@ -64,12 +73,19 @@ namespace Bill2Pay.Web.Controllers
             List<MerchantVM> Merchatlist = new JavaScriptSerializer().Deserialize<List<MerchantVM>>(chkList);
 
             List<MerchantVM> checkedList = Merchatlist.Where(m => m.IsChecked == 1).ToList();
-            var list= Merchatlist.Where(m => m.IsChecked == 1).Select(m=> m.AccountNo).ToList();
+            var list = Merchatlist.Where(m => m.IsChecked == 1).Select(m => m.AccountNo).ToList();
             TempData["CheckedMerchantList"] = list;
 
             if (!string.IsNullOrEmpty(Request.Form["tinmatching"]))
             {
                 // Call tinmatching process
+
+                //TODO: limit can be read from config file
+                if (checkedList.Count > 100000)
+                {
+
+                    return RedirectToAction("Index");
+                }
                 return RedirectToAction("TINMatchingInput", "TINProcess");
             }
             else if (!string.IsNullOrEmpty(Request.Form["irstest"]))
@@ -110,20 +126,5 @@ namespace Bill2Pay.Web.Controllers
             return View();
         }
 
-        public ActionResult Download(string file)
-        {
-            file = @"C:\B2P\" + file;
-            if (!System.IO.File.Exists(file))
-            {
-                return HttpNotFound();
-            }
-
-            var fileBytes = System.IO.File.ReadAllBytes(file);
-            var response = new FileContentResult(fileBytes, "application/octet-stream")
-            {
-                FileDownloadName = "download.txt"
-            };
-            return response;
-        }
     }
 }
