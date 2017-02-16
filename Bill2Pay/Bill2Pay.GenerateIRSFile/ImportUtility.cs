@@ -5,11 +5,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.IO;
 using System.Data;
-//using Bill2Pay.ExceptionLogger;
+using Bill2Pay.ExceptionLogger;
 using ICSharpCode.SharpZipLib.Zip;
 using ICSharpCode.SharpZipLib.Core;
 using System.Web.Hosting;
 using System.Transactions;
+using System.Data.Entity.Core;
+
 
 namespace Bill2Pay.GenerateIRSFile
 {
@@ -33,15 +35,19 @@ namespace Bill2Pay.GenerateIRSFile
         {
             try
             {
-                //Logger.LogInstance.LogDebug("Import Started Path:{0}", fileName);
+                Logger.LogInstance.LogDebug("Import Started Path:{0}", fileName);
                 var random = DateTime.Now.Ticks;
                 ExtractZip(fileName, random);
                 ReadCSV(fileName, random);
                 ExecutePostImportDataProcessing(this.year, this.fileName, this.userId);
             }
+            catch (EntityException ex)
+            {
+                Logger.LogInstance.LogError(ex.Message);
+            }
             catch (Exception ex)
             {
-                //Logger.LogInstance.LogError(ex.Message);
+                Logger.LogInstance.LogError(ex.StackTrace);
             }
         }
 
@@ -49,7 +55,7 @@ namespace Bill2Pay.GenerateIRSFile
         {
             var outPath = Path.Combine(Path.GetDirectoryName(fileName), random.ToString());
             ExtractZipFile(fileName, "", outPath);
-            //Logger.LogInstance.LogDebug("File UnZipped Path:{0}", outPath);
+            Logger.LogInstance.LogDebug("File UnZipped Path:{0}", outPath);
         }
 
         private void ExtractZipFile(string archiveFilenameIn, string password, string outFolder)
@@ -104,9 +110,9 @@ namespace Bill2Pay.GenerateIRSFile
 
         private void ExecutePostImportDataProcessing(int year, string path, long UserId)
         {
-            //Logger.LogInstance.LogDebug("PostImportDataProcessing Starts");
+            Logger.LogInstance.LogDebug("PostImportDataProcessing Starts");
             RawTransactionStaging.ExecutePostImportDataProcessing(year, path, UserId);
-           // Logger.LogInstance.LogDebug("PostImportDataProcessing Ends");
+            Logger.LogInstance.LogDebug("PostImportDataProcessing Ends");
         }
 
         string[] line_records;
@@ -122,41 +128,68 @@ namespace Bill2Pay.GenerateIRSFile
             {
                 filename = file;
 
-                //Logger.LogInstance.LogDebug("DB Import Started:{0}", filename);
+                Logger.LogInstance.LogDebug("DB Import Started:{0}", filename);
+
+                RawTransactionStaging.Clear();
+                Logger.LogInstance.LogDebug("DB Old Staging data cleared");
 
                 using (StreamReader sr = new StreamReader(filename))
                 {
-                    using (TransactionScope scope = new TransactionScope())
+                    int iteration = 0;
+                    while (sr.Peek() >= 0)
                     {
-                        RawTransactionStaging.Clear();
-                       // Logger.LogInstance.LogDebug("DB Old Staging data cleared");
-                        RawTransactionStaging.StagingList.Clear();
+                        var fileLine = sr.ReadLine();
+                        iteration++;
+                        AddItemToStagingTable(fileLine, iteration);
 
-                        int iteration = 0;
-                        while (sr.Peek() >= 0)
+                        if ((iteration % 5000) == 0)
                         {
-                            var fileLine = sr.ReadLine();
-                            iteration++;
-                            AddItemToStaging(fileLine, iteration);
-
-                            if ((iteration % 1000) == 0)
-                            {
-                                RawTransactionStaging.AddBulkAsync();
-                                RawTransactionStaging.StagingList.Clear();
-                               // Logger.LogInstance.LogDebug("DB Import Iteration:{0}", iteration);
-                            }
-
+                            RawTransactionStaging.AddBulk();
+                            RawTransactionStaging.StagingTable.Rows.Clear();
+                            Logger.LogInstance.LogDebug("DB Import Iteration:{0}", iteration);
                         }
-
-                        RawTransactionStaging.AddBulkAsync();
-                        RawTransactionStaging.StagingList.Clear();
-                       // Logger.LogInstance.LogDebug("DB Import Completed");
-
-
-                        scope.Complete();
                     }
+
+                    RawTransactionStaging.AddBulk();
+                    RawTransactionStaging.StagingTable.Rows.Clear();
+
+                    // TODO REMOVE
+                    //RawTransactionStaging.StagingList.Clear();
+
+                    //while (sr.Peek() >= 0)
+                    //{
+                    //    var fileLine = sr.ReadLine();
+                    //    iteration++;
+                    //    AddItemToStaging(fileLine, iteration);
+
+                    //    if ((iteration % 5000) == 0)
+                    //    {
+                    //        RawTransactionStaging.AddBulkAsync();
+                    //        RawTransactionStaging.StagingList.Clear();
+                    //        Logger.LogInstance.LogDebug("DB Import Iteration:{0}", iteration);
+                    //    }
+
+                    //}
+
+                    //RawTransactionStaging.AddBulkAsync();
+                    //RawTransactionStaging.StagingList.Clear();
                 }
+
+                Logger.LogInstance.LogDebug("DB Import Completed");
             }
+        }
+
+        private void AddItemToStagingTable(string fileLine, int iteration)
+        {
+            var line = string.Format("{0},{1}", iteration, fileLine);
+            line_records = line.Split(',');
+
+            if (line_records.Length != 13) // TODO FOR OTHER FIELDS
+            {
+                throw new Exception("Import File not in  correct format");
+            }
+
+            RawTransactionStaging.StagingTable.Rows.Add(line_records);
         }
 
         private void AddItemToStaging(string fileLine, int Id)
@@ -193,6 +226,8 @@ namespace Bill2Pay.GenerateIRSFile
 
             RawTransactionStaging.StagingList.Add(data);
         }
+
+
     }
 
     public class KeyValue
