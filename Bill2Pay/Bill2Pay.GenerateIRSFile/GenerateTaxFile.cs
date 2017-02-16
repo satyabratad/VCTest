@@ -17,53 +17,41 @@ namespace Bill2Pay.GenerateIRSFile
     public class GenerateTaxFile
     {
         List<Records> records;
-        StringBuilder fileData= new StringBuilder();
+        StringBuilder fileData = new StringBuilder();
         bool testFileIndicator = false;
         int recordSequenceNumber = 1;
         ApplicationDbContext dbContext = null;
         List<ImportDetail> detailTableData = null;
-        ImportSummary summaryTableData= null;
+        ImportSummary summaryTableData = null;
         string amount = string.Empty;
         decimal januaryAmount, februaryAmount, marchAmount, aprilAmount, mayAmount, juneAmount, julyAmount, augustAmount, septemberAmount, octoberAmount, novemberAmount, decemberAmount = 0;
-        decimal grossAmount, cnpTransactionAmount, federalWithHoldingAmount, stateWithHolding, localWithHolding=0;
+        decimal grossAmount, cnpTransactionAmount, federalWithHoldingAmount, stateWithHolding, localWithHolding = 0;
         int numberofPayee = 0;
         int paymentYear = 0;
         long userId = 0;
+        bool reSubmission = false;
 
-        
-        //SubmissionDetail submissionDetail = new SubmissionDetail();
-        //SubmissionStatus submissionStatus = new SubmissionStatus();
-        //SubmissionSummary submissionSummary = new SubmissionSummary();
-        //PSEMaster pseMaster = new PSEMaster();
-
-        public GenerateTaxFile(bool testFile, int year, long userId, List<string> selectedAccountNo)
+        public GenerateTaxFile(bool testFile, int year, long user, List<string> selectedAccountNo, bool correction = false)
         {
             testFileIndicator = testFile;
             paymentYear = year;
+            userId = user;
+            reSubmission = correction;
 
-             dbContext= new ApplicationDbContext();
-            //var submissionDetails = dbContext.SubmissionDetails.ToList();
-
-            //var tableData = from SubmissionDetail in dbContext.SubmissionDetails
-            //                join SubmissionSummary in dbContext.SubmissionSummary on SubmissionDetail.SubmissionSummary.Id equals SubmissionSummary.Id
-            //                select new { detail = SubmissionDetail, summary = SubmissionSummary };
+            dbContext = new ApplicationDbContext();
 
             summaryTableData = dbContext.ImportSummary.OrderByDescending(x => x.Id).First();
             detailTableData = dbContext.ImportDetails.Where(x => selectedAccountNo.Contains(x.AccountNo)).ToList();
 
-            //Where(x => ids.Contains(x.Attribute("id").Value));
-
-            
             numberofPayee = detailTableData.Count();
-        } 
-
+        }
         private void GenerateTRecord()
         {
             Records tRecords = records.FirstOrDefault(x => x.RecordType == "T");
 
-            foreach(Field item in tRecords.Fields)
+            foreach (Field item in tRecords.Fields)
             {
-                switch(item.Name.ToUpper())
+                switch (item.Name.ToUpper())
                 {
                     case "TEST FILE INDICATOR":
                         if (testFileIndicator)
@@ -77,7 +65,7 @@ namespace Bill2Pay.GenerateIRSFile
                         recordSequenceNumber++;
                         break;
                     case "TOTAL NUMBER OF PAYEES":
-                        item.Default= numberofPayee.ToString();
+                        item.Default = numberofPayee.ToString();
                         fileData.Append(GetFieldValue(item));
                         break;
                     default:
@@ -100,7 +88,7 @@ namespace Bill2Pay.GenerateIRSFile
                         recordSequenceNumber++;
                         break;
                     case "COMBINED FEDERAL/STATE FILING PROGRAM":
-                        fileData.Append(GetFieldValue(item,Model.ValueType.Alternate));
+                        fileData.Append(GetFieldValue(item, Model.ValueType.Alternate));
                         break;
                     default:
                         fileData.Append(GetFieldValue(item));
@@ -126,13 +114,13 @@ namespace Bill2Pay.GenerateIRSFile
                             recordSequenceNumber++;
                             break;
                         case "PAYMENT AMOUNT 1":
-                            amount= GetFieldValue(item, dataValue: data);
+                            amount = GetFieldValue(item, dataValue: data);
                             grossAmount = grossAmount + Convert.ToDecimal(amount);
                             fileData.Append(FormatAmount(amount, item));
                             break;
                         case "PAYMENT AMOUNT 2":
                             amount = GetFieldValue(item, dataValue: data);
-                            cnpTransactionAmount = cnpTransactionAmount+ Convert.ToDecimal(amount);
+                            cnpTransactionAmount = cnpTransactionAmount + Convert.ToDecimal(amount);
                             fileData.Append(FormatAmount(amount, item));
                             break;
                         case "PAYMENT AMOUNT 3":
@@ -170,22 +158,22 @@ namespace Bill2Pay.GenerateIRSFile
                             break;
                         case "PAYMENT AMOUNT A":
                             amount = GetFieldValue(item, dataValue: data);
-                            juneAmount= juneAmount+ Convert.ToDecimal(amount);
+                            juneAmount = juneAmount + Convert.ToDecimal(amount);
                             fileData.Append(FormatAmount(amount, item));
                             break;
                         case "PAYMENT AMOUNT B":
                             amount = GetFieldValue(item, dataValue: data);
-                            julyAmount = julyAmount+ Convert.ToDecimal(amount);
+                            julyAmount = julyAmount + Convert.ToDecimal(amount);
                             fileData.Append(FormatAmount(amount, item));
                             break;
-                        case "PAYMENT AMOUNT C":                        
+                        case "PAYMENT AMOUNT C":
                             amount = GetFieldValue(item, dataValue: data);
                             augustAmount = augustAmount + Convert.ToDecimal(amount);
                             fileData.Append(FormatAmount(amount, item));
                             break;
                         case "PAYMENT AMOUNT D":
                             amount = GetFieldValue(item, dataValue: data);
-                            septemberAmount  = septemberAmount+ Convert.ToDecimal(amount);
+                            septemberAmount = septemberAmount + Convert.ToDecimal(amount);
                             fileData.Append(FormatAmount(amount, item));
                             break;
                         case "PAYMENT AMOUNT E":
@@ -470,7 +458,7 @@ namespace Bill2Pay.GenerateIRSFile
                     else
                     {
                         pi = detailTableData.GetType().GetProperty(field.Data.Trim());
-                        value =(pi.GetValue(detailTableData, null)).ToString();
+                        value = (pi.GetValue(detailTableData, null)).ToString();
                     }
                 }
                 else
@@ -501,26 +489,86 @@ namespace Bill2Pay.GenerateIRSFile
             }
             return field.PadValue(value);
         }
-        private string FormatAmount(string value,Field field)
+        private string FormatAmount(string value, Field field)
         {
             value = value.Replace(".", "").Replace(",", "").Replace("$", "");
             return field.PadValue(value);
         }
-
-        private void PopulateSubmissionSummary()
+        private int SaveSubmissionSummary()
         {
-
             var submissionSummary = new SubmissionSummary();
-            submissionSummary.PaymentYear = 1234;
-            
-            //submissionSummary.CreatedUser = 1;
 
+            submissionSummary.PaymentYear = paymentYear;
+            submissionSummary.SubmissionDate = DateTime.Now;
+            submissionSummary.UserId = userId;
 
-            //dbContext.SubmissionSummary.Add(submissionSummary);
-            //dbContext.SaveChanges();
-            
-            
-        }       
+            dbContext.SubmissionSummary.Add(submissionSummary);
+            dbContext.SaveChanges();
+            return submissionSummary.Id;
+        }
+        private void SaveSubmissionDetails()
+        {
+            int submissionSummaryId = SaveSubmissionSummary();
+
+            foreach (var item in detailTableData)
+            {
+                var submissionDetails = new SubmissionDetail();
+
+                submissionDetails.AccountNo = item.AccountNo;
+                submissionDetails.SubmissionId = submissionSummaryId;
+                submissionDetails.TINType = item.TINType;
+                submissionDetails.TIN = item.TIN;
+                submissionDetails.PayerOfficeCode = item.PayerOfficeCode;
+                submissionDetails.GrossAmount = item.GrossAmount;
+                submissionDetails.CNPTransactionAmount = item.CNPTransactionAmount;
+                submissionDetails.FederalWithHoldingAmount = item.FederalWithHoldingAmount;
+                submissionDetails.JanuaryAmount = item.JanuaryAmount;
+                submissionDetails.FebruaryAmount = item.FebruaryAmount;
+                submissionDetails.MarchAmount = item.MarchAmount;
+                submissionDetails.AprilAmount = item.AprilAmount;
+                submissionDetails.MayAmount = item.MayAmount;
+                submissionDetails.JuneAmount = item.JuneAmount;
+                submissionDetails.JulyAmount = item.JulyAmount;
+                submissionDetails.AugustAmount = item.AugustAmount;
+                submissionDetails.SeptemberAmount = item.SeptemberAmount;
+                submissionDetails.OctoberAmount = item.OctoberAmount;
+                submissionDetails.NovemberAmount = item.NovemberAmount;
+                submissionDetails.DecemberAmount = item.DecemberAmount;
+                submissionDetails.ForeignCountryIndicator = item.ForeignCountryIndicator;
+                submissionDetails.FirstPayeeName = item.FirstPayeeName;
+                submissionDetails.SecondPayeeName = item.SecondPayeeName;
+                submissionDetails.PayeeMailingAddress = item.PayeeMailingAddress;
+                submissionDetails.PayeeCity = item.PayeeCity;
+                submissionDetails.PayeeState = item.PayeeState;
+                submissionDetails.PayeeZipCode = item.PayeeZipCode;
+                submissionDetails.SecondTINNoticed = item.SecondTINNoticed;
+                submissionDetails.FillerIndicatorType = item.FillerIndicatorType;
+                submissionDetails.PaymentIndicatorType = item.PaymentIndicatorType;
+                submissionDetails.TransactionCount = item.TransactionCount;
+                submissionDetails.PSEMasterId = item.PSEMasterId;
+                submissionDetails.MerchantCategoryCode = item.MerchantCategoryCode;
+                submissionDetails.SpecialDataEntry = item.SpecialDataEntry;
+                submissionDetails.StateWithHolding = item.StateWithHolding;
+                submissionDetails.LocalWithHolding = item.LocalWithHolding;
+                submissionDetails.CFSF = item.CFSF;
+
+                dbContext.SubmissionDetails.Add(submissionDetails);
+                item.SubmissionSummaryId = submissionSummaryId;
+                SaveSubmissionStatus(item.AccountNo, reSubmission ? (int)RecordStatus.ReSubmitted : (int)RecordStatus.Submitted);
+                dbContext.SaveChanges();
+            }
+        }
+        private void SaveSubmissionStatus(string accountNo, int statusId)
+        {
+            var submissionStatus = new SubmissionStatus();
+
+            submissionStatus.PaymentYear = paymentYear;
+            submissionStatus.AccountNumber = accountNo;
+            submissionStatus.ProcessingDate = DateTime.Now;
+            submissionStatus.StatusId = statusId;
+
+            dbContext.SubmissionStatus.Add(submissionStatus);
+        }
         public void ReadFromSchemaFile()
         {
             //TODO : Read from config file;
@@ -532,18 +580,19 @@ namespace Bill2Pay.GenerateIRSFile
 
             GenerateETaxFile();
 
-                // Delete the file if it exists.
-                if (File.Exists(path))
-                {
-                    File.Delete(path);
-                }
+            // Delete the file if it exists.
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
 
-                // Create the file.
-                using (FileStream fs = File.Create(path))
-                {
-                    Byte[] info = new UTF8Encoding(true).GetBytes(fileData.ToString());
-                    fs.Write(info, 0, info.Length);
-                }
+            // Create the file.
+            using (FileStream fs = File.Create(path))
+            {
+                Byte[] info = new UTF8Encoding(true).GetBytes(fileData.ToString());
+                fs.Write(info, 0, info.Length);
+                SaveSubmissionDetails();
+            }
 
             #region "commented"
             //var result = (Records)JsonConvert.DeserializeObject(json, typeof(Records));
@@ -582,5 +631,14 @@ namespace Bill2Pay.GenerateIRSFile
             GenerateKRecord();
             GenerateFRecord();
         }
+    }
+
+    public enum RecordStatus
+    {
+        NotSubmitted = 1,
+        Submitted = 2,
+        CorrectionRequired = 3,
+        CorrectionUploaded = 4,
+        ReSubmitted = 5
     }
 }
