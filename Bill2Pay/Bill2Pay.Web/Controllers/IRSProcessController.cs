@@ -94,7 +94,7 @@ namespace Bill2Pay.Web.Controllers
         public ActionResult IRSFireTestFile()
         {
             List<string> selectedMerchants = (List<string>)TempData["CheckedMerchantList"];
-            GenerateTaxFile taxFile = new GenerateTaxFile(true, 2016, 1, selectedMerchants);
+            GenerateTaxFile taxFile = new GenerateTaxFile(true, 2016, 8, selectedMerchants);
 
             taxFile.ReadFromSchemaFile();
             return View();
