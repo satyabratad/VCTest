@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace Bill2Pay.Web.Controllers
 {
-   
+    [Authorize(Roles = "Admin")]
     public class TINProcessController : Controller
     {
         ApplicationDbContext dbContext = null;
@@ -26,7 +26,7 @@ namespace Bill2Pay.Web.Controllers
         {
             string strFileline = string.Empty;
             var  Merchantlist = (List<string>)TempData.Peek("CheckedMerchantList");
- 
+            
 
             if (Merchantlist!=null)
             {
@@ -34,7 +34,7 @@ namespace Bill2Pay.Web.Controllers
 
                 var lstTin = dbContext.ImportDetails.Where(p => Merchantlist.Contains(p.AccountNo));
 
-                strFileline = "TINTYPE;TINNUMBER;NAME;ACCOUNTNUMBER" + Environment.NewLine; 
+                //strFileline = "TINTYPE;TINNUMBER;NAME;ACCOUNTNUMBER" + Environment.NewLine; 
 
                 foreach(var itm in lstTin)
                 {
@@ -45,5 +45,7 @@ namespace Bill2Pay.Web.Controllers
             }
             return File(new System.Text.UTF8Encoding().GetBytes(strFileline), "text/csv", "TinMatch.txt");
         }
+
+        
     }
 }
