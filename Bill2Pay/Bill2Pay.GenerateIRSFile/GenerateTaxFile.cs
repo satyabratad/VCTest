@@ -16,6 +16,7 @@ namespace Bill2Pay.GenerateIRSFile
 {
     public class GenerateTaxFile
     {
+        #region "Variables"
         List<Records> records;
         StringBuilder fileData = new StringBuilder();
         bool testFileIndicator = false;
@@ -30,6 +31,8 @@ namespace Bill2Pay.GenerateIRSFile
         int paymentYear = 0;
         long userId = 0;
         bool reSubmission = false;
+        PSEMaster pseMaster = null;
+        #endregion
 
         public GenerateTaxFile(bool testFile, int year, long user, List<string> selectedAccountNo, bool correction = false)
         {
@@ -39,12 +42,14 @@ namespace Bill2Pay.GenerateIRSFile
             reSubmission = correction;
 
             dbContext = new ApplicationDbContext();
+            pseMaster = new PSEMaster();
 
             summaryTableData = dbContext.ImportSummary.OrderByDescending(x => x.Id).First();
             detailTableData = dbContext.ImportDetails.Where(x => selectedAccountNo.Contains(x.AccountNo)).ToList();
 
             numberofPayee = detailTableData.Count();
         }
+        int pseMasterId = 0;
         private void GenerateTRecord()
         {
             Records tRecords = records.FirstOrDefault(x => x.RecordType == "T");
@@ -73,12 +78,13 @@ namespace Bill2Pay.GenerateIRSFile
                         break;
                 }
             }
+            SavePSEMaster(tRecords);
         }
         private void GenerateARecord()
         {
-            Records tRecords = records.FirstOrDefault(x => x.RecordType == "A");
+            Records aRecords = records.FirstOrDefault(x => x.RecordType == "A");
 
-            foreach (Field item in tRecords.Fields)
+            foreach (Field item in aRecords.Fields)
             {
                 switch (item.Name.ToUpper())
                 {
@@ -95,6 +101,11 @@ namespace Bill2Pay.GenerateIRSFile
                         break;
                 }
             }
+            SavePSEMaster(aRecords);
+            dbContext.PSEMaster.Add(pseMaster);
+            dbContext.SaveChanges();
+            pseMasterId = pseMaster.Id;
+            
         }
         private void GenerateBRecord()
         {
@@ -545,7 +556,7 @@ namespace Bill2Pay.GenerateIRSFile
                 submissionDetails.FillerIndicatorType = item.FillerIndicatorType;
                 submissionDetails.PaymentIndicatorType = item.PaymentIndicatorType;
                 submissionDetails.TransactionCount = item.TransactionCount;
-                submissionDetails.PSEMasterId = item.PSEMasterId;
+                submissionDetails.PSEMasterId = pseMasterId;
                 submissionDetails.MerchantCategoryCode = item.MerchantCategoryCode;
                 submissionDetails.SpecialDataEntry = item.SpecialDataEntry;
                 submissionDetails.StateWithHolding = item.StateWithHolding;
@@ -554,6 +565,7 @@ namespace Bill2Pay.GenerateIRSFile
 
                 dbContext.SubmissionDetails.Add(submissionDetails);
                 item.SubmissionSummaryId = submissionSummaryId;
+                item.PSEMasterId = pseMasterId;
                 SaveSubmissionStatus(item.AccountNo, reSubmission ? (int)RecordStatus.ReSubmitted : (int)RecordStatus.Submitted);
                 dbContext.SaveChanges();
             }
@@ -568,6 +580,132 @@ namespace Bill2Pay.GenerateIRSFile
             submissionStatus.StatusId = statusId;
 
             dbContext.SubmissionStatus.Add(submissionStatus);
+        }
+        private void SavePSEMaster(Records records)
+        {
+            foreach (Field item in records.Fields)
+            {
+               switch (item.Name.ToUpper())
+                {
+                    case "TRANSMITTER’S TIN":
+                        pseMaster.TransmitterTIN = item.Default;
+                        break;
+                    case "TRANSMITTER CONTROL CODE":
+                        pseMaster.TransmitterControlCode = item.Default;
+                        break;
+                    case "TEST FILE INDICATOR":
+                        pseMaster.TestFileIndicator = testFileIndicator ? "T" : " ";
+                        break;
+                    case "FOREIGN ENTITY INDICATOR":
+                        pseMaster.TransmitterForeignEntityIndicator = item.Default;
+                        break;
+                    case "TRANSMITTER NAME":
+                        pseMaster.TransmitterName = item.Default;
+                        break;
+                    case "TRANSMITTER NAME (CONTINUATION)":
+                        pseMaster.TransmitterNameContinued = item.Default;
+                        break;
+                    case "COMPANY NAME":
+                        pseMaster.CompanyName = item.Default;
+                        break;
+                    case "COMPANY NAME (CONTINUATION)":
+                        pseMaster.CompanyNameContinued = item.Default;
+                        break;
+                    case "COMPANY MAILING ADDRESS":
+                        pseMaster.CompanyMailingAddress = item.Default;
+                        break;
+                    case "COMPANY CITY":
+                        pseMaster.CompanyCity = item.Default;
+                        break;
+                    case "COMPANY STATE":
+                        pseMaster.CompanyState = item.Default;
+                        break;
+                    case "COMPANY ZIP CODE":
+                        pseMaster.CompanyZIP = item.Default;
+                        break;
+                    case "TOTAL NUMBER OF PAYEES":
+                        pseMaster.TotalNumberofPayees = numberofPayee;
+                        break;
+                    case "CONTACT NAME":
+                        pseMaster.ContactName = item.Default;
+                        break;
+                    case "CONTACT TELEPHONE NUMBER & EXTENSION":
+                        pseMaster.ContactTelephoneNumber = item.Default;
+                        break;
+                    case "CONTACT EMAIL ADDRESS":
+                        pseMaster.ContactEmailAddress = item.Default;
+                        break;
+                    case "VENDOR INDICATOR":
+                        pseMaster.VendorIndicator = item.Default;
+                        break;
+                    case "VENDOR NAME":
+                        pseMaster.VendorName = item.Default;
+                        break;
+                    case "VENDOR MAILING ADDRESS":
+                        pseMaster.VendorMailingAddress = item.Default;
+                        break;
+                    case "VENDOR CITY":
+                        pseMaster.VendorCity = item.Default;
+                        break;
+                    case "VENDOR STATE":
+                        pseMaster.VendorState = item.Default;
+                        break;
+                    case "VENDOR ZIP CODE":
+                        pseMaster.VendorZIP = item.Default;
+                        break;
+                    case "VENDOR CONTACT NAME":
+                        pseMaster.VendorContactName = item.Default;
+                        break;
+                    case "VENDOR CONTACT TELEPHONE NUMBER & EXTENSION":
+                        pseMaster.VendorContactTelephoneNumber = item.Default;
+                        break;
+                    case "VENDOR FOREIGN ENTITY INDICATOR":
+                        pseMaster.VendorForeignEntityIndicator = item.Default;
+                        break;
+                    case "COMBINED FEDERAL/STATE FILING PROGRAM":
+                        pseMaster.CFSF = item.Default;
+                        break;
+                    case "PAYER’S TAXPAYER IDENTIFICATION NUMBER (TIN)":
+                        pseMaster.PayerTIN = item.Default;
+                        break;
+                    case "PAYER NAME CONTROL":
+                        pseMaster.PayerNameControl = item.Default;
+                        break;
+                    case "LAST FILING INDICATOR":
+                        pseMaster.LastFilingIndicator = item.Default;
+                        break;
+                    case "TYPE OF RETURN":
+                        pseMaster.ReturnType = item.Default;
+                        break;
+                    case "FIRST PAYER NAME LINE":
+                        pseMaster.FirstPayerName = item.Default;
+                        break;
+                    case "SECOND PAYER NAME LINE":
+                        pseMaster.SecondPayerName = item.Default;
+                        break;
+                    case "TRANSFER AGENT INDICATOR":
+                        pseMaster.TransferAgentIndicator = item.Default;
+                        break;
+                    case "PAYER SHIPPING ADDRESS":
+                        pseMaster.PayerShippingAddress = item.Default;
+                        break;
+                    case "PAYER CITY":
+                        pseMaster.PayerCity = item.Default;
+                        break;
+                    case "PAYER STATE":
+                        pseMaster.PayerState = item.Default;
+                        break;
+                    case "PAYER ZIP CODE":
+                        pseMaster.PayerZIP = item.Default;
+                        break;
+                    case "PAYER’S TELEPHONE NUMBER AND EXTENSION":
+                        pseMaster.PayerTelephoneNumber = item.Default;
+                        break;
+                    default:
+                        break;
+
+                }
+            }
         }
         public void ReadFromSchemaFile()
         {

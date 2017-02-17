@@ -126,6 +126,20 @@ namespace Bill2Pay.Web.Controllers
         {
             return View();
         }
+        public ActionResult Download(string file)
+        {
+            file = @"C:\B2P\" + file;
+            if (!System.IO.File.Exists(file))
+            {
+                return HttpNotFound();
+            }
 
+            var fileBytes = System.IO.File.ReadAllBytes(file);
+            var response = new FileContentResult(fileBytes, "application/octet-stream")
+            {
+                FileDownloadName = "download.txt"
+            };
+            return response;
+        }
     }
 }
