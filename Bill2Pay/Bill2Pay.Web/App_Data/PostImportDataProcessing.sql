@@ -1,32 +1,61 @@
-﻿CREATE PROCEDURE [dbo].[PostImportDataProcessing]
+﻿ALTER PROCEDURE [dbo].[PostImportDataProcessing]
 	@YEAR INT = 2016,
-	@FileName varchar(255),
-	@UserId bigint
+	@UserId BIGINT=7
 AS
-	
-	declare @PSEId int =1;
+	DECLARE 
+	@SummaryId INT,
+	@ProcessLog NVARCHAR(1024)='',
+	@RecordCount INT,
+	@PSEId INT =1;
+
+	SELECT @PSEID = MAX(ID)  FROM [dbo].[PSEMasters] WHERE IsActive = 1
+
+	INSERT INTO ImportSummaries(PaymentYear,ImportDate,UserId,DateAdded)
+	values (@YEAR,GETDATE(),@UserId,GETDATE())
+	SET @SummaryId = @@IDENTITY
+
+	DECLARE @K1099SUMMARYCHART TABLE(
+		TransactionYear INT,
+		PayeeAccountNumber VARCHAR(255),
+		JANUARY DECIMAL(19,2),
+		FEBRUARY DECIMAL(19,2),
+		MARCH DECIMAL(19,2),
+		APRIL DECIMAL(19,2),
+		MAY DECIMAL(19,2),
+		JUNE DECIMAL(19,2),
+		JULY DECIMAL(19,2),
+		AUGUST DECIMAL(19,2),
+		SEPTEMBER DECIMAL(19,2),
+		OCTOBOR DECIMAL(19,2),
+		NOVEMBER DECIMAL(19,2),
+		DECEMBER DECIMAL(19,2),
+		TotalCPAmount DECIMAL(19,2),
+		GrossAmount DECIMAL(19,2),
+		TotalTransaction INT
+	)
 
 	IF OBJECT_ID('tempdb..#TEMP_SUMMARY') IS NOT NULL
 	BEGIN
 	DROP TABLE #TEMP_SUMMARY
 	END
-	IF OBJECT_ID('tempdb..##TEMP_SUMMARY_PIVOT') IS NOT NULL
-	BEGIN
-	DROP TABLE #TEMP_SUMMARY_PIVOT
-	END
-	IF OBJECT_ID('tempdb..##TEMP_SUMMARY_GROSS') IS NOT NULL
-	BEGIN
-	DROP TABLE #TEMP_SUMMARY_GROSS
-	END
-	IF OBJECT_ID('tempdb..##TEMP_SUMMARY_CP') IS NOT NULL
-	BEGIN
-	DROP TABLE #TEMP_SUMMARY_CP
-	END
 	
+	
+	IF OBJECT_ID('tempdb..#OLD_DETAILS') IS NOT NULL
+	BEGIN
+	DROP TABLE #OLD_DETAILS
+	END
 
+	BEGIN TRY  
+	BEGIN TRANSACTION K1099
+
+	SET @ProcessLog = 'K1099: PROCESS BEGIN ' +CHAR(13)+CHAR(10)
+	
+	
 	-- ARCHIVE EXISTING DATA
-	UPDATE [dbo].[RawTransaction] SET Isactive = 0,UpdatedDate = getdate() WHERE Isactive=1
-	--DELETE FROM [dbo].[RawTransaction]
+	UPDATE [dbo].[RawTransaction] SET Isactive = 0,UpdatedDate = GETDATE() WHERE Isactive=1
+	--## ALTERNATIVE --DELETE FROM [dbo].[RawTransaction]
+	
+	SET @ProcessLog = @ProcessLog + 'ARCHIVING OLD TRANSACTIONS, TOTAL COUNT : '+CAST(@@ROWCOUNT AS VARCHAR)+''+CHAR(13)+CHAR(10)
 
 	-- INSERT NEW DATA
 	INSERT INTO [dbo].[RawTransaction](PayeeAccountNumber,TransactionType,TransactionAmount,TransactionDate,IsActive,UserID,[AddedDate])
@@ -37,41 +66,15 @@ AS
 	CAST([TransactionDate] AS DATE) AS TransactionDate,
 	1,
 	@UserId,
-	getdate()
+	GETDATE()
 	FROM [dbo].[RawTransactionStagings]
 
-	---- ARCHIVE EXISTING DATA
-	--UPDATE [dbo].[MerchantDetails] SET Isactive = 0,UpdatedDate = getdate() WHERE Isactive=1
-	----DELETE FROM [dbo].[MerchantDetails]
+	SET @ProcessLog = @ProcessLog + 'INSERTING NEW TRANSACTIONS, TOTAL COUNT : '+CAST(@@ROWCOUNT AS VARCHAR)+''+CHAR(13)+CHAR(10)
 
-	------ DETAILS
-	--INSERT INTO [dbo].[MerchantDetails] (PayeeAccountNumber,TINType,PayeeTIN,PayeeOfficeCode,PayeeFirstName,PayeeSecondName,PayeeMailingAddress,
-	--PayeeCity,PayeeState,PayeeZIP,FilerIndicatorType,PaymentIndicatorType,MCC,IsActive,AddedDate,UserId)
-	--SELECT DISTINCT 
-	--[PayeeAccountNumber],
-	--[TINType], 
-	--[PayeeTIN], 
-	--[PayeeOfficeCode], 
-	----[CardPresentTransactions], 
-	----[FederalIncomeTaxWithheld], 
-	----[StateIncomeTaxWithheld], 
-	--[PayeeFirstName], 
-	--[PayeeSecondName], 
-	--[PayeeMailingAddress], 
-	--[PayeeCity], 
-	--[PayeeState],
-	--[PayeeZIP], 
-	--[FilerIndicatorType], 
-	--[PaymentIndicatorType], 
-	--[MCC],
-	--1,
-	--GETDATE()
-	--,@UserId
-	--FROM [dbo].[RawTransactionStagings]
-
-
-	-- GROUP BY MONTH,YEAR
-	SELECT TransactionYear,TransactionMonth,[PayeeAccountNumber],SUM(TransactionAmount) AS TransactionAmount,TransactionType
+	
+	
+	-- GROUP BY MONTH,YEAR : MONTHLY SUMMARY
+	SELECT TransactionYear,TransactionMonth,[PayeeAccountNumber],SUM(TransactionAmount) AS TransactionAmount,TransactionType,COUNT(1) AS TransactionCount
 	INTO #TEMP_SUMMARY 
 	FROM 
 		(SELECT [PayeeAccountNumber],YEAR(TransactionDate) AS TransactionYear,
@@ -84,19 +87,9 @@ AS
 	ORDER BY 
 	TransactionMonth,PayeeAccountNumber
 
-	select TransactionYear,PayeeAccountNumber,TransactionType, sum(TransactionAmount) as TransactionAmount
-	into #TEMP_SUMMARY_CP
-	from #TEMP_SUMMARY
-	group by TransactionYear,PayeeAccountNumber,TransactionType
-	
-	select TransactionYear,PayeeAccountNumber, sum(TransactionAmount) as TransactionAmount
-	into #TEMP_SUMMARY_GROSS
-	from #TEMP_SUMMARY_CP
-	group by TransactionYear,PayeeAccountNumber
-
-	
-
 	-- PIVOT
+	INSERT INTO @K1099SUMMARYCHART(TransactionYear,PayeeAccountNumber
+	,JANUARY,FEBRUARY,MARCH,APRIL,MAY,JUNE,JULY,AUGUST,SEPTEMBER,OCTOBOR,NOVEMBER,DECEMBER)
 	SELECT TransactionYear,
 	PayeeAccountNumber,
 	[1] AS JANUARY,
@@ -111,7 +104,7 @@ AS
 	[10] AS OCTOBOR,
 	[11] AS NOVEMBER,
 	[12] AS DECEMBER
-	INTO #TEMP_SUMMARY_PIVOT
+	--INTO #TEMP_SUMMARY_PIVOT
 	FROM 
 	(
 	  SELECT TransactionYear,TransactionMonth,PayeeAccountNumber,TransactionAmount
@@ -125,21 +118,53 @@ AS
 
 	ORDER BY PAYEEACCOUNTNUMBER
 
+
+	UPDATE CHART SET
+		CHART.GrossAmount = GOSS.TransactionAmount
+	FROM @K1099SUMMARYCHART CHART
+	LEFT JOIN (
+		SELECT TransactionYear,PayeeAccountNumber,SUM(TransactionAmount) AS TransactionAmount
+			FROM #TEMP_SUMMARY
+			GROUP BY TransactionYear,PayeeAccountNumber
+		)GOSS ON GOSS.TransactionYear= CHART.TransactionYear 
+		AND GOSS.PayeeAccountNumber = CHART.PayeeAccountNumber 
+
+	UPDATE CHART SET
+		CHART.TotalCPAmount = CNP.TransactionAmount
+	FROM @K1099SUMMARYCHART CHART
+	LEFT JOIN (
+			SELECT TransactionYear,PayeeAccountNumber,TransactionType, SUM(TransactionAmount) AS TransactionAmount
+			FROM #TEMP_SUMMARY
+			GROUP BY TransactionYear,PayeeAccountNumber,TransactionType
+		)CNP ON CNP.TransactionYear= CHART.TransactionYear 
+		AND CNP.PayeeAccountNumber = CHART.PayeeAccountNumber AND CNP.TransactionType = 'CNP'
 	
+	UPDATE CHART SET
+		CHART.TotalTransaction = C.TransactionCount
+	FROM @K1099SUMMARYCHART CHART
+	LEFT JOIN (
+		SELECT TransactionYear,PayeeAccountNumber,SUM(TransactionCount) AS TransactionCount
+		FROM #TEMP_SUMMARY
+		GROUP BY TransactionYear,PayeeAccountNumber
+	)C ON C.TransactionYear= CHART.TransactionYear 
+		AND C.PayeeAccountNumber = CHART.PayeeAccountNumber
 
-	DECLARE @SummaryId int,@RecordCount int
+	SELECT AccountNo,ImportSummaryId,TINCheckStatus,TINCheckRemarks,SubmissionSummaryId,S.Status_Id AS [Status]
+	INTO #OLD_DETAILS
+	FROM ImportDetails D
+	INNER JOIN [dbo].[ImportSummaries] I ON I.Id = D.ImportSummaryId
+	LEFT JOIN [dbo].[SubmissionSummaries] S ON S.Id = D.SubmissionSummaryId
+	WHERE D.IsActive =1 AND S.PaymentYear = @Year AND S.IsActive = 1
 
-	SELECT @RecordCount = COUNT(Id) FROM [dbo].[RawTransaction] WHERE IsActive = 1
-
-	INSERT INTO ImportSummaries(PaymentYear,ImportDate,[FileName],RecordCount,UserId)
-	values (@YEAR,GETDATE(),@FileName,@RecordCount,@UserId)
-	SET @SummaryId = @@IDENTITY
-
-
-	SELECT TOP 1 @PSEID = ID  FROM [dbo].[PSEMasters]
-
+	SET @ProcessLog = @ProcessLog + 'EXISTING SUBMISSION INFORMATION , COUNT : '+CAST(@@ROWCOUNT AS VARCHAR)+''+CHAR(13)+CHAR(10)
 	-- CLEAR EXISTING DATA
-	DELETE FROM ImportDetails
+	UPDATE D
+	SET D.IsActive = 0 
+	FROM ImportDetails D
+	INNER JOIN [dbo].[ImportSummaries] S ON S.Id = D.ImportSummaryId
+	WHERE D.IsActive =1 AND S.PaymentYear = @Year AND S.IsActive = 1
+
+	SET @ProcessLog = @ProcessLog + 'ARCHIVING OLD IMPORT INFORMATION , COUNT : '+CAST(@@ROWCOUNT AS VARCHAR)+''+CHAR(13)+CHAR(10)
 
 	INSERT INTO ImportDetails (AccountNo,ImportSummaryId,TINCheckStatus,TINCheckRemarks,SubmissionSummaryId,TINType,TIN,
 	PayerOfficeCode,GrossAmount,CNPTransactionAmount,FederalWithHoldingAmount,
@@ -149,25 +174,42 @@ AS
 	PaymentIndicatorType,TransactionCount,PSEMasterId,MerchantCategoryCode,SpecialDataEntry,StateWithHolding,
 	LocalWithHolding,CFSF)
 
-	SELECT S.PayeeAccountNumber,@SummaryId,null,null,null,D.TINType,D.PayeeTIN,
-	D.PayeeOfficeCode,G.TransactionAmount,C.TransactionAmount,0,
+	SELECT S.PayeeAccountNumber,@SummaryId,O.TINCheckStatus,O.TINCheckRemarks,O.SubmissionSummaryId,D.TINType,D.PayeeTIN,
+	D.PayeeOfficeCode,S.GrossAmount,S.TotalCPAmount,NULL,
 	S.JANUARY,S.FEBRUARY,S.MARCH,S.APRIL,S.MAY,S.JUNE,S.JULY,S.AUGUST,
-	S.SEPTEMBER,S.OCTOBOR,S.NOVEMBER,S.DECEMBER,null,D.[PayeeFirstName], 
-	D.[PayeeSecondName],D.[PayeeMailingAddress],D.[PayeeCity],D.[PayeeState],Replace(D.[PayeeZIP],'-',''),null,D.[FilerIndicatorType], 
-	D.[PaymentIndicatorType],0,@PSEId,D.[MCC],null,null,
-	null,null
+	S.SEPTEMBER,S.OCTOBOR,S.NOVEMBER,S.DECEMBER,NULL,SUBSTRING(D.[PayeeFirstName],1,40), 
+	SUBSTRING(D.[PayeeSecondName],1,40),SUBSTRING(D.[PayeeMailingAddress],1,40),SUBSTRING(D.[PayeeCity],1,40),D.[PayeeState],REPLACE(D.[PayeeZIP],'-',''),null,D.[FilerIndicatorType], 
+	D.[PaymentIndicatorType],S.TotalTransaction,@PSEId,D.[MCC],NULL,NULL,
+	NULL,D.CFSF
 
-	FROM [dbo].[MerchantDetails] D
-	LEFT JOIN #TEMP_SUMMARY_PIVOT S ON S.PayeeAccountNumber = D.PayeeAccountNumber and D.IsActive = 1 and S.TransactionYear = @YEAR
-	LEFT JOIN #TEMP_SUMMARY_GROSS G ON G.TransactionYear= S.TransactionYear AND G.PayeeAccountNumber = S.PayeeAccountNumber and G.TransactionYear = @YEAR
-	LEFT JOIN #TEMP_SUMMARY_CP C ON G.TransactionYear= S.TransactionYear AND C.PayeeAccountNumber = S.PayeeAccountNumber AND C.TransactionType = 'CNP'and  C.TransactionYear = @YEAR
+	FROM @K1099SUMMARYCHART S
+	LEFT JOIN #OLD_DETAILS O ON S.PayeeAccountNumber = O.AccountNo
+	LEFT JOIN  [dbo].[MerchantDetails] D ON S.PayeeAccountNumber = D.PayeeAccountNumber AND D.IsActive = 1
+	WHERE S.TransactionYear = @YEAR
+
+	SET @ProcessLog = @ProcessLog + 'INSERTING NEW INFORMATION , COUNT : '+CAST(@@ROWCOUNT AS VARCHAR)+''+CHAR(13)+CHAR(10)
+
+		COMMIT TRANSACTION K1099
+		END TRY  
+	BEGIN CATCH  
+		SET @ProcessLog = @ProcessLog + 'EXCEPTION : '+ERROR_MESSAGE()
+		ROLLBACK TRANSACTION K1099
+	END CATCH 
 	
+	UPDATE ImportSummaries SET
+		RecordCount = @RecordCount,
+		ProcessLog = @ProcessLog,
+		ImportDate = GETDATE()
+	WHERE Id = @SummaryId
+	
+	IF OBJECT_ID('tempdb..#TEMP_SUMMARY') IS NOT NULL
+	BEGIN
 	DROP TABLE #TEMP_SUMMARY
-	DROP TABLE #TEMP_SUMMARY_PIVOT
-	DROP TABLE #TEMP_SUMMARY_GROSS
-	DROP TABLE #TEMP_SUMMARY_CP
-
-	--select * from ImportSummaries
-	--select * from ImportDetails
+	END
+	
+	IF OBJECT_ID('tempdb..#OLD_DETAILS') IS NOT NULL
+	BEGIN
+	DROP TABLE #OLD_DETAILS
+	END
 	
 RETURN

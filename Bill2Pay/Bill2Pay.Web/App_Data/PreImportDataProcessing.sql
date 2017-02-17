@@ -2,6 +2,6 @@
 	
 AS
 	-- CLEAR ALL RECORD
-	DELETE FROM RawTransactionStagings
+	TRUNCATE TABLE RawTransactionStagings
 
 RETURN 

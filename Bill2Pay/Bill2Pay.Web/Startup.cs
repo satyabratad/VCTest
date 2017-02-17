@@ -78,7 +78,7 @@ namespace Bill2Pay.Web
                 //Add default User to Role Admin
                 if (chkUser.Succeeded)
                 {
-                    var result1 = UserManager.AddToRoleAsync(user.Id, "Admin").Result;
+                    var result1 = UserManager.AddToRoleAsync(user.Id, "User").Result;
 
                 }
 
@@ -86,19 +86,7 @@ namespace Bill2Pay.Web
                 context.SaveChanges();
             }
 
-            var pse = context.PSEMaster.FirstOrDefault(p => p.Id == 1);
-            if(pse != null)
-            {
-
-            }
-            else
-            {
-                pse = new PSEMaster();
-
-                context.PSEMaster.Add(pse);
-            }
-
-            context.SaveChanges();
+            
         }
     }
 }

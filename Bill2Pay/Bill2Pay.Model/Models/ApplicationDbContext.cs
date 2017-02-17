@@ -34,6 +34,10 @@ namespace Bill2Pay.Model
         public virtual DbSet<TINStatus> TINStatus { get; set; }
         public virtual DbSet<RawTransactionStaging> RawTransactionStaging { get; set; }
 
+        public virtual DbSet<RawTransaction> RawTransactions { get; set; }
+
+        public virtual DbSet<MerchantDetails> MerchantDetails { get; set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

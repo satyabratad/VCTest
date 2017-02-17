@@ -94,6 +94,10 @@ namespace Bill2Pay.Model
         [MaxLength(2)]
         public string CFSF { get; set; }
 
-        public int SubmissionType { get; set; }
+        [Key, Column(Order = 0)]
+        public bool IsActive { get; set; }
+        public DateTime DateAdded { get; set; }
+
+
     }
 }

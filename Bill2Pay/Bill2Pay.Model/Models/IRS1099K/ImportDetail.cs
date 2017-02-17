@@ -7,10 +7,10 @@ namespace Bill2Pay.Model
 
     public class ImportDetail : IRSDetail
     {
-        [Key, Column(Order = 0)]
+        [Key, Column(Order = 1)]
         public string AccountNo { get; set; }
 
-        [Key, Column(Order = 1)]
+        [Key, Column(Order = 2)]
         [ForeignKey("ImportSummary")]
         public int ImportSummaryId { get; set; }
 
@@ -26,6 +26,6 @@ namespace Bill2Pay.Model
         public Nullable<int> SubmissionSummaryId { get; set; }
     
         public virtual SubmissionSummary SubmissionSummary { get; set; }
-        
+
     }
 }

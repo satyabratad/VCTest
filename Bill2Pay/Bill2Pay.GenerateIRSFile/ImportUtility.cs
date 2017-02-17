@@ -39,7 +39,7 @@ namespace Bill2Pay.GenerateIRSFile
                 var random = DateTime.Now.Ticks;
                 ExtractZip(fileName, random);
                 ReadCSV(fileName, random);
-                ExecutePostImportDataProcessing(this.year, this.fileName, this.userId);
+                ExecutePostImportDataProcessing(this.year, this.userId);
             }
             catch (EntityException ex)
             {
@@ -108,10 +108,10 @@ namespace Bill2Pay.GenerateIRSFile
             }
         }
 
-        private void ExecutePostImportDataProcessing(int year, string path, long UserId)
+        private void ExecutePostImportDataProcessing(int year, long UserId)
         {
             Logger.LogInstance.LogDebug("PostImportDataProcessing Starts");
-            RawTransactionStaging.ExecutePostImportDataProcessing(year, path, UserId);
+            RawTransactionStaging.ExecutePostImportDataProcessing(year, UserId);
             Logger.LogInstance.LogDebug("PostImportDataProcessing Ends");
         }
 

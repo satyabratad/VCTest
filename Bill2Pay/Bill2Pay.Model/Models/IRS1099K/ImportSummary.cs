@@ -29,11 +29,17 @@ namespace Bill2Pay.Model
 
         public Nullable<int> RecordCount { get; set; }
 
+        [MaxLength(1024)]
+        public String ProcessLog { get; set; }
+
+        public virtual ICollection<ImportDetail> ImportDetails { get; set; }
+
+        public bool IsActive { get; set; }
+        public DateTime DateAdded { get; set; }
+
         [ForeignKey("CreatedUser")]
         public long UserId { get; set; }
 
         public virtual ApplicationUser CreatedUser { get; set; }
-
-        public virtual ICollection<ImportDetail> ImportDetails { get; set; }
     }
 }

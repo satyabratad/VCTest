@@ -24,12 +24,15 @@ namespace Bill2Pay.Model
 
         public DateTime SubmissionDate { get; set; }
 
+        public virtual ICollection<SubmissionDetail> SubmissionDetails { get; set; }
+        public virtual ICollection<ImportDetail> ImportDetails { get; set; }
+
+        public bool IsActive { get; set; }
+        public DateTime DateAdded { get; set; }
+
         [ForeignKey("CreatedUser")]
         public long UserId { get; set; }
 
         public virtual ApplicationUser CreatedUser { get; set; }
-
-        public virtual ICollection<SubmissionDetail> SubmissionDetails { get; set; }
-        public virtual ICollection<ImportDetail> ImportDetails { get; set; }
     }
 }

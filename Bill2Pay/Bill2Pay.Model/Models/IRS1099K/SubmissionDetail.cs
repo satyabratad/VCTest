@@ -16,13 +16,17 @@ namespace Bill2Pay.Model
 
     public class SubmissionDetail : IRSDetail
     {
-        [Key, Column(Order = 0)]
+        [Key, Column(Order = 1)]
         public string AccountNo { get; set; }
 
-        [Key, Column(Order = 1)]
+        [Key, Column(Order = 2)]
         [ForeignKey("SubmissionSummary")]
         public int SubmissionId { get; set; }
 
+        public int SubmissionType { get; set; }
+
         public virtual SubmissionSummary SubmissionSummary { get; set; }
+
+       
     }
 }

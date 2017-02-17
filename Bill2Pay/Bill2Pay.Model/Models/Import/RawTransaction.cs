@@ -1,64 +1,28 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bill2Pay.Model
 {
-    public abstract class RawTransaction
+    public class RawTransaction
     {
-        [MaxLength(255)]
-        public string TINType { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
+        public int Id { get; set; }
 
-        [MaxLength(255)]
-        public string PayeeTIN { get; set; } 
-
-        [MaxLength(255)]
+        [MaxLength(256)]
         public string PayeeAccountNumber { get; set; }
+        public Nullable<decimal> TransactionAmount { get; set; }
+        public DateTime TransactionDate { get; set; }
+        public int TransactionType { get; set; }
+        public bool IsActive { get; set; }
+        public DateTime DateAdded { get; set; }
+       
+        [ForeignKey("CreatedUser")]
+        public long UserId { get; set; }
 
-        [MaxLength(255)]
-        public string PayeeOfficeCode { get; set; }
+        public virtual ApplicationUser CreatedUser { get; set; }
 
-        [MaxLength(255)]
-        public string CardPresentTransactions { get; set; }
 
-        [MaxLength(255)]
-        public string FederalIncomeTaxWithheld { get; set; }
-
-        [MaxLength(255)]
-        public string StateIncomeTaxWithheld { get; set; }
-
-        [MaxLength(255)]
-        public string TransactionAmount { get; set; }
-
-        [MaxLength(255)]
-        public string TransactionDate { get; set; }
-
-        [MaxLength(255)]
-        public string TransactionType { get; set; }
-
-        [MaxLength(255)]
-        public string PayeeFirstName { get; set; }
-
-        [MaxLength(255)]
-        public string PayeeSecondName { get; set; }
-
-        [MaxLength(255)]
-        public string PayeeMailingAddress { get; set; }
-
-        [MaxLength(255)]
-        public string PayeeCity { get; set; }
-
-        [MaxLength(255)]
-        public string PayeeState { get; set; }
-
-        [MaxLength(255)]
-        public string PayeeZIP { get; set; }
-
-        [MaxLength(255)]
-        public string FilerIndicatorType { get; set; }
-
-        [MaxLength(255)]
-        public string PaymentIndicatorType { get; set; }
-
-        [MaxLength(255)]
-        public string MCC { get; set; }
     }
 }
