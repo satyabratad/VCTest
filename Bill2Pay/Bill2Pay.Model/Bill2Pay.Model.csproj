@@ -140,6 +140,7 @@
     <Compile Include="Models\Import\RawTransactionStaging.cs" />
     <Compile Include="Models\IRS1099K\MerchantListVM.cs" />
     <Compile Include="Models\IRS1099K\MerchantVM.cs" />
+    <Compile Include="Models\IRS1099K\SubmissionDetailsViewModel.cs" />
     <Compile Include="Models\User\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\IdentityConfig.cs" />
