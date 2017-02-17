@@ -135,12 +135,17 @@
     <Compile Include="DataContextMigrations\201702140656047_M1.Designer.cs">
       <DependentUpon>201702140656047_M1.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataContextMigrations\201702170610107_M3.cs" />
+    <Compile Include="DataContextMigrations\201702170610107_M3.Designer.cs">
+      <DependentUpon>201702170610107_M3.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataContextMigrations\Configuration.cs" />
     <Compile Include="Models\Import\RawTransaction.cs" />
     <Compile Include="Models\Import\RawTransactionStaging.cs" />
     <Compile Include="Models\IRS1099K\MerchantListVM.cs" />
     <Compile Include="Models\IRS1099K\MerchantVM.cs" />
     <Compile Include="Models\IRS1099K\SubmissionDetailsViewModel.cs" />
+    <Compile Include="Models\IRS1099K\TINStatus.cs" />
     <Compile Include="Models\User\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\IdentityConfig.cs" />
@@ -178,6 +183,9 @@
   <ItemGroup>
     <EmbeddedResource Include="DataContextMigrations\201702140656047_M1.resx">
       <DependentUpon>201702140656047_M1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContextMigrations\201702170610107_M3.resx">
+      <DependentUpon>201702170610107_M3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
