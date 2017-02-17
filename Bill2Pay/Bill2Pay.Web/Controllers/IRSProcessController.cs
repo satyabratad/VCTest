@@ -60,7 +60,11 @@ namespace Bill2Pay.Web.Controllers
 
         public ActionResult Details(string Id)
         {
-            var data = ApplicationDbContext.Instence.SubmissionDetails.FirstOrDefault(p => p.AccountNo.Equals(Id, StringComparison.OrdinalIgnoreCase));
+            var data = ApplicationDbContext.Instence
+                .SubmissionDetails
+                .Include("PSE")
+                .OrderByDescending(p=>p.SubmissionId )
+                .FirstOrDefault(p => p.AccountNo.Equals(Id, StringComparison.OrdinalIgnoreCase));
             return View(data);
         }
 
