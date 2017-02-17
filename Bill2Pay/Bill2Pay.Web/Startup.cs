@@ -52,8 +52,8 @@ namespace Bill2Pay.Web
 
                 context.PSEMaster.Add(new PSEMaster()
                 {
-                    Name = "B2P",
-                    Address = "B2P"
+                    FirstPayerName = "B2P",
+                    PayerShippingAddress = "B2P"
                 });
                 context.SaveChanges();
             }
