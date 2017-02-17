@@ -74,7 +74,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="IRSFileFields.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

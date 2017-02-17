@@ -709,10 +709,11 @@ namespace Bill2Pay.GenerateIRSFile
         }
         public void ReadFromSchemaFile()
         {
-            //TODO : Read from config file;
-            //var path = string.Format(@"{0}\App_Data", HostingEnvironment.ApplicationPhysicalPath);
-            var json = File.ReadAllText(@"C:\B2P\Bill2Pay.GenerateIRSFile\IRSFileFields.json");
-            string path = @"C:\B2P\IRSInputFile.txt";
+            var jsonpath = string.Format(@"{0}App_Data\IRSFileFields.json", HostingEnvironment.ApplicationPhysicalPath);
+            string path = string.Format(@"{0}App_Data\Download\Irs\IRSInputFile.txt", HostingEnvironment.ApplicationPhysicalPath);
+
+            var json = File.ReadAllText(jsonpath);
+
 
             records = JsonConvert.DeserializeObject<List<Records>>(json);
 

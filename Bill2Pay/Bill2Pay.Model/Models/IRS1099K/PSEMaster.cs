@@ -133,8 +133,6 @@ namespace Bill2Pay.Model
         [MaxLength(15)]
         public string PayerTelephoneNumber { get; set; }
 
-        public int FillerType { get; set; }
-
         public virtual ICollection<ImportDetail> ImportDetails { get; set; }
 
         public virtual ICollection<SubmissionDetail> SubmissionDetails { get; set; }

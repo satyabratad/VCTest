@@ -1,6 +1,7 @@
 ﻿using Bill2Pay.Model;
 using Microsoft.Owin;
 using Owin;
+using System.Linq;
 
 [assembly: OwinStartupAttribute(typeof(Bill2Pay.Web.Startup))]
 namespace Bill2Pay.Web
@@ -36,8 +37,8 @@ namespace Bill2Pay.Web
                 //Here we create a Admin super user who will maintain the website				
 
                 var user = new ApplicationUser();
-                user.UserName = "arghyab@rssoftware.co.in";
-                user.Email = "arghyab@rssoftware.co.in";
+                user.UserName = "admin@b2p.com"; 
+                user.Email = "admin@b2p.com";
 
                 string userPWD = "Admin@123";
 
@@ -50,13 +51,54 @@ namespace Bill2Pay.Web
 
                 }
 
-                context.PSEMaster.Add(new PSEMaster()
-                {
-                    FirstPayerName = "B2P",
-                    PayerShippingAddress = "B2P"
-                });
                 context.SaveChanges();
             }
+
+            // In Startup iam creating first Admin Role and creating a default Admin User 
+            HasRole = roleManager.RoleExistsAsync("User").Result;
+
+            if (!HasRole)
+            {
+
+                // first we create Admin rool
+                var role = new ApplicationRole();
+                role.Name = "User";
+                var result = roleManager.CreateAsync(role).Result;
+
+                //Here we create a Admin super user who will maintain the website				
+
+                var user = new ApplicationUser();
+                user.UserName = "user@b2p.com";
+                user.Email = "user@b2p.com";
+
+                string userPWD = "User@123";
+
+                var chkUser = UserManager.CreateAsync(user, userPWD).Result;
+
+                //Add default User to Role Admin
+                if (chkUser.Succeeded)
+                {
+                    var result1 = UserManager.AddToRoleAsync(user.Id, "Admin").Result;
+
+                }
+
+                
+                context.SaveChanges();
+            }
+
+            var pse = context.PSEMaster.FirstOrDefault(p => p.Id == 1);
+            if(pse != null)
+            {
+
+            }
+            else
+            {
+                pse = new PSEMaster();
+
+                context.PSEMaster.Add(pse);
+            }
+
+            context.SaveChanges();
         }
     }
 }

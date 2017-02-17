@@ -46,6 +46,7 @@ namespace Bill2Pay.Web.Controllers
 
             var item = ApplicationDbContext.Instence.SubmissionDetails
                 .Include("PSE")
+                .OrderByDescending(p=>p.SubmissionId)
                 .FirstOrDefault(p=>p.AccountNo.Equals(Id,StringComparison.OrdinalIgnoreCase));
 
             var data = new List<SubmissionDetail>();

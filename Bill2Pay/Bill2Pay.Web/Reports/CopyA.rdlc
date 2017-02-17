@@ -32,7 +32,7 @@
         <Top>0.63182cm</Top>
         <Left>9.19538cm</Left>
         <Height>0.6cm</Height>
-        <Width>2.5cm</Width>
+        <Width>3.1704cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -116,7 +116,7 @@
             <Style />
           </Paragraph>
         </Paragraphs>
-        <Top>6.73537cm</Top>
+        <Top>6.79887cm</Top>
         <Left>9.19539cm</Left>
         <Height>0.6cm</Height>
         <Width>3.17039cm</Width>
@@ -145,7 +145,7 @@
             <Style />
           </Paragraph>
         </Paragraphs>
-        <Top>6.73537cm</Top>
+        <Top>6.79887cm</Top>
         <Left>12.71434cm</Left>
         <Height>0.6cm</Height>
         <Width>3.16146cm</Width>
@@ -174,7 +174,7 @@
             <Style />
           </Paragraph>
         </Paragraphs>
-        <Top>7.51176cm</Top>
+        <Top>7.60701cm</Top>
         <Left>9.19539cm</Left>
         <Height>0.6cm</Height>
         <Width>3.17039cm</Width>
@@ -203,7 +203,7 @@
             <Style />
           </Paragraph>
         </Paragraphs>
-        <Top>7.51176cm</Top>
+        <Top>7.60701cm</Top>
         <Left>12.71434cm</Left>
         <Height>0.6cm</Height>
         <Width>3.16146cm</Width>
@@ -232,7 +232,7 @@
             <Style />
           </Paragraph>
         </Paragraphs>
-        <Top>8.41961cm</Top>
+        <Top>8.48311cm</Top>
         <Left>9.19539cm</Left>
         <Height>0.6cm</Height>
         <Width>3.17039cm</Width>
@@ -261,7 +261,7 @@
             <Style />
           </Paragraph>
         </Paragraphs>
-        <Top>8.41961cm</Top>
+        <Top>8.48311cm</Top>
         <Left>12.71434cm</Left>
         <Height>0.6cm</Height>
         <Width>3.16146cm</Width>
@@ -290,7 +290,7 @@
             <Style />
           </Paragraph>
         </Paragraphs>
-        <Top>9.37211cm</Top>
+        <Top>9.40386cm</Top>
         <Left>9.19539cm</Left>
         <Height>0.6cm</Height>
         <Width>3.17039cm</Width>
@@ -319,7 +319,7 @@
             <Style />
           </Paragraph>
         </Paragraphs>
-        <Top>9.37211cm</Top>
+        <Top>9.40386cm</Top>
         <Left>12.71434cm</Left>
         <Height>0.6cm</Height>
         <Width>3.16146cm</Width>
@@ -348,7 +348,7 @@
             <Style />
           </Paragraph>
         </Paragraphs>
-        <Top>10.11322cm</Top>
+        <Top>10.17672cm</Top>
         <Left>9.19539cm</Left>
         <Height>0.6cm</Height>
         <Width>3.17039cm</Width>
@@ -377,7 +377,7 @@
             <Style />
           </Paragraph>
         </Paragraphs>
-        <Top>10.07794cm</Top>
+        <Top>10.14144cm</Top>
         <Left>12.71434cm</Left>
         <Height>0.6cm</Height>
         <Width>3.16146cm</Width>
@@ -399,7 +399,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!FirstPayeeName.Value, "SubmissionDetails") + First(Fields!SecondPayeeName.Value, "SubmissionDetails")</Value>
+                <Value>=First(Fields!FirstPayeeName.Value, "SubmissionDetails") &amp; First(Fields!SecondPayeeName.Value, "SubmissionDetails")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -428,14 +428,14 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!PayeeCity.Value, "SubmissionDetails")+","+First(Fields!PayeeState.Value, "SubmissionDetails")+","+First(Fields!PayeeZipCode.Value, "SubmissionDetails")</Value>
+                <Value>=First(Fields!PayeeCity.Value, "SubmissionDetails") &amp; "," &amp; First(Fields!PayeeState.Value, "SubmissionDetails") &amp; "," &amp; First(Fields!PayeeZipCode.Value, "SubmissionDetails")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
             <Style />
           </Paragraph>
         </Paragraphs>
-        <Top>8.81648cm</Top>
+        <Top>8.94348cm</Top>
         <Left>0.3175cm</Left>
         <Height>0.54708cm</Height>
         <Width>8.24146cm</Width>
@@ -486,7 +486,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!FirstPayerName.Value, "PSEMaster") + " " + First(Fields!SecondPayerName.Value, "PSEMaster") + " " +First(Fields!PayerTelephoneNumber.Value, "PSEMaster")</Value>
+                <Value>=First(Fields!CompanyName.Value, "PSEMaster") &amp; " " &amp; First(Fields!CompanyNameContinued.Value, "PSEMaster") &amp; " " &amp; First(Fields!ContactTelephoneNumber.Value, "PSEMaster")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -522,7 +522,7 @@
             <Style />
           </Paragraph>
         </Paragraphs>
-        <Top>11.43586cm</Top>
+        <Top>11.37236cm</Top>
         <Left>0.3175cm</Left>
         <Height>0.52063cm</Height>
         <Width>6.68042cm</Width>
@@ -609,10 +609,10 @@
             <Style />
           </Paragraph>
         </Paragraphs>
-        <Top>2.9295cm</Top>
+        <Top>2.96125cm</Top>
         <Left>9.19539cm</Left>
         <Height>0.52063cm</Height>
-        <Width>2.16498cm</Width>
+        <Width>3.17039cm</Width>
         <ZIndex>21</ZIndex>
         <Style>
           <Border>
@@ -641,7 +641,7 @@
         <Top>4.0143cm</Top>
         <Left>9.19539cm</Left>
         <Height>0.52063cm</Height>
-        <Width>2.16498cm</Width>
+        <Width>3.17039cm</Width>
         <ZIndex>22</ZIndex>
         <Style>
           <Border>
@@ -670,7 +670,7 @@
         <Top>4.0143cm</Top>
         <Left>12.71434cm</Left>
         <Height>0.52063cm</Height>
-        <Width>2.16498cm</Width>
+        <Width>3.16146cm</Width>
         <ZIndex>23</ZIndex>
         <Style>
           <Border>
@@ -700,7 +700,7 @@
         <Top>5.01971cm</Top>
         <Left>9.19538cm</Left>
         <Height>0.52063cm</Height>
-        <Width>2.16498cm</Width>
+        <Width>3.1704cm</Width>
         <ZIndex>24</ZIndex>
         <Style>
           <Border>
@@ -730,7 +730,7 @@
         <Top>5.01971cm</Top>
         <Left>12.71434cm</Left>
         <Height>0.52063cm</Height>
-        <Width>2.16498cm</Width>
+        <Width>3.16146cm</Width>
         <ZIndex>25</ZIndex>
         <Style>
           <Border>
@@ -760,7 +760,7 @@
         <Top>1.5669cm</Top>
         <Left>9.19539cm</Left>
         <Height>0.6cm</Height>
-        <Width>2.5cm</Width>
+        <Width>3.17039cm</Width>
         <ZIndex>26</ZIndex>
         <Style>
           <Border>
@@ -808,7 +808,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=IIF((First(Fields!FillerType.Value,"PSEMaster") And 1)=1, "x","")</Value>
+                <Value>=IIF((First(Fields!FillerIndicatorType.Value, "SubmissionDetails") And 1)=1, "x","")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -891,7 +891,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=IIF((First(Fields!FillerType.Value,"PSEMaster") And 2)=2, "x","")</Value>
+                <Value>=IIF((First(Fields!PaymentIndicatorType.Value, "SubmissionDetails") And 1)=1, "x","")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -920,7 +920,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=IIF((First(Fields!FillerType.Value,"PSEMaster") And 4)=4, "x","")</Value>
+                <Value>=IIF((First(Fields!FillerIndicatorType.Value, "SubmissionDetails") And 2)=2, "x","")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -949,7 +949,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=IIF((First(Fields!FillerType.Value,"PSEMaster") And 8)=8, "x","")</Value>
+                <Value>=IIF((First(Fields!PaymentIndicatorType.Value, "SubmissionDetails") And 2)=2, "x","")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
