@@ -1,5 +1,6 @@
 ﻿@using Bill2Pay.Model
 @Model SubmissionDetail
+
 @{
     ViewBag.Title = "1099 K Details";
 }
@@ -19,7 +20,7 @@
         <div class="col-md-12">
             <br />
             <div id="copy-a" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-a'">
-                @using (Html.BeginForm("CopyA", "Print", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                @using (Html.BeginForm("CopyA", "Print", new { ReturnUrl = ViewBag.ReturnUrl ,Id=Model.AccountNo }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                     @Html.AntiForgeryToken()
                     <button style="float:right;" type="submit" class="btn " title="Print to PDF">

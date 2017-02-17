@@ -43,17 +43,33 @@ namespace Bill2Pay.Web.Controllers
         }
         public ActionResult DetailsReport(string reportName, string Id)
         {
+
+            var item = ApplicationDbContext.Instence.SubmissionDetails
+                .Include("PSE")
+                .FirstOrDefault(p=>p.AccountNo.Equals(Id,StringComparison.OrdinalIgnoreCase));
+
             var data = new List<SubmissionDetail>();
-            data.Add(new SubmissionDetail()
+            if(item != null)
             {
-                AccountNo = "test"
-            });//ApplicationDbContext.Instence.SubmissionDetails.FirstOrDefault();)
+                data.Add(item);
+            }
+
+            var pseData = new List<PSEMaster>();
+            if(item.PSE != null)
+            {
+                pseData.Add(item.PSE);
+            }
 
             LocalReport localReport = new LocalReport();
             localReport.ReportPath = Server.MapPath("~/Reports/" + reportName + ".rdlc");
             ReportDataSource reportDataSource = new ReportDataSource("SubmissionDetails", data);
 
             localReport.DataSources.Add(reportDataSource);
+
+            ReportDataSource pseDataSource = new ReportDataSource("PSEMaster", pseData);
+
+            localReport.DataSources.Add(pseDataSource);
+
             string reportType = "PDF";
             string mimeType;
             string encoding;

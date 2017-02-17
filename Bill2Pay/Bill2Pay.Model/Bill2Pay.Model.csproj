@@ -139,12 +139,23 @@
     <Compile Include="DataContextMigrations\201702170610107_M3.Designer.cs">
       <DependentUpon>201702170610107_M3.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataContextMigrations\201702170730203_M2.cs" />
+    <Compile Include="DataContextMigrations\201702170730203_M2.Designer.cs">
+      <DependentUpon>201702170730203_M2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContextMigrations\201702170850304_M31.cs" />
+    <Compile Include="DataContextMigrations\201702170850304_M31.Designer.cs">
+      <DependentUpon>201702170850304_M31.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContextMigrations\201702170959034_M32.cs" />
+    <Compile Include="DataContextMigrations\201702170959034_M32.Designer.cs">
+      <DependentUpon>201702170959034_M32.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataContextMigrations\Configuration.cs" />
     <Compile Include="Models\Import\RawTransaction.cs" />
     <Compile Include="Models\Import\RawTransactionStaging.cs" />
     <Compile Include="Models\IRS1099K\MerchantListVM.cs" />
     <Compile Include="Models\IRS1099K\MerchantVM.cs" />
-    <Compile Include="Models\IRS1099K\SubmissionDetailsViewModel.cs" />
     <Compile Include="Models\IRS1099K\TINStatus.cs" />
     <Compile Include="Models\User\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -186,6 +197,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataContextMigrations\201702170610107_M3.resx">
       <DependentUpon>201702170610107_M3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContextMigrations\201702170730203_M2.resx">
+      <DependentUpon>201702170730203_M2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContextMigrations\201702170850304_M31.resx">
+      <DependentUpon>201702170850304_M31.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContextMigrations\201702170959034_M32.resx">
+      <DependentUpon>201702170959034_M32.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

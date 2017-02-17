@@ -60,7 +60,8 @@ namespace Bill2Pay.Web.Controllers
 
         public ActionResult Details(string Id)
         {
-            return View();
+            var data = ApplicationDbContext.Instence.SubmissionDetails.FirstOrDefault(p => p.AccountNo.Equals(Id, StringComparison.OrdinalIgnoreCase));
+            return View(data);
         }
 
 
