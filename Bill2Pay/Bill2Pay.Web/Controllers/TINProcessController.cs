@@ -32,7 +32,7 @@ namespace Bill2Pay.Web.Controllers
             {
                
 
-                var lstTin = dbContext.ImportDetails.Where(p => Merchantlist.Contains(p.AccountNo));
+                var lstTin = dbContext.ImportDetails.Where(p => Merchantlist.Contains(p.AccountNo) && p.TINCheckStatus==null);
 
                 //strFileline = "TINTYPE;TINNUMBER;NAME;ACCOUNTNUMBER" + Environment.NewLine; 
 
