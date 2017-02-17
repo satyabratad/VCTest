@@ -808,7 +808,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=IIF((First(Fields!FillerType.Value,"SubmissionDetails") And 1)=1, "X","")</Value>
+                <Value>=IIF((First(Fields!FillerType.Value,"PSEMaster") And 1)=1, "x","")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -837,7 +837,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=IIF((First(Fields!SubmissionType.Value,"SubmissionDetails") And 1)=1, "X","")</Value>
+                <Value>=IIF((First(Fields!SubmissionType.Value,"SubmissionDetails") And 1)=1, "x","")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -864,7 +864,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=IIF((First(Fields!SubmissionType.Value,"SubmissionDetails") And 2)=2, "X","")</Value>
+                <Value>=IIF((First(Fields!SubmissionType.Value,"SubmissionDetails") And 2)=2, "x","")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -891,7 +891,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=IIF((First(Fields!FillerType.Value,"SubmissionDetails") And 2)=2, "X","")</Value>
+                <Value>=IIF((First(Fields!FillerType.Value,"PSEMaster") And 2)=2, "x","")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -920,7 +920,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=IIF((First(Fields!FillerType.Value,"SubmissionDetails") And 4)=4, "X","")</Value>
+                <Value>=IIF((First(Fields!FillerType.Value,"PSEMaster") And 4)=4, "x","")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -949,7 +949,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=IIF((First(Fields!FillerType.Value,"SubmissionDetails") And 8)=8, "X","")</Value>
+                <Value>=IIF((First(Fields!FillerType.Value,"PSEMaster") And 8)=8, "x","")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -1051,14 +1051,14 @@
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>ad5ffd39-d836-4f8a-8ee7-8637bcf92c43</rd:DataSourceID>
+      <rd:DataSourceID>6bf22034-8bd1-4c58-8804-14bc4e40635d</rd:DataSourceID>
     </DataSource>
     <DataSource Name="Bill2PayModel1">
       <ConnectionProperties>
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>b47d95bb-5731-4e69-88c9-203ffbea59a1</rd:DataSourceID>
+      <rd:DataSourceID>0711a7e2-96ec-4fe1-8c5b-fbc364c1efb0</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
@@ -1103,10 +1103,6 @@
         <Field Name="FillerIndicatorType">
           <DataField>FillerIndicatorType</DataField>
           <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="FillerType">
-          <DataField>FillerType</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="FirstPayeeName">
           <DataField>FirstPayeeName</DataField>
@@ -1236,7 +1232,7 @@
       <rd:DataSetInfo>
         <rd:DataSetName>Bill2Pay.Model</rd:DataSetName>
         <rd:TableName>SubmissionDetail</rd:TableName>
-        <rd:ObjectDataSourceType>Bill2Pay.Model.SubmissionDetail, Bill2Pay.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:ObjectDataSourceType>Bill2Pay.Model.SubmissionDetail, Bill2Pay.Model, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
     <DataSet Name="PSEMaster">
@@ -1288,6 +1284,10 @@
         <Field Name="ContactTelephoneNumber">
           <DataField>ContactTelephoneNumber</DataField>
           <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FillerType">
+          <DataField>FillerType</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="FirstPayerName">
           <DataField>FirstPayerName</DataField>
@@ -1413,7 +1413,7 @@
       <rd:DataSetInfo>
         <rd:DataSetName>Bill2Pay.Model</rd:DataSetName>
         <rd:TableName>PSEMaster</rd:TableName>
-        <rd:ObjectDataSourceType>Bill2Pay.Model.PSEMaster, Bill2Pay.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:ObjectDataSourceType>Bill2Pay.Model.PSEMaster, Bill2Pay.Model, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>

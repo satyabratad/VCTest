@@ -94,6 +94,6 @@ namespace Bill2Pay.Model
         [MaxLength(2)]
         public string CFSF { get; set; }
 
-       
+        public int SubmissionType { get; set; }
     }
 }
