@@ -28,59 +28,102 @@
                 }
                 <div class="copy-a">
                     <div>
-                        <span style="position:absolute; left:25px; top:65px"> [FILER's Name]</span>
-                        <span style="position:absolute; left:25px; top:90px"> [FILER's Address]</span>
-                        <span style="position:absolute; left:25px; top:110px"> [FILER's City], [FILER's State]</span>
-                        <span style="position:absolute; left:25px; top:130px"> [FILER's Country]</span>
-                        <span style="position:absolute; left:25px; top:150px"> [FILER's ZipCode]</span>
-                        <span style="position:absolute; left:25px; top:170px"> [FILER's Phone]</span>
+                        @{
+                            if (@Model.SubmissionType == 0)
+                            {
+                                <span style="position:absolute; left:226px; top:20px"><b>x</b></span>
+                            }
+                            else if (@Model.SubmissionType == 1)
+                            {
+                                <span style="position:absolute; left:314px; top:20px"><b>x</b></span>
+                            }
+                        }
+                        
+                        
+                       
+                        
+                     </div>
+                    <div>
+                        <span style="position:absolute; left:25px; top:65px"> @Model.PSE.CompanyName </span>
+                        <span style="position:absolute; left:25px; top:90px"> @Model.PSE.CompanyMailingAddress </span>
+                        <span style="position:absolute; left:25px; top:110px">@Model.PSE.CompanyCity</span>
+                        <span style="position:absolute; left:25px; top:130px">@Model.PSE.CompanyState</span>
+                        <span style="position:absolute; left:25px; top:150px">@Model.PSE.CompanyZIP</span>
+                       @* <span style="position:absolute; left:25px; top:170px"> [FILER's Phone]</span>*@
                     </div>
                     <div>
-                        <span style="position:absolute; left:185px; top:213px" class="fa fa-check"></span>
-                        <span style="position:absolute; left:370px; top:213px" class="fa fa-check"></span>
-                        <span style="position:absolute; left:185px; top:238px" class="fa fa-check"></span>
-                        <span style="position:absolute; left:370px; top:238px" class="fa fa-check"></span>
+                        @{
+                            if (@Model.FillerIndicatorType == 1)
+                            {
+                                <span style="position:absolute; left:185px; top:213px"><b>x</b></span>
+                            }
+                            else if (@Model.FillerIndicatorType == 2)
+                            {
+                                <span style="position:absolute; left:370px; top:213px"><b>x</b></span>
+                            }
+
+                            if (@Model.PaymentIndicatorType == 1)
+                            {
+                                <span style="position:absolute; left:185px; top:238px"><b>x</b></span>
+                            }
+                            else if (@Model.PaymentIndicatorType == 2)
+                            {
+                                <span style="position:absolute; left:370px; top:238px"><b>x</b></span>
+                            }
+
+
+                         }
+
                     </div>
 
                     <div>
                         <span style="position:absolute; left:395px; top:50px"> [FILER's Federal Id No]</span>
-                        <span style="position:absolute; left:395px; top:90px"> [PAYEE's Taxpayer Id]</span>
-                        <span style="position:absolute; left:410px; top:150px"> [Gross Amount]</span>
+                        <span style="position:absolute; left:395px; top:90px">@Model.TIN</span>
+                        <span style="position:absolute; left:410px; top:150px; text-align:right;width:120px;">@Model.GrossAmount</span>
                     </div>
                     <div>
-                        <span style="position:absolute; left:25px; top:270px"> [PAYEE's Name]</span>
-                        <span style="position:absolute; left:25px; top:325px"> [PAYEE's Street Address]</span>
-                        <span style="position:absolute; left:25px; top:400px"> [PAYEE's City], [PAYEE's State], [PAYEE's Country]</span>
+                        <span style="position:absolute; left:25px; top:270px">@Model.FirstPayeeName &nbsp; @Model.SecondPayeeName</span>
+                        <span style="position:absolute; left:25px; top:325px">@Model.PayeeMailingAddress</span>
+                        <span style="position:absolute; left:25px; top:400px">@Model.PayeeCity, @Model.PayeeState</span>
                     </div>
                     <div>
-                        <span style="position:absolute; left:25px; top:440px"> [PSE's Name]</span>
-                        <span style="position:absolute; left:25px; top:460px"> [PSE's Phone]</span>
-                        <span style="position:absolute; left:25px; top:500px"> [Account Number]</span>
+                        <span style="position:absolute; left:25px; top:440px">@Model.PSE.FirstPayerName</span>
+                        <span style="position:absolute; left:25px; top:460px">@Model.PSE.PayerTelephoneNumber</span>
+                        <span style="position:absolute; left:25px; top:500px">@Model.AccountNo</span>
+                        @{
+                            if (@Model.SecondTINNoticed != null)
+                            {
+                                <span style="position:absolute; left:350px; top:500px"><b>x</b></span>
+                            }
+                           
+
+                        }
+                        
 
                     </div>
                     <div>
-                        <span style="position:absolute; left:410px; top:195px"> [CNP Amount]</span>
-                        <span style="position:absolute; left:550px; top:195px"> [MCC]</span>
-                        <span style="position:absolute; left:410px; top:235px"> [TransactionCount]</span>
-                        <span style="position:absolute; left:560px; top:240px"> [Federal Income Tax]</span>
-                        <span style="position:absolute; left:410px; top:278px"> [Jan Amt]</span>
-                        <span style="position:absolute; left:560px; top:278px"> [Fed Amt]</span>
-                        <span style="position:absolute; left:410px; top:312px"> [Mar Amt]</span>
-                        <span style="position:absolute; left:560px; top:312px"> [Apr Amt]</span>
-                        <span style="position:absolute; left:410px; top:350px"> [May Amt]</span>
-                        <span style="position:absolute; left:560px; top:350px"> [Jun Amt]</span>
-                        <span style="position:absolute; left:410px; top:387px"> [Jul Amt]</span>
-                        <span style="position:absolute; left:560px; top:387px"> [Aug Amt]</span>
-                        <span style="position:absolute; left:410px; top:425px"> [Sep Amt]</span>
-                        <span style="position:absolute; left:560px; top:425px"> [Oct Amt]</span>
-                        <span style="position:absolute; left:410px; top:460px"> [Nov Amt]</span>
-                        <span style="position:absolute; left:560px; top:460px"> [Dec Amt]</span>
+                        <span style="position:absolute; left:410px; top:195px;text-align:right;width:120px;">@Model.CNPTransactionAmount</span>
+                        <span style="position:absolute; left:550px; top:195px">@Model.MerchantCategoryCode</span>
+                        <span style="position:absolute; left:410px; top:235px;text-align:right;width:120px;">@Model.TransactionCount</span>
+                        <span style="position:absolute; left:560px; top:240px;text-align:right;width:120px;">@Model.FederalWithHoldingAmount</span>
+                        <span style="position:absolute; left:410px; top:278px;text-align:right;width:120px;">@Model.JanuaryAmount</span>
+                        <span style="position:absolute; left:560px; top:278px;text-align:right;width:120px;">@Model.FebruaryAmount</span>
+                        <span style="position:absolute; left:410px; top:312px;text-align:right;width:120px;">@Model.MarchAmount</span>
+                        <span style="position:absolute; left:560px; top:312px;text-align:right;width:120px;">@Model.AprilAmount</span>
+                        <span style="position:absolute; left:410px; top:350px;text-align:right;width:120px;">@Model.MayAmount</span>
+                        <span style="position:absolute; left:560px; top:350px;text-align:right;width:120px;">@Model.JuneAmount</span>
+                        <span style="position:absolute; left:410px; top:387px;text-align:right;width:120px;">@Model.JulyAmount</span>
+                        <span style="position:absolute; left:560px; top:387px;text-align:right;width:120px;">@Model.AugustAmount</span>
+                        <span style="position:absolute; left:410px; top:425px;text-align:right;width:120px;">@Model.SeptemberAmount</span>
+                        <span style="position:absolute; left:560px; top:425px;text-align:right;width:120px;">@Model.OctoberAmount</span>
+                        <span style="position:absolute; left:410px; top:460px;text-align:right;width:120px;">@Model.NovemberAmount</span>
+                        <span style="position:absolute; left:560px; top:460px;text-align:right;width:120px;">@Model.DecemberAmount</span>
                     </div>
 
                     <div>
-                        <span style="position:absolute; left:410px; top:490px"> [State]</span>
+                        <span style="position:absolute; left:410px; top:490px">@Model.PayeeState</span>
                         <span style="position:absolute; left:560px; top:490px"> [State Id No]</span>
-                        <span style="position:absolute; left:715px; top:497px"> [State I T Withheld]</span>
+                        <span style="position:absolute; left:715px; top:497px">@Model.StateWithHolding</span>
 
                     </div>
                 </div>
@@ -94,7 +137,106 @@
                     </button>
                 }
                 <div class="copy-1">
+                        <div>
+                            @{
+                                if (@Model.SubmissionType == 0)
+                                {
+                                    <span style="position:absolute; left:226px; top:20px"><b>x</b></span>
+                                }
+                                else if (@Model.SubmissionType == 1)
+                                {
+                                    <span style="position:absolute; left:314px; top:20px"><b>x</b></span>
+                                }
+                            }
 
+
+
+
+                        </div>
+                        <div>
+                            <span style="position:absolute; left:25px; top:65px"> @Model.PSE.CompanyName </span>
+                            <span style="position:absolute; left:25px; top:90px"> @Model.PSE.CompanyMailingAddress </span>
+                            <span style="position:absolute; left:25px; top:110px">@Model.PSE.CompanyCity</span>
+                            <span style="position:absolute; left:25px; top:130px">@Model.PSE.CompanyState</span>
+                            <span style="position:absolute; left:25px; top:150px">@Model.PSE.CompanyZIP</span>
+                            @* <span style="position:absolute; left:25px; top:170px"> [FILER's Phone]</span>*@
+                        </div>
+                        <div>
+                            @{
+                                if (@Model.FillerIndicatorType == 1)
+                                {
+                                    <span style="position:absolute; left:185px; top:213px"><b>x</b></span>
+                                }
+                                else if (@Model.FillerIndicatorType == 2)
+                                {
+                                    <span style="position:absolute; left:370px; top:213px"><b>x</b></span>
+                                }
+
+                                if (@Model.PaymentIndicatorType == 1)
+                                {
+                                    <span style="position:absolute; left:185px; top:238px"><b>x</b></span>
+                                }
+                                else if (@Model.PaymentIndicatorType == 2)
+                                {
+                                    <span style="position:absolute; left:370px; top:238px"><b>x</b></span>
+                                }
+
+
+                            }
+
+                        </div>
+
+                        <div>
+                            <span style="position:absolute; left:395px; top:50px"> [FILER's Federal Id No]</span>
+                            <span style="position:absolute; left:395px; top:90px">@Model.TIN</span>
+                            <span style="position:absolute; left:410px; top:150px; text-align:right;width:120px;">@Model.GrossAmount</span>
+                        </div>
+                        <div>
+                            <span style="position:absolute; left:25px; top:270px">@Model.FirstPayeeName &nbsp; @Model.SecondPayeeName</span>
+                            <span style="position:absolute; left:25px; top:325px">@Model.PayeeMailingAddress</span>
+                            <span style="position:absolute; left:25px; top:400px">@Model.PayeeCity, @Model.PayeeState</span>
+                        </div>
+                        <div>
+                            <span style="position:absolute; left:25px; top:440px">@Model.PSE.FirstPayerName</span>
+                            <span style="position:absolute; left:25px; top:460px">@Model.PSE.PayerTelephoneNumber</span>
+                            <span style="position:absolute; left:25px; top:500px">@Model.AccountNo</span>
+                            @{
+                                if (@Model.SecondTINNoticed != null)
+                                {
+                                    <span style="position:absolute; left:350px; top:500px"><b>x</b></span>
+                                }
+
+
+                            }
+
+
+                        </div>
+                        <div>
+                            <span style="position:absolute; left:410px; top:195px;text-align:right;width:120px;">@Model.CNPTransactionAmount</span>
+                            <span style="position:absolute; left:550px; top:195px">@Model.MerchantCategoryCode</span>
+                            <span style="position:absolute; left:410px; top:235px;text-align:right;width:120px;">@Model.TransactionCount</span>
+                            <span style="position:absolute; left:560px; top:240px;text-align:right;width:120px;">@Model.FederalWithHoldingAmount</span>
+                            <span style="position:absolute; left:410px; top:278px;text-align:right;width:120px;">@Model.JanuaryAmount</span>
+                            <span style="position:absolute; left:560px; top:278px;text-align:right;width:120px;">@Model.FebruaryAmount</span>
+                            <span style="position:absolute; left:410px; top:312px;text-align:right;width:120px;">@Model.MarchAmount</span>
+                            <span style="position:absolute; left:560px; top:312px;text-align:right;width:120px;">@Model.AprilAmount</span>
+                            <span style="position:absolute; left:410px; top:350px;text-align:right;width:120px;">@Model.MayAmount</span>
+                            <span style="position:absolute; left:560px; top:350px;text-align:right;width:120px;">@Model.JuneAmount</span>
+                            <span style="position:absolute; left:410px; top:387px;text-align:right;width:120px;">@Model.JulyAmount</span>
+                            <span style="position:absolute; left:560px; top:387px;text-align:right;width:120px;">@Model.AugustAmount</span>
+                            <span style="position:absolute; left:410px; top:425px;text-align:right;width:120px;">@Model.SeptemberAmount</span>
+                            <span style="position:absolute; left:560px; top:425px;text-align:right;width:120px;">@Model.OctoberAmount</span>
+                            <span style="position:absolute; left:410px; top:460px;text-align:right;width:120px;">@Model.NovemberAmount</span>
+                            <span style="position:absolute; left:560px; top:460px;text-align:right;width:120px;">@Model.DecemberAmount</span>
+                        </div>
+
+                        <div>
+                            <span style="position:absolute; left:410px; top:490px">@Model.PayeeState</span>
+                            <span style="position:absolute; left:560px; top:490px"> [State Id No]</span>
+                            <span style="position:absolute; left:715px; top:497px">@Model.StateWithHolding</span>
+
+                        </div>
+                    
                 </div>
             </div>
             <div id="copy-b" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-b'">
@@ -107,6 +249,106 @@
                 }
                 <div class="copy-b">
 
+                        <div>
+                            @{
+                                if (@Model.SubmissionType == 0)
+                                {
+                                    <span style="position:absolute; left:226px; top:20px"><b>x</b></span>
+                                }
+                                else if (@Model.SubmissionType == 1)
+                                {
+                                    <span style="position:absolute; left:314px; top:20px"><b>x</b></span>
+                                }
+                            }
+
+
+
+
+                        </div>
+                        <div>
+                            <span style="position:absolute; left:25px; top:65px"> @Model.PSE.CompanyName </span>
+                            <span style="position:absolute; left:25px; top:90px"> @Model.PSE.CompanyMailingAddress </span>
+                            <span style="position:absolute; left:25px; top:110px">@Model.PSE.CompanyCity</span>
+                            <span style="position:absolute; left:25px; top:130px">@Model.PSE.CompanyState</span>
+                            <span style="position:absolute; left:25px; top:150px">@Model.PSE.CompanyZIP</span>
+                            @* <span style="position:absolute; left:25px; top:170px"> [FILER's Phone]</span>*@
+                        </div>
+                        <div>
+                            @{
+                                if (@Model.FillerIndicatorType == 1)
+                                {
+                                    <span style="position:absolute; left:185px; top:213px"><b>x</b></span>
+                                }
+                                else if (@Model.FillerIndicatorType == 2)
+                                {
+                                    <span style="position:absolute; left:370px; top:213px"><b>x</b></span>
+                                }
+
+                                if (@Model.PaymentIndicatorType == 1)
+                                {
+                                    <span style="position:absolute; left:185px; top:238px"><b>x</b></span>
+                                }
+                                else if (@Model.PaymentIndicatorType == 2)
+                                {
+                                    <span style="position:absolute; left:370px; top:238px"><b>x</b></span>
+                                }
+
+
+                            }
+
+                        </div>
+
+                        <div>
+                            <span style="position:absolute; left:395px; top:50px"> [FILER's Federal Id No]</span>
+                            <span style="position:absolute; left:395px; top:90px">@Model.TIN</span>
+                            <span style="position:absolute; left:410px; top:150px; text-align:right;width:120px;">@Model.GrossAmount</span>
+                        </div>
+                        <div>
+                            <span style="position:absolute; left:25px; top:270px">@Model.FirstPayeeName &nbsp; @Model.SecondPayeeName</span>
+                            <span style="position:absolute; left:25px; top:325px">@Model.PayeeMailingAddress</span>
+                            <span style="position:absolute; left:25px; top:400px">@Model.PayeeCity, @Model.PayeeState</span>
+                        </div>
+                        <div>
+                            <span style="position:absolute; left:25px; top:440px">@Model.PSE.FirstPayerName</span>
+                            <span style="position:absolute; left:25px; top:460px">@Model.PSE.PayerTelephoneNumber</span>
+                            <span style="position:absolute; left:25px; top:500px">@Model.AccountNo</span>
+                            @{
+                                if (@Model.SecondTINNoticed != null)
+                                {
+                                    <span style="position:absolute; left:350px; top:500px"><b>x</b></span>
+                                }
+
+
+                            }
+
+
+                        </div>
+                        <div>
+                            <span style="position:absolute; left:410px; top:195px;text-align:right;width:120px;">@Model.CNPTransactionAmount</span>
+                            <span style="position:absolute; left:550px; top:195px">@Model.MerchantCategoryCode</span>
+                            <span style="position:absolute; left:410px; top:235px;text-align:right;width:120px;">@Model.TransactionCount</span>
+                            <span style="position:absolute; left:560px; top:240px;text-align:right;width:120px;">@Model.FederalWithHoldingAmount</span>
+                            <span style="position:absolute; left:410px; top:278px;text-align:right;width:120px;">@Model.JanuaryAmount</span>
+                            <span style="position:absolute; left:560px; top:278px;text-align:right;width:120px;">@Model.FebruaryAmount</span>
+                            <span style="position:absolute; left:410px; top:312px;text-align:right;width:120px;">@Model.MarchAmount</span>
+                            <span style="position:absolute; left:560px; top:312px;text-align:right;width:120px;">@Model.AprilAmount</span>
+                            <span style="position:absolute; left:410px; top:350px;text-align:right;width:120px;">@Model.MayAmount</span>
+                            <span style="position:absolute; left:560px; top:350px;text-align:right;width:120px;">@Model.JuneAmount</span>
+                            <span style="position:absolute; left:410px; top:387px;text-align:right;width:120px;">@Model.JulyAmount</span>
+                            <span style="position:absolute; left:560px; top:387px;text-align:right;width:120px;">@Model.AugustAmount</span>
+                            <span style="position:absolute; left:410px; top:425px;text-align:right;width:120px;">@Model.SeptemberAmount</span>
+                            <span style="position:absolute; left:560px; top:425px;text-align:right;width:120px;">@Model.OctoberAmount</span>
+                            <span style="position:absolute; left:410px; top:460px;text-align:right;width:120px;">@Model.NovemberAmount</span>
+                            <span style="position:absolute; left:560px; top:460px;text-align:right;width:120px;">@Model.DecemberAmount</span>
+                        </div>
+
+                        <div>
+                            <span style="position:absolute; left:410px; top:490px">@Model.PayeeState</span>
+                            <span style="position:absolute; left:560px; top:490px"> [State Id No]</span>
+                            <span style="position:absolute; left:715px; top:497px">@Model.StateWithHolding</span>
+
+                        </div>
+                    
                 </div>
             </div>
             <div id="copy-2" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-2'">
@@ -118,6 +360,106 @@
                     </button>
                 }
                 <div class="copy-2">
+
+                    <div>
+                        @{
+                            if (@Model.SubmissionType == 0)
+                            {
+                                <span style="position:absolute; left:226px; top:20px"><b>x</b></span>
+                            }
+                            else if (@Model.SubmissionType == 1)
+                            {
+                                <span style="position:absolute; left:314px; top:20px"><b>x</b></span>
+                            }
+                        }
+
+
+
+
+                    </div>
+                    <div>
+                        <span style="position:absolute; left:25px; top:65px"> @Model.PSE.CompanyName </span>
+                        <span style="position:absolute; left:25px; top:90px"> @Model.PSE.CompanyMailingAddress </span>
+                        <span style="position:absolute; left:25px; top:110px">@Model.PSE.CompanyCity</span>
+                        <span style="position:absolute; left:25px; top:130px">@Model.PSE.CompanyState</span>
+                        <span style="position:absolute; left:25px; top:150px">@Model.PSE.CompanyZIP</span>
+                        @* <span style="position:absolute; left:25px; top:170px"> [FILER's Phone]</span>*@
+                    </div>
+                    <div>
+                        @{
+                            if (@Model.FillerIndicatorType == 1)
+                            {
+                                <span style="position:absolute; left:185px; top:213px"><b>x</b></span>
+                            }
+                            else if (@Model.FillerIndicatorType == 2)
+                            {
+                                <span style="position:absolute; left:370px; top:213px"><b>x</b></span>
+                            }
+
+                            if (@Model.PaymentIndicatorType == 1)
+                            {
+                                <span style="position:absolute; left:185px; top:238px"><b>x</b></span>
+                            }
+                            else if (@Model.PaymentIndicatorType == 2)
+                            {
+                                <span style="position:absolute; left:370px; top:238px"><b>x</b></span>
+                            }
+
+
+                        }
+
+                    </div>
+
+                    <div>
+                        <span style="position:absolute; left:395px; top:50px"> [FILER's Federal Id No]</span>
+                        <span style="position:absolute; left:395px; top:90px">@Model.TIN</span>
+                        <span style="position:absolute; left:410px; top:150px; text-align:right;width:120px;">@Model.GrossAmount</span>
+                    </div>
+                    <div>
+                        <span style="position:absolute; left:25px; top:270px">@Model.FirstPayeeName &nbsp; @Model.SecondPayeeName</span>
+                        <span style="position:absolute; left:25px; top:325px">@Model.PayeeMailingAddress</span>
+                        <span style="position:absolute; left:25px; top:400px">@Model.PayeeCity, @Model.PayeeState</span>
+                    </div>
+                    <div>
+                        <span style="position:absolute; left:25px; top:440px">@Model.PSE.FirstPayerName</span>
+                        <span style="position:absolute; left:25px; top:460px">@Model.PSE.PayerTelephoneNumber</span>
+                        <span style="position:absolute; left:25px; top:500px">@Model.AccountNo</span>
+                        @{
+                            if (@Model.SecondTINNoticed != null)
+                            {
+                                <span style="position:absolute; left:350px; top:500px"><b>x</b></span>
+                            }
+
+
+                        }
+
+
+                    </div>
+                    <div>
+                        <span style="position:absolute; left:410px; top:195px;text-align:right;width:120px;">@Model.CNPTransactionAmount</span>
+                        <span style="position:absolute; left:550px; top:195px">@Model.MerchantCategoryCode</span>
+                        <span style="position:absolute; left:410px; top:235px;text-align:right;width:120px;">@Model.TransactionCount</span>
+                        <span style="position:absolute; left:560px; top:240px;text-align:right;width:120px;">@Model.FederalWithHoldingAmount</span>
+                        <span style="position:absolute; left:410px; top:278px;text-align:right;width:120px;">@Model.JanuaryAmount</span>
+                        <span style="position:absolute; left:560px; top:278px;text-align:right;width:120px;">@Model.FebruaryAmount</span>
+                        <span style="position:absolute; left:410px; top:312px;text-align:right;width:120px;">@Model.MarchAmount</span>
+                        <span style="position:absolute; left:560px; top:312px;text-align:right;width:120px;">@Model.AprilAmount</span>
+                        <span style="position:absolute; left:410px; top:350px;text-align:right;width:120px;">@Model.MayAmount</span>
+                        <span style="position:absolute; left:560px; top:350px;text-align:right;width:120px;">@Model.JuneAmount</span>
+                        <span style="position:absolute; left:410px; top:387px;text-align:right;width:120px;">@Model.JulyAmount</span>
+                        <span style="position:absolute; left:560px; top:387px;text-align:right;width:120px;">@Model.AugustAmount</span>
+                        <span style="position:absolute; left:410px; top:425px;text-align:right;width:120px;">@Model.SeptemberAmount</span>
+                        <span style="position:absolute; left:560px; top:425px;text-align:right;width:120px;">@Model.OctoberAmount</span>
+                        <span style="position:absolute; left:410px; top:460px;text-align:right;width:120px;">@Model.NovemberAmount</span>
+                        <span style="position:absolute; left:560px; top:460px;text-align:right;width:120px;">@Model.DecemberAmount</span>
+                    </div>
+
+                    <div>
+                        <span style="position:absolute; left:410px; top:490px">@Model.PayeeState</span>
+                        <span style="position:absolute; left:560px; top:490px"> [State Id No]</span>
+                        <span style="position:absolute; left:715px; top:497px">@Model.StateWithHolding</span>
+
+                    </div>
 
                 </div>
             </div>
