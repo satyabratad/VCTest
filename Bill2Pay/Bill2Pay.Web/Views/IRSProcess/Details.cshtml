@@ -53,20 +53,21 @@
                     </div>
                     <div>
                         @{
-                            if (@Model.FillerIndicatorType == 1)
+                            if (@Model.FillerIndicatorType == "1")
                             {
                                 <span style="position:absolute; left:185px; top:213px"><b>x</b></span>
                             }
-                            else if (@Model.FillerIndicatorType == 2)
-                            {
-                                <span style="position:absolute; left:370px; top:213px"><b>x</b></span>
-                            }
-
-                            if (@Model.PaymentIndicatorType == 1)
+                            else if (@Model.FillerIndicatorType == "2")
                             {
                                 <span style="position:absolute; left:185px; top:238px"><b>x</b></span>
                             }
-                            else if (@Model.PaymentIndicatorType == 2)
+
+                            if (@Model.PaymentIndicatorType == "1")
+                            {
+
+                                <span style="position:absolute; left:370px; top:213px"><b>x</b></span>
+                            }
+                            else if (@Model.PaymentIndicatorType == "2")
                             {
                                 <span style="position:absolute; left:370px; top:238px"><b>x</b></span>
                             }
@@ -122,7 +123,7 @@
 
                     <div>
                         <span style="position:absolute; left:410px; top:490px">@Model.PayeeState</span>
-                        <span style="position:absolute; left:560px; top:490px"> [State Id No]</span>
+                        <span style="position:absolute; left:560px; top:490px"></span>
                         <span style="position:absolute; left:715px; top:497px">@Model.StateWithHolding</span>
 
                     </div>
@@ -163,20 +164,21 @@
                         </div>
                         <div>
                             @{
-                                if (@Model.FillerIndicatorType == 1)
+                                if (@Model.FillerIndicatorType == "1")
                                 {
                                     <span style="position:absolute; left:185px; top:213px"><b>x</b></span>
                                 }
-                                else if (@Model.FillerIndicatorType == 2)
-                                {
-                                    <span style="position:absolute; left:370px; top:213px"><b>x</b></span>
-                                }
-
-                                if (@Model.PaymentIndicatorType == 1)
+                                else if (@Model.FillerIndicatorType == "2")
                                 {
                                     <span style="position:absolute; left:185px; top:238px"><b>x</b></span>
                                 }
-                                else if (@Model.PaymentIndicatorType == 2)
+
+                                if (@Model.PaymentIndicatorType == "1")
+                                {
+
+                                    <span style="position:absolute; left:370px; top:213px"><b>x</b></span>
+                                }
+                                else if (@Model.PaymentIndicatorType == "2")
                                 {
                                     <span style="position:absolute; left:370px; top:238px"><b>x</b></span>
                                 }
@@ -232,7 +234,7 @@
 
                         <div>
                             <span style="position:absolute; left:410px; top:490px">@Model.PayeeState</span>
-                            <span style="position:absolute; left:560px; top:490px"> [State Id No]</span>
+                            <span style="position:absolute; left:560px; top:490px">  </span>
                             <span style="position:absolute; left:715px; top:497px">@Model.StateWithHolding</span>
 
                         </div>
@@ -275,20 +277,21 @@
                         </div>
                         <div>
                             @{
-                                if (@Model.FillerIndicatorType == 1)
+                                if (@Model.FillerIndicatorType == "1")
                                 {
                                     <span style="position:absolute; left:185px; top:213px"><b>x</b></span>
                                 }
-                                else if (@Model.FillerIndicatorType == 2)
-                                {
-                                    <span style="position:absolute; left:370px; top:213px"><b>x</b></span>
-                                }
-
-                                if (@Model.PaymentIndicatorType == 1)
+                                else if (@Model.FillerIndicatorType == "2")
                                 {
                                     <span style="position:absolute; left:185px; top:238px"><b>x</b></span>
                                 }
-                                else if (@Model.PaymentIndicatorType == 2)
+
+                                if (@Model.PaymentIndicatorType == "1")
+                                {
+
+                                    <span style="position:absolute; left:370px; top:213px"><b>x</b></span>
+                                }
+                                else if (@Model.PaymentIndicatorType == "2")
                                 {
                                     <span style="position:absolute; left:370px; top:238px"><b>x</b></span>
                                 }
@@ -344,7 +347,7 @@
 
                         <div>
                             <span style="position:absolute; left:410px; top:490px">@Model.PayeeState</span>
-                            <span style="position:absolute; left:560px; top:490px"> [State Id No]</span>
+                            <span style="position:absolute; left:560px; top:490px">  </span>
                             <span style="position:absolute; left:715px; top:497px">@Model.StateWithHolding</span>
 
                         </div>
@@ -387,24 +390,24 @@
                     </div>
                     <div>
                         @{
-                            if (@Model.FillerIndicatorType == 1)
+                            if (@Model.FillerIndicatorType == "1")
                             {
                                 <span style="position:absolute; left:185px; top:213px"><b>x</b></span>
                             }
-                            else if (@Model.FillerIndicatorType == 2)
-                            {
-                                <span style="position:absolute; left:370px; top:213px"><b>x</b></span>
-                            }
-
-                            if (@Model.PaymentIndicatorType == 1)
+                            else if (@Model.FillerIndicatorType == "2")
                             {
                                 <span style="position:absolute; left:185px; top:238px"><b>x</b></span>
                             }
-                            else if (@Model.PaymentIndicatorType == 2)
+
+                            if (@Model.PaymentIndicatorType == "1")
+                            {
+
+                                <span style="position:absolute; left:370px; top:213px"><b>x</b></span>
+                            }
+                            else if (@Model.PaymentIndicatorType == "2")
                             {
                                 <span style="position:absolute; left:370px; top:238px"><b>x</b></span>
                             }
-
 
                         }
 
@@ -456,7 +459,7 @@
 
                     <div>
                         <span style="position:absolute; left:410px; top:490px">@Model.PayeeState</span>
-                        <span style="position:absolute; left:560px; top:490px"> [State Id No]</span>
+                        <span style="position:absolute; left:560px; top:490px">  </span>
                         <span style="position:absolute; left:715px; top:497px">@Model.StateWithHolding</span>
 
                     </div>

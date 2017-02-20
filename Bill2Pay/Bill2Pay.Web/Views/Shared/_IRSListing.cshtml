@@ -64,10 +64,10 @@
                         @foreach (var item in Model)
                         {
                         <tr>
-                            <td>
+                            <td style="width:100px">
                                 <input id="chkAccountNo" onclick="GetSelectedMerchant('@item.ImportDetails.AccountNo');" type="checkbox" />&nbsp;
                                 @{
-                                    if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                                    if (item.ImportDetails.SubmissionSummaryId !=null )
                                     {
                                         <a href="@Url.Action("Details", new { Id = item.ImportDetails.AccountNo })">
                                             <i class="fa fa-vcard-o fa-lg" title="Generate 1099-K Copies"></i>
@@ -90,17 +90,25 @@
                             <td>@item.ImportDetails.MerchantCategoryCode</td>
                             <td>
                                 @{ 
-                                    if (@item.ImportDetails.TINCheckStatus == "0")
+                                    if (!string.IsNullOrEmpty(@item.ImportDetails.TINCheckStatus))
                                     {
+                                        if (@item.ImportDetails.TINCheckStatus.Equals("0",StringComparison.InvariantCultureIgnoreCase)
+                                                        || @item.ImportDetails.TINCheckStatus.Equals("6", StringComparison.InvariantCultureIgnoreCase)
+                                                        || @item.ImportDetails.TINCheckStatus.Equals("7", StringComparison.InvariantCultureIgnoreCase)
+                                                        || @item.ImportDetails.TINCheckStatus.Equals("8", StringComparison.InvariantCultureIgnoreCase))
+                                        {
                                         <img style="width:25px; height:25px" title='@item.ImportDetails.TINCheckRemarks' src="@Url.Content("~/Images/true.png")" />
-                                    }
-                                    else if (@item.ImportDetails.TINCheckStatus != "0" && !string.IsNullOrEmpty(@item.ImportDetails.TINCheckStatus))
-                                    {
-                                        <img style="width:25px; height:25px" title='@item.ImportDetails.TINCheckRemarks' src="@Url.Content("~/Images/false.png")" />
+                                        }
+                                        else
+                                        {
+                                       
+                                            <img style="width:25px; height:25px" title='@item.ImportDetails.TINCheckRemarks' src="@Url.Content("~/Images/false.png")" />
+
+                                        }
                                     }
 
-                                }
-                                                      
+                                 }
+
 
                             </td>
                             <td>
