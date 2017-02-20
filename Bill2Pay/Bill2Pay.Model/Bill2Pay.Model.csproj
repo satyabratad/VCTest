@@ -183,6 +183,10 @@
     <Compile Include="DataContextMigrations\201702172200508_M10.Designer.cs">
       <DependentUpon>201702172200508_M10.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataContextMigrations\201702201216247_M11.cs" />
+    <Compile Include="DataContextMigrations\201702201216247_M11.Designer.cs">
+      <DependentUpon>201702201216247_M11.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataContextMigrations\Configuration.cs" />
     <Compile Include="Models\Import\RawTransaction.cs" />
     <Compile Include="Models\Import\RawTransactionStaging.cs" />
@@ -263,6 +267,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataContextMigrations\201702172200508_M10.resx">
       <DependentUpon>201702172200508_M10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContextMigrations\201702201216247_M11.resx">
+      <DependentUpon>201702201216247_M11.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

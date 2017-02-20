@@ -7,10 +7,12 @@ namespace Bill2Pay.Model
 
     public class ImportDetail : IRSDetail
     {
-        [Key, Column(Order = 1)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
+        public int Id { get; set; }
+
         public string AccountNo { get; set; }
 
-        [Key, Column(Order = 2)]
         [ForeignKey("ImportSummary")]
         public int ImportSummaryId { get; set; }
 
