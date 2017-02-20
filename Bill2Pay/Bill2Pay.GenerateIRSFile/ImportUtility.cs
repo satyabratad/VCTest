@@ -110,7 +110,7 @@ namespace Bill2Pay.GenerateIRSFile
 
         private void ExecutePostImportDataProcessing(int year, long UserId)
         {
-            Logger.LogInstance.LogDebug("PostImportDataProcessing Starts");
+            Logger.LogInstance.LogDebug("PostImportDataProcessing Starts year:'{0}' User:'{1}'", year, UserId);
             RawTransactionStaging.ExecutePostImportDataProcessing(year, UserId);
             Logger.LogInstance.LogDebug("PostImportDataProcessing Ends");
         }

@@ -10,8 +10,8 @@ AS
 
 	SELECT @PSEID = MAX(ID)  FROM [dbo].[PSEMasters] WHERE IsActive = 1
 
-	INSERT INTO ImportSummaries(PaymentYear,ImportDate,UserId,DateAdded)
-	values (@YEAR,GETDATE(),@UserId,GETDATE())
+	INSERT INTO ImportSummaries(PaymentYear,ImportDate,UserId,DateAdded,IsActive)
+	values (@YEAR,GETDATE(),@UserId,GETDATE(),1)
 	SET @SummaryId = @@IDENTITY
 
 	DECLARE @K1099SUMMARYCHART TABLE(
@@ -52,26 +52,33 @@ AS
 	
 	
 	-- ARCHIVE EXISTING DATA
-	UPDATE [dbo].[RawTransaction] SET Isactive = 0,UpdatedDate = GETDATE() WHERE Isactive=1
+	UPDATE [dbo].[RawTransaction] SET Isactive = 0,UpdatedDate = GETDATE() WHERE IsActive=1
 	--## ALTERNATIVE --DELETE FROM [dbo].[RawTransaction]
 	
 	SET @ProcessLog = @ProcessLog + 'ARCHIVING OLD TRANSACTIONS, TOTAL COUNT : '+CAST(@@ROWCOUNT AS VARCHAR)+''+CHAR(13)+CHAR(10)
 
-	-- INSERT NEW DATA
-	INSERT INTO [dbo].[RawTransaction](PayeeAccountNumber,TransactionType,TransactionAmount,TransactionDate,IsActive,UserID,[AddedDate])
-	SELECT 
-	[PayeeAccountNumber], 
-	CASE WHEN [TransactionType] = 7 THEN 'CNP' ELSE 'CP' END AS [TransactionType],
-	CAST([TransactionAmount] AS DECIMAL(19,2)) AS TransactionAmount, 
-	CAST([TransactionDate] AS DATE) AS TransactionDate,
-	1,
-	@UserId,
-	GETDATE()
-	FROM [dbo].[RawTransactionStagings]
+	BEGIN TRY
+		-- INSERT NEW DATA
+		INSERT INTO [dbo].[RawTransaction](PayeeAccountNumber,TransactionType,TransactionAmount,TransactionDate,IsActive,UserID,[AddedDate])
+		SELECT 
+		[PayeeAccountNumber], 
+		CASE WHEN [TransactionType] = 7 THEN 'CNP' ELSE 'CP' END AS [TransactionType],
+		CAST([TransactionAmount] AS DECIMAL(19,2)) AS TransactionAmount, 
+		CAST([TransactionDate] AS DATE) AS TransactionDate,
+		1,
+		@UserId,
+		GETDATE()
+		FROM [dbo].[RawTransactionStagings]
 
-	SET @ProcessLog = @ProcessLog + 'INSERTING NEW TRANSACTIONS, TOTAL COUNT : '+CAST(@@ROWCOUNT AS VARCHAR)+''+CHAR(13)+CHAR(10)
-
-	
+		SET @ProcessLog = @ProcessLog + 'INSERTING NEW TRANSACTIONS, TOTAL COUNT : '+CAST(@@ROWCOUNT AS VARCHAR)+''+CHAR(13)+CHAR(10)
+	END TRY
+	BEGIN CATCH
+	-- IF @@TRANCOUNT > 0 COMMIT;
+	PRINT ERROR_MESSAGE();
+	SET @ProcessLog = @ProcessLog + 'INVALID DATA MESSAGER : '+ERROR_MESSAGE()+' ,ERROR CODE : ' +CAST(ERROR_NUMBER() AS VARCHAR)+''+CHAR(13)+CHAR(10)
+	ROLLBACK TRANSACTION K1099
+	GOTO ENDPROCESS
+	END CATCH;
 	
 	-- GROUP BY MONTH,YEAR : MONTHLY SUMMARY
 	SELECT TransactionYear,TransactionMonth,[PayeeAccountNumber],SUM(TransactionAmount) AS TransactionAmount,TransactionType,COUNT(1) AS TransactionCount
@@ -172,7 +179,7 @@ AS
 	SeptemberAmount,OctoberAmount,NovemberAmount,DecemberAmount,ForeignCountryIndicator,FirstPayeeName,
 	SecondPayeeName,PayeeMailingAddress,PayeeCity,PayeeState,PayeeZipCode,SecondTINNoticed,FillerIndicatorType,
 	PaymentIndicatorType,TransactionCount,PSEMasterId,MerchantCategoryCode,SpecialDataEntry,StateWithHolding,
-	LocalWithHolding,CFSF)
+	LocalWithHolding,CFSF,IsActive)
 
 	SELECT S.PayeeAccountNumber,@SummaryId,O.TINCheckStatus,O.TINCheckRemarks,O.SubmissionSummaryId,D.TINType,D.PayeeTIN,
 	D.PayeeOfficeCode,S.GrossAmount,S.TotalCPAmount,NULL,
@@ -180,7 +187,7 @@ AS
 	S.SEPTEMBER,S.OCTOBOR,S.NOVEMBER,S.DECEMBER,NULL,SUBSTRING(D.[PayeeFirstName],1,40), 
 	SUBSTRING(D.[PayeeSecondName],1,40),SUBSTRING(D.[PayeeMailingAddress],1,40),SUBSTRING(D.[PayeeCity],1,40),D.[PayeeState],REPLACE(D.[PayeeZIP],'-',''),null,D.[FilerIndicatorType], 
 	D.[PaymentIndicatorType],S.TotalTransaction,@PSEId,D.[MCC],NULL,NULL,
-	NULL,D.CFSF
+	NULL,D.CFSF,1
 
 	FROM @K1099SUMMARYCHART S
 	LEFT JOIN #OLD_DETAILS O ON S.PayeeAccountNumber = O.AccountNo
@@ -196,6 +203,8 @@ AS
 		ROLLBACK TRANSACTION K1099
 	END CATCH 
 	
+	ENDPROCESS:
+
 	UPDATE ImportSummaries SET
 		RecordCount = @RecordCount,
 		ProcessLog = @ProcessLog,
