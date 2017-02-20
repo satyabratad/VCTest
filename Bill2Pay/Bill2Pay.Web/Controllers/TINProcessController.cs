@@ -25,8 +25,13 @@ namespace Bill2Pay.Web.Controllers
         public FileContentResult  TINMatchingInput()
         {
             string strFileline = string.Empty;
-            var  Merchantlist = (List<string>)TempData.Peek("CheckedMerchantList");
             int year = 2016;
+            var  Merchantlist = (List<string>)TempData.Peek("CheckedMerchantList");
+            if(TempData["SelectedYear"]!=null)
+            {
+                year = (int)(TempData["SelectedYear"]);
+            }
+            
 
             if (Merchantlist!=null)
             {
