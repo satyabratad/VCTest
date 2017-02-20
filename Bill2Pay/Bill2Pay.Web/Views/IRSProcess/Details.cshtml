@@ -130,7 +130,7 @@
                 </div>
 </div>
             <div id="copy-1" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-1'">
-                @using (Html.BeginForm("Copy1", "Print", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                @using (Html.BeginForm("Copy1", "Print", new { ReturnUrl = ViewBag.ReturnUrl, Id = Model.AccountNo }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                     @Html.AntiForgeryToken()
                     <button style="float:right;" type="submit" class="btn " title="Print to PDF">
@@ -242,7 +242,7 @@
                 </div>
             </div>
             <div id="copy-b" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-b'">
-                @using (Html.BeginForm("CopyB", "Print", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                @using (Html.BeginForm("CopyB", "Print", new { ReturnUrl = ViewBag.ReturnUrl, Id = Model.AccountNo }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                     @Html.AntiForgeryToken()
                     <button style="float:right;" type="submit" class="btn " title="Print to PDF">
@@ -356,7 +356,7 @@
                 </div>
             </div>
             <div id="copy-2" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-2'">
-                @using (Html.BeginForm("Copy2", "Print", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                @using (Html.BeginForm("Copy2", "Print", new { ReturnUrl = ViewBag.ReturnUrl, Id = Model.AccountNo }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                     @Html.AntiForgeryToken()
                     <button style="float:right;" type="submit" class="btn " title="Print to PDF">
@@ -469,7 +469,7 @@
                 </div>
             </div>
             <div id="copy-c" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-c'">
-                @using (Html.BeginForm("CopyC", "Print", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                @using (Html.BeginForm("CopyC", "Print", new { ReturnUrl = ViewBag.ReturnUrl, Id = Model.AccountNo }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                     @Html.AntiForgeryToken()
                     <button style="float:right;" type="submit" class="btn " title="Print to PDF">
