@@ -49,7 +49,7 @@ namespace Bill2Pay.GenerateIRSFile
 
             detailTableData = dbContext.ImportDetails
             .Join(dbContext.ImportSummary, d => d.ImportSummaryId, s => s.Id, (d, s) => new { detail = d, summary = s })
-            .Where(x => selectedAccountNo.Contains(x.detail.AccountNo) && x.summary.PaymentYear == year)
+            .Where(x => selectedAccountNo.Contains(x.detail.AccountNo) && x.summary.PaymentYear == year && x.detail.IsActive==true && x.summary.IsActive==true) 
             .Select(x=>x.detail).ToList();
 
             numberofPayee = detailTableData.Count();

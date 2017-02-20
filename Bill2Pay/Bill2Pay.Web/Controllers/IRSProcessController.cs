@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Bill2Pay.GenerateIRSFile;
 using System.Web.Hosting;
+using Microsoft.AspNet.Identity;
 
 namespace Bill2Pay.Web.Controllers
 {
@@ -33,7 +34,7 @@ namespace Bill2Pay.Web.Controllers
                 year = (int)ID;
             }
 
-         
+            TempData["year"] = year.ToString();
 
             var merchantlst = (dbContext.ImportDetails
                             .Include("ImportSummary")
@@ -43,9 +44,6 @@ namespace Bill2Pay.Web.Controllers
                             (imp, stat) => new MerchantListVM() { ImportDetails = imp, SubmissionStatus = stat.FirstOrDefault() })
                             .Where(x => x.ImportDetails.ImportSummary.PaymentYear == year && x.ImportDetails.IsActive==true)
                             ).ToList();
- 
-
-
 
             var merchantAccList = dbContext.ImportDetails.Select(p =>
                                  new MerchantVM
@@ -69,8 +67,6 @@ namespace Bill2Pay.Web.Controllers
                 .FirstOrDefault(p => p.AccountNo.Equals(Id, StringComparison.OrdinalIgnoreCase));
             return View(data);
         }
-
-
 
         [HttpPost]
         public ActionResult Process(string btnPressed)
@@ -114,12 +110,11 @@ namespace Bill2Pay.Web.Controllers
             }
         }
 
-
         public ActionResult IRSFireTestFile()
         {
             List<string> selectedMerchants = (List<string>)TempData["CheckedMerchantList"];
 
-            GenerateTaxFile taxFile = new GenerateTaxFile(true, 2016, 8, selectedMerchants);
+            GenerateTaxFile taxFile = new GenerateTaxFile(true, 2016, User.Identity.GetUserId<long>(), selectedMerchants);
 
             taxFile.ReadFromSchemaFile();
             ViewBag.fileName = "IRSInputFile_Test.txt";
@@ -129,15 +124,15 @@ namespace Bill2Pay.Web.Controllers
         public ActionResult IRSFireFile()
         {
             List<string> selectedMerchants = (List<string>)TempData["CheckedMerchantList"];
+            Int32 year = Convert.ToInt32(TempData["year"]);
 
             string errorTINResult = "1,2,3,4,5";
 
-            //TODO : Check if TIN Status is pass before creating the file.
-
             var tinCheckedPayeeList = ApplicationDbContext.Instence.ImportDetails
-                .Where(x => selectedMerchants.Contains(x.AccountNo)).ToList();
+                .Join(ApplicationDbContext.Instence.ImportSummary, d => d.ImportSummaryId, s => s.Id, (d, s) => new { detail = d, summary = s })
+                .Where(x => selectedMerchants.Contains(x.detail.AccountNo) && x.summary.PaymentYear == year && x.detail.IsActive==true && x.summary.IsActive==true).ToList();
 
-            var incorrectTINresult = tinCheckedPayeeList.Where(x => x.TINCheckStatus == null || errorTINResult.Contains(x.TINCheckStatus)).ToList();
+            var incorrectTINresult = tinCheckedPayeeList.Where(x => x.detail.TINCheckStatus == null || errorTINResult.Contains(x.detail.TINCheckStatus)).ToList();
 
             if (incorrectTINresult.Count != 0)
             {
@@ -145,7 +140,7 @@ namespace Bill2Pay.Web.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            GenerateTaxFile taxFile = new GenerateTaxFile(false, 2016, 8, selectedMerchants);
+            GenerateTaxFile taxFile = new GenerateTaxFile(false, 2016, User.Identity.GetUserId<long>(), selectedMerchants);
 
             taxFile.ReadFromSchemaFile();
             ViewBag.fileName = "IRSInputFile.txt";
