@@ -105,7 +105,7 @@ namespace Bill2Pay.GenerateIRSFile
             dbContext.PSEMaster.Add(pseMaster);
             dbContext.SaveChanges();
             pseMasterId = pseMaster.Id;
-            
+
         }
         private void GenerateBRecord()
         {
@@ -512,6 +512,7 @@ namespace Bill2Pay.GenerateIRSFile
             submissionSummary.PaymentYear = paymentYear;
             submissionSummary.SubmissionDate = DateTime.Now;
             submissionSummary.UserId = userId;
+            submissionSummary.DateAdded = DateTime.Now;
 
             dbContext.SubmissionSummary.Add(submissionSummary);
             dbContext.SaveChanges();
@@ -562,6 +563,7 @@ namespace Bill2Pay.GenerateIRSFile
                 submissionDetails.StateWithHolding = item.StateWithHolding;
                 submissionDetails.LocalWithHolding = item.LocalWithHolding;
                 submissionDetails.CFSF = item.CFSF;
+                submissionDetails.DateAdded = DateTime.Now;
 
                 dbContext.SubmissionDetails.Add(submissionDetails);
                 item.SubmissionSummaryId = submissionSummaryId;
@@ -585,7 +587,7 @@ namespace Bill2Pay.GenerateIRSFile
         {
             foreach (Field item in records.Fields)
             {
-               switch (item.Name.ToUpper())
+                switch (item.Name.ToUpper())
                 {
                     case "TRANSMITTER’S TIN":
                         pseMaster.TransmitterTIN = item.Default;
@@ -703,14 +705,19 @@ namespace Bill2Pay.GenerateIRSFile
                         break;
                     default:
                         break;
-
+                        
                 }
+                pseMaster.DateAdded = DateTime.Now;
             }
         }
         public void ReadFromSchemaFile()
         {
+            string path = string.Empty;
             var jsonpath = string.Format(@"{0}App_Data\IRSFileFields.json", HostingEnvironment.ApplicationPhysicalPath);
-            string path = string.Format(@"{0}App_Data\Download\Irs\IRSInputFile.txt", HostingEnvironment.ApplicationPhysicalPath);
+            if (testFileIndicator)
+                path = string.Format(@"{0}App_Data\Download\Irs\IRSInputFile_Test.txt", HostingEnvironment.ApplicationPhysicalPath);
+            else
+                path = string.Format(@"{0}App_Data\Download\Irs\IRSInputFile.txt", HostingEnvironment.ApplicationPhysicalPath);
 
             var json = File.ReadAllText(jsonpath);
 
@@ -730,7 +737,8 @@ namespace Bill2Pay.GenerateIRSFile
             {
                 Byte[] info = new UTF8Encoding(true).GetBytes(fileData.ToString());
                 fs.Write(info, 0, info.Length);
-                SaveSubmissionDetails();
+                if (!testFileIndicator)
+                    SaveSubmissionDetails();
             }
 
             #region "commented"

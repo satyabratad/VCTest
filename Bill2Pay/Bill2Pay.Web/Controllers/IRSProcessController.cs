@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Bill2Pay.GenerateIRSFile;
+using System.Web.Hosting;
 
 namespace Bill2Pay.Web.Controllers
 {
@@ -99,7 +100,7 @@ namespace Bill2Pay.Web.Controllers
             }
             else if (!string.IsNullOrEmpty(Request.Form["irs"]))
             {
-                return RedirectToAction("IRS");
+                return RedirectToAction("IRSFireFile");
             }
             else if (!string.IsNullOrEmpty(Request.Form["irscorrection"]))
             {
@@ -115,15 +116,25 @@ namespace Bill2Pay.Web.Controllers
         public ActionResult IRSFireTestFile()
         {
             List<string> selectedMerchants = (List<string>)TempData["CheckedMerchantList"];
+
             GenerateTaxFile taxFile = new GenerateTaxFile(true, 2016, 8, selectedMerchants);
 
             taxFile.ReadFromSchemaFile();
+            ViewBag.fileName = "IRSInputFile_Test.txt";
             return View();
         }
 
-        public ActionResult IRS()
+        public ActionResult IRSFireFile()
         {
-            return View();
+            List<string> selectedMerchants = (List<string>)TempData["CheckedMerchantList"];
+
+            //TODO : Check if TIN Status is pass before creating the file.
+
+            GenerateTaxFile taxFile = new GenerateTaxFile(false, 2016, 8, selectedMerchants);
+
+            taxFile.ReadFromSchemaFile();
+            ViewBag.fileName = "IRSInputFile.txt";
+            return View("IRSFireTestFile");
         }
 
         public ActionResult IRScorrection()
@@ -132,13 +143,14 @@ namespace Bill2Pay.Web.Controllers
         }
         public ActionResult Download(string file)
         {
-            file = @"C:\B2P\" + file;
-            if (!System.IO.File.Exists(file))
+            string path = string.Format(@"{0}App_Data\Download\Irs\" + file, HostingEnvironment.ApplicationPhysicalPath);
+            
+            if (!System.IO.File.Exists(path))
             {
                 return HttpNotFound();
             }
 
-            var fileBytes = System.IO.File.ReadAllBytes(file);
+            var fileBytes = System.IO.File.ReadAllBytes(path);
             var response = new FileContentResult(fileBytes, "application/octet-stream")
             {
                 FileDownloadName = "download.txt"
