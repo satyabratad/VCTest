@@ -79,6 +79,7 @@ namespace Bill2Pay.Web.Controllers
             List<MerchantVM> checkedList = Merchatlist.Where(m => m.IsChecked == 1).ToList();
             var list = Merchatlist.Where(m => m.IsChecked == 1).Select(m => m.AccountNo).ToList();
             TempData["CheckedMerchantList"] = list;
+            TempData["SelectedYear"] = year;
 
             if (!string.IsNullOrEmpty(Request.Form["tinmatching"]))
             {
