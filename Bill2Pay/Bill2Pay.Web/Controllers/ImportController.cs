@@ -194,18 +194,63 @@ namespace Bill2Pay.Web.Controllers
                     var tinStatusName = dbContext.TINStatus.Where(t => t.Id.ToString() == tinStaus).FirstOrDefault();
 
                     ImportDetail impd = dbContext.ImportDetails.Where(i => i.TIN == tin && i.AccountNo == accNo && i.ImportSummary.Id == imps.Id).FirstOrDefault();
-                    ImportDetail newimpd = impd;
+
+                    ImportDetail newimpd = new ImportDetail()
+                    {
+                        AccountNo = impd.AccountNo,
+                        ImportSummaryId = impd.ImportSummaryId,
+                        TINCheckStatus = impd.TINCheckStatus,
+                        TINCheckRemarks = impd.TINCheckRemarks,
+                        SubmissionSummaryId = impd.SubmissionSummaryId,
+                        TINType = impd.TINType,
+                        TIN = impd.TIN,
+                        PayerOfficeCode = impd.PayerOfficeCode,
+                        GrossAmount = impd.GrossAmount,
+                        CNPTransactionAmount = impd.CNPTransactionAmount,
+                        FederalWithHoldingAmount = impd.FederalWithHoldingAmount,
+                        JanuaryAmount = impd.JanuaryAmount,
+                        FebruaryAmount = impd.FebruaryAmount,
+                        MarchAmount = impd.MarchAmount,
+                        AprilAmount = impd.AprilAmount,
+                        MayAmount = impd.MayAmount,
+                        JuneAmount = impd.JuneAmount,
+                        JulyAmount = impd.JulyAmount,
+                        AugustAmount = impd.AugustAmount,
+                        SeptemberAmount = impd.SeptemberAmount,
+                        OctoberAmount = impd.OctoberAmount,
+                        NovemberAmount = impd.NovemberAmount,
+                        DecemberAmount = impd.DecemberAmount,
+                        ForeignCountryIndicator = impd.ForeignCountryIndicator,
+                        FirstPayeeName = impd.FirstPayeeName,
+                        SecondPayeeName = impd.SecondPayeeName,
+                        PayeeMailingAddress = impd.PayeeMailingAddress,
+                        PayeeCity = impd.PayeeCity,
+                        PayeeState = impd.PayeeState,
+                        PayeeZipCode = impd.PayeeZipCode,
+                        SecondTINNoticed = impd.SecondTINNoticed,
+                        FillerIndicatorType = impd.FillerIndicatorType,
+                        PaymentIndicatorType = impd.PaymentIndicatorType,
+                        TransactionCount = impd.TransactionCount,
+                        PSEMasterId = impd.PSEMasterId,
+                        MerchantCategoryCode = impd.MerchantCategoryCode,
+                        SpecialDataEntry = impd.SpecialDataEntry,
+                        StateWithHolding = impd.StateWithHolding,
+                        LocalWithHolding = impd.LocalWithHolding,
+                        CFSF = impd.CFSF
+                    };
+
 
                     impd.IsActive =false ;
                     dbContext.Entry(impd).State = System.Data.Entity.EntityState.Modified;
 
+                    dbContext.SaveChanges();
 
-                  
                     newimpd.TINCheckStatus = tinStaus;
                     newimpd.TINCheckRemarks = tinStatusName.Name;
                     newimpd.IsActive = true;
                     newimpd.DateAdded = DateTime.Now;
 
+                    dbContext.ImportDetails.Add(newimpd);
                     dbContext.SaveChanges();
                     //}
                 }

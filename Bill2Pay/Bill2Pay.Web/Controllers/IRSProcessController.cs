@@ -24,17 +24,16 @@ namespace Bill2Pay.Web.Controllers
 
 
         // GET: IRSProcess
-        public ActionResult Index(int? ID)
+        public ActionResult Index(int? Id)
         {
-
-            var year = DateTime.Now.Year - 1;
-            // ID - > Year
-            if (ID != null)
+            if(Id == null)
             {
-                year = (int)ID;
+                var year = DateTime.Now.Year - 1;
+                return RedirectToAction("Index", "IRSProcess", new { id = year });
             }
+            
 
-            TempData["year"] = year.ToString();
+            TempData["year"] = Id.ToString();
 
             var merchantlst = (dbContext.ImportDetails
                             .Include("ImportSummary")
@@ -42,8 +41,8 @@ namespace Bill2Pay.Web.Controllers
                             imp => imp.AccountNo,
                             stat => stat.AccountNumber,
                             (imp, stat) => new MerchantListVM() { ImportDetails = imp, SubmissionStatus = stat.FirstOrDefault() })
-                            .Where(x => x.ImportDetails.ImportSummary.PaymentYear == year && x.ImportDetails.IsActive==true)
-                            ).ToList();
+                            .Where(x => x.ImportDetails.ImportSummary.PaymentYear == Id && x.ImportDetails.IsActive==true)
+                            ).OrderBy(x=>x.ImportDetails.AccountNo).ToList();
 
             var merchantAccList = dbContext.ImportDetails.Select(p =>
                                  new MerchantVM
@@ -52,9 +51,13 @@ namespace Bill2Pay.Web.Controllers
                                      IsChecked = 0
                                  }).ToList();
 
-            ViewBag.SelectedYear = year;
+            ViewBag.SelectedYear = Id;
             ViewBag.lstmerchantAcc = JsonConvert.SerializeObject(merchantAccList);
-
+            ViewBag.ErrorMsg = "";
+            if (TempData["ErrorMsg"]!=null)
+            {
+                ViewBag.ErrorMsg = TempData["ErrorMsg"];
+            }
             return View(merchantlst);
         }
 
@@ -80,7 +83,11 @@ namespace Bill2Pay.Web.Controllers
             var list = Merchatlist.Where(m => m.IsChecked == 1).Select(m => m.AccountNo).ToList();
             TempData["CheckedMerchantList"] = list;
             TempData["SelectedYear"] = year;
-
+            if (checkedList.Count == 0)
+            {
+                TempData["ErrorMsg"] = "Select atleast one merchant.";
+                return RedirectToAction("Index");
+            }
             if (!string.IsNullOrEmpty(Request.Form["tinmatching"]))
             {
                 // Call tinmatching process

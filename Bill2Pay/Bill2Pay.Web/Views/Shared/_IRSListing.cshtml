@@ -44,6 +44,7 @@
         @Html.Hidden("checkedAccountNo", (object)@ViewBag.lstmerchantAcc)
         @Html.Partial("_SelectYear")
 
+        <span class="text-danger"> @ViewBag.ErrorMsg </span>
         <div class="col-md-12">
             <div class="table-responsive">
                 <table class="table table-striped">
