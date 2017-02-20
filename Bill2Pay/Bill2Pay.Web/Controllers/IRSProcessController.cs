@@ -128,7 +128,17 @@ namespace Bill2Pay.Web.Controllers
         {
             List<string> selectedMerchants = (List<string>)TempData["CheckedMerchantList"];
 
+            string errorTINResult = "1,2,3,4,5";
+
             //TODO : Check if TIN Status is pass before creating the file.
+
+            var tinCheckedPayeeList = ApplicationDbContext.Instence.ImportDetails
+                .Where(x => selectedMerchants.Contains(x.AccountNo)).ToList();
+
+            var incorrectTINresult = tinCheckedPayeeList.Where(x => x.TINCheckStatus == null || errorTINResult.Contains(x.TINCheckStatus)).ToList();
+
+            if (incorrectTINresult.Count != 0)
+                return RedirectToAction("Index", "Home");
 
             GenerateTaxFile taxFile = new GenerateTaxFile(false, 2016, 8, selectedMerchants);
 
