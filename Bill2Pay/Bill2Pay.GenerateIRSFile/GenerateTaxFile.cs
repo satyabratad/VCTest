@@ -518,6 +518,7 @@ namespace Bill2Pay.GenerateIRSFile
             submissionSummary.SubmissionDate = DateTime.Now;
             submissionSummary.UserId = userId;
             submissionSummary.DateAdded = DateTime.Now;
+            submissionSummary.IsActive = true;
 
             dbContext.SubmissionSummary.Add(submissionSummary);
             dbContext.SaveChanges();
@@ -573,6 +574,7 @@ namespace Bill2Pay.GenerateIRSFile
                 dbContext.SubmissionDetails.Add(submissionDetails);
                 item.SubmissionSummaryId = submissionSummaryId;
                 item.PSEMasterId = pseMasterId;
+                submissionDetails.IsActive = true;
                 SaveSubmissionStatus(item.AccountNo, reSubmission ? (int)RecordStatus.ReSubmitted : (int)RecordStatus.Submitted);
                 dbContext.SaveChanges();
             }
