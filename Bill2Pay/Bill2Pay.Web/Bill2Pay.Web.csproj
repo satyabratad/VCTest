@@ -208,6 +208,7 @@
     <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Controllers\IRSProcessController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PrintController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\TINProcessController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -220,6 +221,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Extra_Table.sql" />
+    <Content Include="App_Data\MerchantData.sql" />
     <Content Include="App_Data\PostImportDataProcessing.sql" />
     <Content Include="App_Data\PreImportDataProcessing.sql" />
     <Content Include="Content\bbpou.css" />
@@ -276,8 +278,15 @@
     <Content Include="App_Data\Uploads\Tin\_dummy.b2p">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="App_Data\IRSFileFields.json" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
-    <Content Include="Reports\CopyA.rdlc" />
+    <Content Include="Reports\CopyA.rdlc">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Reports\Copy1.rdlc" />
+    <Content Include="Reports\Copy2.rdlc" />
+    <Content Include="Reports\CopyB.rdlc" />
+    <Content Include="Reports\CopyC.rdlc" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap_multiselect.js" />
     <Content Include="Scripts\dashboard.js" />
@@ -377,6 +386,7 @@
     <Content Include="Views\IRSProcess\IRSFireTestFile.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\Download\Irs\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Print\" />
     <Folder Include="Views\TIN\" />
