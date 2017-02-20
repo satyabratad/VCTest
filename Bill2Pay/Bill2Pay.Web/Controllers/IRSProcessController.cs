@@ -138,7 +138,10 @@ namespace Bill2Pay.Web.Controllers
             var incorrectTINresult = tinCheckedPayeeList.Where(x => x.TINCheckStatus == null || errorTINResult.Contains(x.TINCheckStatus)).ToList();
 
             if (incorrectTINresult.Count != 0)
+            {
+                TempData["errorMessage"] = "One or more than one selected merchant have negative or void TIN check result. IRS file can not be generated for this selection";
                 return RedirectToAction("Index", "Home");
+            }
 
             GenerateTaxFile taxFile = new GenerateTaxFile(false, 2016, 8, selectedMerchants);
 
