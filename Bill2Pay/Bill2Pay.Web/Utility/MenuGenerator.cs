@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Web;
 
 
@@ -18,13 +19,21 @@ namespace Bill2Pay.Web
                 if (menu == null)
                 {
                     menu = new Menu();
+                    menu.UserName = HttpContext.Current.User.Identity.Name;
+                }
+
+
+                if (!menu.UserName.Equals(HttpContext.Current.User.Identity.Name, StringComparison.OrdinalIgnoreCase))
+                {
+                    menu = new Menu();
+                    menu.UserName = HttpContext.Current.User.Identity.Name;
                 }
 
                 return menu;
             }
         }
 
-        public static string IsActive(string controllerName,bool HasSubMenu)
+        public static string IsActive(string controllerName, bool HasSubMenu)
         {
             string value = "";
             if (HasSubMenu)
@@ -35,7 +44,7 @@ namespace Bill2Pay.Web
             //var currentAction = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString();
             if (controllerName.Equals(currentController, StringComparison.OrdinalIgnoreCase))
             {
-                return "active "+ value;
+                return "active " + value;
             }
 
             return "";
@@ -48,7 +57,7 @@ namespace Bill2Pay.Web
                 var currentController = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
                 var currentAction = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString();
 
-                var path = string.Format("/{0}/{1}/",currentController,currentAction);
+                var path = string.Format("/{0}/{1}/", currentController, currentAction);
                 return path;
             }
         }
@@ -57,12 +66,12 @@ namespace Bill2Pay.Web
         {
             var value = "";
             var selectedItem = -1;
-            if(HttpContext.Current.Request.RequestContext.RouteData.Values["ID"] != null)
+            if (HttpContext.Current.Request.RequestContext.RouteData.Values["ID"] != null)
             {
                 selectedItem = Convert.ToInt32(HttpContext.Current.Request.RequestContext.RouteData.Values["ID"]);
             }
 
-            if(selectedItem == item)
+            if (selectedItem == item)
             {
                 value = "selected";
             }
@@ -74,6 +83,7 @@ namespace Bill2Pay.Web
     {
 
         public List<MenuItem> Items { get; internal set; }
+        public string UserName { get; internal set; }
 
         public Menu()
         {
@@ -100,7 +110,22 @@ namespace Bill2Pay.Web
                         menuItem.SubMenu = new List<Web.MenuItem>();
                         ProcessNode(menuItem.SubMenu, node);
                     }
-                    items.Add(menuItem);
+
+                    var roles = node.Roles;
+                    bool IsInRole = false;
+                    foreach (var role in roles)
+                    {
+                        if (HttpContext.Current.User.IsInRole(role.ToString()))
+                        {
+                            IsInRole = true;
+                            break;
+                        }
+                    }
+
+                    if (IsInRole)
+                    {
+                        items.Add(menuItem);
+                    }
                 }
             }
         }
