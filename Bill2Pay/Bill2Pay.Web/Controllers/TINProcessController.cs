@@ -26,13 +26,15 @@ namespace Bill2Pay.Web.Controllers
         {
             string strFileline = string.Empty;
             var  Merchantlist = (List<string>)TempData.Peek("CheckedMerchantList");
-            
+            int year = 2016;
 
             if (Merchantlist!=null)
             {
                
 
-                var lstTin = dbContext.ImportDetails.Where(p => Merchantlist.Contains(p.AccountNo));
+                var lstTin = dbContext.ImportDetails
+                                      .Include("ImportSummary")
+                                      .Where(p => Merchantlist.Contains(p.AccountNo) && p.ImportSummary.PaymentYear==year && p.IsActive==true);
 
                 //strFileline = "TINTYPE;TINNUMBER;NAME;ACCOUNTNUMBER" + Environment.NewLine; 
 

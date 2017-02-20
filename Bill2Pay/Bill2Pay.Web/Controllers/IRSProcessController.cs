@@ -11,6 +11,7 @@ using System.Web.Hosting;
 
 namespace Bill2Pay.Web.Controllers
 {
+    [Authorize]
     public class IRSProcessController : Controller
     {
         ApplicationDbContext dbContext = null;
@@ -40,7 +41,7 @@ namespace Bill2Pay.Web.Controllers
                             imp => imp.AccountNo,
                             stat => stat.AccountNumber,
                             (imp, stat) => new MerchantListVM() { ImportDetails = imp, SubmissionStatus = stat.FirstOrDefault() })
-                            .Where(x => x.ImportDetails.ImportSummary.PaymentYear == year)
+                            .Where(x => x.ImportDetails.ImportSummary.PaymentYear == year && x.ImportDetails.IsActive==true)
                             ).ToList();
  
 
@@ -75,6 +76,7 @@ namespace Bill2Pay.Web.Controllers
         public ActionResult Process(string btnPressed)
         {
             var chkList = Request.Form["checkedAccountNo"];
+            var year =int.Parse( Request.Form["ddlYear"]);
 
             List<MerchantVM> Merchatlist = new JavaScriptSerializer().Deserialize<List<MerchantVM>>(chkList);
 

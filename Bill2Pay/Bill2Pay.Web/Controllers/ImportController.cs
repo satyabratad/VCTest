@@ -194,13 +194,19 @@ namespace Bill2Pay.Web.Controllers
                     var tinStatusName = dbContext.TINStatus.Where(t => t.Id.ToString() == tinStaus).FirstOrDefault();
 
                     ImportDetail impd = dbContext.ImportDetails.Where(i => i.TIN == tin && i.AccountNo == accNo && i.ImportSummary.Id == imps.Id).FirstOrDefault();
-                    //if (impd.TINCheckStatus == null)
-                    //{
-                        impd.TINCheckStatus = tinStaus;
-                        impd.TINCheckRemarks = tinStatusName.Name;
+                    ImportDetail newimpd = impd;
 
-                        dbContext.Entry(impd).State = System.Data.Entity.EntityState.Modified;
-                        dbContext.SaveChanges();
+                    impd.IsActive =false ;
+                    dbContext.Entry(impd).State = System.Data.Entity.EntityState.Modified;
+
+
+                  
+                    newimpd.TINCheckStatus = tinStaus;
+                    newimpd.TINCheckRemarks = tinStatusName.Name;
+                    newimpd.IsActive = true;
+                    newimpd.DateAdded = DateTime.Now;
+
+                    dbContext.SaveChanges();
                     //}
                 }
                 result = "TIN matching updated successfully";
