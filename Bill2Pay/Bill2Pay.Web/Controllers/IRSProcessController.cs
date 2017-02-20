@@ -115,6 +115,12 @@ namespace Bill2Pay.Web.Controllers
         {
             List<string> selectedMerchants = (List<string>)TempData["CheckedMerchantList"];
 
+            if (selectedMerchants.Count == 0)
+            {
+                TempData["errorMessage"] = "Select atleast one record to generate IRS Test File";
+                return RedirectToAction("Index", "Home");
+            }
+
             GenerateTaxFile taxFile = new GenerateTaxFile(true, 2016, User.Identity.GetUserId<long>(), selectedMerchants);
 
             taxFile.ReadFromSchemaFile();
@@ -125,6 +131,11 @@ namespace Bill2Pay.Web.Controllers
         public ActionResult IRSFireFile()
         {
             List<string> selectedMerchants = (List<string>)TempData["CheckedMerchantList"];
+            if (selectedMerchants.Count == 0)
+            {
+                TempData["errorMessage"] = "Select atleast one record to generate IRS File";
+                return RedirectToAction("Index", "Home");
+            }
             Int32 year = Convert.ToInt32(TempData["year"]);
 
             string errorTINResult = "1,2,3,4,5";
