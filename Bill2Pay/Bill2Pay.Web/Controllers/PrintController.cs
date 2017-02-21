@@ -81,7 +81,7 @@ namespace Bill2Pay.Web.Controllers
             string deviceInfo =
             "<DeviceInfo>" +
             "  <OutputFormat>PDF</OutputFormat>" +
-            "  <PageWidth>8.5in</PageWidth>" +
+            "  <PageWidth>8.75in</PageWidth>" +
             "  <PageHeight>11in</PageHeight>" +
             "  <MarginTop>0.5in</MarginTop>" +
             "  <MarginLeft>0.5in</MarginLeft>" +
