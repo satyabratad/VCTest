@@ -15,6 +15,8 @@ namespace Bill2Pay.Model
         [Key]
         public override long Id { get; set; }
 
+        public bool IsDefaultPasswordChanged { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(ApplicationUserManager manager, string authenticationType)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

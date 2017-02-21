@@ -159,9 +159,9 @@ AS
 	SELECT AccountNo,ImportSummaryId,TINCheckStatus,TINCheckRemarks,SubmissionSummaryId,S.Status_Id AS [Status]
 	INTO #OLD_DETAILS
 	FROM ImportDetails D
-	INNER JOIN [dbo].[ImportSummaries] I ON I.Id = D.ImportSummaryId
-	LEFT JOIN [dbo].[SubmissionSummaries] S ON S.Id = D.SubmissionSummaryId
-	WHERE D.IsActive =1 AND S.PaymentYear = @Year AND S.IsActive = 1
+	INNER JOIN [dbo].[ImportSummaries] I ON I.Id = D.ImportSummaryId 
+	LEFT JOIN [dbo].[SubmissionSummaries] S ON S.Id = D.SubmissionSummaryId AND S.IsActive = 1
+	WHERE D.IsActive =1 AND S.PaymentYear = @Year 
 
 	SET @ProcessLog = @ProcessLog + 'EXISTING SUBMISSION INFORMATION , COUNT : '+CAST(@@ROWCOUNT AS VARCHAR)++' ON' +CAST(GETDATE() AS VARCHAR)+CHAR(13)+CHAR(10)
 	-- CLEAR EXISTING DATA
