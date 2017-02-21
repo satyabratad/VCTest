@@ -34,7 +34,9 @@ namespace Bill2Pay.Web.Controllers
 
         public ActionResult Transaction()
         {
-            return View();
+            var importSummary = ApplicationDbContext.Instence.ImportSummary
+                .OrderByDescending(p => p.ImportDate).FirstOrDefault();
+            return View(importSummary);
         }
 
         [HttpPost]

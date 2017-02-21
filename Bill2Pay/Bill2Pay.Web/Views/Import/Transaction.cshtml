@@ -1,4 +1,5 @@
-﻿
+﻿@model Bill2Pay.Model.ImportSummary
+
 @{
     ViewBag.Title = "Import Transaction";
 }
@@ -6,9 +7,9 @@
 <div class="row">
     @using (Html.BeginForm("Transaction", "Import", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
     { @Html.AntiForgeryToken()
-        
+
         @Html.Partial("_SelectYear")
-        <div class="col-md-12">
+        <div class="col-md-8">
             <div class="row">
                 <div class="col-md-12">
                     <strong>Step to Import:</strong>
@@ -29,7 +30,7 @@
                         <li>Create zip archive of the csv file using windows zip utility.</li>
                         <li>Upload .zip file.</li>
                     </ul>
-                    
+
                     <br />
                     <strong>Note:</strong> this will start a background task to import the transaction. Once completed transaction log will generated.
 
@@ -48,7 +49,19 @@
                     </div>
                 </div>
             </div>
-           
+
+        </div>
+        <div class="col-md-4" style="border-left: 1px solid #DDD;padding-left:5px;">
+            <div class="row">
+                <div class="col-md-12">
+                    <strong>Last Imported Summary:</strong>
+                    <br />
+                    <div >
+                        @Html.Raw(Model.ProcessLog.Replace(Environment.NewLine, "<br /><br />"))
+                    </div>
+
+                </div>
+            </div>
         </div>
     }
 </div>
