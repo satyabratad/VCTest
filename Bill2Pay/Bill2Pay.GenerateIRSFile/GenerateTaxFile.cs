@@ -571,6 +571,8 @@ namespace Bill2Pay.GenerateIRSFile
                 submissionDetails.CFSF = item.CFSF;
                 submissionDetails.DateAdded = DateTime.Now;
 
+                submissionDetails.SubmissionType = (!reSubmission) ? 1 : 2;
+
                 dbContext.SubmissionDetails.Add(submissionDetails);
                 item.SubmissionSummaryId = submissionSummaryId;
                 item.PSEMasterId = pseMasterId;
