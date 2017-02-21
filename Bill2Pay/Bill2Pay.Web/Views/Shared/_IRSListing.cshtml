@@ -50,7 +50,8 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th class="btn-primary">#</th>
+                            <th class="btn-primary"></th>
+                            <th class="btn-primary">1099-K Copies</th>
                             <th class="btn-primary">Account Number</th>
                             <th class="btn-primary">TIN</th>
                             <th class="btn-primary">Merchant Name</th>
@@ -65,19 +66,22 @@
                         @foreach (var item in Model)
                         {
                         <tr>
-                            <td style="width:100px">
+                            <td >
                                 <input id="chkAccountNo" onclick="GetSelectedMerchant('@item.ImportDetails.AccountNo');" type="checkbox" />&nbsp;
+                            </td>
+                            <td style="width:100px">
+                                
                                 @{
                                     if (item.ImportDetails.SubmissionSummaryId !=null )
                                     {
                                         <a href="@Url.Action("Details", new { Id = item.ImportDetails.AccountNo })">
-                                            <i class="fa fa-vcard-o fa-lg" title="Generate 1099-K Copies"></i>
+                                            <i class="fa fa-files-o fa-lg" title="Generate 1099-K Copies"></i>
                                         </a>
                                     }
                                     else
                                     {
                                         
-                                            <i class="fa fa-vcard-o fa-lg" title="IRS not submitted"></i>
+                                            <i class="fa fa-files-o fa-lg" title="IRS not submitted"></i>
                                         
                                     }
                                 }
@@ -120,7 +124,19 @@
                                         
                                         if (@item.SubmissionStatus.StatusId == 2)
                                         {
-                                                    <img style="width:25px; height:25px" title='@item.SubmissionStatus.Status.Name' src="@Url.Content("~/Images/Like.png")" />
+                                                    <img style="width:25px; height:25px" title='@item.SubmissionStatus.Status.Name' src="@Url.Content("~/Images/submitted.png")" />
+                                        }
+                                        else if (@item.SubmissionStatus.StatusId == 3)
+                                        {
+                                            <img style="width:25px; height:25px" title='@item.SubmissionStatus.Status.Name' src="@Url.Content("~/Images/CorrectionRequired.png")" />
+                                        }
+                                        else if (@item.SubmissionStatus.StatusId == 4)
+                                        {
+                                            <img style="width:25px; height:25px" title='@item.SubmissionStatus.Status.Name' src="@Url.Content("~/Images/CorrectionUpload.jpg")" />
+                                        }
+                                        else if (@item.SubmissionStatus.StatusId == 5)
+                                        {
+                                            <img style="width:25px; height:25px" title='@item.SubmissionStatus.Status.Name' src="@Url.Content("~/Images/resubmitted.png")" />
                                         }
                                         @*else if (@item.ImportDetails.TINCheckStatus != "0" && !string.IsNullOrEmpty(@item.ImportDetails.TINCheckStatus))
                                         {
