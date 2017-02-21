@@ -22,7 +22,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!PayerTIN.Value, "PSEMaster")</Value>
+                <Value></Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -428,7 +428,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!PayeeCity.Value, "SubmissionDetails") &amp; "," &amp; First(Fields!PayeeState.Value, "SubmissionDetails") &amp; "," &amp; First(Fields!PayeeZipCode.Value, "SubmissionDetails")</Value>
+                <Value>=TRIM(First(Fields!PayeeCity.Value, "SubmissionDetails")) &amp; "," &amp; First(Fields!PayeeState.Value, "SubmissionDetails") &amp; "," &amp; First(Fields!PayeeZipCode.Value, "SubmissionDetails")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -486,7 +486,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!CompanyName.Value, "PSEMaster") &amp; " " &amp; First(Fields!CompanyNameContinued.Value, "PSEMaster") &amp; " " &amp; First(Fields!ContactTelephoneNumber.Value, "PSEMaster")</Value>
+                <Value>=First(Fields!CompanyName.Value, "PSEMaster") &amp; " " &amp; First(Fields!CompanyNameContinued.Value, "PSEMaster") &amp; System.Environment.NewLine &amp; First(Fields!PayerTelephoneNumber.Value, "PSEMaster")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -749,7 +749,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!PayerTIN.Value, "PSEMaster")</Value>
+                <Value>=First(Fields!TIN.Value, "SubmissionDetails")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -779,7 +779,13 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!TransmitterName.Value, "PSEMaster") &amp; " " &amp; First(Fields!TransmitterNameContinued.Value, "PSEMaster") &amp; " " &amp; First(Fields!CompanyMailingAddress.Value, "PSEMaster") &amp; " " &amp; First(Fields!CompanyCity.Value, "PSEMaster") &amp; " " &amp; First(Fields!CompanyState.Value, "PSEMaster") &amp; " " &amp; First(Fields!CompanyZIP.Value, "PSEMaster")</Value>
+                <Value>
+                  =First(Fields!TransmitterName.Value, "PSEMaster") &amp; " " &amp; First(Fields!TransmitterNameContinued.Value, "PSEMaster") &amp;
+                  System.Environment.NewLine &amp; First(Fields!CompanyMailingAddress.Value, "PSEMaster") &amp;
+                  System.Environment.NewLine &amp; First(Fields!CompanyCity.Value, "PSEMaster") &amp;
+                  System.Environment.NewLine &amp; First(Fields!CompanyState.Value, "PSEMaster") &amp;
+                  System.Environment.NewLine &amp; First(Fields!CompanyZIP.Value, "PSEMaster")
+                </Value>
                 <Style />
               </TextRun>
             </TextRuns>
