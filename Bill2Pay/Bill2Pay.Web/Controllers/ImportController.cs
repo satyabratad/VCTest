@@ -38,13 +38,13 @@ namespace Bill2Pay.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Transaction(int Id, HttpPostedFileBase fileBase)
+        public async Task<ActionResult> Transaction(int? Id, HttpPostedFileBase fileBase)
         {
-            if(Id < 2015)
+            if (Id == null || Id < 2015)
             {
                 return View();
             }
-
+            int year = (int)Id;
             string[] whiteListing = new string[] { ".zip", ".ZIP" };
 
             // Verify that the user selected a file
@@ -67,7 +67,7 @@ namespace Bill2Pay.Web.Controllers
                 var path = Path.Combine(Server.MapPath("~/App_Data/Uploads/Transactions"), fileName);
                 fileBase.SaveAs(path);
 
-                utility.ProcessInputFileAsync(Id, path, User.Identity.GetUserId<long>());
+                utility.ProcessInputFileAsync(year, path, User.Identity.GetUserId<long>());
 
                 return RedirectToAction("Transaction");
             }
@@ -90,7 +90,7 @@ namespace Bill2Pay.Web.Controllers
             return lstyear;
         }
 
-        
+
         public ActionResult Tin()
         {
 
@@ -100,22 +100,22 @@ namespace Bill2Pay.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Tin(int Id, HttpPostedFileBase fileBase)
+        public ActionResult Tin(int? Id, HttpPostedFileBase fileBase)
         {
             DataTable dtTin = null;
             string result = string.Empty;
             //int year =int.Parse(Request["ddlyear"]);
-            if (Id < 2015)
+            if (Id == null || Id < 2015)
             {
                 return View();
             }
-            int year = Id;
+            int year = (int)Id;
             if (fileBase != null && fileBase.ContentLength > 0)
             {
                 // Validation
                 var extention = Path.GetExtension(fileBase.FileName);
 
-                if (extention !=".txt")
+                if (extention != ".txt")
                 {
                     ViewBag.ValidationMessage = "Unsupported file format.";
                     return View();
@@ -128,7 +128,7 @@ namespace Bill2Pay.Web.Controllers
                 // store the file inside ~/App_Data/uploads folder
                 var path = Path.Combine(Server.MapPath("~/App_Data/Uploads/Tin"), fileName);
                 fileBase.SaveAs(path);
-                dtTin=ReadTinInput(path);
+                dtTin = ReadTinInput(path);
                 result = UpdateTinMatchingStatus(dtTin, year);
                 ViewBag.Message = result;
                 //ViewBag.Yearlist = GetYearList();
@@ -139,7 +139,7 @@ namespace Bill2Pay.Web.Controllers
 
         private DataTable ReadTinInput(string fileName)
         {
-            DataTable dtTin= new DataTable(); ;
+            DataTable dtTin = new DataTable(); ;
 
             string Feedback = string.Empty;
             string line = string.Empty;
@@ -157,7 +157,7 @@ namespace Bill2Pay.Web.Controllers
 
             while ((line = sr.ReadLine()) != null)
             {
-                if(isFirstLine)
+                if (isFirstLine)
                 {
                     strArray = line.Split(splitchar);// r.Split(line);
                     Array.ForEach(strArray, s => dtTin.Columns.Add(new DataColumn()));
@@ -169,12 +169,12 @@ namespace Bill2Pay.Web.Controllers
             }
             sr.Dispose();
 
-           
+
             return dtTin;
 
         }
 
-        private string UpdateTinMatchingStatus(DataTable dtTin,int year)
+        private string UpdateTinMatchingStatus(DataTable dtTin, int year)
         {
             string result = string.Empty;
             string accNo = string.Empty;
@@ -183,8 +183,8 @@ namespace Bill2Pay.Web.Controllers
 
             try
             {
-                var imps = dbContext.ImportSummary.Where(s => s.PaymentYear == year).OrderByDescending(s=>s.Id).FirstOrDefault();
-                
+                var imps = dbContext.ImportSummary.Where(s => s.PaymentYear == year).OrderByDescending(s => s.Id).FirstOrDefault();
+
                 foreach (DataRow dr in dtTin.Rows)
                 {
                     tin = dr[1].ToString();
@@ -240,7 +240,7 @@ namespace Bill2Pay.Web.Controllers
                     };
 
 
-                    impd.IsActive =false ;
+                    impd.IsActive = false;
                     dbContext.Entry(impd).State = System.Data.Entity.EntityState.Modified;
 
                     dbContext.SaveChanges();
@@ -256,12 +256,12 @@ namespace Bill2Pay.Web.Controllers
                 }
                 result = "TIN matching updated successfully";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 result = "TIN matching updation failed";
             }
-            
-           
+
+
             return result;
 
         }
