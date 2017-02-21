@@ -249,10 +249,14 @@
     <Content Include="Images\CopyA.png" />
     <Content Include="Images\copyb.png" />
     <Content Include="Images\copyc.png" />
+    <Content Include="Images\CorrectionRequired.png" />
+    <Content Include="Images\CorrectionUpload.jpg" />
     <Content Include="Images\dislike.png" />
     <Content Include="Images\false.png" />
     <Content Include="Images\like.png" />
     <Content Include="Images\logo.png" />
+    <Content Include="Images\resubmitted.png" />
+    <Content Include="Images\submitted.png" />
     <Content Include="Images\true.png" />
     <Content Include="Images\user.jpg" />
     <Content Include="Scripts\app.js" />

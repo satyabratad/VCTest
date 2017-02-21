@@ -85,7 +85,7 @@ namespace Bill2Pay.Web.Controllers
             TempData["SelectedYear"] = year;
             if (checkedList.Count == 0)
             {
-                TempData["ErrorMsg"] = "Select atleast one merchant.";
+                TempData["errorMessage"] = "Select atleast one merchant.";
                 return RedirectToAction("Index");
             }
             if (!string.IsNullOrEmpty(Request.Form["tinmatching"]))
@@ -156,6 +156,14 @@ namespace Bill2Pay.Web.Controllers
             if (incorrectTINresult.Count != 0)
             {
                 TempData["errorMessage"] = "One or more than one selected merchant have negative or void TIN check result. IRS file can not be generated for this selection";
+                return RedirectToAction("Index", "Home");
+            }
+
+            var alreadySubmitted = tinCheckedPayeeList.Where(x => x.detail.SubmissionSummaryId != null).ToList();
+
+            if (alreadySubmitted.Count != 0)
+            {
+                TempData["errorMessage"] = "One or more than one selected merchant's 1009K file already generated. IRS file can not be generated for this selection";
                 return RedirectToAction("Index", "Home");
             }
 
