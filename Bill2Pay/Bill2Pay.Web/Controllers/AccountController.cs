@@ -83,7 +83,9 @@ namespace Bill2Pay.Web.Controllers
                     var loggedInUser = UserManager.FindByEmail(model.Email);
                     if (loggedInUser != null && !loggedInUser.IsDefaultPasswordChanged)
                     {
-                        return RedirectToAction("ResetPassword", "Account", new { code = DateTime.Now.Ticks.ToString() });
+                        var token = UserManager.GeneratePasswordResetToken(loggedInUser.Id);
+
+                        return RedirectToAction("ResetPassword", "Account", new { code = token });
                     }
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
