@@ -32,28 +32,32 @@ namespace Bill2Pay.Web.Controllers
                 return RedirectToAction("Index", "IRSProcess", new { id = year });
             }
             
-
             TempData["year"] = Id.ToString();
 
-            var merchantlst = (dbContext.ImportDetails
+
+            // TODO: Isactive of SubmissionStatus need to be consider
+            List<MerchantListVM> merchantlst = (dbContext.ImportDetails
                             .Include("ImportSummary")
                             .GroupJoin(dbContext.SubmissionStatus,
                             imp => imp.AccountNo,
-                            stat => stat.AccountNumber,
+                            stat => stat.AccountNumber ,                          
                             (imp, stat) => new MerchantListVM() { ImportDetails = imp, SubmissionStatus = stat.FirstOrDefault() })
-                            .Where(x => x.ImportDetails.ImportSummary.PaymentYear == Id && x.ImportDetails.IsActive==true)
+                            .Where(x => x.ImportDetails.ImportSummary.PaymentYear == Id && x.ImportDetails.IsActive==true )
                             ).OrderBy(x=>x.ImportDetails.AccountNo).ToList();
 
-            var merchantAccList = dbContext.ImportDetails.Select(p =>
-                                 new MerchantVM
-                                 {
-                                     AccountNo = p.AccountNo,
-                                     IsChecked = 0
-                                 }).ToList();
+
+            var merchantAccList = merchantlst.Select(t =>
+                                        new MerchantVM
+                                        {
+                                            AccountNo = t.ImportDetails.AccountNo,
+                                            IsChecked = 0
+                                        }).ToList(); 
+                                    
+            
 
             ViewBag.SelectedYear = Id;
             ViewBag.lstmerchantAcc = JsonConvert.SerializeObject(merchantAccList);
-            ViewBag.ErrorMsg = "";
+            ViewBag.ErrorMsg = string.Empty ;
             if (TempData["ErrorMsg"]!=null)
             {
                 ViewBag.ErrorMsg = TempData["ErrorMsg"];
@@ -67,7 +71,7 @@ namespace Bill2Pay.Web.Controllers
                 .SubmissionDetails
                 .Include("PSE")
                 .OrderByDescending(p=>p.SubmissionId )
-                .FirstOrDefault(p => p.AccountNo.Equals(Id, StringComparison.OrdinalIgnoreCase));
+                .FirstOrDefault(p => p.AccountNo.Equals(Id, StringComparison.OrdinalIgnoreCase) && p.IsActive == true);
             return View(data);
         }
 
@@ -90,7 +94,7 @@ namespace Bill2Pay.Web.Controllers
             }
             if (!string.IsNullOrEmpty(Request.Form["tinmatching"]))
             {
-                // Call tinmatching process
+  
 
                 //TODO: limit can be read from config file
                 if (checkedList.Count > 100000)
