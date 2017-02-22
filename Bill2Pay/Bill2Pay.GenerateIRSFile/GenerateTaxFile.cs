@@ -584,11 +584,22 @@ namespace Bill2Pay.GenerateIRSFile
         private void SaveSubmissionStatus(string accountNo, int statusId)
         {
             var submissionStatus = new SubmissionStatus();
+            var previousData = dbContext.SubmissionStatus.Where(x=> x.AccountNumber.Equals(accountNo) && x.PaymentYear.Equals(paymentYear) && x.IsActive==true).ToList();
+
+            if(previousData!=null)
+            {
+                foreach (var item in previousData)
+                {
+                    item.IsActive = false;
+                }
+            }
 
             submissionStatus.PaymentYear = paymentYear;
             submissionStatus.AccountNumber = accountNo;
             submissionStatus.ProcessingDate = DateTime.Now;
             submissionStatus.StatusId = statusId;
+            submissionStatus.DateAdded = DateTime.Now;
+            submissionStatus.IsActive = true;
 
             dbContext.SubmissionStatus.Add(submissionStatus);
         }

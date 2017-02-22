@@ -33,15 +33,24 @@
         //alert($('#checkedAccountNo').val());
 
     }
+
+    function submitForm(statusId)
+    {
+        var form = $('#IRSListing');
+        
+        $('#statusId').val(statusId);
+        form.submit();
+    }
 </script>
 
 
 <div class="row">
-    @using (Html.BeginForm("Process", "IRSProcess", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    @using (Html.BeginForm("Process", "IRSProcess", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", Id="IRSListing" }))
     {
         @Html.AntiForgeryToken()
 
         @Html.Hidden("checkedAccountNo", (object)@ViewBag.lstmerchantAcc)
+        @Html.Hidden("statusId", "");
         @Html.Partial("_SelectYear")
 
         
@@ -148,9 +157,6 @@
 
                                 </tr>
                                             }
-
-
-
                         </tbody>
                     </table>
                 </div>
@@ -162,10 +168,25 @@
                 @{
                     if (Request.IsAuthenticated && User.IsInRole("Admin"))
                     {
-                        <input class="btn  btn-primary" type="submit" name="tinmatching" value="Generate TIN Matching Input" />
-                        <input class="btn  btn-primary" type="submit" name="irstest" value="Generate IRS FIRE Test Input" />
-                        <input class="btn  btn-primary" type="submit" name="irs" value="Generate IRS FIRE Input" />
-                        <input class="btn  btn-primary" type="submit" name="irscorrection" value="Generate IRS FIRE Correction Input" />
+                        <div style="display: flex">
+                            <input class="btn  btn-primary" type="submit" name="tinmatching" value="TIN Matching Input" />
+                            <input class="btn  btn-primary" type="submit" name="irstest" value="IRS FIRE Test Input" />
+                            <input class="btn  btn-primary" type="submit" name="irs" value="IRS FIRE Input" />
+                            <input class="btn  btn-primary" type="submit" name="irscorrection" value="IRS FIRE Correction Input" />
+                            <div class="dropdown" style="flex: 1">
+                                <button class="btn btn-primary dropdown-toggle" type="submit" data-toggle="dropdown" >
+                                    Change Status
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#" onclick="submitForm(1);">Not Submitted</a></li>
+                                    <li><a href="#" onclick="submitForm(2);">Submitted</a></li>
+                                    <li><a href="#" onclick="submitForm(3);">Correction Required</a></li>
+                                    <li><a href="#" onclick="submitForm(4);">Correction Uploaded</a></li>
+                                    <li><a href="#" onclick="submitForm(5);">Re-Submitted</a></li>
+                                </ul>
+                            </div>
+                        </div>
                     }
 
                 }

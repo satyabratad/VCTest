@@ -80,13 +80,17 @@ namespace Bill2Pay.Web.Controllers
         {
             var chkList = Request.Form["checkedAccountNo"];
             var year =int.Parse( Request.Form["ddlYear"]);
+            string statusId = Request.Form["statusId"];
 
             List<MerchantVM> Merchatlist = new JavaScriptSerializer().Deserialize<List<MerchantVM>>(chkList);
 
             List<MerchantVM> checkedList = Merchatlist.Where(m => m.IsChecked == 1).ToList();
             var list = Merchatlist.Where(m => m.IsChecked == 1).Select(m => m.AccountNo).ToList();
+
             TempData["CheckedMerchantList"] = list;
             TempData["SelectedYear"] = year;
+            TempData["statusId"] = statusId;
+
             if (checkedList.Count == 0)
             {
                 TempData["errorMessage"] = "Select atleast one merchant.";
@@ -116,6 +120,10 @@ namespace Bill2Pay.Web.Controllers
             {
                 return RedirectToAction("IRScorrection");
             }
+            else if(!string.IsNullOrEmpty(statusId))
+            {
+                return RedirectToAction("ChangeStatus");
+            }
             else
             {
                 return RedirectToAction("Index", "Home");
@@ -125,14 +133,14 @@ namespace Bill2Pay.Web.Controllers
         public ActionResult IRSFireTestFile()
         {
             List<string> selectedMerchants = (List<string>)TempData["CheckedMerchantList"];
-
+            Int32 year = Convert.ToInt32(TempData["year"]);
             if (selectedMerchants.Count == 0)
             {
                 TempData["errorMessage"] = "Select atleast one record to generate IRS Test File";
                 return RedirectToAction("Index", "Home");
             }
 
-            GenerateTaxFile taxFile = new GenerateTaxFile(true, 2016, User.Identity.GetUserId<long>(), selectedMerchants);
+            GenerateTaxFile taxFile = new GenerateTaxFile(true, year, User.Identity.GetUserId<long>(), selectedMerchants);
 
             taxFile.ReadFromSchemaFile();
             ViewBag.fileName = "IRSInputFile_Test.txt";
@@ -197,6 +205,46 @@ namespace Bill2Pay.Web.Controllers
                 FileDownloadName = "download.txt"
             };
             return response;
+        }
+
+        public ActionResult ChangeStatus()
+        {
+
+            Int32 year = Convert.ToInt32(TempData["year"]);
+            List<string> selectedMerchants = (List<string>)TempData["CheckedMerchantList"];
+            Int32 statusId = Convert.ToInt32(TempData["statusId"]);
+
+            if (statusId < 1)
+            {
+                TempData["errorMessage"] = "Requested status is not specified. Please select a list a try again.";
+                return RedirectToAction("Index", "Home");
+            }
+
+            foreach (var item in selectedMerchants)
+            {
+                var previousData = dbContext.SubmissionStatus.Where(x => x.AccountNumber.Equals(item) && x.PaymentYear.Equals(year) && x.IsActive == true).ToList();
+
+                if (previousData != null)
+                {
+                    foreach (var data in previousData)
+                    {
+                        data.IsActive = false;
+                    }
+                }
+                var submissionStatus = new SubmissionStatus();
+
+                submissionStatus.PaymentYear = year;
+                submissionStatus.AccountNumber = item;
+                submissionStatus.ProcessingDate = DateTime.Now;
+                submissionStatus.StatusId = statusId;
+                submissionStatus.DateAdded = DateTime.Now;
+                submissionStatus.IsActive = true;
+
+                dbContext.SubmissionStatus.Add(submissionStatus);
+                dbContext.SaveChanges();
+            }
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }
