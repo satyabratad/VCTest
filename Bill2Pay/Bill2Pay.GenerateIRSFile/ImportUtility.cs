@@ -39,7 +39,7 @@ namespace Bill2Pay.GenerateIRSFile
                 var random = DateTime.Now.Ticks;
                 ExtractZip(fileName, random);
                 ReadCSV(fileName, random);
-                ExecutePostImportDataProcessing(this.year, this.userId);
+
             }
             catch (EntityException ex)
             {
@@ -108,17 +108,9 @@ namespace Bill2Pay.GenerateIRSFile
             }
         }
 
-        private void ExecutePostImportDataProcessing(int year, long UserId)
-        {
-            Logger.LogInstance.LogDebug("PostImportDataProcessing Starts year:'{0}' User:'{1}'", year, UserId);
-            RawTransactionStaging.ExecutePostImportDataProcessing(year, UserId);
-            Logger.LogInstance.LogDebug("PostImportDataProcessing Ends");
-        }
-
         string[] line_records;
         private void ReadCSV(string filename, long random)
         {
-            List<KeyValueCollection> result = new List<KeyValueCollection>();
             var outPath = Path.Combine(Path.GetDirectoryName(fileName), random.ToString());
             if (!Directory.Exists(outPath))
             {
@@ -153,30 +145,19 @@ namespace Bill2Pay.GenerateIRSFile
                     RawTransactionStaging.AddBulk();
                     RawTransactionStaging.StagingTable.Rows.Clear();
 
-                    // TODO REMOVE
-                    //RawTransactionStaging.StagingList.Clear();
-
-                    //while (sr.Peek() >= 0)
-                    //{
-                    //    var fileLine = sr.ReadLine();
-                    //    iteration++;
-                    //    AddItemToStaging(fileLine, iteration);
-
-                    //    if ((iteration % 5000) == 0)
-                    //    {
-                    //        RawTransactionStaging.AddBulkAsync();
-                    //        RawTransactionStaging.StagingList.Clear();
-                    //        Logger.LogInstance.LogDebug("DB Import Iteration:{0}", iteration);
-                    //    }
-
-                    //}
-
-                    //RawTransactionStaging.AddBulkAsync();
-                    //RawTransactionStaging.StagingList.Clear();
+                    var fName = Path.GetFileName(filename);
+                    ExecutePostImportDataProcessing(this.year, this.userId, fName, iteration);
                 }
 
                 Logger.LogInstance.LogDebug("DB Import Completed");
             }
+        }
+
+        private void ExecutePostImportDataProcessing(int year, long userId, string fileName, int totalCount)
+        {
+            Logger.LogInstance.LogDebug("PostImportDataProcessing Starts year:'{0}' User:'{1}' FileName: '{2}' Total Count: {3}", year, userId, fileName,totalCount);
+            RawTransactionStaging.ExecutePostImportDataProcessing(year, userId, fileName,totalCount);
+            Logger.LogInstance.LogDebug("PostImportDataProcessing Ends");
         }
 
         private void AddItemToStagingTable(string fileLine, int iteration)
@@ -225,38 +206,6 @@ namespace Bill2Pay.GenerateIRSFile
             //data.StateIncomeTaxWithheld = line_records[];
 
             RawTransactionStaging.StagingList.Add(data);
-        }
-
-
-    }
-
-    public class KeyValue
-    {
-        public string Key { get; set; }
-        public string Value { get; set; }
-    }
-
-    public class KeyValueCollection : List<KeyValue>, ICloneable
-    {
-        public int ID { get; set; }
-
-        public string this[string key]
-        {
-            get
-            {
-                var temp = this.FirstOrDefault(p => p.Key.Equals(key));
-                if (temp == null)
-                {
-                    return string.Empty;
-                }
-
-                return temp.Value;
-            }
-        }
-
-        public object Clone()
-        {
-            return this.MemberwiseClone();
         }
     }
 }

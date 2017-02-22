@@ -99,6 +99,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
       <Private>True</Private>
@@ -278,6 +279,12 @@
     <EmbeddedResource Include="DataContextMigrations\201702210715230_M12.resx">
       <DependentUpon>201702210715230_M12.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Bill2Pay.ExceptionLogger\Bill2Pay.ExceptionLogger.csproj">
+      <Project>{FB7BE443-BA1C-44CB-BD5C-8A8FEF3B61FE}</Project>
+      <Name>Bill2Pay.ExceptionLogger</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -32,10 +32,16 @@ namespace Bill2Pay.Web.Controllers
             return RedirectToAction("Transaction", new { id = year });
         }
 
-        public ActionResult Transaction()
+        public ActionResult Transaction(int? Id,bool? Status)
         {
             var importSummary = ApplicationDbContext.Instence.ImportSummary
                 .OrderByDescending(p => p.ImportDate).FirstOrDefault();
+
+            if (Status == true)
+            {
+                ViewBag.SuccessMessage = "This will initiate a background process to import the transactions into the database. Once completed a transaction log will be generated.";
+            }
+
             return View(importSummary);
         }
 
@@ -58,6 +64,7 @@ namespace Bill2Pay.Web.Controllers
                 if (!whiteListing.Contains(extention))
                 {
                     ViewBag.ValidationMessage = "Unsupported file format.";
+                    
                     return View();
                 }
 
@@ -71,7 +78,8 @@ namespace Bill2Pay.Web.Controllers
 
                 utility.ProcessInputFileAsync(year, path, User.Identity.GetUserId<long>());
 
-                return RedirectToAction("Transaction");
+                
+                return RedirectToAction("Transaction",new { Id=Id,Status=true});
             }
 
             return View();

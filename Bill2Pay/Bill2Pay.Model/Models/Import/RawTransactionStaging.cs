@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bill2Pay.ExceptionLogger;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,6 +9,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Bill2Pay.Model
 {
@@ -75,31 +77,15 @@ namespace Bill2Pay.Model
 
         public static void Clear()
         {
-            //var existing = ApplicationDbContext.Instence.RawTransactionStaging.AsEnumerable<RawTransactionStaging>();
-            //ApplicationDbContext.Instence.RawTransactionStaging.RemoveRange(existing);
-            //ApplicationDbContext.Instence.SaveChanges();
             var result = ApplicationDbContext.Instence.Database
                 .ExecuteSqlCommand("PreImportDataProcessing");
 
         }
 
-        public static void ExecutePostImportDataProcessing(int year, long userId)
-        {
-            var yearParam = new SqlParameter("@YEAR", year);
-            var userParam = new SqlParameter("@UserId", userId);
 
-            var result = ApplicationDbContext.Instence.Database
-                .ExecuteSqlCommand("PostImportDataProcessing @YEAR, @UserId", yearParam, userParam);
-
-        }
 
         public static void AddBulkAsync()
         {
-            //using(ApplicationDbContext context = new Model.ApplicationDbContext())
-            //{
-            //    context.RawTransactionStaging.AddRange(list);
-            //    context.SaveChanges();
-            //}
             if (ApplicationDbContext.Instence.Database.Connection.State != ConnectionState.Open)
             {
                 ApplicationDbContext.Instence.Database.Connection.Open();
@@ -162,6 +148,19 @@ namespace Bill2Pay.Model
             }
         }
 
+        public static int? ProcessTimeOut
+        {
+            get
+            {
+                var timeout = 5 * 60;// Five Minute
+                if (ConfigurationManager.AppSettings["ProcessTimeOut"] != null)
+                {
+                    timeout = Convert.ToInt32(ConfigurationManager.AppSettings["ProcessTimeOut"]) * 60;
+                }
+                return timeout;
+            }
+        }
+
         public static void AddBulk()
         {
             using (SqlConnection dbConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
@@ -175,6 +174,30 @@ namespace Bill2Pay.Model
                     s.WriteToServer(dt);
                 }
             }
+        }
+
+        public static void ExecutePostImportDataProcessing(int year, long userId, string fileName, int totalCount)
+        {
+            try
+            {
+
+                var yearParam = new SqlParameter("@YEAR", year);
+                var userParam = new SqlParameter("@UserId", userId);
+                var totalParam = new SqlParameter("@TotalCount", totalCount);
+                var fileParam = new SqlParameter("@FileName", fileName);
+
+
+                ApplicationDbContext.Instence.Database.CommandTimeout = RawTransactionStaging.ProcessTimeOut;
+
+                var result = ApplicationDbContext.Instence.Database
+                    .ExecuteSqlCommand("PostImportDataProcessing @YEAR, @UserId, @TotalCount, @FileName", yearParam, userParam, totalParam, fileParam);
+
+            }
+            catch (Exception ex)
+            {
+                Logger.LogInstance.LogError(ex.Message);
+            }
+
         }
     }
 }

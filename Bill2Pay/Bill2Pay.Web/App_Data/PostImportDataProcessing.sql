@@ -1,6 +1,8 @@
 ﻿ALTER PROCEDURE [dbo].[PostImportDataProcessing]
 	@YEAR INT = 2016,
-	@UserId BIGINT=7
+	@UserId BIGINT=1,
+	@TotalCount INT=0,
+	@FileName VARCHAR(255)
 AS
 	DECLARE 
 	@SummaryId INT,
@@ -48,9 +50,11 @@ AS
 	BEGIN TRY  
 	BEGIN TRANSACTION K1099
 
-	SET @ProcessLog = CAST(GETDATE() AS VARCHAR) +' : K1099: IMPORT PROCESS STARTS'+CHAR(13)+CHAR(10)
-	
-	
+	SET @ProcessLog = 'K1099: Import Process Starts' +CHAR(13)+CHAR(10)
+	SET @ProcessLog = @ProcessLog + 'Import Date: '+CAST(GETDATE() AS VARCHAR) +CHAR(13)+CHAR(10)
+	SET @ProcessLog = @ProcessLog + 'File Name: '+@FileName+CHAR(13)+CHAR(10)
+	SET @ProcessLog = @ProcessLog + 'Transaction Count: '+CAST(@TotalCount AS VARCHAR) +CHAR(13)+CHAR(10)
+
 	-- ARCHIVE EXISTING DATA
 	UPDATE [dbo].[RawTransaction] SET Isactive = 0,UpdatedDate = GETDATE() WHERE IsActive=1
 	--## ALTERNATIVE --DELETE FROM [dbo].[RawTransaction]
@@ -70,12 +74,14 @@ AS
 		GETDATE()
 		FROM [dbo].[RawTransactionStagings]
 
-		SET @ProcessLog = CAST(GETDATE() AS VARCHAR) +' : TRANSACTION IMPORTED TOTAL COUNT : '+CAST(@@ROWCOUNT AS VARCHAR)+CHAR(13)+CHAR(10)
+		SET @RecordCount = @@ROWCOUNT
+		
+		--SET @ProcessLog = CAST(GETDATE() AS VARCHAR) +' : TRANSACTION IMPORTED TOTAL COUNT : '+CAST(@@ROWCOUNT AS VARCHAR)+CHAR(13)+CHAR(10)
 	END TRY
 	BEGIN CATCH
 	-- IF @@TRANCOUNT > 0 COMMIT;
 	PRINT ERROR_MESSAGE();
-	SET @ProcessLog = @ProcessLog + 'INVALID DATA MESSAGER : '+ERROR_MESSAGE()+' ,ERROR CODE : ' +CAST(ERROR_NUMBER() AS VARCHAR)+''+CHAR(13)+CHAR(10)
+	SET @ProcessLog = @ProcessLog + 'INVALID DATA : '+ERROR_MESSAGE()+' ,ERROR CODE : ' +CAST(ERROR_NUMBER() AS VARCHAR)+''+CHAR(13)+CHAR(10)
 	ROLLBACK TRANSACTION K1099
 	GOTO ENDPROCESS
 	END CATCH;
@@ -194,8 +200,8 @@ AS
 	LEFT JOIN  [dbo].[MerchantDetails] D ON S.PayeeAccountNumber = D.PayeeAccountNumber AND D.IsActive = 1
 	WHERE S.TransactionYear = @YEAR
 
-	SET @ProcessLog = @ProcessLog + CAST(GETDATE() AS VARCHAR)+' : MERCHANT SUMMARY PROCESSED TOTAL COUNT : '+CAST(@@ROWCOUNT AS VARCHAR)+CHAR(13)+CHAR(10)
-	SET @ProcessLog = @ProcessLog + CAST(GETDATE() AS VARCHAR)+' : IMPORT SUCCESSFUL'+CHAR(13)+CHAR(10)
+	SET @ProcessLog = @ProcessLog + 'Account Count: '+CAST(@@ROWCOUNT AS VARCHAR)+CHAR(13)+CHAR(10)
+	SET @ProcessLog = @ProcessLog + 'Import Successful'+CHAR(13)+CHAR(10)
 
 		COMMIT TRANSACTION K1099
 		END TRY  
@@ -209,6 +215,7 @@ AS
 	UPDATE ImportSummaries SET
 		RecordCount = @RecordCount,
 		ProcessLog = @ProcessLog,
+		[FileName] = @FileName,
 		ImportDate = GETDATE()
 	WHERE Id = @SummaryId
 	
