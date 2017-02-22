@@ -35,17 +35,16 @@ namespace Bill2Pay.Web.Controllers
             TempData["year"] = Id.ToString();
 
 
-            // TODO: Isactive of SubmissionStatus need to be consider
             List<MerchantListVM> merchantlst = (dbContext.ImportDetails
                             .Include("ImportSummary")
-                            .GroupJoin(dbContext.SubmissionStatus,
+                            .GroupJoin(dbContext.SubmissionStatus.Where(s=>s.IsActive==true), //   .DefaultIfEmpty(),
                             imp => imp.AccountNo,
                             stat => stat.AccountNumber ,                          
                             (imp, stat) => new MerchantListVM() { ImportDetails = imp, SubmissionStatus = stat.FirstOrDefault() })
                             .Where(x => x.ImportDetails.ImportSummary.PaymentYear == Id && x.ImportDetails.IsActive==true )
                             ).OrderBy(x=>x.ImportDetails.AccountNo).ToList();
 
-
+           
             var merchantAccList = merchantlst.Select(t =>
                                         new MerchantVM
                                         {
