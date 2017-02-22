@@ -196,12 +196,18 @@
     <Compile Include="DataContextMigrations\201702220912160_M13.Designer.cs">
       <DependentUpon>201702220912160_M13.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataContextMigrations\201702221407234_M14.cs" />
+    <Compile Include="DataContextMigrations\201702221407234_M14.Designer.cs">
+      <DependentUpon>201702221407234_M14.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataContextMigrations\Configuration.cs" />
     <Compile Include="Models\Import\RawTransaction.cs" />
     <Compile Include="Models\Import\RawTransactionStaging.cs" />
     <Compile Include="Models\IRS1099K\MerchantDetails.cs" />
     <Compile Include="Models\IRS1099K\MerchantListVM.cs" />
     <Compile Include="Models\IRS1099K\MerchantVM.cs" />
+    <Compile Include="Models\IRS1099K\PayerDetail.cs" />
+    <Compile Include="Models\IRS1099K\TransmitterDetail.cs" />
     <Compile Include="Models\IRS1099K\TINStatus.cs" />
     <Compile Include="Models\User\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -285,6 +291,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataContextMigrations\201702220912160_M13.resx">
       <DependentUpon>201702220912160_M13.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContextMigrations\201702221407234_M14.resx">
+      <DependentUpon>201702221407234_M14.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

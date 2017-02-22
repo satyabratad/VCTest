@@ -38,6 +38,10 @@ namespace Bill2Pay.Model
 
         public virtual DbSet<MerchantDetails> MerchantDetails { get; set; }
 
+        public virtual DbSet<PayerDetail> PayerDetails { get; set; }
+
+        public virtual DbSet<TransmitterDetail> TransmitterDetails { get; set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
