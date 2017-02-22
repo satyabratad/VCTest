@@ -31,5 +31,8 @@ namespace Bill2Pay.Model
         public int StatusId { get; set; }
 
         public virtual Status Status { get; set; }
+
+        public bool IsActive { get; set; }
+        public DateTime DateAdded { get; set; }
     }
 }

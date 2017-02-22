@@ -192,6 +192,10 @@
     <Compile Include="DataContextMigrations\201702210715230_M12.Designer.cs">
       <DependentUpon>201702210715230_M12.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataContextMigrations\201702220912160_M13.cs" />
+    <Compile Include="DataContextMigrations\201702220912160_M13.Designer.cs">
+      <DependentUpon>201702220912160_M13.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataContextMigrations\Configuration.cs" />
     <Compile Include="Models\Import\RawTransaction.cs" />
     <Compile Include="Models\Import\RawTransactionStaging.cs" />
@@ -278,6 +282,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataContextMigrations\201702210715230_M12.resx">
       <DependentUpon>201702210715230_M12.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContextMigrations\201702220912160_M13.resx">
+      <DependentUpon>201702220912160_M13.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
