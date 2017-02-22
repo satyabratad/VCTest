@@ -59,8 +59,6 @@ AS
 	UPDATE [dbo].[RawTransaction] SET Isactive = 0,UpdatedDate = GETDATE() WHERE IsActive=1
 	--## ALTERNATIVE --DELETE FROM [dbo].[RawTransaction]
 	
-	--SET @ProcessLog = @ProcessLog + CAST(GETDATE() AS VARCHAR)+CHAR(13)+ ' : ARCHIVING OLD TRANSACTIONS, TOTAL COUNT : '+CAST(@@ROWCOUNT AS VARCHAR) +CHAR(10)
-
 	BEGIN TRY
 		-- INSERT NEW DATA
 		INSERT INTO [dbo].[RawTransaction](PayeeAccountNumber,TransactionType,TransactionAmount,TransactionDate,IsActive,UserID,[AddedDate])
@@ -76,10 +74,8 @@ AS
 
 		SET @RecordCount = @@ROWCOUNT
 		
-		--SET @ProcessLog = CAST(GETDATE() AS VARCHAR) +' : TRANSACTION IMPORTED TOTAL COUNT : '+CAST(@@ROWCOUNT AS VARCHAR)+CHAR(13)+CHAR(10)
 	END TRY
 	BEGIN CATCH
-	-- IF @@TRANCOUNT > 0 COMMIT;
 	PRINT ERROR_MESSAGE();
 	SET @ProcessLog = @ProcessLog + 'INVALID DATA : '+ERROR_MESSAGE()+' ,ERROR CODE : ' +CAST(ERROR_NUMBER() AS VARCHAR)+''+CHAR(13)+CHAR(10)
 	ROLLBACK TRANSACTION K1099
@@ -169,7 +165,6 @@ AS
 	LEFT JOIN [dbo].[SubmissionSummaries] S ON S.Id = D.SubmissionSummaryId AND S.IsActive = 1
 	WHERE D.IsActive =1 AND S.PaymentYear = @Year 
 
-	--SET @ProcessLog = @ProcessLog + 'EXISTING SUBMISSION INFORMATION , COUNT : '+CAST(@@ROWCOUNT AS VARCHAR)++' ON' +CAST(GETDATE() AS VARCHAR)+CHAR(13)+CHAR(10)
 	-- CLEAR EXISTING DATA
 	UPDATE D
 	SET D.IsActive = 0 
@@ -177,7 +172,6 @@ AS
 	INNER JOIN [dbo].[ImportSummaries] S ON S.Id = D.ImportSummaryId
 	WHERE D.IsActive =1 AND S.PaymentYear = @Year AND S.IsActive = 1
 
-	--SET @ProcessLog = @ProcessLog + 'ARCHIVING OLD IMPORT INFORMATION , COUNT : '+CAST(@@ROWCOUNT AS VARCHAR)++' ON' +CAST(GETDATE() AS VARCHAR)+CHAR(13)+CHAR(10)
 
 	INSERT INTO ImportDetails (AccountNo,ImportSummaryId,TINCheckStatus,TINCheckRemarks,SubmissionSummaryId,TINType,TIN,
 	PayerOfficeCode,GrossAmount,CNPTransactionAmount,FederalWithHoldingAmount,
