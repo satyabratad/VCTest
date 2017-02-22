@@ -367,7 +367,7 @@ $(function() {
 
     // Toggle mini sidebar
     $('.sidebar-main-toggle').on('click', function (e) {
-        debugger;
+       
         e.preventDefault();
 
         // Toggle min sidebar class

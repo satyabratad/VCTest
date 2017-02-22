@@ -8,7 +8,21 @@
     @using (Html.BeginForm("Transaction", "Import", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
     { @Html.AntiForgeryToken()
 
-        @Html.Partial("_SelectYear")
+        @*@Html.Partial("_SelectYear")*@
+        <div class="col-md-12">
+            <div class="col-md-2 text-bold left-justified">Select Year</div>
+            <div class="col-md-4">
+                <select name="ddlYear" onchange="SelectYear(this)" required>
+                    <option value="-1">-- Select Year --</option>
+                    <option value="2016" @Bill2Pay.Web.MenuGenerator.IsSelected(2016)>2016</option>
+                    <option value="2017" @Bill2Pay.Web.MenuGenerator.IsSelected(2017)>2017</option>
+
+
+                </select>
+            </div>
+            <br />
+            <hr />
+        </div>
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-8">

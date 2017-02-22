@@ -53,7 +53,34 @@
         @Html.Hidden("statusId", "");
         @Html.Partial("_SelectYear")
 
-        
+        <div class="col-md-12">
+           
+
+            @{
+                if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                {
+
+
+                    <button class="btn  btn-primary" type="submit" name="tinmatching" value="TIN Matching Input">TIN Matching Input</button>
+                                <button class="btn  btn-primary" type="submit" name="irstest" value="IRS FIRE Test Input">IRS FIRE Test Input</button>
+                                <button class="btn  btn-primary" type="submit" name="irs" value="IRS FIRE Input">IRS FIRE Input </button>
+                                <button class="btn  btn-primary" type="submit" name="irscorrection" value="IRS FIRE Correction Input">IRS FIRE Correction Input</button>
+                                <div class="dropup" style="float:right">
+                                    <button class="btn btn-success dropdown-toggle" type="submit" data-toggle="dropdown">
+                                        Change Status
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#" onclick="submitForm(1);">Not Submitted</a></li>
+                                        <li><a href="#" onclick="submitForm(3);">Correction Required</a></li>
+                                    </ul>
+                                </div>
+
+
+                }
+
+            }
+            <hr />
+        </div>
             <div class="col-md-12">
                 <div class="table-responsive">
                     <table class="table table-striped">

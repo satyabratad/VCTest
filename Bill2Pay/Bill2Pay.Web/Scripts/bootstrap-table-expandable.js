@@ -17,7 +17,7 @@
     });
 })(jQuery);
 $(document).ready(function () {
-    debugger;
+   
     var rows = $('#mainTable tbody .record');
     for (var i = 0; i < rows.length; i++) {
         if (i % 2 == 0)
