@@ -38,7 +38,6 @@
                         <span style="position:absolute; left:25px; top:110px">@Model.PSE.CompanyCity</span>
                         <span style="position:absolute; left:25px; top:130px">@Model.PSE.CompanyState</span>
                         <span style="position:absolute; left:25px; top:150px">@Model.PSE.CompanyZIP</span>
-                        @* <span style="position:absolute; left:25px; top:170px"> [FILER's Phone]</span>*@
                     </div>
                     <div>
                         @{
@@ -85,8 +84,6 @@
                             {
                                 <span style="position:absolute; left:350px; top:500px"><b>x</b></span>
                             }
-
-
                         }
 
 
@@ -128,20 +125,10 @@
                 }
                 <div class="copy-1">
                     <div>
-                        @*@{
-                            if (@Model.SubmissionType == 0)
-                            {
-                                <span style="position:absolute; left:228px; top:18px"><b>x</b></span>
-                            }
-                            else if (@Model.SubmissionType == 1)
-                            {
-                                <span style="position:absolute; left:316px; top:18px"><b>x</b></span>
-                            }
-                        }*@
-
+                       
                         <div>
-                            <span style="position:absolute; left:226px; top:20px"><b>@(((Model.SubmissionType & 1) == 1) ? "x" : "")</b></span>
-                            <span style="position:absolute; left:314px; top:20px"><b>@(((Model.SubmissionType & 2) == 2) ? "x" : "")</b></span>
+                            <span style="position:absolute; left:226px; top:18px"><b>@(((Model.SubmissionType & 1) == 1) ? "x" : "")</b></span>
+                            <span style="position:absolute; left:314px; top:18px"><b>@(((Model.SubmissionType & 2) == 2) ? "x" : "")</b></span>
                         </div>
 
 
@@ -152,13 +139,12 @@
                         <span style="position:absolute; left:25px; top:110px">@Model.PSE.CompanyCity</span>
                         <span style="position:absolute; left:25px; top:130px">@Model.PSE.CompanyState</span>
                         <span style="position:absolute; left:25px; top:150px">@Model.PSE.CompanyZIP</span>
-                        @* <span style="position:absolute; left:25px; top:170px"> [FILER's Phone]</span>*@
                     </div>
                     <div>
                         @{
                             if (@Model.FillerIndicatorType == "1")
                             {
-                                <span style="position:absolute; left:186px; top:212px"><b>x</b></span>
+                                <span style="position:absolute; left:186px; top:211px"><b>x</b></span>
                             }
                             else if (@Model.FillerIndicatorType == "2")
                             {
@@ -168,7 +154,7 @@
                             if (@Model.PaymentIndicatorType == "1")
                             {
 
-                                <span style="position:absolute; left:372px; top:212px"><b>x</b></span>
+                                <span style="position:absolute; left:372px; top:211px"><b>x</b></span>
                             }
                             else if (@Model.PaymentIndicatorType == "2")
                             {
@@ -243,26 +229,10 @@
                 }
                 <div class="copy-b">
 
-                    <div>
-                        @*@{
-                                            @*if (@Model.SubmissionType == 0)
-                                                {
-                                                    <span style="position:absolute; left:226px; top:20px"><b>x</b></span>
-                                                }
-                                                else
-                        if (@Model.SubmissionType == 1)
-                        {
-                            <span style="position:absolute; left:314px; top:20px"><b>x</b></span>
-                        }
-                        }*@
-                        <div>
-                            @*<span style="position:absolute; left:226px; top:20px"><b>@(((Model.SubmissionType & 1) == 1) ? "x" : "")</b></span>*@
+                    <div>                      
+                        <div>                           
                             <span style="position:absolute; left:314px; top:20px"><b>@(((Model.SubmissionType & 2) == 2) ? "x" : "")</b></span>
                         </div>
-
-
-
-
                     </div>
                     <div>
                         <span style="position:absolute; left:25px; top:65px"> @Model.PSE.CompanyName </span>
@@ -270,7 +240,7 @@
                         <span style="position:absolute; left:25px; top:110px">@Model.PSE.CompanyCity</span>
                         <span style="position:absolute; left:25px; top:130px">@Model.PSE.CompanyState</span>
                         <span style="position:absolute; left:25px; top:150px">@Model.PSE.CompanyZIP</span>
-                        @* <span style="position:absolute; left:25px; top:170px"> [FILER's Phone]</span>*@
+
                     </div>
                     <div>
                         @{
@@ -362,20 +332,10 @@
                 <div class="copy-2">
 
                     <div>
-                        @*@{
-                            @*if (@Model.SubmissionType == 0)
-                                {
-                                    <span style="position:absolute; left:226px; top:20px"><b>x</b></span>
-                                }
-                                else
-                        if (@Model.SubmissionType == 1)
-                        {
-                            <span style="position:absolute; left:314px; top:19px"><b>x</b></span>
-                        }
-                        }*@
+                       
 
                         <div>
-                            @*<span style="position:absolute; left:226px; top:20px"><b>@(((Model.SubmissionType & 1) == 1) ? "x" : "")</b></span>*@
+                            
                             <span style="position:absolute; left:314px; top:20px"><b>@(((Model.SubmissionType & 2) == 2) ? "x" : "")</b></span>
                         </div>
 
@@ -477,18 +437,9 @@
                 }
                 <div class="copy-c">
                     <div>
-                        @*@{
-                            if (@Model.SubmissionType == 0)
-                            {
-                                <span style="position:absolute; left:226px; top:18px"><b>x</b></span>
-                            }
-                            else if (@Model.SubmissionType == 1)
-                            {
-                                <span style="position:absolute; left:314px; top:19px"><b>x</b></span>
-                            }
-                        }*@
+                        
                         <div>
-                            @*<span style="position:absolute; left:226px; top:20px"><b>@(((Model.SubmissionType & 1) == 1) ? "x" : "")</b></span>*@
+                           
                             <span style="position:absolute; left:314px; top:20px"><b>@(((Model.SubmissionType & 2) == 2) ? "x" : "")</b></span>
                         </div>
 
@@ -501,7 +452,7 @@
                         <span style="position:absolute; left:25px; top:110px">@Model.PSE.CompanyCity</span>
                         <span style="position:absolute; left:25px; top:130px">@Model.PSE.CompanyState</span>
                         <span style="position:absolute; left:25px; top:150px">@Model.PSE.CompanyZIP</span>
-                        @* <span style="position:absolute; left:25px; top:170px"> [FILER's Phone]</span>*@
+                        
                     </div>
                     <div>
                         @{

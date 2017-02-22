@@ -81,7 +81,7 @@
                                     <td style="width:100px">
 
                                         @{
-                                            if (item.ImportDetails.SubmissionSummaryId != null)
+                                            if (item.SubmissionStatus!= null && item.SubmissionStatus.StatusId>1 )
                                             {
                                                 <a href="@Url.Action("Details", new { Id = item.ImportDetails.AccountNo })">
                                                     <i class="fa fa-files-o fa-lg" title="Generate 1099-K Copies"></i>
@@ -111,7 +111,7 @@
                                                                 || @item.ImportDetails.TINCheckStatus.Equals("7", StringComparison.InvariantCultureIgnoreCase)
                                                                 || @item.ImportDetails.TINCheckStatus.Equals("8", StringComparison.InvariantCultureIgnoreCase))
                                                 {
-                                                    <img style="width:25px; height:25px" title='@item.ImportDetails.TINCheckRemarks' src="@Url.Content("~/Images/true.png")" />
+                                                    <img style="width:25px; height:25px" title='TIN match sucessfull' src="@Url.Content("~/Images/true.png")" />
                                                 }
                                                 else
                                                 {
@@ -180,10 +180,8 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li><a href="#" onclick="submitForm(1);">Not Submitted</a></li>
-                                    <li><a href="#" onclick="submitForm(2);">Submitted</a></li>
                                     <li><a href="#" onclick="submitForm(3);">Correction Required</a></li>
-                                    <li><a href="#" onclick="submitForm(4);">Correction Uploaded</a></li>
-                                    <li><a href="#" onclick="submitForm(5);">Re-Submitted</a></li>
+                                   
                                 </ul>
                             </div>
                         </div>
