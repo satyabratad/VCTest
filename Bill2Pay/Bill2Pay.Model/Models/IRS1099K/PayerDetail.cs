@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Bill2Pay.Model
 {
-    public class RecordA
+    public class PayerDetail
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
