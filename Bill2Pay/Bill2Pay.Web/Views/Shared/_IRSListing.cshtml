@@ -168,23 +168,23 @@
                 @{
                     if (Request.IsAuthenticated && User.IsInRole("Admin"))
                     {
-                        <div style="display: flex">
-                            <input class="btn  btn-primary" type="submit" name="tinmatching" value="TIN Matching Input" />
-                            <input class="btn  btn-primary" type="submit" name="irstest" value="IRS FIRE Test Input" />
-                            <input class="btn  btn-primary" type="submit" name="irs" value="IRS FIRE Input" />
-                            <input class="btn  btn-primary" type="submit" name="irscorrection" value="IRS FIRE Correction Input" />
-                            <div class="dropdown" style="flex: 1">
-                                <button class="btn btn-success dropdown-toggle" type="submit" data-toggle="dropdown" >
-                                    Change Status
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#" onclick="submitForm(1);">Not Submitted</a></li>
-                                    <li><a href="#" onclick="submitForm(3);">Correction Required</a></li>
-                                   
-                                </ul>
-                            </div>
-                        </div>
+                        
+                           
+                                <button class="btn  btn-primary" type="submit" name="tinmatching" value="TIN Matching Input">TIN Matching Input</button>
+                                <button class="btn  btn-primary" type="submit" name="irstest" value="IRS FIRE Test Input">IRS FIRE Test Input</button>
+                                <button class="btn  btn-primary" type="submit" name="irs" value="IRS FIRE Input">IRS FIRE Input </button>
+                                <button class="btn  btn-primary" type="submit" name="irscorrection" value="IRS FIRE Correction Input">IRS FIRE Correction Input</button>
+                                <div class="dropup" style="float:right">
+                                    <button class="btn btn-success dropdown-toggle" type="submit" data-toggle="dropdown">
+                                        Change Status
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#" onclick="submitForm(1);">Not Submitted</a></li>
+                                        <li><a href="#" onclick="submitForm(3);">Correction Required</a></li>
+                                    </ul>
+                                </div>
+                           
+                        
                     }
 
                 }
