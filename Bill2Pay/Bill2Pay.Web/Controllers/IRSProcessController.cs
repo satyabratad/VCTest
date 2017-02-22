@@ -98,12 +98,9 @@ namespace Bill2Pay.Web.Controllers
             }
             if (!string.IsNullOrEmpty(Request.Form["tinmatching"]))
             {
-  
-
                 //TODO: limit can be read from config file
                 if (checkedList.Count > 100000)
                 {
-
                     return RedirectToAction("Index");
                 }
                 return RedirectToAction("TINMatchingInput", "TINProcess");
@@ -243,6 +240,7 @@ namespace Bill2Pay.Web.Controllers
                 dbContext.SubmissionStatus.Add(submissionStatus);
                 dbContext.SaveChanges();
             }
+            TempData["successMessage"] = "Submission status updated successfully.";
 
             return RedirectToAction("Index", "Home");
         }
