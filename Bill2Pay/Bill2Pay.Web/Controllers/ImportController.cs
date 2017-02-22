@@ -92,21 +92,7 @@ namespace Bill2Pay.Web.Controllers
             return View();
         }
 
-        private List<SelectListItem> GetYearList()
-        {
-            List<SelectListItem> lstyear = new List<SelectListItem>();
-            lstyear.Add(new SelectListItem { Value = "2016", Text = "2016" });
-            lstyear.Add(new SelectListItem { Value = "2017", Text = "2017" });
-            lstyear.Add(new SelectListItem { Value = "2018", Text = "2018" });
-            lstyear.Add(new SelectListItem { Value = "2019", Text = "2019" });
-            lstyear.Add(new SelectListItem { Value = "2020", Text = "2020" });
-            lstyear.Add(new SelectListItem { Value = "2021", Text = "2021" });
-            lstyear.Add(new SelectListItem { Value = "2022", Text = "2022" });
-            lstyear.Add(new SelectListItem { Value = "2023", Text = "2023" });
-
-            return lstyear;
-        }
-
+        
 
         public ActionResult Tin(int? Id)
         {

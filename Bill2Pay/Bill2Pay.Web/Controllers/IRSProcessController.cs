@@ -41,7 +41,7 @@ namespace Bill2Pay.Web.Controllers
                             imp => imp.AccountNo,
                             stat => stat.AccountNumber ,                          
                             (imp, stat) => new MerchantListVM() { ImportDetails = imp, SubmissionStatus = stat.FirstOrDefault() })
-                            .Where(x => x.ImportDetails.ImportSummary.PaymentYear == Id && x.ImportDetails.IsActive==true )
+                            .Where(x => x.ImportDetails.ImportSummary.PaymentYear == Id && x.ImportDetails.IsActive==true && x.ImportDetails.TIN !=null)
                             ).OrderBy(x=>x.ImportDetails.AccountNo).ToList();
 
            
