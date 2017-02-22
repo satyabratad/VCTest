@@ -204,6 +204,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Controllers\IRSProcessController.cs" />
@@ -221,10 +222,10 @@
     <Compile Include="Utility\MenuGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Extra_Table.sql" />
-    <Content Include="App_Data\MerchantData.sql" />
-    <Content Include="App_Data\PostImportDataProcessing.sql" />
-    <Content Include="App_Data\PreImportDataProcessing.sql" />
+    <Content Include="Database\Extra_Table.sql" />
+    <Content Include="Database\MerchantData.sql" />
+    <Content Include="Database\PostImportDataProcessing.sql" />
+    <Content Include="Database\PreImportDataProcessing.sql" />
     <Content Include="Content\bbpou.css" />
     <Content Include="Content\BminStyleSheet1.css" />
     <Content Include="Content\bootstrap-table-expandable.css" />
@@ -277,13 +278,13 @@
     <Content Include="App_Data\Uploads\Transactions\_dummy.b2p">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="App_Data\Template\Transactions.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="App_Data\Uploads\Tin\_dummy.b2p">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\IRSFileFields.json" />
+    <Content Include="App_Data\Download\Irs\_dummy.b2p">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <Content Include="Reports\CopyA.rdlc">
       <SubType>Designer</SubType>
@@ -392,9 +393,11 @@
     <Content Include="Views\Report\Merchant.cshtml" />
     <Content Include="Views\Report\K1099.cshtml" />
     <Content Include="Views\Report\Tin.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Error\UnauthorizedAccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\Download\Irs\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Print\" />
     <Folder Include="Views\TIN\" />

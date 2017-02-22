@@ -32,8 +32,15 @@ namespace Bill2Pay.Web.Controllers
             return RedirectToAction("Transaction", new { id = year });
         }
 
-        public ActionResult Transaction(int? Id,bool? Status)
+        public ActionResult Transaction(int? Id, bool? Status)
         {
+            if (Id == null)
+            {
+                var year = DateTime.Now.Year - 1;
+                return RedirectToAction("Tin", new { id = year });
+            }
+
+
             var importSummary = ApplicationDbContext.Instence.ImportSummary
                 .OrderByDescending(p => p.ImportDate).FirstOrDefault();
 
@@ -64,7 +71,7 @@ namespace Bill2Pay.Web.Controllers
                 if (!whiteListing.Contains(extention))
                 {
                     ViewBag.ValidationMessage = "Unsupported file format.";
-                    
+
                     return View();
                 }
 
@@ -78,8 +85,8 @@ namespace Bill2Pay.Web.Controllers
 
                 utility.ProcessInputFileAsync(year, path, User.Identity.GetUserId<long>());
 
-                
-                return RedirectToAction("Transaction",new { Id=Id,Status=true});
+
+                return RedirectToAction("Transaction", new { Id = Id, Status = true });
             }
 
             return View();
@@ -101,11 +108,16 @@ namespace Bill2Pay.Web.Controllers
         }
 
 
-        public ActionResult Tin()
+        public ActionResult Tin(int? Id)
         {
 
+            if (Id == null)
+            {
+                var year = DateTime.Now.Year - 1;
+                return RedirectToAction("Tin", new { id = year });
+            }
+
             ViewBag.Message = "";
-            //ViewBag.Yearlist = GetYearList();
             return View();
         }
 
@@ -114,7 +126,6 @@ namespace Bill2Pay.Web.Controllers
         {
             DataTable dtTin = null;
             string result = string.Empty;
-            //int year =int.Parse(Request["ddlyear"]);
             if (Id == null || Id < 2015)
             {
                 return View();
@@ -122,7 +133,6 @@ namespace Bill2Pay.Web.Controllers
             int year = (int)Id;
             if (fileBase != null && fileBase.ContentLength > 0)
             {
-                // Validation
                 var extention = Path.GetExtension(fileBase.FileName);
 
                 if (extention != ".txt")
@@ -141,7 +151,6 @@ namespace Bill2Pay.Web.Controllers
                 dtTin = ReadTinInput(path);
                 result = UpdateTinMatchingStatus(dtTin, year);
                 ViewBag.Message = result;
-                //ViewBag.Yearlist = GetYearList();
             }
             return View();
         }
@@ -158,23 +167,18 @@ namespace Bill2Pay.Web.Controllers
             bool isFirstLine = true;
 
             char splitchar = ';';
-            //Regex r = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
             StreamReader sr = new StreamReader(fileName);
-
-            //line = sr.ReadLine();
-            //strArray = line.Split(splitchar);// r.Split(line);
-            //Array.ForEach(strArray, s => dtTin.Columns.Add(new DataColumn()));
 
             while ((line = sr.ReadLine()) != null)
             {
                 if (isFirstLine)
                 {
-                    strArray = line.Split(splitchar);// r.Split(line);
+                    strArray = line.Split(splitchar);
                     Array.ForEach(strArray, s => dtTin.Columns.Add(new DataColumn()));
                     isFirstLine = false;
                 }
                 row = dtTin.NewRow();
-                row.ItemArray = line.Split(splitchar);//  r.Split(line);
+                row.ItemArray = line.Split(splitchar);
                 dtTin.Rows.Add(row);
             }
             sr.Dispose();
@@ -262,7 +266,6 @@ namespace Bill2Pay.Web.Controllers
 
                     dbContext.ImportDetails.Add(newimpd);
                     dbContext.SaveChanges();
-                    //}
                 }
                 result = "TIN matching updated successfully";
             }

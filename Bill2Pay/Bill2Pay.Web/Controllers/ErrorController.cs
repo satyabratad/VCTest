@@ -13,5 +13,15 @@ namespace Bill2Pay.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult NotFound()
+        {
+            return View();
+        }
+
+        public ActionResult UnauthorizedAccess()
+        {
+            return View();
+        }
     }
 }

@@ -35,10 +35,10 @@ namespace Bill2Pay.GenerateIRSFile
         {
             try
             {
-                Logger.LogInstance.LogDebug("Import Started Path:{0}", fileName);
+                Logger.LogInstance.LogInfo("Import Started Path:{0}", fileName);
                 var random = DateTime.Now.Ticks;
                 ExtractZip(fileName, random);
-                ReadCSV(fileName, random);
+                ProcessCSV(fileName, random);
 
             }
             catch (EntityException ex)
@@ -55,7 +55,7 @@ namespace Bill2Pay.GenerateIRSFile
         {
             var outPath = Path.Combine(Path.GetDirectoryName(fileName), random.ToString());
             ExtractZipFile(fileName, "", outPath);
-            Logger.LogInstance.LogDebug("File UnZipped Path:{0}", outPath);
+            Logger.LogInstance.LogInfo("File UnZipped Path:{0}", outPath);
         }
 
         private void ExtractZipFile(string archiveFilenameIn, string password, string outFolder)
@@ -109,7 +109,7 @@ namespace Bill2Pay.GenerateIRSFile
         }
 
         string[] line_records;
-        private void ReadCSV(string filename, long random)
+        private void ProcessCSV(string filename, long random)
         {
             var outPath = Path.Combine(Path.GetDirectoryName(fileName), random.ToString());
             if (!Directory.Exists(outPath))
@@ -120,10 +120,10 @@ namespace Bill2Pay.GenerateIRSFile
             {
                 filename = file;
 
-                Logger.LogInstance.LogDebug("DB Import Started:{0}", filename);
+                Logger.LogInstance.LogInfo("DB Import Started:{0}", filename);
 
                 RawTransactionStaging.Clear();
-                Logger.LogInstance.LogDebug("DB Old Staging data cleared");
+                Logger.LogInstance.LogInfo("DB Old Staging data cleared");
 
                 using (StreamReader sr = new StreamReader(filename))
                 {
@@ -149,15 +149,15 @@ namespace Bill2Pay.GenerateIRSFile
                     ExecutePostImportDataProcessing(this.year, this.userId, fName, iteration);
                 }
 
-                Logger.LogInstance.LogDebug("DB Import Completed");
+                Logger.LogInstance.LogInfo("DB Import Completed");
             }
         }
 
         private void ExecutePostImportDataProcessing(int year, long userId, string fileName, int totalCount)
         {
-            Logger.LogInstance.LogDebug("PostImportDataProcessing Starts year:'{0}' User:'{1}' FileName: '{2}' Total Count: {3}", year, userId, fileName,totalCount);
-            RawTransactionStaging.ExecutePostImportDataProcessing(year, userId, fileName,totalCount);
-            Logger.LogInstance.LogDebug("PostImportDataProcessing Ends");
+            Logger.LogInstance.LogInfo("PostImportDataProcessing Starts year:'{0}' User:'{1}' FileName: '{2}' Total Count: {3}", year, userId, fileName, totalCount);
+            RawTransactionStaging.ExecutePostImportDataProcessing(year, userId, fileName, totalCount);
+            Logger.LogInstance.LogInfo("PostImportDataProcessing Ends");
         }
 
         private void AddItemToStagingTable(string fileLine, int iteration)
@@ -165,47 +165,12 @@ namespace Bill2Pay.GenerateIRSFile
             var line = string.Format("{0},{1}", iteration, fileLine);
             line_records = line.Split(',');
 
-            if (line_records.Length != 13) // TODO FOR OTHER FIELDS
+            if (line_records.Length < 5)
             {
                 throw new Exception("Import File not in  correct format");
             }
 
             RawTransactionStaging.StagingTable.Rows.Add(line_records);
-        }
-
-        private void AddItemToStaging(string fileLine, int Id)
-        {
-            line_records = fileLine.Split(',');
-
-            if (line_records.Length != 12) // TODO FOR OTHER FIELDS
-            {
-                throw new Exception("Import File not in  correct format");
-            }
-
-            RawTransactionStaging data = new RawTransactionStaging();
-            data.Id = Id;
-            data.PayeeAccountNumber = line_records[0];
-            data.TransactionType = line_records[1];
-            data.TransactionAmount = line_records[2];
-            data.TransactionDate = line_records[3];
-            //data.PayeeFirstName = line_records[4];
-            //data.PayeeSecondName = line_records[5];
-            //data.PayeeMailingAddress = line_records[6];
-            //data.PayeeCity = line_records[7];
-            //data.PayeeState = line_records[8];
-            //data.PayeeZIP = line_records[9];
-            //data.MCC = line_records[11];
-
-            //data.FilerIndicatorType = line_records[];
-            //data.PaymentIndicatorType = line_records[];
-            //data.TINType = line_records[];
-            //data.PayeeTIN = line_records[];
-            //data.PayeeOfficeCode = line_records[];
-            //data.CardPresentTransactions = line_records[];
-            //data.FederalIncomeTaxWithheld = line_records[];
-            //data.StateIncomeTaxWithheld = line_records[];
-
-            RawTransactionStaging.StagingList.Add(data);
         }
     }
 }
