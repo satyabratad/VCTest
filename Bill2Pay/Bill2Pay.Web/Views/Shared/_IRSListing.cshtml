@@ -1,19 +1,17 @@
 ﻿@model IEnumerable<Bill2Pay.Model.MerchantListVM>
 
 <script>
-    //alert('aaaaaaaaaaaaaaaaaaaaa');
+    
     function GetSelectedMerchant(accno) {
-        //alert(accno);
-        //alert($('#checkedAccountNo').val());
+        
         var strAcnos = $('#checkedAccountNo').val();
-        //alert(strAcnos);
+       
         var acno=JSON.parse(strAcnos);
-        //alert(acno.length);
-
+        
         for(var i=0;i<acno.length;i++)
         {
 
-           // alert(acno[i].accno);
+         
             if(acno[i].AccountNo==accno)
             {
                 if(acno[i].IsChecked=='0')
@@ -28,9 +26,9 @@
         }
 
         strAcnos=JSON.stringify(acno);
-        //alert(strAcnos);
+
         $('#checkedAccountNo').val(strAcnos);
-        //alert($('#checkedAccountNo').val());
+  
 
     }
 
@@ -108,7 +106,7 @@
                                     <td style="width:100px">
 
                                         @{
-                                            if (item.SubmissionStatus!= null && item.SubmissionStatus.StatusId>1 )
+                                            if (item.SubmissionStatus!= null )
                                             {
                                                 <a href="@Url.Action("Details", new { Id = item.ImportDetails.AccountNo })">
                                                     <i class="fa fa-files-o fa-lg" title="Generate 1099-K Copies"></i>
@@ -160,7 +158,7 @@
 
                                                 if (@item.SubmissionStatus.StatusId == 2)
                                                 {
-                                                    <img style="width:25px; height:25px" title='@item.SubmissionStatus.Status.Name' src="@Url.Content("~/Images/submitted.png")" />
+                                                    <img style="width:25px; height:25px" title='@item.SubmissionStatus.Status.Name' src="@Url.Content("~/Images/Generated.png.png")" />
                                                 }
                                                 else if (@item.SubmissionStatus.StatusId == 3)
                                                 {
@@ -174,10 +172,10 @@
                                                 {
                                                     <img style="width:25px; height:25px" title='@item.SubmissionStatus.Status.Name' src="@Url.Content("~/Images/resubmitted.png")" />
                                                 }
-                                                @*else if (@item.ImportDetails.TINCheckStatus != "0" && !string.IsNullOrEmpty(@item.ImportDetails.TINCheckStatus))
-                                                    {
-                                                        <img style="width:25px; height:25px" src="@Url.Content("~/Images/false.png")" />
-                                                    }*@
+                                                else if (@item.SubmissionStatus.StatusId == 6)
+                                                {
+                                                    <img style="width:25px; height:25px" title='@item.SubmissionStatus.Status.Name' src="@Url.Content("~/Images/submitted.png")" />
+                                                }
                                             }
                                         }
                                     </td>
