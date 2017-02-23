@@ -254,6 +254,7 @@
     <Content Include="Images\CorrectionUpload.jpg" />
     <Content Include="Images\dislike.png" />
     <Content Include="Images\false.png" />
+    <Content Include="Images\Generated.png" />
     <Content Include="Images\like.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\resubmitted.png" />
