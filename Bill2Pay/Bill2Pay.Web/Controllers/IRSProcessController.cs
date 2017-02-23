@@ -163,7 +163,7 @@ namespace Bill2Pay.Web.Controllers
 
             if (incorrectTINresult.Count != 0)
             {
-                TempData["errorMessage"] = "One or more than one selected merchant have negative or void TIN check result. IRS file can not be generated for this selection";
+                TempData["errorMessage"] = "At least one of the selected merchants has negative or void TIN check result. IRS FIRE Input file cannot be generated for this selection.";
                 return RedirectToAction("Index", "Home");
             }
 
