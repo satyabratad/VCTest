@@ -37,13 +37,16 @@ namespace Bill2Pay.Web.Controllers
             if (Id == null)
             {
                 var year = DateTime.Now.Year - 1;
-                return RedirectToAction("Tin", new { id = year });
+                return RedirectToAction("Transaction", new { id = year });
             }
 
 
             var importSummary = ApplicationDbContext.Instence.ImportSummary
                 .OrderByDescending(p => p.ImportDate).FirstOrDefault();
-
+            if(importSummary == null)
+            {
+                importSummary = new ImportSummary();
+            }
             if (Status == true)
             {
                 ViewBag.SuccessMessage = "This will initiate a background process to import the transactions into the database. Once completed a transaction log will be generated.";
@@ -231,7 +234,7 @@ namespace Bill2Pay.Web.Controllers
                         FillerIndicatorType = impd.FillerIndicatorType,
                         PaymentIndicatorType = impd.PaymentIndicatorType,
                         TransactionCount = impd.TransactionCount,
-                        PSEMasterId = impd.PSEMasterId,
+                        PseId = impd.PseId,
                         MerchantCategoryCode = impd.MerchantCategoryCode,
                         SpecialDataEntry = impd.SpecialDataEntry,
                         StateWithHolding = impd.StateWithHolding,
