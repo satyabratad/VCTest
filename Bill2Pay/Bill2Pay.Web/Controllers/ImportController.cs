@@ -46,6 +46,7 @@ namespace Bill2Pay.Web.Controllers
             if(importSummary == null)
             {
                 importSummary = new ImportSummary();
+                importSummary.ProcessLog = "";
             }
             if (Status == true)
             {
@@ -234,7 +235,7 @@ namespace Bill2Pay.Web.Controllers
                         FillerIndicatorType = impd.FillerIndicatorType,
                         PaymentIndicatorType = impd.PaymentIndicatorType,
                         TransactionCount = impd.TransactionCount,
-                        PseId = impd.PseId,
+                        PSEMasterId = impd.PSEMasterId,
                         MerchantCategoryCode = impd.MerchantCategoryCode,
                         SpecialDataEntry = impd.SpecialDataEntry,
                         StateWithHolding = impd.StateWithHolding,
