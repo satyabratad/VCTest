@@ -77,9 +77,9 @@ namespace Bill2Pay.Model
         public int TransactionCount { get; set; }
 
         [ForeignKey("PSE")]
-        public virtual int PSEMasterId { get; set; }
+        public virtual Nullable<int> PseId { get; set; }
 
-        public PSEMaster PSE { get; set; }
+        public PSEDetails PSE { get; set; }
 
         [MaxLength(4)]
         public string MerchantCategoryCode { get; set; }

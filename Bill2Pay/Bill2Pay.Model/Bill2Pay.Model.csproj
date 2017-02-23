@@ -132,73 +132,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataContextMigrations\201702140656047_M1.cs" />
-    <Compile Include="DataContextMigrations\201702140656047_M1.Designer.cs">
-      <DependentUpon>201702140656047_M1.cs</DependentUpon>
+    <Compile Include="DataContextMigrations\201702230921494_P1.cs" />
+    <Compile Include="DataContextMigrations\201702230921494_P1.Designer.cs">
+      <DependentUpon>201702230921494_P1.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataContextMigrations\201702170610107_M3.cs" />
-    <Compile Include="DataContextMigrations\201702170610107_M3.Designer.cs">
-      <DependentUpon>201702170610107_M3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataContextMigrations\201702170730203_M2.cs" />
-    <Compile Include="DataContextMigrations\201702170730203_M2.Designer.cs">
-      <DependentUpon>201702170730203_M2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataContextMigrations\201702170850304_M31.cs" />
-    <Compile Include="DataContextMigrations\201702170850304_M31.Designer.cs">
-      <DependentUpon>201702170850304_M31.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataContextMigrations\201702170959034_M32.cs" />
-    <Compile Include="DataContextMigrations\201702170959034_M32.Designer.cs">
-      <DependentUpon>201702170959034_M32.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataContextMigrations\201702171006116_M4.cs" />
-    <Compile Include="DataContextMigrations\201702171006116_M4.Designer.cs">
-      <DependentUpon>201702171006116_M4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataContextMigrations\201702171108452_M5.cs" />
-    <Compile Include="DataContextMigrations\201702171108452_M5.Designer.cs">
-      <DependentUpon>201702171108452_M5.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataContextMigrations\201702171341358_M6.cs" />
-    <Compile Include="DataContextMigrations\201702171341358_M6.Designer.cs">
-      <DependentUpon>201702171341358_M6.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataContextMigrations\201702171811545_M7.cs" />
-    <Compile Include="DataContextMigrations\201702171811545_M7.Designer.cs">
-      <DependentUpon>201702171811545_M7.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataContextMigrations\201702171913460_M8.cs" />
-    <Compile Include="DataContextMigrations\201702171913460_M8.Designer.cs">
-      <DependentUpon>201702171913460_M8.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataContextMigrations\201702172007199_M81.cs" />
-    <Compile Include="DataContextMigrations\201702172007199_M81.Designer.cs">
-      <DependentUpon>201702172007199_M81.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataContextMigrations\201702172012570_m9.cs" />
-    <Compile Include="DataContextMigrations\201702172012570_m9.Designer.cs">
-      <DependentUpon>201702172012570_m9.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataContextMigrations\201702172200508_M10.cs" />
-    <Compile Include="DataContextMigrations\201702172200508_M10.Designer.cs">
-      <DependentUpon>201702172200508_M10.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataContextMigrations\201702201216247_M11.cs" />
-    <Compile Include="DataContextMigrations\201702201216247_M11.Designer.cs">
-      <DependentUpon>201702201216247_M11.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataContextMigrations\201702210715230_M12.cs" />
-    <Compile Include="DataContextMigrations\201702210715230_M12.Designer.cs">
-      <DependentUpon>201702210715230_M12.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataContextMigrations\201702220912160_M13.cs" />
-    <Compile Include="DataContextMigrations\201702220912160_M13.Designer.cs">
-      <DependentUpon>201702220912160_M13.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataContextMigrations\201702221407234_M14.cs" />
-    <Compile Include="DataContextMigrations\201702221407234_M14.Designer.cs">
-      <DependentUpon>201702221407234_M14.cs</DependentUpon>
+    <Compile Include="DataContextMigrations\201702231046373_p2.cs" />
+    <Compile Include="DataContextMigrations\201702231046373_p2.Designer.cs">
+      <DependentUpon>201702231046373_p2.cs</DependentUpon>
     </Compile>
     <Compile Include="DataContextMigrations\Configuration.cs" />
     <Compile Include="Models\Import\RawTransaction.cs" />
@@ -218,7 +158,7 @@
     <Compile Include="Models\IRS1099K\SubmissionDetail.cs" />
     <Compile Include="Models\IRS1099K\ImportDetail.cs" />
     <Compile Include="Models\IRS1099K\ImportSummary.cs" />
-    <Compile Include="Models\IRS1099K\PSEMaster.cs" />
+    <Compile Include="Models\IRS1099K\PSEDetails.cs" />
     <Compile Include="Models\IRS1099K\SubmissionStatus.cs" />
     <Compile Include="Models\IRS1099K\Status.cs" />
     <Compile Include="Models\User\ManageViewModels.cs" />
@@ -226,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -244,63 +185,18 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DataContextMigrations\201702140656047_M1.resx">
-      <DependentUpon>201702140656047_M1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataContextMigrations\201702170610107_M3.resx">
-      <DependentUpon>201702170610107_M3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataContextMigrations\201702170730203_M2.resx">
-      <DependentUpon>201702170730203_M2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataContextMigrations\201702170850304_M31.resx">
-      <DependentUpon>201702170850304_M31.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataContextMigrations\201702170959034_M32.resx">
-      <DependentUpon>201702170959034_M32.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataContextMigrations\201702171006116_M4.resx">
-      <DependentUpon>201702171006116_M4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataContextMigrations\201702171108452_M5.resx">
-      <DependentUpon>201702171108452_M5.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataContextMigrations\201702171341358_M6.resx">
-      <DependentUpon>201702171341358_M6.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataContextMigrations\201702171811545_M7.resx">
-      <DependentUpon>201702171811545_M7.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataContextMigrations\201702171913460_M8.resx">
-      <DependentUpon>201702171913460_M8.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataContextMigrations\201702172007199_M81.resx">
-      <DependentUpon>201702172007199_M81.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataContextMigrations\201702172012570_m9.resx">
-      <DependentUpon>201702172012570_m9.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataContextMigrations\201702172200508_M10.resx">
-      <DependentUpon>201702172200508_M10.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataContextMigrations\201702201216247_M11.resx">
-      <DependentUpon>201702201216247_M11.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataContextMigrations\201702210715230_M12.resx">
-      <DependentUpon>201702210715230_M12.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataContextMigrations\201702220912160_M13.resx">
-      <DependentUpon>201702220912160_M13.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataContextMigrations\201702221407234_M14.resx">
-      <DependentUpon>201702221407234_M14.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Bill2Pay.ExceptionLogger\Bill2Pay.ExceptionLogger.csproj">
       <Project>{FB7BE443-BA1C-44CB-BD5C-8A8FEF3B61FE}</Project>
       <Name>Bill2Pay.ExceptionLogger</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DataContextMigrations\201702230921494_P1.resx">
+      <DependentUpon>201702230921494_P1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContextMigrations\201702231046373_p2.resx">
+      <DependentUpon>201702231046373_p2.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

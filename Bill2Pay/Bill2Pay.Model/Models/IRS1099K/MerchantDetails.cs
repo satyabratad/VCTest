@@ -56,6 +56,11 @@ namespace Bill2Pay.Model
         [MaxLength(2)]
         public string CFSF { get; set; }
 
+        [ForeignKey("Payer")]
+        public int PayerId { get; set; }
+
+        public virtual PayerDetail Payer { get; set; }
+
         public bool IsActive { get; set; }
         public DateTime DateAdded { get; set; }
 

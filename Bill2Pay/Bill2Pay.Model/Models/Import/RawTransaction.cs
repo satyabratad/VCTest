@@ -14,7 +14,7 @@ namespace Bill2Pay.Model
         public string PayeeAccountNumber { get; set; }
         public Nullable<decimal> TransactionAmount { get; set; }
         public DateTime TransactionDate { get; set; }
-        public int TransactionType { get; set; }
+        public string TransactionType { get; set; }
         public bool IsActive { get; set; }
         public DateTime DateAdded { get; set; }
        

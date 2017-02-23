@@ -55,7 +55,7 @@ namespace Bill2Pay.Web.Controllers
                 data.Add(item);
             }
 
-            var pseData = new List<PSEMaster>();
+            var pseData = new List<PSEDetails>();
             if(item.PSE != null)
             {
                 pseData.Add(item.PSE);

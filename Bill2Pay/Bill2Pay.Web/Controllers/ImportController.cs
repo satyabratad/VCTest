@@ -235,7 +235,7 @@ namespace Bill2Pay.Web.Controllers
                         FillerIndicatorType = impd.FillerIndicatorType,
                         PaymentIndicatorType = impd.PaymentIndicatorType,
                         TransactionCount = impd.TransactionCount,
-                        PSEMasterId = impd.PSEMasterId,
+                        PseId = impd.PseId,
                         MerchantCategoryCode = impd.MerchantCategoryCode,
                         SpecialDataEntry = impd.SpecialDataEntry,
                         StateWithHolding = impd.StateWithHolding,

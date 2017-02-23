@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Bill2Pay.Model
 {
-    public class PSEMaster
+    public class PSEDetails
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]

@@ -7,10 +7,7 @@ AS
 	DECLARE 
 	@SummaryId INT,
 	@ProcessLog NVARCHAR(1024)='',
-	@RecordCount INT,
-	@PSEId INT =1;
-
-	SELECT @PSEID = MAX(ID)  FROM [dbo].[PSEMasters] WHERE IsActive = 1
+	@RecordCount INT;
 
 	INSERT INTO ImportSummaries(PaymentYear,ImportDate,UserId,DateAdded,IsActive)
 	values (@YEAR,GETDATE(),@UserId,GETDATE(),1)
@@ -50,18 +47,18 @@ AS
 	BEGIN TRY  
 	BEGIN TRANSACTION K1099
 
-	SET @ProcessLog = 'K1099: Import Process Starts' +CHAR(13)+CHAR(10)
+	SET @ProcessLog = '1099K: Import Process Starts' +CHAR(13)+CHAR(10)
 	SET @ProcessLog = @ProcessLog + 'Import Date: '+CAST(GETDATE() AS VARCHAR) +CHAR(13)+CHAR(10)
 	SET @ProcessLog = @ProcessLog + 'File Name: '+@FileName+CHAR(13)+CHAR(10)
 	SET @ProcessLog = @ProcessLog + 'Transaction Count: '+CAST(@TotalCount AS VARCHAR) +CHAR(13)+CHAR(10)
 
 	-- ARCHIVE EXISTING DATA
-	UPDATE [dbo].[RawTransaction] SET Isactive = 0,UpdatedDate = GETDATE() WHERE IsActive=1
-	--## ALTERNATIVE --DELETE FROM [dbo].[RawTransaction]
+	UPDATE [dbo].[RawTransactions] SET Isactive = 0 WHERE IsActive=1
+	--## ALTERNATIVE --DELETE FROM [dbo].[RawTransactions]
 	
 	BEGIN TRY
 		-- INSERT NEW DATA
-		INSERT INTO [dbo].[RawTransaction](PayeeAccountNumber,TransactionType,TransactionAmount,TransactionDate,IsActive,UserID,[AddedDate])
+		INSERT INTO [dbo].[RawTransactions](PayeeAccountNumber,TransactionType,TransactionAmount,TransactionDate,IsActive,UserID,DateAdded)
 		SELECT 
 		[PayeeAccountNumber], 
 		CASE WHEN [TransactionType] = 7 THEN 'CNP' ELSE 'CP' END AS [TransactionType],
@@ -88,7 +85,7 @@ AS
 	FROM 
 		(SELECT [PayeeAccountNumber],YEAR(TransactionDate) AS TransactionYear,
 		MONTH(TransactionDate) AS TransactionMonth,TransactionAmount,TransactionType
-		FROM [dbo].[RawTransaction] where IsActive = 1
+		FROM [dbo].[RawTransactions] where IsActive = 1
 	) P
 	
 	GROUP BY 
@@ -178,16 +175,16 @@ AS
 	JanuaryAmount,FebruaryAmount,MarchAmount,AprilAmount,MayAmount,JuneAmount,JulyAmount,AugustAmount,
 	SeptemberAmount,OctoberAmount,NovemberAmount,DecemberAmount,ForeignCountryIndicator,FirstPayeeName,
 	SecondPayeeName,PayeeMailingAddress,PayeeCity,PayeeState,PayeeZipCode,SecondTINNoticed,FillerIndicatorType,
-	PaymentIndicatorType,TransactionCount,PSEMasterId,MerchantCategoryCode,SpecialDataEntry,StateWithHolding,
-	LocalWithHolding,CFSF,IsActive)
+	PaymentIndicatorType,TransactionCount,PseId,MerchantCategoryCode,SpecialDataEntry,StateWithHolding,
+	LocalWithHolding,CFSF,IsActive,DateAdded)
 
 	SELECT S.PayeeAccountNumber,@SummaryId,O.TINCheckStatus,O.TINCheckRemarks,O.SubmissionSummaryId,D.TINType,D.PayeeTIN,
 	D.PayeeOfficeCode,S.GrossAmount,S.TotalCPAmount,NULL,
 	S.JANUARY,S.FEBRUARY,S.MARCH,S.APRIL,S.MAY,S.JUNE,S.JULY,S.AUGUST,
 	S.SEPTEMBER,S.OCTOBOR,S.NOVEMBER,S.DECEMBER,NULL,SUBSTRING(D.[PayeeFirstName],1,40), 
 	SUBSTRING(D.[PayeeSecondName],1,40),SUBSTRING(D.[PayeeMailingAddress],1,40),SUBSTRING(D.[PayeeCity],1,40),D.[PayeeState],REPLACE(D.[PayeeZIP],'-',''),null,D.[FilerIndicatorType], 
-	D.[PaymentIndicatorType],S.TotalTransaction,@PSEId,D.[MCC],NULL,NULL,
-	NULL,D.CFSF,1
+	D.[PaymentIndicatorType],S.TotalTransaction,NULL,D.[MCC],NULL,NULL,
+	NULL,D.CFSF,1,GETDATE()
 
 	FROM @K1099SUMMARYCHART S
 	LEFT JOIN #OLD_DETAILS O ON S.PayeeAccountNumber = O.AccountNo

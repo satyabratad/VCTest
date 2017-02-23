@@ -59,6 +59,11 @@ namespace Bill2Pay.Model
         [MaxLength(15)]
         public string PayerTelephoneNumber { get; set; }
 
+        [ForeignKey("Transmitter")]
+        public int TransmitterId { get; set; }
+
+        public virtual TransmitterDetail Transmitter { get; set; }
+
         public bool IsActive { get; set; }
         public DateTime DateAdded { get; set; }
     }

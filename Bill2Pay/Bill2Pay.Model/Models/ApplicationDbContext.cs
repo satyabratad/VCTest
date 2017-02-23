@@ -27,7 +27,7 @@ namespace Bill2Pay.Model
 
         public virtual DbSet<SubmissionStatus> SubmissionStatus { get; set; }
 
-        public virtual DbSet<PSEMaster> PSEMaster { get; set; }
+        public virtual DbSet<PSEDetails> PSEMaster { get; set; }
 
         public virtual DbSet<Status> Status { get; set; }
 

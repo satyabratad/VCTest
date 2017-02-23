@@ -31,7 +31,7 @@ namespace Bill2Pay.GenerateIRSFile
         int paymentYear = 0;
         long userId = 0;
         bool reSubmission = false;
-        PSEMaster pseMaster = null;
+        PSEDetails pseMaster = null;
         #endregion
 
         public GenerateTaxFile(bool testFile, int year, long user, List<string> selectedAccountNo, bool correction = false)
@@ -42,7 +42,7 @@ namespace Bill2Pay.GenerateIRSFile
             reSubmission = correction;
 
             dbContext = new ApplicationDbContext();
-            pseMaster = new PSEMaster();
+            pseMaster = new PSEDetails();
 
             summaryTableData = dbContext.ImportSummary.OrderByDescending(x => x.Id).First();
             
@@ -563,7 +563,7 @@ namespace Bill2Pay.GenerateIRSFile
                 submissionDetails.FillerIndicatorType = item.FillerIndicatorType;
                 submissionDetails.PaymentIndicatorType = item.PaymentIndicatorType;
                 submissionDetails.TransactionCount = item.TransactionCount;
-                submissionDetails.PSEMasterId = pseMasterId;
+                submissionDetails.PseId = pseMasterId;
                 submissionDetails.MerchantCategoryCode = item.MerchantCategoryCode;
                 submissionDetails.SpecialDataEntry = item.SpecialDataEntry;
                 submissionDetails.StateWithHolding = item.StateWithHolding;
@@ -575,7 +575,7 @@ namespace Bill2Pay.GenerateIRSFile
 
                 dbContext.SubmissionDetails.Add(submissionDetails);
                 item.SubmissionSummaryId = submissionSummaryId;
-                item.PSEMasterId = pseMasterId;
+                item.PseId = pseMasterId;
                 submissionDetails.IsActive = true;
                 SaveSubmissionStatus(item.AccountNo, reSubmission ? (int)RecordStatus.ReSubmitted : (int)RecordStatus.Submitted);
                 dbContext.SaveChanges();
