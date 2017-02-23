@@ -63,7 +63,7 @@
                                 <button class="btn  btn-primary" type="submit" name="irstest" value="IRS FIRE Test Input">IRS FIRE Test Input</button>
                                 <button class="btn  btn-primary" type="submit" name="irs" value="IRS FIRE Input">IRS FIRE Input </button>
                                 <button class="btn  btn-primary" type="submit" name="irscorrection" value="IRS FIRE Correction Input">IRS FIRE Correction Input</button>
-                                <div class="dropup" style="float:right">
+                                <div class="dropdown" style="float:right">
                                     <button class="btn btn-success dropdown-toggle" type="submit" data-toggle="dropdown">
                                         Change Status
                                     </button>
@@ -158,7 +158,7 @@
 
                                                 if (@item.SubmissionStatus.StatusId == 2)
                                                 {
-                                                    <img style="width:25px; height:25px" title='@item.SubmissionStatus.Status.Name' src="@Url.Content("~/Images/Generated.png")" />
+                                                    <img style="width:30px; height:30px" title='@item.SubmissionStatus.Status.Name' src="@Url.Content("~/Images/Generated.png")" />
                                                 }
                                                 else if (@item.SubmissionStatus.StatusId == 3)
                                                 {
