@@ -1,7 +1,9 @@
-﻿<div class="col-md-12">
+﻿@model bool?
+
+<div class="col-md-12">
     <div class="col-md-2 text-bold left-justified">Select Year</div>
     <div class="col-md-4">
-        <select name="ddlYear" onchange="SelectYear(this)" required >
+        <select name="ddlYear" onchange="SelectYear(this,@Model)" required >
             <option value="-1">-- Select Year --</option>
             <option value="2016" @Bill2Pay.Web.MenuGenerator.IsSelected(2016)>2016</option>
             <option value="2017" @Bill2Pay.Web.MenuGenerator.IsSelected(2017)>2017</option>
@@ -18,7 +20,11 @@
 
 
 <script>
-    SelectYear = function (oBj) {
+    SelectYear = function (oBj,AllowPostback) {
+        if(AllowPostback != true){
+            return;
+        }
+
         var y = $(oBj).val();
         if (y > 0) {
             location.href = '@Bill2Pay.Web.MenuGenerator.CurrentUrl' + y;
