@@ -57,7 +57,7 @@ namespace Bill2Pay.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Transaction(int? Id, HttpPostedFileBase fileBase,int ddlPayer)
+        public async Task<ActionResult> Transaction(int? Id,int ddlPayer, HttpPostedFileBase fileBase)
         {
             if (Id == null || Id < 2015)
             {
@@ -120,10 +120,16 @@ namespace Bill2Pay.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Tin(int? Id, HttpPostedFileBase fileBase)
+        public ActionResult Tin(int? Id, int? ddlPayer, HttpPostedFileBase fileBase)
         {
             DataTable dtTin = null;
+            
             string result = string.Empty;
+            //if (ddlPayer != null)
+            //{
+            //    payer = Convert.ToInt32(ddlPayer);
+            //}
+
             if (Id == null || Id < 2015)
             {
                 return View();
@@ -147,7 +153,7 @@ namespace Bill2Pay.Web.Controllers
                 var path = Path.Combine(Server.MapPath("~/App_Data/Uploads/Tin"), fileName);
                 fileBase.SaveAs(path);
                 dtTin = ReadTinInput(path);
-                result = UpdateTinMatchingStatus(dtTin, year);
+                result = UpdateTinMatchingStatus(dtTin, year, ddlPayer);
                 ViewBag.Message = result;
             }
             return View();
@@ -186,7 +192,7 @@ namespace Bill2Pay.Web.Controllers
 
         }
 
-        private string UpdateTinMatchingStatus(DataTable dtTin, int year)
+        private string UpdateTinMatchingStatus(DataTable dtTin, int year,int? payer)
         {
             string result = string.Empty;
             string accNo = string.Empty;
@@ -197,7 +203,7 @@ namespace Bill2Pay.Web.Controllers
             try
             {
                 var imps = dbContext.ImportSummary.Where(s => s.PaymentYear == year).OrderByDescending(s => s.Id).FirstOrDefault();
-
+                ImportDetail impd = null;
                 foreach (DataRow dr in dtTin.Rows)
                 {
                     tin = dr[1].ToString();
@@ -207,54 +213,68 @@ namespace Bill2Pay.Web.Controllers
 
                     var tinStatusName = dbContext.TINStatus.Where(t => t.Id.ToString() == tinStaus).FirstOrDefault();
 
-                    //ImportDetail impd1 = dbContext.ImportDetails.Where(i => i.TIN == tin && i.AccountNo == accNo && i.ImportSummary.Id == imps.Id).FirstOrDefault();
-                    ImportDetail impd =dbContext.ImportDetails.Where(i=> i.TIN.Equals(tin,StringComparison.InvariantCultureIgnoreCase )
-                                                                    && i.FirstPayeeName.Equals(accName,StringComparison.InvariantCultureIgnoreCase)
-                                                                    && i.ImportSummary.Id == imps.Id).FirstOrDefault();
-
-                    ImportDetail newimpd = impd;
-                    ImportDetail newimpd1 = new ImportDetail()
+                    if (payer == 0)
                     {
-                        AccountNo = impd.AccountNo,
-                        ImportSummaryId = impd.ImportSummaryId,
-                        TINCheckStatus = impd.TINCheckStatus,
-                        TINCheckRemarks = impd.TINCheckRemarks,
-                        SubmissionSummaryId = impd.SubmissionSummaryId,
-                        TINType = impd.TINType,
-                        TIN = impd.TIN,
-                        PayerOfficeCode = impd.PayerOfficeCode,
-                        GrossAmount = impd.GrossAmount,
-                        CNPTransactionAmount = impd.CNPTransactionAmount,
-                        FederalWithHoldingAmount = impd.FederalWithHoldingAmount,
-                        JanuaryAmount = impd.JanuaryAmount,
-                        FebruaryAmount = impd.FebruaryAmount,
-                        MarchAmount = impd.MarchAmount,
-                        AprilAmount = impd.AprilAmount,
-                        MayAmount = impd.MayAmount,
-                        JuneAmount = impd.JuneAmount,
-                        JulyAmount = impd.JulyAmount,
-                        AugustAmount = impd.AugustAmount,
-                        SeptemberAmount = impd.SeptemberAmount,
-                        OctoberAmount = impd.OctoberAmount,
-                        NovemberAmount = impd.NovemberAmount,
-                        DecemberAmount = impd.DecemberAmount,
-                        ForeignCountryIndicator = impd.ForeignCountryIndicator,
-                        FirstPayeeName = impd.FirstPayeeName,
-                        SecondPayeeName = impd.SecondPayeeName,
-                        PayeeMailingAddress = impd.PayeeMailingAddress,
-                        PayeeCity = impd.PayeeCity,
-                        PayeeState = impd.PayeeState,
-                        PayeeZipCode = impd.PayeeZipCode,
-                        SecondTINNoticed = impd.SecondTINNoticed,
-                        FillerIndicatorType = impd.FillerIndicatorType,
-                        PaymentIndicatorType = impd.PaymentIndicatorType,
-                        TransactionCount = impd.TransactionCount,
-                        MerchantCategoryCode = impd.MerchantCategoryCode,
-                        SpecialDataEntry = impd.SpecialDataEntry,
-                        StateWithHolding = impd.StateWithHolding,
-                        LocalWithHolding = impd.LocalWithHolding,
-                        CFSF = impd.CFSF
-                    };
+                        //ImportDetail impd1 = dbContext.ImportDetails.Where(i => i.TIN == tin && i.AccountNo == accNo && i.ImportSummary.Id == imps.Id).FirstOrDefault();
+                         impd = dbContext.ImportDetails.Where(i => i.TIN.Equals(tin, StringComparison.InvariantCultureIgnoreCase)
+                                                                         && i.FirstPayeeName.Equals(accName, StringComparison.InvariantCultureIgnoreCase)
+                                                                         && i.ImportSummary.Id == imps.Id
+                                                                         && i.IsActive == true
+                                                                         ).FirstOrDefault();
+
+                    }
+                    else
+                    {
+
+                         impd = dbContext.ImportDetails.Where(i => i.TIN.Equals(tin, StringComparison.InvariantCultureIgnoreCase)
+                                                                         && i.FirstPayeeName.Equals(accName, StringComparison.InvariantCultureIgnoreCase)
+                                                                         && i.ImportSummary.Id == imps.Id
+                                                                         && i.Merchant.Payer.Id == payer && i.IsActive==true
+                                                                         ).FirstOrDefault();
+                    }
+                    ImportDetail newimpd = impd;
+                    //ImportDetail newimpd1 = new ImportDetail()
+                    //{
+                    //    AccountNo = impd.AccountNo,
+                    //    ImportSummaryId = impd.ImportSummaryId,
+                    //    TINCheckStatus = impd.TINCheckStatus,
+                    //    TINCheckRemarks = impd.TINCheckRemarks,
+                    //    SubmissionSummaryId = impd.SubmissionSummaryId,
+                    //    TINType = impd.TINType,
+                    //    TIN = impd.TIN,
+                    //    PayerOfficeCode = impd.PayerOfficeCode,
+                    //    GrossAmount = impd.GrossAmount,
+                    //    CNPTransactionAmount = impd.CNPTransactionAmount,
+                    //    FederalWithHoldingAmount = impd.FederalWithHoldingAmount,
+                    //    JanuaryAmount = impd.JanuaryAmount,
+                    //    FebruaryAmount = impd.FebruaryAmount,
+                    //    MarchAmount = impd.MarchAmount,
+                    //    AprilAmount = impd.AprilAmount,
+                    //    MayAmount = impd.MayAmount,
+                    //    JuneAmount = impd.JuneAmount,
+                    //    JulyAmount = impd.JulyAmount,
+                    //    AugustAmount = impd.AugustAmount,
+                    //    SeptemberAmount = impd.SeptemberAmount,
+                    //    OctoberAmount = impd.OctoberAmount,
+                    //    NovemberAmount = impd.NovemberAmount,
+                    //    DecemberAmount = impd.DecemberAmount,
+                    //    ForeignCountryIndicator = impd.ForeignCountryIndicator,
+                    //    FirstPayeeName = impd.FirstPayeeName,
+                    //    SecondPayeeName = impd.SecondPayeeName,
+                    //    PayeeMailingAddress = impd.PayeeMailingAddress,
+                    //    PayeeCity = impd.PayeeCity,
+                    //    PayeeState = impd.PayeeState,
+                    //    PayeeZipCode = impd.PayeeZipCode,
+                    //    SecondTINNoticed = impd.SecondTINNoticed,
+                    //    FillerIndicatorType = impd.FillerIndicatorType,
+                    //    PaymentIndicatorType = impd.PaymentIndicatorType,
+                    //    TransactionCount = impd.TransactionCount,
+                    //    MerchantCategoryCode = impd.MerchantCategoryCode,
+                    //    SpecialDataEntry = impd.SpecialDataEntry,
+                    //    StateWithHolding = impd.StateWithHolding,
+                    //    LocalWithHolding = impd.LocalWithHolding,
+                    //    CFSF = impd.CFSF
+                    //};
 
 
                     impd.IsActive = false;
