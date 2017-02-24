@@ -1,33 +1,40 @@
-﻿@model bool?
+﻿@model Bill2Pay.Web.YearSelection
 
 <div class="col-md-12">
     <div class="col-md-2 text-bold left-justified">Select Year</div>
     <div class="col-md-4">
-        <select name="ddlYear" onchange="SelectYear(this,@Model)" required >
-            <option value="-1">-- Select Year --</option>
-            <option value="2016" @Bill2Pay.Web.MenuGenerator.IsSelected(2016)>2016</option>
-            <option value="2017" @Bill2Pay.Web.MenuGenerator.IsSelected(2017)>2017</option>
-            
-            
-        </select>
+        @if (@Model.AllowPostback)
+        {
+            <select name="ddlYear" onchange="SelectYear(this)" required>
+                <option value="-1">-- Select Year --</option>
+                <option value="2016" @Bill2Pay.Web.MenuGenerator.IsSelected(2016)>2016</option>
+                <option value="2017" @Bill2Pay.Web.MenuGenerator.IsSelected(2017)>2017</option>
+            </select>
+        }
+        else
+        {
+            <select name="ddlYear" required>
+                <option value="-1">-- Select Year --</option>
+                <option value="2016" @Bill2Pay.Web.MenuGenerator.IsSelected(2016)>2016</option>
+                <option value="2017" @Bill2Pay.Web.MenuGenerator.IsSelected(2017)>2017</option>
+            </select>
+        }
+
+                    
+        </div>
+        <br />
+        <hr />
     </div>
-    <br />
-    <hr />
-</div>
 
 
 
 
 
-<script>
-    SelectYear = function (oBj,AllowPostback) {
-        if(AllowPostback != true){
-            return;
+    <script>
+        SelectYear = function (oBj) {
+            var y = $(oBj).val();
+            if (y > 0) {
+                location.href = '@Url.Content("~/"+Bill2Pay.Web.MenuGenerator.CurrentUrl)' + y;
+            }
         }
-
-        var y = $(oBj).val();
-        if (y > 0) {
-            location.href = '@Bill2Pay.Web.MenuGenerator.CurrentUrl' + y;
-        }
-    }
-</script>
+    </script>

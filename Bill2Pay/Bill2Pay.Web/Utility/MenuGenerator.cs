@@ -139,4 +139,9 @@ namespace Bill2Pay.Web
         public string LinkText { get; internal set; }
         public List<MenuItem> SubMenu { get; internal set; }
     }
+
+    public class YearSelection
+    {
+        public bool AllowPostback { get; set; }
+    }
 }

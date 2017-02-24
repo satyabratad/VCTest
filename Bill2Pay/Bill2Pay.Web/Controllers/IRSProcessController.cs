@@ -69,8 +69,15 @@ namespace Bill2Pay.Web.Controllers
             var data = ApplicationDbContext.Instence
                 .SubmissionDetails
                 .Include("PSE")
-                .OrderByDescending(p=>p.SubmissionId )
+                .OrderByDescending(p => p.SubmissionId)
                 .FirstOrDefault(p => p.AccountNo.Equals(Id, StringComparison.OrdinalIgnoreCase) && p.IsActive == true);
+
+            //var data = ApplicationDbContext.Instence
+            //    .ImportDetails
+            //    .Include("PSE")
+            //    .OrderByDescending(p => p.ImportSummaryId)
+            //    .FirstOrDefault(p => p.AccountNo.Equals(Id, StringComparison.OrdinalIgnoreCase) && p.IsActive == true);
+
             return View(data);
         }
 
@@ -100,6 +107,7 @@ namespace Bill2Pay.Web.Controllers
                 //TODO: limit can be read from config file
                 if (checkedList.Count > 100000)
                 {
+                    TempData["errorMessage"] = "Maximum 100000 merchant is allowed for TIN matching input.";
                     return RedirectToAction("Index");
                 }
                 return RedirectToAction("TINMatchingInput", "TINProcess");

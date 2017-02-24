@@ -43,13 +43,13 @@
 
 
 <div class="row">
-    @using (Html.BeginForm("Process", "IRSProcess", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", Id="IRSListing" }))
+    @using (Html.BeginForm("Process", "IRSProcess", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", Id = "IRSListing" }))
     {
         @Html.AntiForgeryToken()
 
         @Html.Hidden("checkedAccountNo", (object)@ViewBag.lstmerchantAcc)
         @Html.Hidden("statusId", "");
-        @Html.Partial("_SelectYear",true)
+        @Html.Partial("_SelectYear", new Bill2Pay.Web.YearSelection() { AllowPostback =true})
 
         <div class="col-md-12">
            
@@ -98,91 +98,100 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>
-                                        <input id="chkAccountNo" onclick="GetSelectedMerchant('@item.ImportDetails.AccountNo');" type="checkbox" />&nbsp;
-                                    </td>
-                                    <td style="width:100px">
+                            @{ 
+                                if (Model != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <input id="chkAccountNo" onclick="GetSelectedMerchant('@item.ImportDetails.AccountNo');" type="checkbox" />&nbsp;
+                                            </td>
+                                            <td style="width:100px">
 
-                                        @{
-                                            if (item.SubmissionStatus!= null )
-                                            {
-                                                <a href="@Url.Action("Details", new { Id = item.ImportDetails.AccountNo })">
-                                                    <i class="fa fa-files-o fa-lg" title="Generate 1099-K Copies"></i>
-                                                </a>
-                                            }
-                                            else
-                                            {
+                                                @{
+                                                    if (item.SubmissionStatus != null)
+                                                    {
+                                                        <a href="@Url.Action("Details", new { Id = item.ImportDetails.AccountNo })">
+                                                            <i class="fa fa-files-o fa-lg" title="Generate 1099-K Copies"></i>
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
 
-                                                <i class="fa fa-files-o fa-lg" title="IRS not submitted"></i>
+                                                        <i class="fa fa-files-o fa-lg" title="IRS not submitted"></i>
 
-                                            }
-                                        }
-
-
-                                    </td>
-                                    <td>@item.ImportDetails.AccountNo</td>
-                                    <td>@item.ImportDetails.TIN </td>
-                                    <td>@item.ImportDetails.FirstPayeeName  </td>
-                                    <td>@item.ImportDetails.PayeeMailingAddress </td>
-                                    <td>@item.ImportDetails.MerchantCategoryCode</td>
-                                    <td>
-                                        @{
-                                            if (!string.IsNullOrEmpty(@item.ImportDetails.TINCheckStatus))
-                                            {
-                                                if (@item.ImportDetails.TINCheckStatus.Equals("0", StringComparison.InvariantCultureIgnoreCase)
-                                                                || @item.ImportDetails.TINCheckStatus.Equals("6", StringComparison.InvariantCultureIgnoreCase)
-                                                                || @item.ImportDetails.TINCheckStatus.Equals("7", StringComparison.InvariantCultureIgnoreCase)
-                                                                || @item.ImportDetails.TINCheckStatus.Equals("8", StringComparison.InvariantCultureIgnoreCase))
-                                                {
-                                                    <img style="width:25px; height:25px" title='TIN match sucessfull' src="@Url.Content("~/Images/true.png")" />
+                                                    }
                                                 }
-                                                else
-                                                {
 
-                                                    <img style="width:25px; height:25px" title='@item.ImportDetails.TINCheckRemarks' src="@Url.Content("~/Images/false.png")" />
+
+                                            </td>
+                                            <td>@item.ImportDetails.AccountNo</td>
+                                            <td>@item.ImportDetails.TIN </td>
+                                            <td>@item.ImportDetails.FirstPayeeName  </td>
+                                            <td>@item.ImportDetails.PayeeMailingAddress </td>
+                                            <td>@item.ImportDetails.MerchantCategoryCode</td>
+                                            <td>
+                                                @{
+                                                    if (!string.IsNullOrEmpty(@item.ImportDetails.TINCheckStatus))
+                                                    {
+                                                        if (@item.ImportDetails.TINCheckStatus.Equals("0", StringComparison.InvariantCultureIgnoreCase)
+                                                                        || @item.ImportDetails.TINCheckStatus.Equals("6", StringComparison.InvariantCultureIgnoreCase)
+                                                                        || @item.ImportDetails.TINCheckStatus.Equals("7", StringComparison.InvariantCultureIgnoreCase)
+                                                                        || @item.ImportDetails.TINCheckStatus.Equals("8", StringComparison.InvariantCultureIgnoreCase))
+                                                        {
+                                                            <img style="width:25px; height:25px" title='TIN match sucessfull' src="@Url.Content("~/Images/true.png")" />
+                                                        }
+                                                        else
+                                                        {
+
+                                                            <img style="width:25px; height:25px" title='@item.ImportDetails.TINCheckRemarks' src="@Url.Content("~/Images/false.png")" />
+
+                                                        }
+                                                    }
 
                                                 }
-                                            }
-
-                                        }
 
 
-                                    </td>
-                                    <td>
-                                        @{
+                                            </td>
+                                            <td>
+                                                @{
 
-                                            if (@item.SubmissionStatus != null)
-                                            {
+                                                    if (@item.SubmissionStatus != null)
+                                                    {
 
-                                                if (@item.SubmissionStatus.StatusId == 2)
-                                                {
-                                                    <img style="width:30px; height:30px" title='@item.SubmissionStatus.Status.Name' src="@Url.Content("~/Images/Generated.png")" />
+                                                        if (@item.SubmissionStatus.StatusId == 2)
+                                                        {
+                                                            <img style="width:30px; height:30px" title='@item.SubmissionStatus.Status.Name' src="@Url.Content("~/Images/Generated.png")" />
+                                                        }
+                                                        else if (@item.SubmissionStatus.StatusId == 3)
+                                                        {
+                                                            <img style="width:25px; height:25px" title='@item.SubmissionStatus.Status.Name' src="@Url.Content("~/Images/CorrectionRequired.png")" />
+                                                        }
+                                                        else if (@item.SubmissionStatus.StatusId == 4)
+                                                        {
+                                                            <img style="width:25px; height:25px" title='@item.SubmissionStatus.Status.Name' src="@Url.Content("~/Images/CorrectionUpload.jpg")" />
+                                                        }
+                                                        else if (@item.SubmissionStatus.StatusId == 5)
+                                                        {
+                                                            <img style="width:25px; height:25px" title='@item.SubmissionStatus.Status.Name' src="@Url.Content("~/Images/resubmitted.png")" />
+                                                        }
+                                                        else if (@item.SubmissionStatus.StatusId == 6)
+                                                        {
+                                                            <img style="width:25px; height:25px" title='@item.SubmissionStatus.Status.Name' src="@Url.Content("~/Images/submitted.png")" />
+                                                        }
+                                                    }
                                                 }
-                                                else if (@item.SubmissionStatus.StatusId == 3)
-                                                {
-                                                    <img style="width:25px; height:25px" title='@item.SubmissionStatus.Status.Name' src="@Url.Content("~/Images/CorrectionRequired.png")" />
-                                                }
-                                                else if (@item.SubmissionStatus.StatusId == 4)
-                                                {
-                                                    <img style="width:25px; height:25px" title='@item.SubmissionStatus.Status.Name' src="@Url.Content("~/Images/CorrectionUpload.jpg")" />
-                                                }
-                                                else if (@item.SubmissionStatus.StatusId == 5)
-                                                {
-                                                    <img style="width:25px; height:25px" title='@item.SubmissionStatus.Status.Name' src="@Url.Content("~/Images/resubmitted.png")" />
-                                                }
-                                                else if (@item.SubmissionStatus.StatusId == 6)
-                                                {
-                                                    <img style="width:25px; height:25px" title='@item.SubmissionStatus.Status.Name' src="@Url.Content("~/Images/submitted.png")" />
-                                                }
-                                            }
-                                        }
-                                    </td>
+                                            </td>
 
-                                </tr>
-                                            }
+                                        </tr>
+                                      }
+                                  }
+                                  else
+                                  {
+                                            <span>No data found</span>
+                                  }
+                             }
                         </tbody>
                     </table>
                 </div>

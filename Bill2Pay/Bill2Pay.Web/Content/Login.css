@@ -12,7 +12,6 @@ body {
     font-family: 'Roboto', sans-serif;
     font-size: 20px;
     height: 100%;
-    background-image: url('../Images/background.jpg');
     background-repeat: no-repeat;
 }
 a,
@@ -43,7 +42,6 @@ ul {
 /*Login Signup Page*/
 
 .bg-image {
-    background: url(http://jskrishna.com/work/merkury/images/background-login.jpg) no-repeat 0 0 / cover;
     position: relative;
     width: 100%;
     height: 100%;
