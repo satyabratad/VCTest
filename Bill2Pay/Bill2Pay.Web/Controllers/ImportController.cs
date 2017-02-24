@@ -182,6 +182,7 @@ namespace Bill2Pay.Web.Controllers
         {
             string result = string.Empty;
             string accNo = string.Empty;
+            string accName = string.Empty;
             string tin = string.Empty;
             string tinStaus = string.Empty;
 
@@ -192,14 +193,19 @@ namespace Bill2Pay.Web.Controllers
                 foreach (DataRow dr in dtTin.Rows)
                 {
                     tin = dr[1].ToString();
+                    accName = dr[2].ToString();
                     accNo = dr[3].ToString();
                     tinStaus = dr[4].ToString();
 
                     var tinStatusName = dbContext.TINStatus.Where(t => t.Id.ToString() == tinStaus).FirstOrDefault();
 
-                    ImportDetail impd = dbContext.ImportDetails.Where(i => i.TIN == tin && i.AccountNo == accNo && i.ImportSummary.Id == imps.Id).FirstOrDefault();
+                    //ImportDetail impd1 = dbContext.ImportDetails.Where(i => i.TIN == tin && i.AccountNo == accNo && i.ImportSummary.Id == imps.Id).FirstOrDefault();
+                    ImportDetail impd =dbContext.ImportDetails.Where(i=> i.TIN.Equals(tin,StringComparison.InvariantCultureIgnoreCase )
+                                                                    && i.FirstPayeeName.Equals(accName,StringComparison.InvariantCultureIgnoreCase)
+                                                                    && i.ImportSummary.Id == imps.Id).FirstOrDefault();
 
-                    ImportDetail newimpd = new ImportDetail()
+                    ImportDetail newimpd = impd;
+                    ImportDetail newimpd1 = new ImportDetail()
                     {
                         AccountNo = impd.AccountNo,
                         ImportSummaryId = impd.ImportSummaryId,
@@ -235,7 +241,6 @@ namespace Bill2Pay.Web.Controllers
                         FillerIndicatorType = impd.FillerIndicatorType,
                         PaymentIndicatorType = impd.PaymentIndicatorType,
                         TransactionCount = impd.TransactionCount,
-                        PseId = impd.PseId,
                         MerchantCategoryCode = impd.MerchantCategoryCode,
                         SpecialDataEntry = impd.SpecialDataEntry,
                         StateWithHolding = impd.StateWithHolding,

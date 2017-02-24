@@ -175,7 +175,7 @@ AS
 	JanuaryAmount,FebruaryAmount,MarchAmount,AprilAmount,MayAmount,JuneAmount,JulyAmount,AugustAmount,
 	SeptemberAmount,OctoberAmount,NovemberAmount,DecemberAmount,ForeignCountryIndicator,FirstPayeeName,
 	SecondPayeeName,PayeeMailingAddress,PayeeCity,PayeeState,PayeeZipCode,SecondTINNoticed,FillerIndicatorType,
-	PaymentIndicatorType,TransactionCount,PseId,MerchantCategoryCode,SpecialDataEntry,StateWithHolding,
+	PaymentIndicatorType,TransactionCount,MerchantId,MerchantCategoryCode,SpecialDataEntry,StateWithHolding,
 	LocalWithHolding,CFSF,IsActive,DateAdded)
 
 	SELECT S.PayeeAccountNumber,@SummaryId,O.TINCheckStatus,O.TINCheckRemarks,O.SubmissionSummaryId,D.TINType,D.PayeeTIN,
@@ -183,12 +183,12 @@ AS
 	S.JANUARY,S.FEBRUARY,S.MARCH,S.APRIL,S.MAY,S.JUNE,S.JULY,S.AUGUST,
 	S.SEPTEMBER,S.OCTOBOR,S.NOVEMBER,S.DECEMBER,NULL,SUBSTRING(D.[PayeeFirstName],1,40), 
 	SUBSTRING(D.[PayeeSecondName],1,40),SUBSTRING(D.[PayeeMailingAddress],1,40),SUBSTRING(D.[PayeeCity],1,40),D.[PayeeState],REPLACE(D.[PayeeZIP],'-',''),null,D.[FilerIndicatorType], 
-	D.[PaymentIndicatorType],S.TotalTransaction,NULL,D.[MCC],NULL,NULL,
+	D.[PaymentIndicatorType],S.TotalTransaction,D.Id,D.[MCC],NULL,NULL,
 	NULL,D.CFSF,1,GETDATE()
 
 	FROM @K1099SUMMARYCHART S
 	LEFT JOIN #OLD_DETAILS O ON S.PayeeAccountNumber = O.AccountNo
-	LEFT JOIN  [dbo].[MerchantDetails] D ON S.PayeeAccountNumber = D.PayeeAccountNumber AND D.IsActive = 1
+	LEFT JOIN  [dbo].[MerchantDetails] D ON S.PayeeAccountNumber = D.PayeeAccountNumber AND D.IsActive = 1 AND D.PaymentYear = @YEAR
 	WHERE S.TransactionYear = @YEAR
 
 	SET @ProcessLog = @ProcessLog + 'Account Count: '+CAST(@@ROWCOUNT AS VARCHAR)+CHAR(13)+CHAR(10)

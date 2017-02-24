@@ -66,17 +66,17 @@ namespace Bill2Pay.Web.Controllers
 
         public ActionResult Details(string Id)
         {
-            var data = ApplicationDbContext.Instence
-                .SubmissionDetails
-                .Include("PSE")
-                .OrderByDescending(p => p.SubmissionId)
-                .FirstOrDefault(p => p.AccountNo.Equals(Id, StringComparison.OrdinalIgnoreCase) && p.IsActive == true);
-
             //var data = ApplicationDbContext.Instence
-            //    .ImportDetails
+            //    .SubmissionDetails
             //    .Include("PSE")
-            //    .OrderByDescending(p => p.ImportSummaryId)
+            //    .OrderByDescending(p => p.SubmissionId)
             //    .FirstOrDefault(p => p.AccountNo.Equals(Id, StringComparison.OrdinalIgnoreCase) && p.IsActive == true);
+
+            var data = ApplicationDbContext.Instence
+                .ImportDetails
+                .Include("Merchant")
+                .OrderByDescending(p => p.ImportSummaryId)
+                .FirstOrDefault(p => p.AccountNo.Equals(Id, StringComparison.OrdinalIgnoreCase) && p.IsActive == true);
 
             return View(data);
         }

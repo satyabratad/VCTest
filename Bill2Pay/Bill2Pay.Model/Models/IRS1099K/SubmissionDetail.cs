@@ -29,6 +29,9 @@ namespace Bill2Pay.Model
 
         public virtual SubmissionSummary SubmissionSummary { get; set; }
 
-       
+        [ForeignKey("PSE")]
+        public virtual Nullable<int> PseId { get; set; }
+
+        public PSEDetails PSE { get; set; }
     }
 }

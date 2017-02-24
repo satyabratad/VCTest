@@ -91,5 +91,7 @@ namespace Bill2Pay.Model
         public bool IsActive { get; set; }
         public DateTime DateAdded { get; set; }
 
+        public int PaymentYear { get; set; }
+
     }
 }

@@ -76,11 +76,6 @@ namespace Bill2Pay.Model
 
         public int TransactionCount { get; set; }
 
-        [ForeignKey("PSE")]
-        public virtual Nullable<int> PseId { get; set; }
-
-        public PSEDetails PSE { get; set; }
-
         [MaxLength(4)]
         public string MerchantCategoryCode { get; set; }
 
@@ -100,6 +95,9 @@ namespace Bill2Pay.Model
         public bool IsActive { get; set; }
         public DateTime DateAdded { get; set; }
 
+        [ForeignKey("Merchant")]
+        public virtual Nullable<int> MerchantId { get; set; }
 
+        public MerchantDetails Merchant { get; set; }
     }
 }

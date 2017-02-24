@@ -16,7 +16,6 @@ namespace Bill2Pay.Model
 
     public class Status
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int Id { get; set; }
 

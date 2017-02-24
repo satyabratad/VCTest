@@ -109,20 +109,9 @@
                                             </td>
                                             <td style="width:100px">
 
-                                                @{
-                                                    if (item.SubmissionStatus != null)
-                                                    {
-                                                        <a href="@Url.Action("Details", new { Id = item.ImportDetails.AccountNo })">
-                                                            <i class="fa fa-files-o fa-lg" title="Generate 1099-K Copies"></i>
-                                                        </a>
-                                                    }
-                                                    else
-                                                    {
-
-                                                        <i class="fa fa-files-o fa-lg" title="IRS not submitted"></i>
-
-                                                    }
-                                                }
+                                                <a href="@Url.Action("Details", new { Id = item.ImportDetails.AccountNo })">
+                                                    <i class="fa fa-files-o fa-lg" title="Generate 1099-K Copies"></i>
+                                                </a>
 
 
                                             </td>

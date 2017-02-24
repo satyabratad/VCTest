@@ -575,7 +575,7 @@ namespace Bill2Pay.GenerateIRSFile
 
                 dbContext.SubmissionDetails.Add(submissionDetails);
                 item.SubmissionSummaryId = submissionSummaryId;
-                item.PseId = pseMasterId;
+                //item.PseId = pseMasterId;
                 submissionDetails.IsActive = true;
                 SaveSubmissionStatus(item.AccountNo, reSubmission ? (int)RecordStatus.ReSubmitted : (int)RecordStatus.Submitted);
                 dbContext.SaveChanges();
