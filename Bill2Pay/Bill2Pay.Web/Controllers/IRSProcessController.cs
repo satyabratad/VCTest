@@ -138,27 +138,36 @@ namespace Bill2Pay.Web.Controllers
         {
             List<string> selectedMerchants = (List<string>)TempData["CheckedMerchantList"];
             Int32 year = Convert.ToInt32(TempData["year"]);
-            if (selectedMerchants.Count == 0)
-            {
-                TempData["errorMessage"] = "Select atleast one record to generate IRS Test File";
-                return RedirectToAction("Index", "Home");
-            }
-
-            GenerateTaxFile taxFile = new GenerateTaxFile(true, year, User.Identity.GetUserId<long>(), selectedMerchants);
+            //if (selectedMerchants.Count == 0)
+            //{
+            //    TempData["errorMessage"] = "Select atleast one record to generate IRS Test File";
+            //    return RedirectToAction("Index", "Home");
+            //}
+            List<string> payer = new List<string> { "8" };
+            GenerateTaxFile taxFile = new GenerateTaxFile(true, year, User.Identity.GetUserId<long>(), selectedMerchants, payer);
 
             taxFile.ReadFromSchemaFile();
             ViewBag.fileName = "IRSInputFile_Test.txt";
-            return View();
+
+            string path = string.Format(@"{0}App_Data\Download\Irs\IRSInputFile_Test.txt" , HostingEnvironment.ApplicationPhysicalPath);
+
+            if (!System.IO.File.Exists(path))
+            {
+                return HttpNotFound();
+            }
+
+            var fileBytes = System.IO.File.ReadAllBytes(path);
+            var response = new FileContentResult(fileBytes, "application/octet-stream")
+            {
+                FileDownloadName = "IRSInputFile_Test.txt"
+            };
+            return response;
         }
 
         public ActionResult IRSFireFile()
         {
             List<string> selectedMerchants = (List<string>)TempData["CheckedMerchantList"];
-            if (selectedMerchants.Count == 0)
-            {
-                TempData["errorMessage"] = "Select atleast one record to generate IRS File";
-                return RedirectToAction("Index", "Home");
-            }
+            
             Int32 year = Convert.ToInt32(TempData["year"]);
 
             string errorTINResult = "1,2,3,4,5";
@@ -171,7 +180,7 @@ namespace Bill2Pay.Web.Controllers
 
             if (incorrectTINresult.Count != 0)
             {
-                TempData["errorMessage"] = "At least one of the selected merchants has negative or void TIN check result. IRS FIRE Input file cannot be generated for this selection.";
+                TempData["errorMessage"] = "At least one of the selected merchant has negative or void TIN check result. IRS FIRE Input file cannot be generated for this selection.";
                 return RedirectToAction("Index", "Home");
             }
 
@@ -188,11 +197,25 @@ namespace Bill2Pay.Web.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            GenerateTaxFile taxFile = new GenerateTaxFile(false, 2016, User.Identity.GetUserId<long>(), selectedMerchants);
+            List<string> payer = new List<string> { "8" };
+            GenerateTaxFile taxFile = new GenerateTaxFile(false, year, User.Identity.GetUserId<long>(), selectedMerchants, payer);
 
             taxFile.ReadFromSchemaFile();
             ViewBag.fileName = "IRSInputFile.txt";
-            return View("IRSFireTestFile");
+
+            string path = string.Format(@"{0}App_Data\Download\Irs\IRSInputFile.txt", HostingEnvironment.ApplicationPhysicalPath);
+
+            if (!System.IO.File.Exists(path))
+            {
+                return HttpNotFound();
+            }
+
+            var fileBytes = System.IO.File.ReadAllBytes(path);
+            var response = new FileContentResult(fileBytes, "application/octet-stream")
+            {
+                FileDownloadName = "IRSInputFile.txt"
+            };
+            return response;
         }
 
         public ActionResult IRScorrection()

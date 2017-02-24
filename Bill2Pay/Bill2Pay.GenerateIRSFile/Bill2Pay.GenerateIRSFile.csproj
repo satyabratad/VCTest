@@ -66,6 +66,7 @@
     <Compile Include="GenerateTaxFile.cs" />
     <Compile Include="ImportUtility.cs" />
     <Compile Include="Model\Alignment.cs" />
+    <Compile Include="Model\CFSFStates.cs" />
     <Compile Include="Model\Field.cs" />
     <Compile Include="Model\FieldType.cs" />
     <Compile Include="Model\ValueType.cs" />

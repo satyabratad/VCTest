@@ -18,12 +18,15 @@ namespace Bill2Pay.GenerateIRSFile
     {
         #region "Variables"
         List<Records> records;
+        List<CFSFStates> cfsfStates;
+        List<PayerDetail> payerDetails = null;
+        TransmitterDetail transmitterDetails = null;
         StringBuilder fileData = new StringBuilder();
         bool testFileIndicator = false;
         int recordSequenceNumber = 1;
         ApplicationDbContext dbContext = null;
-        List<ImportDetail> detailTableData = null;
-        ImportSummary summaryTableData = null;
+        List<ImportDetail> importDetaiils = null;
+        ImportSummary importSummaries = null;
         string amount = string.Empty;
         decimal januaryAmount, februaryAmount, marchAmount, aprilAmount, mayAmount, juneAmount, julyAmount, augustAmount, septemberAmount, octoberAmount, novemberAmount, decemberAmount = 0;
         decimal grossAmount, cnpTransactionAmount, federalWithHoldingAmount, stateWithHolding, localWithHolding = 0;
@@ -31,30 +34,35 @@ namespace Bill2Pay.GenerateIRSFile
         int paymentYear = 0;
         long userId = 0;
         bool reSubmission = false;
-        PSEDetails pseMaster = null;
+        PSEDetails pseDetails = null;
+        List<string> selectedAccounts = null;
+        string currentAccountNumber = string.Empty;
+        int currentPayer = 0;
+        List<string> payerIds;
+        int pseMasterId = 0;
+        int totalNumberofPayee = 0;
         #endregion
-
-        public GenerateTaxFile(bool testFile, int year, long user, List<string> selectedAccountNo, bool correction = false)
+        public GenerateTaxFile(bool testFile, int year, long user, List<string> selectedAccountNo, List<string> payerId, bool correction = false)
         {
             testFileIndicator = testFile;
             paymentYear = year;
             userId = user;
             reSubmission = correction;
+            selectedAccounts = selectedAccountNo;
+            payerIds = payerId;
 
             dbContext = new ApplicationDbContext();
-            pseMaster = new PSEDetails();
+            pseDetails = new PSEDetails();
 
-            summaryTableData = dbContext.ImportSummary.OrderByDescending(x => x.Id).First();
-            
+            importSummaries = dbContext.ImportSummary.OrderByDescending(x => x.Id).Where(x => x.IsActive == true).FirstOrDefault();
 
-            detailTableData = dbContext.ImportDetails
-            .Join(dbContext.ImportSummary, d => d.ImportSummaryId, s => s.Id, (d, s) => new { detail = d, summary = s })
-            .Where(x => selectedAccountNo.Contains(x.detail.AccountNo) && x.summary.PaymentYear == year && x.detail.IsActive==true && x.summary.IsActive==true) 
-            .Select(x=>x.detail).ToList();
+            transmitterDetails = dbContext.TransmitterDetails.FirstOrDefault(x => x.IsActive == true);
 
-            numberofPayee = detailTableData.Count();
+            payerDetails = dbContext.PayerDetails.Where(x => payerIds.Contains(x.Id.ToString()) && x.IsActive == true).ToList();
+
         }
-        int pseMasterId = 0;
+
+        
         private void GenerateTRecord()
         {
             Records tRecords = records.FirstOrDefault(x => x.RecordType == "T");
@@ -88,34 +96,61 @@ namespace Bill2Pay.GenerateIRSFile
         private void GenerateARecord()
         {
             Records aRecords = records.FirstOrDefault(x => x.RecordType == "A");
-
-            foreach (Field item in aRecords.Fields)
+            string cfsf = string.Empty;
+            foreach (var data in payerDetails)
             {
-                switch (item.Name.ToUpper())
+                importDetaiils = dbContext.ImportDetails
+                .Join(dbContext.ImportSummary, d => d.ImportSummaryId, s => s.Id, (d, s) => new { detail = d, summary = s })
+                .Join(dbContext.MerchantDetails, d => d.detail.MerchantId, m => m.Id, (d, m) => new { d.detail, d.summary, merchant = m })
+                .Where(x => selectedAccounts.Contains(x.detail.AccountNo) && x.summary.PaymentYear == paymentYear && x.detail.IsActive == true && x.summary.IsActive == true && x.merchant.PayerId.Equals(data.Id))
+                .Select(x => x.detail).ToList();
+
+                currentPayer = data.Id;
+                numberofPayee = importDetaiils.Count();
+                totalNumberofPayee = totalNumberofPayee + numberofPayee;
+
+                foreach (Field item in aRecords.Fields)
                 {
-                    case "RECORD SEQUENCE NUMBER":
-                        item.Default = recordSequenceNumber.ToString();
-                        fileData.Append(GetFieldValue(item));
-                        recordSequenceNumber++;
-                        break;
-                    case "COMBINED FEDERAL/STATE FILING PROGRAM":
-                        fileData.Append(GetFieldValue(item, Model.ValueType.Alternate));
-                        break;
-                    default:
-                        fileData.Append(GetFieldValue(item));
-                        break;
+                    switch (item.Name.ToUpper())
+                    {
+                        case "RECORD SEQUENCE NUMBER":
+                            item.Default = recordSequenceNumber.ToString();
+                            fileData.Append(GetFieldValue(item));
+                            recordSequenceNumber++;
+                            break;
+                        case "COMBINED FEDERAL/STATE FILING PROGRAM":
+                            fileData.Append(GetFieldValue(item));
+                            cfsf = GetFieldValue(item);
+                            break;
+                        default:
+                            fileData.Append(GetFieldValue(item));
+                            break;
+                    }
                 }
+                SavePSEMaster(aRecords);
+                dbContext.PSEMaster.Add(pseDetails);
+                dbContext.SaveChanges();
+                pseMasterId = pseDetails.Id;
+
+                GenerateBRecord();
+                GenerateCRecord();
+                if (!string.IsNullOrEmpty(cfsf.Trim()))
+                    GenerateKRecord();
+
             }
-            SavePSEMaster(aRecords);
-            dbContext.PSEMaster.Add(pseMaster);
-            dbContext.SaveChanges();
-            pseMasterId = pseMaster.Id;
+
+
+
 
         }
         private void GenerateBRecord()
         {
-            foreach (var data in detailTableData)
+            januaryAmount= februaryAmount= marchAmount= aprilAmount= mayAmount= juneAmount= julyAmount= augustAmount= septemberAmount= octoberAmount= novemberAmount= decemberAmount = 0;
+            grossAmount= cnpTransactionAmount= federalWithHoldingAmount= stateWithHolding= localWithHolding = 0;
+
+            foreach (var data in importDetaiils)
             {
+                currentAccountNumber = data.AccountNo;
                 Records bRecords = records.FirstOrDefault(x => x.RecordType == "B");
                 foreach (Field item in bRecords.Fields)
                 {
@@ -130,12 +165,12 @@ namespace Bill2Pay.GenerateIRSFile
                             recordSequenceNumber++;
                             break;
                         case "PAYMENT AMOUNT 1":
-                            amount = GetFieldValue(item, dataValue: data);
+                            amount = GetFieldValue(item);
                             grossAmount = grossAmount + Convert.ToDecimal(amount);
                             fileData.Append(FormatAmount(amount, item));
                             break;
                         case "PAYMENT AMOUNT 2":
-                            amount = GetFieldValue(item, dataValue: data);
+                            amount = GetFieldValue(item);
                             cnpTransactionAmount = cnpTransactionAmount + Convert.ToDecimal(amount);
                             fileData.Append(FormatAmount(amount, item));
                             break;
@@ -143,82 +178,82 @@ namespace Bill2Pay.GenerateIRSFile
                             fileData.Append(GetFieldValue(item));
                             break;
                         case "PAYMENT AMOUNT 4":
-                            amount = GetFieldValue(item, dataValue: data);
+                            amount = GetFieldValue(item);
                             federalWithHoldingAmount = federalWithHoldingAmount + Convert.ToDecimal(amount);
                             fileData.Append(FormatAmount(amount, item));
                             break;
                         case "PAYMENT AMOUNT 5":
-                            amount = GetFieldValue(item, dataValue: data);
+                            amount = GetFieldValue(item);
                             januaryAmount = januaryAmount + Convert.ToDecimal(amount);
                             fileData.Append(FormatAmount(amount, item));
                             break;
                         case "PAYMENT AMOUNT 6":
-                            amount = GetFieldValue(item, dataValue: data);
+                            amount = GetFieldValue(item);
                             februaryAmount = februaryAmount + Convert.ToDecimal(amount);
                             fileData.Append(FormatAmount(amount, item));
                             break;
                         case "PAYMENT AMOUNT 7":
-                            amount = GetFieldValue(item, dataValue: data);
+                            amount = GetFieldValue(item);
                             marchAmount = marchAmount + Convert.ToDecimal(amount);
                             fileData.Append(FormatAmount(amount, item));
                             break;
                         case "PAYMENT AMOUNT 8":
-                            amount = GetFieldValue(item, dataValue: data);
+                            amount = GetFieldValue(item);
                             aprilAmount = aprilAmount + Convert.ToDecimal(amount);
                             fileData.Append(FormatAmount(amount, item));
                             break;
                         case "PAYMENT AMOUNT 9":
-                            amount = GetFieldValue(item, dataValue: data);
+                            amount = GetFieldValue(item);
                             mayAmount = mayAmount + Convert.ToDecimal(amount);
                             fileData.Append(FormatAmount(amount, item));
                             break;
                         case "PAYMENT AMOUNT A":
-                            amount = GetFieldValue(item, dataValue: data);
+                            amount = GetFieldValue(item);
                             juneAmount = juneAmount + Convert.ToDecimal(amount);
                             fileData.Append(FormatAmount(amount, item));
                             break;
                         case "PAYMENT AMOUNT B":
-                            amount = GetFieldValue(item, dataValue: data);
+                            amount = GetFieldValue(item);
                             julyAmount = julyAmount + Convert.ToDecimal(amount);
                             fileData.Append(FormatAmount(amount, item));
                             break;
                         case "PAYMENT AMOUNT C":
-                            amount = GetFieldValue(item, dataValue: data);
+                            amount = GetFieldValue(item);
                             augustAmount = augustAmount + Convert.ToDecimal(amount);
                             fileData.Append(FormatAmount(amount, item));
                             break;
                         case "PAYMENT AMOUNT D":
-                            amount = GetFieldValue(item, dataValue: data);
+                            amount = GetFieldValue(item);
                             septemberAmount = septemberAmount + Convert.ToDecimal(amount);
                             fileData.Append(FormatAmount(amount, item));
                             break;
                         case "PAYMENT AMOUNT E":
-                            amount = GetFieldValue(item, dataValue: data);
+                            amount = GetFieldValue(item);
                             octoberAmount = octoberAmount + Convert.ToDecimal(amount);
                             fileData.Append(FormatAmount(amount, item));
                             break;
                         case "PAYMENT AMOUNT F":
-                            amount = GetFieldValue(item, dataValue: data);
+                            amount = GetFieldValue(item);
                             novemberAmount = novemberAmount + Convert.ToDecimal(amount);
                             fileData.Append(FormatAmount(amount, item));
                             break;
                         case "PAYMENT AMOUNT G":
-                            amount = GetFieldValue(item, dataValue: data);
+                            amount = GetFieldValue(item);
                             decemberAmount = decemberAmount + Convert.ToDecimal(amount);
                             fileData.Append(FormatAmount(amount, item));
                             break;
                         case "STATE INCOME TAX WITHHELD":
-                            amount = GetFieldValue(item, dataValue: data);
+                            amount = GetFieldValue(item);
                             stateWithHolding = stateWithHolding + Convert.ToDecimal(amount);
                             fileData.Append(FormatAmount(amount, item));
                             break;
                         case "LOCAL INCOME TAX WITHHELD":
-                            amount = GetFieldValue(item, dataValue: data);
+                            amount = GetFieldValue(item);
                             localWithHolding = localWithHolding + Convert.ToDecimal(amount);
                             fileData.Append(FormatAmount(amount, item));
                             break;
                         default:
-                            fileData.Append(GetFieldValue(item, dataValue: data));
+                            fileData.Append(GetFieldValue(item));
                             break;
                     }
                 }
@@ -329,110 +364,173 @@ namespace Bill2Pay.GenerateIRSFile
         {
             Records tRecords = records.FirstOrDefault(x => x.RecordType == "K");
 
-            foreach (Field item in tRecords.Fields)
-            {
-                switch (item.Name.ToUpper())
+            var states = cfsfStates.Select(x => x.State).ToList();
+
+            var stateWieSummary = importDetaiils.Join(cfsfStates, d=> d.PayeeState, s=> s.State, (d,s)=> new {details=d, state=s } )
+                .Where(x => x.details.IsActive == true)
+                .Where(xy => selectedAccounts.Contains(xy.details.AccountNo))
+                .Where(y => states.Contains(y.details.PayeeState))
+                .GroupBy(x => x.state.Code)
+                .Select(s => new
                 {
-                    case "RECORD SEQUENCE NUMBER":
-                        item.Default = recordSequenceNumber.ToString();
-                        fileData.Append(GetFieldValue(item));
-                        recordSequenceNumber++;
-                        break;
-                    case "NUMBER OF PAYEES":
-                        item.Default = numberofPayee.ToString();
-                        fileData.Append(GetFieldValue(item));
-                        break;
-                    case "CONTROL TOTAL 1":
-                        item.Default = grossAmount.ToString();
-                        amount = GetFieldValue(item);
-                        fileData.Append(FormatAmount(amount, item));
-                        break;
-                    case "CONTROL TOTAL 2":
-                        item.Default = cnpTransactionAmount.ToString();
-                        amount = GetFieldValue(item);
-                        fileData.Append(FormatAmount(amount, item));
-                        break;
-                    case "CONTROL TOTAL 3":
-                        fileData.Append(GetFieldValue(item));
-                        break;
-                    case "CONTROL TOTAL 4":
-                        item.Default = federalWithHoldingAmount.ToString();
-                        amount = GetFieldValue(item);
-                        fileData.Append(FormatAmount(amount, item));
-                        break;
-                    case "CONTROL TOTAL 5":
-                        item.Default = januaryAmount.ToString();
-                        amount = GetFieldValue(item);
-                        fileData.Append(FormatAmount(amount, item));
-                        break;
-                    case "CONTROL TOTAL 6":
-                        item.Default = februaryAmount.ToString();
-                        amount = GetFieldValue(item);
-                        fileData.Append(FormatAmount(amount, item));
-                        break;
-                    case "CONTROL TOTAL 7":
-                        item.Default = marchAmount.ToString();
-                        amount = GetFieldValue(item);
-                        fileData.Append(FormatAmount(amount, item));
-                        break;
-                    case "CONTROL TOTAL 8":
-                        item.Default = aprilAmount.ToString();
-                        amount = GetFieldValue(item);
-                        fileData.Append(FormatAmount(amount, item));
-                        break;
-                    case "CONTROL TOTAL 9":
-                        item.Default = mayAmount.ToString();
-                        amount = GetFieldValue(item);
-                        fileData.Append(FormatAmount(amount, item));
-                        break;
-                    case "CONTROL TOTAL A":
-                        item.Default = juneAmount.ToString();
-                        amount = GetFieldValue(item);
-                        fileData.Append(FormatAmount(amount, item));
-                        break;
-                    case "CONTROL TOTAL B":
-                        item.Default = julyAmount.ToString();
-                        amount = GetFieldValue(item);
-                        fileData.Append(FormatAmount(amount, item));
-                        break;
-                    case "CONTROL TOTAL C":
-                        item.Default = augustAmount.ToString();
-                        amount = GetFieldValue(item);
-                        fileData.Append(FormatAmount(amount, item));
-                        break;
-                    case "CONTROL TOTAL D":
-                        item.Default = septemberAmount.ToString();
-                        amount = GetFieldValue(item);
-                        fileData.Append(FormatAmount(amount, item));
-                        break;
-                    case "CONTROL TOTAL E":
-                        item.Default = octoberAmount.ToString();
-                        amount = GetFieldValue(item);
-                        fileData.Append(FormatAmount(amount, item));
-                        break;
-                    case "CONTROL TOTAL F":
-                        item.Default = novemberAmount.ToString();
-                        amount = GetFieldValue(item);
-                        fileData.Append(FormatAmount(amount, item));
-                        break;
-                    case "CONTROL TOTAL G":
-                        item.Default = decemberAmount.ToString();
-                        amount = GetFieldValue(item);
-                        fileData.Append(FormatAmount(amount, item));
-                        break;
-                    case "STATE INCOME TAX WITHHELD TOTAL":
-                        item.Default = stateWithHolding.ToString();
-                        amount = GetFieldValue(item);
-                        fileData.Append(FormatAmount(amount, item));
-                        break;
-                    case "LOCAL INCOME TAX WITHHELD TOTAL":
-                        item.Default = localWithHolding.ToString();
-                        amount = GetFieldValue(item);
-                        fileData.Append(FormatAmount(amount, item));
-                        break;
-                    default:
-                        fileData.Append(GetFieldValue(item));
-                        break;
+                    state = s.Key,
+                    count = s.Count(),
+                    jan = s.Sum(w => w.details.JanuaryAmount),
+                    feb = s.Sum(w => w.details.FebruaryAmount),
+                    mar = s.Sum(w => w.details.MarchAmount),
+                    apr = s.Sum(w => w.details.AprilAmount),
+                    may = s.Sum(w => w.details.MayAmount),
+                    jun = s.Sum(w => w.details.JuneAmount),
+                    jul = s.Sum(w => w.details.JulyAmount),
+                    aug = s.Sum(w => w.details.AugustAmount),
+                    sep = s.Sum(w => w.details.SeptemberAmount),
+                    oct = s.Sum(w => w.details.OctoberAmount),
+                    nov = s.Sum(w => w.details.NovemberAmount),
+                    dec = s.Sum(w => w.details.DecemberAmount),
+                    stateWH = s.Sum(w => w.details.StateWithHolding),
+                    localWH = s.Sum(w => w.details.LocalWithHolding),
+                    gross = s.Sum(w => w.details.GrossAmount),
+                    cnp = s.Sum(w => w.details.CNPTransactionAmount),
+                    fWH = s.Sum(w => w.details.FederalWithHoldingAmount)
+                }).ToList();
+            //var stateWieSummary = dbContext.ImportDetails.Where(x => x.IsActive == true)
+            //    .Where(xy => selectedAccounts.Contains(xy.AccountNo))
+            //    .Where(y => states.Contains(y.PayeeState))
+            //    .GroupBy(x => x.PayeeState)
+            //    .Select(s => new
+            //    {
+            //        state = s.Key,
+            //        count = s.Count(),
+            //        jan = s.Sum(w => w.JanuaryAmount),
+            //        feb = s.Sum(w => w.FebruaryAmount),
+            //        mar = s.Sum(w => w.MarchAmount),
+            //        apr = s.Sum(w => w.AprilAmount),
+            //        may = s.Sum(w => w.MayAmount),
+            //        jun = s.Sum(w => w.JuneAmount),
+            //        jul = s.Sum(w => w.JulyAmount),
+            //        aug = s.Sum(w => w.AugustAmount),
+            //        sep = s.Sum(w => w.SeptemberAmount),
+            //        oct = s.Sum(w => w.OctoberAmount),
+            //        nov = s.Sum(w => w.NovemberAmount),
+            //        dec = s.Sum(w => w.DecemberAmount),
+            //        stateWH = s.Sum(w => w.StateWithHolding),
+            //        localWH = s.Sum(w => w.LocalWithHolding),
+            //        gross = s.Sum(w => w.GrossAmount),
+            //        cnp = s.Sum(w => w.CNPTransactionAmount),
+            //        fWH = s.Sum(w => w.FederalWithHoldingAmount)
+            //    }).ToList();
+
+            foreach (var data in stateWieSummary)
+            {
+                foreach (Field item in tRecords.Fields)
+                {
+                    switch (item.Name.ToUpper())
+                    {
+                        case "RECORD SEQUENCE NUMBER":
+                            item.Default = recordSequenceNumber.ToString();
+                            fileData.Append(GetFieldValue(item));
+                            recordSequenceNumber++;
+                            break;
+                        case "NUMBER OF PAYEES":
+                            item.Default = data.count.ToString();
+                            fileData.Append(GetFieldValue(item));
+                            break;
+                        case "CONTROL TOTAL 1":
+                            item.Default = data.gross.ToString();
+                            amount = GetFieldValue(item);
+                            fileData.Append(FormatAmount(amount, item));
+                            break;
+                        case "CONTROL TOTAL 2":
+                            item.Default = data.cnp.ToString();
+                            amount = GetFieldValue(item);
+                            fileData.Append(FormatAmount(amount, item));
+                            break;
+                        case "CONTROL TOTAL 3":
+                            fileData.Append(GetFieldValue(item));
+                            break;
+                        case "CONTROL TOTAL 4":
+                            item.Default = data.fWH.ToString();
+                            amount = GetFieldValue(item);
+                            fileData.Append(FormatAmount(amount, item));
+                            break;
+                        case "CONTROL TOTAL 5":
+                            item.Default = data.jan.ToString();
+                            amount = GetFieldValue(item);
+                            fileData.Append(FormatAmount(amount, item));
+                            break;
+                        case "CONTROL TOTAL 6":
+                            item.Default = data.feb.ToString();
+                            amount = GetFieldValue(item);
+                            fileData.Append(FormatAmount(amount, item));
+                            break;
+                        case "CONTROL TOTAL 7":
+                            item.Default = data.mar.ToString();
+                            amount = GetFieldValue(item);
+                            fileData.Append(FormatAmount(amount, item));
+                            break;
+                        case "CONTROL TOTAL 8":
+                            item.Default = data.apr.ToString();
+                            amount = GetFieldValue(item);
+                            fileData.Append(FormatAmount(amount, item));
+                            break;
+                        case "CONTROL TOTAL 9":
+                            item.Default = data.may.ToString();
+                            amount = GetFieldValue(item);
+                            fileData.Append(FormatAmount(amount, item));
+                            break;
+                        case "CONTROL TOTAL A":
+                            item.Default = data.jun.ToString();
+                            amount = GetFieldValue(item);
+                            fileData.Append(FormatAmount(amount, item));
+                            break;
+                        case "CONTROL TOTAL B":
+                            item.Default = data.jul.ToString();
+                            amount = GetFieldValue(item);
+                            fileData.Append(FormatAmount(amount, item));
+                            break;
+                        case "CONTROL TOTAL C":
+                            item.Default = data.aug.ToString();
+                            amount = GetFieldValue(item);
+                            fileData.Append(FormatAmount(amount, item));
+                            break;
+                        case "CONTROL TOTAL D":
+                            item.Default = data.sep.ToString();
+                            amount = GetFieldValue(item);
+                            fileData.Append(FormatAmount(amount, item));
+                            break;
+                        case "CONTROL TOTAL E":
+                            item.Default = data.oct.ToString();
+                            amount = GetFieldValue(item);
+                            fileData.Append(FormatAmount(amount, item));
+                            break;
+                        case "CONTROL TOTAL F":
+                            item.Default = data.nov.ToString();
+                            amount = GetFieldValue(item);
+                            fileData.Append(FormatAmount(amount, item));
+                            break;
+                        case "CONTROL TOTAL G":
+                            item.Default = data.dec.ToString();
+                            amount = GetFieldValue(item);
+                            fileData.Append(FormatAmount(amount, item));
+                            break;
+                        case "STATE INCOME TAX WITHHELD TOTAL":
+                            item.Default = data.stateWH.ToString();
+                            amount = GetFieldValue(item);
+                            fileData.Append(FormatAmount(amount, item));
+                            break;
+                        case "LOCAL INCOME TAX WITHHELD TOTAL":
+                            item.Default = data.localWH.ToString();
+                            amount = GetFieldValue(item);
+                            fileData.Append(FormatAmount(amount, item));
+                            break;
+                        case "COMBINED FEDERAL/STATE CODE":
+                            item.Default = data.state;
+                            fileData.Append(GetFieldValue(item));
+                            break;
+                        default:
+                            fileData.Append(GetFieldValue(item));
+                            break;
+                    }
                 }
             }
         }
@@ -450,7 +548,7 @@ namespace Bill2Pay.GenerateIRSFile
                         recordSequenceNumber++;
                         break;
                     case "TOTAL NUMBER OF PAYEES":
-                        item.Default = numberofPayee.ToString();
+                        item.Default = totalNumberofPayee.ToString();
                         fileData.Append(GetFieldValue(item));
                         break;
                     default:
@@ -459,22 +557,22 @@ namespace Bill2Pay.GenerateIRSFile
                 }
             }
         }
-        private string GetFieldValue(Field field, Model.ValueType valueType = Model.ValueType.Defalut, ImportDetail dataValue = null)
+        private string GetFieldValues(Field field, Model.ValueType valueType = Model.ValueType.Defalut, ImportDetail dataValue = null)
         {
             string value = string.Empty;
             if (!string.IsNullOrEmpty(field.Data))
             {
                 if (dataValue == null)
                 {
-                    System.Reflection.PropertyInfo pi = summaryTableData.GetType().GetProperty(field.Data.Trim());
+                    System.Reflection.PropertyInfo pi = importSummaries.GetType().GetProperty(field.Data.Trim());
                     if (pi != null)
                     {
-                        value = (pi.GetValue(summaryTableData, null)).ToString();
+                        value = (pi.GetValue(importSummaries, null)).ToString();
                     }
                     else
                     {
-                        pi = detailTableData.GetType().GetProperty(field.Data.Trim());
-                        value = (pi.GetValue(detailTableData, null)).ToString();
+                        pi = importDetaiils.GetType().GetProperty(field.Data.Trim());
+                        value = (pi.GetValue(importDetaiils, null)).ToString();
                     }
                 }
                 else
@@ -505,6 +603,50 @@ namespace Bill2Pay.GenerateIRSFile
             }
             return field.PadValue(value);
         }
+        private string GetFieldValue(Field field, Model.ValueType valueType = Model.ValueType.Defalut)
+        {
+            string value = string.Empty;
+            System.Reflection.PropertyInfo pi = null;
+
+            if (!string.IsNullOrEmpty(field.Table) && !string.IsNullOrEmpty(field.Data))
+            {
+                switch (field.Table.ToUpper())
+                {
+                    case "IMPORTDETAILS":
+                        if (!string.IsNullOrEmpty(currentAccountNumber))
+                        {
+                            var importDetail = importDetaiils.FirstOrDefault(x => x.AccountNo.Equals(currentAccountNumber));
+                            pi = importDetail.GetType().GetProperty(field.Data.Trim());
+                            value = Convert.ToString((pi.GetValue(importDetail, null)));
+                        }
+                        break;
+                    case "IMPORTSUMMARIES":
+                        pi = importSummaries.GetType().GetProperty(field.Data.Trim());
+                        value = Convert.ToString((pi.GetValue(importSummaries, null)));
+                        break;
+                    case "PAYERDETAILS":
+                        var payer = payerDetails.FirstOrDefault(x => x.Id.Equals(currentPayer));
+                        pi = payer.GetType().GetProperty(field.Data.Trim());
+                        value = Convert.ToString((pi.GetValue(payer, null)));
+                        break;
+                    case "TRANSMITTERDETAILS":
+                        pi = transmitterDetails.GetType().GetProperty(field.Data.Trim());
+                        value = Convert.ToString(pi.GetValue(transmitterDetails, null));
+                        break;
+                }
+            }
+            else if (field.Default.Equals("\n"))
+                value = field.Default.Replace("\n", Environment.NewLine);
+            else
+            {
+                if (valueType == Model.ValueType.Defalut)
+                    value = field.Default.Trim();
+                else
+                    value = field.Alternate.Trim();
+            }
+
+            return field.PadValue(value);
+        }
         private string FormatAmount(string value, Field field)
         {
             value = value.Replace(".", "").Replace(",", "").Replace("$", "");
@@ -528,7 +670,7 @@ namespace Bill2Pay.GenerateIRSFile
         {
             int submissionSummaryId = SaveSubmissionSummary();
 
-            foreach (var item in detailTableData)
+            foreach (var item in importDetaiils)
             {
                 var submissionDetails = new SubmissionDetail();
 
@@ -584,9 +726,9 @@ namespace Bill2Pay.GenerateIRSFile
         private void SaveSubmissionStatus(string accountNo, int statusId)
         {
             var submissionStatus = new SubmissionStatus();
-            var previousData = dbContext.SubmissionStatus.Where(x=> x.AccountNumber.Equals(accountNo) && x.PaymentYear.Equals(paymentYear) && x.IsActive==true).ToList();
+            var previousData = dbContext.SubmissionStatus.Where(x => x.AccountNumber.Equals(accountNo) && x.PaymentYear.Equals(paymentYear) && x.IsActive == true).ToList();
 
-            if(previousData!=null)
+            if (previousData != null)
             {
                 foreach (var item in previousData)
                 {
@@ -610,139 +752,143 @@ namespace Bill2Pay.GenerateIRSFile
                 switch (item.Name.ToUpper())
                 {
                     case "TRANSMITTER’S TIN":
-                        pseMaster.TransmitterTIN = item.Default;
+                        pseDetails.TransmitterTIN = item.Default;
                         break;
                     case "TRANSMITTER CONTROL CODE":
-                        pseMaster.TransmitterControlCode = item.Default;
+                        pseDetails.TransmitterControlCode = item.Default;
                         break;
                     case "TEST FILE INDICATOR":
-                        pseMaster.TestFileIndicator = testFileIndicator ? "T" : " ";
+                        pseDetails.TestFileIndicator = testFileIndicator ? "T" : " ";
                         break;
                     case "FOREIGN ENTITY INDICATOR":
-                        pseMaster.TransmitterForeignEntityIndicator = item.Default;
+                        pseDetails.TransmitterForeignEntityIndicator = item.Default;
                         break;
                     case "TRANSMITTER NAME":
-                        pseMaster.TransmitterName = item.Default;
+                        pseDetails.TransmitterName = item.Default;
                         break;
                     case "TRANSMITTER NAME (CONTINUATION)":
-                        pseMaster.TransmitterNameContinued = item.Default;
+                        pseDetails.TransmitterNameContinued = item.Default;
                         break;
                     case "COMPANY NAME":
-                        pseMaster.CompanyName = item.Default;
+                        pseDetails.CompanyName = item.Default;
                         break;
                     case "COMPANY NAME (CONTINUATION)":
-                        pseMaster.CompanyNameContinued = item.Default;
+                        pseDetails.CompanyNameContinued = item.Default;
                         break;
                     case "COMPANY MAILING ADDRESS":
-                        pseMaster.CompanyMailingAddress = item.Default;
+                        pseDetails.CompanyMailingAddress = item.Default;
                         break;
                     case "COMPANY CITY":
-                        pseMaster.CompanyCity = item.Default;
+                        pseDetails.CompanyCity = item.Default;
                         break;
                     case "COMPANY STATE":
-                        pseMaster.CompanyState = item.Default;
+                        pseDetails.CompanyState = item.Default;
                         break;
                     case "COMPANY ZIP CODE":
-                        pseMaster.CompanyZIP = item.Default;
+                        pseDetails.CompanyZIP = item.Default;
                         break;
                     case "TOTAL NUMBER OF PAYEES":
-                        pseMaster.TotalNumberofPayees = numberofPayee;
+                        pseDetails.TotalNumberofPayees = numberofPayee;
                         break;
                     case "CONTACT NAME":
-                        pseMaster.ContactName = item.Default;
+                        pseDetails.ContactName = item.Default;
                         break;
                     case "CONTACT TELEPHONE NUMBER & EXTENSION":
-                        pseMaster.ContactTelephoneNumber = item.Default;
+                        pseDetails.ContactTelephoneNumber = item.Default;
                         break;
                     case "CONTACT EMAIL ADDRESS":
-                        pseMaster.ContactEmailAddress = item.Default;
+                        pseDetails.ContactEmailAddress = item.Default;
                         break;
                     case "VENDOR INDICATOR":
-                        pseMaster.VendorIndicator = item.Default;
+                        pseDetails.VendorIndicator = item.Default;
                         break;
                     case "VENDOR NAME":
-                        pseMaster.VendorName = item.Default;
+                        pseDetails.VendorName = item.Default;
                         break;
                     case "VENDOR MAILING ADDRESS":
-                        pseMaster.VendorMailingAddress = item.Default;
+                        pseDetails.VendorMailingAddress = item.Default;
                         break;
                     case "VENDOR CITY":
-                        pseMaster.VendorCity = item.Default;
+                        pseDetails.VendorCity = item.Default;
                         break;
                     case "VENDOR STATE":
-                        pseMaster.VendorState = item.Default;
+                        pseDetails.VendorState = item.Default;
                         break;
                     case "VENDOR ZIP CODE":
-                        pseMaster.VendorZIP = item.Default;
+                        pseDetails.VendorZIP = item.Default;
                         break;
                     case "VENDOR CONTACT NAME":
-                        pseMaster.VendorContactName = item.Default;
+                        pseDetails.VendorContactName = item.Default;
                         break;
                     case "VENDOR CONTACT TELEPHONE NUMBER & EXTENSION":
-                        pseMaster.VendorContactTelephoneNumber = item.Default;
+                        pseDetails.VendorContactTelephoneNumber = item.Default;
                         break;
                     case "VENDOR FOREIGN ENTITY INDICATOR":
-                        pseMaster.VendorForeignEntityIndicator = item.Default;
+                        pseDetails.VendorForeignEntityIndicator = item.Default;
                         break;
                     case "COMBINED FEDERAL/STATE FILING PROGRAM":
-                        pseMaster.CFSF = item.Default;
+                        pseDetails.CFSF = item.Default;
                         break;
                     case "PAYER’S TAXPAYER IDENTIFICATION NUMBER (TIN)":
-                        pseMaster.PayerTIN = item.Default;
+                        pseDetails.PayerTIN = item.Default;
                         break;
                     case "PAYER NAME CONTROL":
-                        pseMaster.PayerNameControl = item.Default;
+                        pseDetails.PayerNameControl = item.Default;
                         break;
                     case "LAST FILING INDICATOR":
-                        pseMaster.LastFilingIndicator = item.Default;
+                        pseDetails.LastFilingIndicator = item.Default;
                         break;
                     case "TYPE OF RETURN":
-                        pseMaster.ReturnType = item.Default;
+                        pseDetails.ReturnType = item.Default;
                         break;
                     case "FIRST PAYER NAME LINE":
-                        pseMaster.FirstPayerName = item.Default;
+                        pseDetails.FirstPayerName = item.Default;
                         break;
                     case "SECOND PAYER NAME LINE":
-                        pseMaster.SecondPayerName = item.Default;
+                        pseDetails.SecondPayerName = item.Default;
                         break;
                     case "TRANSFER AGENT INDICATOR":
-                        pseMaster.TransferAgentIndicator = item.Default;
+                        pseDetails.TransferAgentIndicator = item.Default;
                         break;
                     case "PAYER SHIPPING ADDRESS":
-                        pseMaster.PayerShippingAddress = item.Default;
+                        pseDetails.PayerShippingAddress = item.Default;
                         break;
                     case "PAYER CITY":
-                        pseMaster.PayerCity = item.Default;
+                        pseDetails.PayerCity = item.Default;
                         break;
                     case "PAYER STATE":
-                        pseMaster.PayerState = item.Default;
+                        pseDetails.PayerState = item.Default;
                         break;
                     case "PAYER ZIP CODE":
-                        pseMaster.PayerZIP = item.Default;
+                        pseDetails.PayerZIP = item.Default;
                         break;
                     case "PAYER’S TELEPHONE NUMBER AND EXTENSION":
-                        pseMaster.PayerTelephoneNumber = item.Default;
+                        pseDetails.PayerTelephoneNumber = item.Default;
                         break;
                     default:
                         break;
-                        
+
                 }
-                pseMaster.DateAdded = DateTime.Now;
+                pseDetails.DateAdded = DateTime.Now;
             }
         }
         public void ReadFromSchemaFile()
         {
             string path = string.Empty;
-            var jsonpath = string.Format(@"{0}App_Data\IRSFileFields.json", HostingEnvironment.ApplicationPhysicalPath);
+            var jsonPath = string.Format(@"{0}App_Data\IRSFileFields.json", HostingEnvironment.ApplicationPhysicalPath);
+            var cfsfPath = string.Format(@"{0}App_Data\CFSFStates.json", HostingEnvironment.ApplicationPhysicalPath);
             if (testFileIndicator)
                 path = string.Format(@"{0}App_Data\Download\Irs\IRSInputFile_Test.txt", HostingEnvironment.ApplicationPhysicalPath);
             else
                 path = string.Format(@"{0}App_Data\Download\Irs\IRSInputFile.txt", HostingEnvironment.ApplicationPhysicalPath);
 
-            var json = File.ReadAllText(jsonpath);
+            var json = File.ReadAllText(jsonPath);
+            var cfsfJson = File.ReadAllText(cfsfPath);
+
 
 
             records = JsonConvert.DeserializeObject<List<Records>>(json);
+            cfsfStates = JsonConvert.DeserializeObject<List<CFSFStates>>(cfsfJson);
 
             GenerateETaxFile();
 
@@ -793,9 +939,9 @@ namespace Bill2Pay.GenerateIRSFile
         {
             GenerateTRecord();
             GenerateARecord();
-            GenerateBRecord();
-            GenerateCRecord();
-            GenerateKRecord();
+            //GenerateBRecord();
+            //GenerateCRecord();
+            //GenerateKRecord();
             GenerateFRecord();
         }
     }

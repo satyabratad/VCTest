@@ -16,7 +16,7 @@ namespace Bill2Pay.GenerateIRSFile.Model
         public FieldType Type { get; set; }
         public string Data { get; set; }
         public Alignment Alignment { get; set; }
-
+        public string Table { get; set; }
         public string PadValue(string value)
         {
             string newValue = string.Empty;
