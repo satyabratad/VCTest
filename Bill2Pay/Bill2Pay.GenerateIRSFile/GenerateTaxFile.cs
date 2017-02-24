@@ -83,7 +83,7 @@ namespace Bill2Pay.GenerateIRSFile
                         recordSequenceNumber++;
                         break;
                     case "TOTAL NUMBER OF PAYEES":
-                        item.Default = numberofPayee.ToString();
+                        item.Default = selectedAccounts.Count.ToString();
                         fileData.Append(GetFieldValue(item));
                         break;
                     default:
