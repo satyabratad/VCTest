@@ -3,22 +3,12 @@
 <div class="col-md-12">
     <div class="col-md-2 text-bold left-justified">Select Year</div>
     <div class="col-md-4">
-        @if (@Model.AllowPostback)
-        {
-            <select name="ddlYear" onchange="SelectYear(this)" style="min-width:150px;" required>
-                <option value="">-- Select Year --</option>
-                <option value="2016" @Bill2Pay.Web.MenuGenerator.IsSelected(2016)>2016</option>
-                <option value="2017" @Bill2Pay.Web.MenuGenerator.IsSelected(2017)>2017</option>
-            </select>
-        }
-        else
-        {
-            <select name="ddlYear" style="min-width:150px;" required>
-                <option value="">-- Select Year --</option>
-                <option value="2016" @Bill2Pay.Web.MenuGenerator.IsSelected(2016)>2016</option>
-                <option value="2017" @Bill2Pay.Web.MenuGenerator.IsSelected(2017)>2017</option>
-            </select>
-        }
+        <select name="ddlYear" onchange="SelectYear(this)" style="min-width:150px;" required>
+            <option value="">-- Select Year --</option>
+            <option value="2016" @Bill2Pay.Web.MenuGenerator.IsSelected(2016)>2016</option>
+            <option value="2017" @Bill2Pay.Web.MenuGenerator.IsSelected(2017)>2017</option>
+        </select>
+        
     </div>
 </div>
 <div class="col-md-12" style="height:5px;">
@@ -28,11 +18,11 @@
 
     <div class="col-md-2 text-bold left-justified">Select Payer</div>
     <div class="col-md-4">
-        <select name="ddlPayer" style="min-width:150px;" required>
-            <option value="">-- Select Payer --</option>
+        <select name="ddlPayer" style="min-width:150px;" onchange="SelectPayer(this)" required>
+            <option value="0">-- All --</option>
             @foreach (var payer in ApplicationDbContext.Instence.PayerDetails.Where(p=>p.IsActive))
             {
-                <option value="@payer.Id" @Bill2Pay.Web.MenuGenerator.IsSelected(payer.Id)>@payer.FirstPayerName</option>
+                <option value="@payer.Id" @Bill2Pay.Web.MenuGenerator.IsSelectedPayer(payer.Id)>@payer.FirstPayerName</option>
             }
         </select>
 
@@ -47,10 +37,22 @@
 
 
 <script>
+    var AllowSubmit = '@Model.AllowPostback';
+
+    var year = @(Request.RequestContext.RouteData.Values["ID"] == null ? 0: Request.RequestContext.RouteData.Values["ID"]);
+    var payer = @(Request["payer"] == null ? "0" : Request["payer"]);
     SelectYear = function (oBj) {
-        var y = $(oBj).val();
-        if (y > 0) {
-            location.href = '@Url.Content("~/"+Bill2Pay.Web.MenuGenerator.CurrentUrl)' + y;
+        year = $(oBj).val();
+        Redirect();
+    }
+    SelectPayer = function (oBj) {
+        payer = $(oBj).val();
+        Redirect();
+
+    }
+    Redirect = function () {
+        if (AllowSubmit == 'True' && year > 0 ) {
+            location.href = '@Url.Content("~/"+Bill2Pay.Web.MenuGenerator.CurrentUrl)' + year + '/?payer=' + payer;
         }
     }
 </script>

@@ -78,6 +78,22 @@ namespace Bill2Pay.Web
             }
             return value;
         }
+
+        public static string IsSelectedPayer(int item)
+        {
+            var value = "";
+            var selectedItem = -1;
+            if (HttpContext.Current.Request["payer"] != null)
+            {
+                selectedItem = Convert.ToInt32(HttpContext.Current.Request["payer"]);
+            }
+
+            if (selectedItem == item)
+            {
+                value = "selected";
+            }
+            return value;
+        }
     }
 
     public class Menu
