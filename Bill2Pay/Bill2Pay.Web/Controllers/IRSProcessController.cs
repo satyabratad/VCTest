@@ -139,12 +139,12 @@ namespace Bill2Pay.Web.Controllers
         public ActionResult IRSFireTestFile()
         {
             List<string> selectedMerchants = (List<string>)TempData["CheckedMerchantList"];
-            Int32 year = Convert.ToInt32(TempData["year"]);
-            //if (selectedMerchants.Count == 0)
-            //{
-            //    TempData["errorMessage"] = "Select atleast one record to generate IRS Test File";
-            //    return RedirectToAction("Index", "Home");
-            //}
+            Int32 year = Convert.ToInt32(TempData["SelectedYear"]);
+            if (selectedMerchants.Count == 0)
+            {
+                TempData["errorMessage"] = "Select atleast one record to generate IRS Test File";
+                return RedirectToAction("Index", "Home");
+            }
             List<string> payer = new List<string> { "8" };
             GenerateTaxFile taxFile = new GenerateTaxFile(true, year, User.Identity.GetUserId<long>(), selectedMerchants, payer);
 
@@ -158,19 +158,19 @@ namespace Bill2Pay.Web.Controllers
                 return HttpNotFound();
             }
 
-            var fileBytes = System.IO.File.ReadAllBytes(path);
-            var response = new FileContentResult(fileBytes, "application/octet-stream")
-            {
-                FileDownloadName = "IRSInputFile_Test.txt"
-            };
-            return response;
+            //var fileBytes = System.IO.File.ReadAllBytes(path);
+            //var response = new FileContentResult(fileBytes, "application/octet-stream")
+            //{
+            //    FileDownloadName = "IRSInputFile_Test.txt"
+            //};
+            return File(path,"text", "IRSInputFile_Test.txt");
         }
 
         public ActionResult IRSFireFile()
         {
             List<string> selectedMerchants = (List<string>)TempData["CheckedMerchantList"];
             
-            Int32 year = Convert.ToInt32(TempData["year"]);
+            Int32 year = Convert.ToInt32(TempData["SelectedYear"]);
 
             string errorTINResult = "1,2,3,4,5";
 
@@ -212,12 +212,13 @@ namespace Bill2Pay.Web.Controllers
                 return HttpNotFound();
             }
 
-            var fileBytes = System.IO.File.ReadAllBytes(path);
-            var response = new FileContentResult(fileBytes, "application/octet-stream")
-            {
-                FileDownloadName = "IRSInputFile.txt"
-            };
-            return response;
+            //var fileBytes = System.IO.File.ReadAllBytes(path);
+            //var response = new FileContentResult(fileBytes, "application/octet-stream")
+            //{
+            //    FileDownloadName = "IRSInputFile.txt"
+            //};
+            //return response;
+            return File(path, "text", "IRSInputFile.txt");
         }
 
         public ActionResult IRScorrection()
