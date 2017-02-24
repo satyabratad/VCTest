@@ -24,25 +24,32 @@ namespace Bill2Pay.Web.Controllers
 
 
         // GET: IRSProcess
-        public ActionResult Index(int? Id)
+        public ActionResult Index(int? Id, int? payer)
         {
-            if(Id == null)
+            
+            List<MerchantListVM> merchantlst;
+            if(payer==null)
+            {
+                payer = 0;
+            }
+
+            if (Id == null)
             {
                 var year = DateTime.Now.Year - 1;
-                return RedirectToAction("Index", "IRSProcess", new { id = year });
+                return RedirectToAction("Index", "IRSProcess", new { id = year, payer = payer });
             }
             
             TempData["year"] = Id.ToString();
 
-
-            List<MerchantListVM> merchantlst = (dbContext.ImportDetails
-                            .Include("ImportSummary")
-                            .GroupJoin(dbContext.SubmissionStatus.Where(s=>s.IsActive==true), //   .DefaultIfEmpty(),
-                            imp => imp.AccountNo,
-                            stat => stat.AccountNumber ,                          
-                            (imp, stat) => new MerchantListVM() { ImportDetails = imp, SubmissionStatus = stat.FirstOrDefault() })
-                            .Where(x => x.ImportDetails.ImportSummary.PaymentYear == Id && x.ImportDetails.IsActive==true && x.ImportDetails.TIN !=null)
-                            ).OrderBy(x=>x.ImportDetails.AccountNo).ToList();
+            merchantlst = (dbContext.ImportDetails
+                               .Include("ImportSummary")
+                               .GroupJoin(dbContext.SubmissionStatus.Where(s => s.IsActive == true), 
+                               imp => imp.AccountNo,
+                               stat => stat.AccountNumber,
+                               (imp, stat) => new MerchantListVM() { ImportDetails = imp, SubmissionStatus = stat.FirstOrDefault() })
+                               .Where(x => x.ImportDetails.ImportSummary.PaymentYear == Id && x.ImportDetails.IsActive == true && x.ImportDetails.TIN != null
+                                       && (payer == 0 || x.ImportDetails.Merchant.PayerId == payer))
+                               ).OrderBy(x => x.ImportDetails.AccountNo).ToList();
 
            
             var merchantAccList = merchantlst.Select(t =>
@@ -66,12 +73,7 @@ namespace Bill2Pay.Web.Controllers
 
         public ActionResult Details(string Id)
         {
-            //var data = ApplicationDbContext.Instence
-            //    .SubmissionDetails
-            //    .Include("PSE")
-            //    .OrderByDescending(p => p.SubmissionId)
-            //    .FirstOrDefault(p => p.AccountNo.Equals(Id, StringComparison.OrdinalIgnoreCase) && p.IsActive == true);
-
+           
             var data = ApplicationDbContext.Instence
                 .ImportDetails
                 .Include("Merchant")
@@ -104,7 +106,7 @@ namespace Bill2Pay.Web.Controllers
             }
             if (!string.IsNullOrEmpty(Request.Form["tinmatching"]))
             {
-                //TODO: limit can be read from config file
+
                 if (checkedList.Count > 100000)
                 {
                     TempData["errorMessage"] = "Maximum 100000 merchant is allowed for TIN matching input.";
