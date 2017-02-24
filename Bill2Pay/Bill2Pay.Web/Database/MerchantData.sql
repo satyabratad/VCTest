@@ -1,33 +1,39 @@
-INSERT INTO Status (Name) values('Not Submitted')
+DELETE  FROM Status 
 GO
-INSERT INTO Status (Name) values('File Generated')
+INSERT INTO Status (Id,Name) values(1,'Not Submitted')
 GO
-INSERT INTO Status (Name) values('Correction Required')
+INSERT INTO Status (Id,Name) values(2,'File Generated')
 GO
-INSERT INTO Status (Name) values('CorrectionUploaded')
+INSERT INTO Status (Id,Name) values(3,'Correction Required')
 GO
-INSERT INTO Status (Name) values('ReSubmitted')
+INSERT INTO Status (Id,Name) values(4,'CorrectionUploaded')
 GO
-INSERT INTO Status (Name) values('Submitted')
+INSERT INTO Status (Id,Name) values(5,'ReSubmitted')
+GO
+INSERT INTO Status (Id,Name) values(6,'Submitted')
 GO
 
-INSERT INTO TINStatus (Name) values('Name TIN combination matches IRS records')
+
+TRUNCATE TABLE TINStatus 
 GO
-INSERT INTO TINStatus (Name) values('TIN was missing or TIN is not a 9 digit number')
+
+INSERT INTO TINStatus (Id,Name) values(0,'Name TIN combination matches IRS records')
 GO
-INSERT INTO TINStatus (Name) values('TIN entered is not currently issued')
+INSERT INTO TINStatus (Id,Name) values(1,'TIN was missing or TIN is not a 9 digit number')
 GO
-INSERT INTO TINStatus (Name) values('Name TIN combination do not match IRS records')
+INSERT INTO TINStatus (Id,Name) values(2,'TIN entered is not currently issued')
 GO
-INSERT INTO TINStatus (Name) values('Invalid TIN Matching request')
+INSERT INTO TINStatus (Id,Name) values(3,'Name TIN combination do not match IRS records')
 GO
-INSERT INTO TINStatus (Name) values('Duplicate TIN Matching request')
+INSERT INTO TINStatus (Id,Name) values(4,'Invalid TIN Matching request')
 GO
-INSERT INTO TINStatus (Name) values('Matched on SSN')
+INSERT INTO TINStatus (Id,Name) values(5,'Duplicate TIN Matching request')
 GO
-INSERT INTO TINStatus (Name) values('Matched on EIN')
+INSERT INTO TINStatus (Id,Name) values(6,'Matched on SSN')
 GO
-INSERT INTO TINStatus (Name) values('Matched on EIN and SSN')
+INSERT INTO TINStatus (Id,Name) values(7,'Matched on EIN')
+GO
+INSERT INTO TINStatus (Id,Name) values(8,'Matched on EIN and SSN')
 GO
 
 
