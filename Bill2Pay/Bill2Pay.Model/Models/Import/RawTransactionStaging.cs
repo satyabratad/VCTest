@@ -176,7 +176,7 @@ namespace Bill2Pay.Model
             }
         }
 
-        public static void ExecutePostImportDataProcessing(int year, long userId, string fileName, int totalCount)
+        public static void ExecutePostImportDataProcessing(int year, long userId, string fileName, int totalCount,int payerId)
         {
             try
             {
@@ -185,12 +185,12 @@ namespace Bill2Pay.Model
                 var userParam = new SqlParameter("@UserId", userId);
                 var totalParam = new SqlParameter("@TotalCount", totalCount);
                 var fileParam = new SqlParameter("@FileName", fileName);
-
+                var payerParam = new SqlParameter("@PayerId", payerId);
 
                 ApplicationDbContext.Instence.Database.CommandTimeout = RawTransactionStaging.ProcessTimeOut;
 
                 var result = ApplicationDbContext.Instence.Database
-                    .ExecuteSqlCommand("PostImportDataProcessing @YEAR, @UserId, @TotalCount, @FileName", yearParam, userParam, totalParam, fileParam);
+                    .ExecuteSqlCommand("PostImportDataProcessing @YEAR, @UserId, @TotalCount, @FileName,@PayerId", yearParam, userParam, totalParam, fileParam, payerParam);
 
             }
             catch (Exception ex)

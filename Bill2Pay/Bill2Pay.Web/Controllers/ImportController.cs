@@ -43,7 +43,7 @@ namespace Bill2Pay.Web.Controllers
 
             var importSummary = ApplicationDbContext.Instence.ImportSummary
                 .OrderByDescending(p => p.ImportDate).FirstOrDefault();
-            if(importSummary == null)
+            if (importSummary == null)
             {
                 importSummary = new ImportSummary();
                 importSummary.ProcessLog = "";
@@ -57,7 +57,7 @@ namespace Bill2Pay.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Transaction(int? Id, HttpPostedFileBase fileBase)
+        public async Task<ActionResult> Transaction(int? Id, HttpPostedFileBase fileBase,int ddlPayer)
         {
             if (Id == null || Id < 2015)
             {
@@ -76,7 +76,15 @@ namespace Bill2Pay.Web.Controllers
                 {
                     ViewBag.ValidationMessage = "Unsupported file format.";
 
-                    return View();
+                    var importSummary = ApplicationDbContext.Instence.ImportSummary
+                            .OrderByDescending(p => p.ImportDate).FirstOrDefault();
+                    if (importSummary == null)
+                    {
+                        importSummary = new ImportSummary();
+                        importSummary.ProcessLog = "";
+                    }
+
+                    return View(importSummary);
                 }
 
 
@@ -87,7 +95,7 @@ namespace Bill2Pay.Web.Controllers
                 var path = Path.Combine(Server.MapPath("~/App_Data/Uploads/Transactions"), fileName);
                 fileBase.SaveAs(path);
 
-                utility.ProcessInputFileAsync(year, path, User.Identity.GetUserId<long>());
+                utility.ProcessInputFileAsync(year, path, User.Identity.GetUserId<long>(), ddlPayer);
 
 
                 return RedirectToAction("Transaction", new { Id = Id, Status = true });
@@ -96,7 +104,7 @@ namespace Bill2Pay.Web.Controllers
             return View();
         }
 
-        
+
 
         public ActionResult Tin(int? Id)
         {

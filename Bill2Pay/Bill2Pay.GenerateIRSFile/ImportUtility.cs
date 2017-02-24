@@ -20,14 +20,15 @@ namespace Bill2Pay.GenerateIRSFile
         int year;
         string fileName;
         long userId;
+        int payerId;
 
-        public void ProcessInputFileAsync(int year, string fileName, long UserId)
+        public void ProcessInputFileAsync(int year, string fileName, long UserId,int PayerId)
         {
             this.year = year;
             this.fileName = fileName;
             this.userId = UserId;
+            this.payerId = PayerId;
 
-            //Task.Factory.StartNew(this.ProcessInputFile);
             HostingEnvironment.QueueBackgroundWorkItem(clt => ProcessInputFile());
         }
 
@@ -146,17 +147,17 @@ namespace Bill2Pay.GenerateIRSFile
                     RawTransactionStaging.StagingTable.Rows.Clear();
 
                     var fName = Path.GetFileName(filename);
-                    ExecutePostImportDataProcessing(this.year, this.userId, fName, iteration);
+                    ExecutePostImportDataProcessing(this.year, this.userId, fName, iteration,this.payerId);
                 }
 
                 Logger.LogInstance.LogInfo("DB Import Completed");
             }
         }
 
-        private void ExecutePostImportDataProcessing(int year, long userId, string fileName, int totalCount)
+        private void ExecutePostImportDataProcessing(int year, long userId, string fileName, int totalCount,int payerId)
         {
             Logger.LogInstance.LogInfo("PostImportDataProcessing Starts year:'{0}' User:'{1}' FileName: '{2}' Total Count: {3}", year, userId, fileName, totalCount);
-            RawTransactionStaging.ExecutePostImportDataProcessing(year, userId, fileName, totalCount);
+            RawTransactionStaging.ExecutePostImportDataProcessing(year, userId, fileName, totalCount, payerId);
             Logger.LogInstance.LogInfo("PostImportDataProcessing Ends");
         }
 

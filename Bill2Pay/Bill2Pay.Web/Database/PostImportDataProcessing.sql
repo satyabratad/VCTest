@@ -2,7 +2,8 @@
 	@YEAR INT = 2016,
 	@UserId BIGINT=1,
 	@TotalCount INT=0,
-	@FileName VARCHAR(255)
+	@FileName VARCHAR(255),
+	@PayerId int
 AS
 	DECLARE 
 	@SummaryId INT,
@@ -188,7 +189,8 @@ AS
 
 	FROM @K1099SUMMARYCHART S
 	LEFT JOIN #OLD_DETAILS O ON S.PayeeAccountNumber = O.AccountNo
-	LEFT JOIN  [dbo].[MerchantDetails] D ON S.PayeeAccountNumber = D.PayeeAccountNumber AND D.IsActive = 1 AND D.PaymentYear = @YEAR
+	LEFT JOIN  [dbo].[MerchantDetails] D ON S.PayeeAccountNumber = D.PayeeAccountNumber 
+		AND D.IsActive = 1 AND D.PaymentYear = @YEAR AND D.PayerId = @PayerId
 	WHERE S.TransactionYear = @YEAR
 
 	SET @ProcessLog = @ProcessLog + 'Account Count: '+CAST(@@ROWCOUNT AS VARCHAR)+CHAR(13)+CHAR(10)
