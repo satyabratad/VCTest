@@ -254,9 +254,9 @@ namespace Bill2Pay.GenerateIRSFile
                             {
                                 var stateCode = cfsfStates.FirstOrDefault(x => x.State.ToUpper().Equals(data.PayeeState.Trim().ToUpper()));
                                 if (stateCode != null)
-                                {
                                     item.Default = Convert.ToString(stateCode.Code);
-                                }
+                                else
+                                    item.Default = " ";
                                 fileData.Append(GetFieldValue(item));
                             }
                             break;
