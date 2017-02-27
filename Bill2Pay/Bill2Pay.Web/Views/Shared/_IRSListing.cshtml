@@ -2,6 +2,12 @@
 
 <script>
     
+    function SetSelecAllMerchant()
+    {
+        $('.tblchk').attr('checked', $('#chkSelectAll').is(":checked"));
+    }
+
+
     function GetSelectedMerchant(accno) {
         
         var strAcnos = $('#checkedAccountNo').val();
@@ -85,7 +91,7 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th class="btn-primary"></th>
+                                <th class="btn-primary"><input id="chkSelectAll"  onclick="SetSelecAllMerchant();" type="checkbox" /></th>
                                 <th class="btn-primary">1099-K Copies</th>
                                 <th class="btn-primary">Account Number</th>
                                 <th class="btn-primary">TIN</th>
@@ -105,7 +111,7 @@
                                     {
                                         <tr>
                                             <td>
-                                                <input id="chkAccountNo" onclick="GetSelectedMerchant('@item.ImportDetails.AccountNo');" type="checkbox" />&nbsp;
+                                                <input id="chkAccountNo" class="tblchk" onclick="GetSelectedMerchant('@item.ImportDetails.AccountNo');" type="checkbox" />&nbsp;
                                             </td>
                                             <td style="width:100px">
 
