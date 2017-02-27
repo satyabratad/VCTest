@@ -1209,9 +1209,9 @@
         "Default": " ",
         "Alternate": "",
         "Type": "Alphanumeric",
-        "Data": "CFSF",
+        "Data": "",
         "Alignment": "Left",
-        "Table" : "ImportDetails"
+        "Table" : ""
       },
       {
         "Name": "Blank",

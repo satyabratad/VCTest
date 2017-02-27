@@ -41,6 +41,7 @@ namespace Bill2Pay.GenerateIRSFile
         List<string> payerIds;
         int pseMasterId = 0;
         int totalNumberofPayee = 0;
+        string cfsf = string.Empty;
         #endregion
         public GenerateTaxFile(bool testFile, int year, long user, List<string> selectedAccountNo, List<string> payerId, bool correction = false)
         {
@@ -96,7 +97,7 @@ namespace Bill2Pay.GenerateIRSFile
         private void GenerateARecord()
         {
             Records aRecords = records.FirstOrDefault(x => x.RecordType == "A");
-            string cfsf = string.Empty;
+            
             foreach (var data in payerDetails)
             {
                 importDetaiils = dbContext.ImportDetails
@@ -138,10 +139,6 @@ namespace Bill2Pay.GenerateIRSFile
                     GenerateKRecord();
 
             }
-
-
-
-
         }
         private void GenerateBRecord()
         {
@@ -251,6 +248,17 @@ namespace Bill2Pay.GenerateIRSFile
                             amount = GetFieldValue(item);
                             localWithHolding = localWithHolding + Convert.ToDecimal(amount);
                             fileData.Append(FormatAmount(amount, item));
+                            break;
+                        case "COMBINED FEDERAL/STATE CODE":
+                            if (!string.IsNullOrEmpty(cfsf.Trim()))
+                            {
+                                var stateCode = cfsfStates.FirstOrDefault(x => x.State.ToUpper().Equals(data.PayeeState.Trim().ToUpper()));
+                                if (stateCode != null)
+                                {
+                                    item.Default = Convert.ToString(stateCode.Code);
+                                }
+                                fileData.Append(GetFieldValue(item));
+                            }
                             break;
                         default:
                             fileData.Append(GetFieldValue(item));
