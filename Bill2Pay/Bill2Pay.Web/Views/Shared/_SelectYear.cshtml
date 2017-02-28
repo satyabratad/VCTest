@@ -19,7 +19,15 @@
     <div class="col-md-2 text-bold left-justified">Select Payer</div>
     <div class="col-md-4">
         <select name="ddlPayer" style="min-width:150px;" onchange="SelectPayer(this)" required>
-            <option value="0">-- All --</option>
+            @if (Model.AllowPostback)
+            {
+                <option value="0">-- All --</option>
+            }
+            else
+            {
+                <option value="">-- Select --</option>
+            }
+            
             @foreach (var payer in ApplicationDbContext.Instence.PayerDetails.Where(p=>p.IsActive))
             {
                 <option value="@payer.Id" @Bill2Pay.Web.MenuGenerator.IsSelectedPayer(payer.Id)>@payer.FirstPayerName</option>

@@ -40,9 +40,9 @@ AS
 	END
 	
 	
-	IF OBJECT_ID('tempdb..#OLD_DETAILS') IS NOT NULL
+	IF OBJECT_ID('tempdb..#SUBMITTED') IS NOT NULL
 	BEGIN
-	DROP TABLE #OLD_DETAILS
+	DROP TABLE #SUBMITTED
 	END
 
 	BEGIN TRY  
@@ -53,11 +53,28 @@ AS
 	SET @ProcessLog = @ProcessLog + 'File Name: '+@FileName+CHAR(13)+CHAR(10)
 	SET @ProcessLog = @ProcessLog + 'Transaction Count: '+CAST(@TotalCount AS VARCHAR) +CHAR(13)+CHAR(10)
 
+	SELECT D.Id, D.AccountNo,P.Id AS PayerId
+	INTO #SUBMITTED
+	FROM ImportDetails D
+	INNER JOIN [dbo].[ImportSummaries] S ON S.Id = D.ImportSummaryId
+	INNER JOIN [dbo].[MerchantDetails] M ON M.ID = D.MerchantId
+	INNER JOIN [dbo].[PayerDetails] P ON P.ID = M.PayerId AND P.ID = @PayerId
+	INNER JOIN [dbo].[SubmissionStatus] SS ON D.AccountNo = SS.AccountNumber AND S.PaymentYear = SS.PaymentYear
+	WHERE D.IsActive =1  AND S.IsActive = 1 AND SS.IsActive =1 AND   SS.StatusId > 2 AND S.PaymentYear = @YEAR
+
+	--FROM ImportDetails D
+	--INNER JOIN [dbo].[ImportSummaries] S ON S.Id = D.ImportSummaryId
+	--INNER JOIN [dbo].[MerchantDetails] M ON M.ID = D.MerchantId
+	--INNER JOIN [dbo].[PayerDetails] P ON P.ID = M.PayerId AND P.ID = @PayerId
+	--LEFT JOIN [dbo].[SubmissionStatus] SS ON D.AccountNo = SS.AccountNumber AND S.PaymentYear = SS.PaymentYear
+	--WHERE D.IsActive =1 AND S.PaymentYear = @Year AND S.IsActive = 1 AND (D.SubmissionSummaryId IS NULL OR SS.StatusId <= 2)
+
 	-- ARCHIVE EXISTING DATA
 	UPDATE [dbo].[RawTransactions] SET Isactive = 0 WHERE IsActive=1
 	--## ALTERNATIVE --DELETE FROM [dbo].[RawTransactions]
 	
 	BEGIN TRY
+
 		-- INSERT NEW DATA
 		INSERT INTO [dbo].[RawTransactions](PayeeAccountNumber,TransactionType,TransactionAmount,TransactionDate,IsActive,UserID,DateAdded)
 		SELECT 
@@ -156,20 +173,21 @@ AS
 	)C ON C.TransactionYear= CHART.TransactionYear 
 		AND C.PayeeAccountNumber = CHART.PayeeAccountNumber
 
-	SELECT AccountNo,ImportSummaryId,TINCheckStatus,TINCheckRemarks,SubmissionSummaryId,S.Status_Id AS [Status]
-	INTO #OLD_DETAILS
-	FROM ImportDetails D
-	INNER JOIN [dbo].[ImportSummaries] I ON I.Id = D.ImportSummaryId 
-	LEFT JOIN [dbo].[SubmissionSummaries] S ON S.Id = D.SubmissionSummaryId AND S.IsActive = 1
-	WHERE D.IsActive =1 AND S.PaymentYear = @Year 
-
-	-- CLEAR EXISTING DATA
+	-- CLEAR EXISTING DATA THAT ARE NOT SUBMITTED
 	UPDATE D
-	SET D.IsActive = 0 
+	SET D.IsActive = CASE WHEN SS.Id IS NULL THEN 0 ELSE D.IsActive END
 	FROM ImportDetails D
-	INNER JOIN [dbo].[ImportSummaries] S ON S.Id = D.ImportSummaryId
-	WHERE D.IsActive =1 AND S.PaymentYear = @Year AND S.IsActive = 1
+	INNER JOIN [dbo].[MerchantDetails] M ON M.ID = D.MerchantId
+	INNER JOIN [dbo].[PayerDetails] P ON P.ID = M.PayerId AND P.ID = @PayerId
+	LEFT JOIN #SUBMITTED SS ON D.Id = SS.Id  
+	WHERE D.IsActive =1 
 
+	DELETE C 
+	FROM @K1099SUMMARYCHART C
+	INNER JOIN #SUBMITTED S ON C.PayeeAccountNumber=S.AccountNo 
+	
+	DECLARE @PAYERNAME VARCHAR(127)
+	SELECT @PAYERNAME = p.FirstPayerName FROM [dbo].[PayerDetails] p where Id = @PayerId
 
 	INSERT INTO ImportDetails (AccountNo,ImportSummaryId,TINCheckStatus,TINCheckRemarks,SubmissionSummaryId,TINType,TIN,
 	PayerOfficeCode,GrossAmount,CNPTransactionAmount,FederalWithHoldingAmount,
@@ -179,7 +197,7 @@ AS
 	PaymentIndicatorType,TransactionCount,MerchantId,MerchantCategoryCode,SpecialDataEntry,StateWithHolding,
 	LocalWithHolding,CFSF,IsActive,DateAdded)
 
-	SELECT S.PayeeAccountNumber,@SummaryId,O.TINCheckStatus,O.TINCheckRemarks,O.SubmissionSummaryId,D.TINType,D.PayeeTIN,
+	SELECT S.PayeeAccountNumber,@SummaryId,NULL,NULL,NULL,D.TINType,D.PayeeTIN,
 	D.PayeeOfficeCode,S.GrossAmount,S.TotalCPAmount,NULL,
 	S.JANUARY,S.FEBRUARY,S.MARCH,S.APRIL,S.MAY,S.JUNE,S.JULY,S.AUGUST,
 	S.SEPTEMBER,S.OCTOBOR,S.NOVEMBER,S.DECEMBER,NULL,SUBSTRING(D.[PayeeFirstName],1,40), 
@@ -188,12 +206,40 @@ AS
 	NULL,D.CFSF,1,GETDATE()
 
 	FROM @K1099SUMMARYCHART S
-	LEFT JOIN #OLD_DETAILS O ON S.PayeeAccountNumber = O.AccountNo
+	--LEFT JOIN #SUBMITTED O ON S.PayeeAccountNumber = O.AccountNo
+	INNER JOIN  [dbo].[MerchantDetails] D ON S.PayeeAccountNumber = D.PayeeAccountNumber 
+		AND D.IsActive = 1 AND D.PaymentYear = @YEAR AND D.PayerId = @PayerId
+	WHERE S.TransactionYear = @YEAR --AND O.Id IS NULL
+
+
+	SET @ProcessLog = @ProcessLog + 'Account associated with '+@PAYERNAME+':'+CAST(@@ROWCOUNT AS VARCHAR)+CHAR(13)+CHAR(10)
+
+	DECLARE @ORPHANT NVARCHAR(1024),@ORPHANTCOUNT INT
+
+	SELECT @ORPHANTCOUNT = COUNT(*)
+	FROM @K1099SUMMARYCHART S
 	LEFT JOIN  [dbo].[MerchantDetails] D ON S.PayeeAccountNumber = D.PayeeAccountNumber 
 		AND D.IsActive = 1 AND D.PaymentYear = @YEAR AND D.PayerId = @PayerId
-	WHERE S.TransactionYear = @YEAR
+	WHERE S.TransactionYear = @YEAR AND D.Id IS NULL
 
-	SET @ProcessLog = @ProcessLog + 'Account Count: '+CAST(@@ROWCOUNT AS VARCHAR)+CHAR(13)+CHAR(10)
+
+	IF @ORPHANTCOUNT>0
+	BEGIN
+		
+
+		SET @ProcessLog = @ProcessLog + 'Account not associated with '+@PAYERNAME+':'+CAST(@ORPHANTCOUNT AS VARCHAR)+CHAR(13)+CHAR(10)
+	
+
+		--SELECT @ORPHANT = ISNULL(@ORPHANT,'')+S.PayeeAccountNumber +CHAR(13)+CHAR(10)
+		--FROM @K1099SUMMARYCHART S
+		--LEFT JOIN  [dbo].[MerchantDetails] D ON S.PayeeAccountNumber = D.PayeeAccountNumber 
+		--	AND D.IsActive = 1 AND D.PaymentYear = @YEAR AND D.PayerId = @PayerId
+		--WHERE S.TransactionYear = @YEAR AND D.Id IS NULL
+
+		--SET @ProcessLog = @ProcessLog + ISNULL(@ORPHANT,'')
+
+	END
+
 	SET @ProcessLog = @ProcessLog + 'Import Successful'+CHAR(13)+CHAR(10)
 
 		COMMIT TRANSACTION K1099
@@ -217,9 +263,9 @@ AS
 	DROP TABLE #TEMP_SUMMARY
 	END
 	
-	IF OBJECT_ID('tempdb..#OLD_DETAILS') IS NOT NULL
+	IF OBJECT_ID('tempdb..#SUBMITTED') IS NOT NULL
 	BEGIN
-	DROP TABLE #OLD_DETAILS
+	DROP TABLE #SUBMITTED
 	END
 	
 RETURN

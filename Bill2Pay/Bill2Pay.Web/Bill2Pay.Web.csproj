@@ -222,8 +222,8 @@
     <Compile Include="Utility\MenuGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Database\Extra_Table.sql" />
-    <Content Include="Database\MerchantData.sql" />
+    <Content Include="Database\Tables.sql" />
+    <Content Include="Database\Data.sql" />
     <Content Include="Database\PostImportDataProcessing.sql" />
     <Content Include="Database\PreImportDataProcessing.sql" />
     <Content Include="Content\bbpou.css" />
