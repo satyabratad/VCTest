@@ -90,6 +90,9 @@ namespace Bill2Pay.Web.Controllers
             var year =int.Parse( Request.Form["ddlYear"]);
             string statusId = Request.Form["statusId"];
 
+
+            string mk = HttpContext.Request.QueryString["payer"];
+
             List<MerchantVM> Merchatlist = new JavaScriptSerializer().Deserialize<List<MerchantVM>>(chkList);
 
             List<MerchantVM> checkedList = Merchatlist.Where(m => m.IsChecked == 1).ToList();
@@ -145,8 +148,8 @@ namespace Bill2Pay.Web.Controllers
                 TempData["errorMessage"] = "Select atleast one record to generate IRS Test File";
                 return RedirectToAction("Index", "Home");
             }
-            List<string> payer = new List<string> { "8" };
-            GenerateTaxFile taxFile = new GenerateTaxFile(true, year, User.Identity.GetUserId<long>(), selectedMerchants, payer);
+            
+            GenerateTaxFile taxFile = new GenerateTaxFile(true, year, User.Identity.GetUserId<long>(), selectedMerchants);
 
             taxFile.ReadFromSchemaFile();
             ViewBag.fileName = "IRSInputFile_Test.txt";
@@ -158,11 +161,6 @@ namespace Bill2Pay.Web.Controllers
                 return HttpNotFound();
             }
 
-            //var fileBytes = System.IO.File.ReadAllBytes(path);
-            //var response = new FileContentResult(fileBytes, "application/octet-stream")
-            //{
-            //    FileDownloadName = "IRSInputFile_Test.txt"
-            //};
             return File(path,"text", "IRSInputFile_Test.txt");
         }
 
@@ -187,7 +185,7 @@ namespace Bill2Pay.Web.Controllers
             }
 
             //var alreadySubmitted = tinCheckedPayeeList.Where(x => x.detail.SubmissionSummaryId != null).ToList();
-            string doNotSubmit = "2,3,5";
+            string doNotSubmit = "3,5,6";
             var alreadySubmitted = ApplicationDbContext.Instence.ImportDetails
                 .Join(ApplicationDbContext.Instence.SubmissionStatus, d => d.AccountNo, s => s.AccountNumber, (d, s) => new { details = d, status = s })
                 .Where(x => selectedMerchants.Contains(x.details.AccountNo) && x.details.IsActive==true && x.status.IsActive==true &&
@@ -195,12 +193,11 @@ namespace Bill2Pay.Web.Controllers
 
             if (alreadySubmitted.Count != 0)
             {
-                TempData["errorMessage"] = "One or more than one selected merchant's 1009K file already generated. IRS file can not be generated for this selection";
+                TempData["errorMessage"] = "One or more than one selected merchant's 1009K file already submitted. IRS file can not be generated for this selection";
                 return RedirectToAction("Index", "Home");
             }
 
-            List<string> payer = new List<string> { "8" };
-            GenerateTaxFile taxFile = new GenerateTaxFile(false, year, User.Identity.GetUserId<long>(), selectedMerchants, payer);
+            GenerateTaxFile taxFile = new GenerateTaxFile(false, year, User.Identity.GetUserId<long>(), selectedMerchants);
 
             taxFile.ReadFromSchemaFile();
             ViewBag.fileName = "IRSInputFile.txt";
@@ -212,12 +209,6 @@ namespace Bill2Pay.Web.Controllers
                 return HttpNotFound();
             }
 
-            //var fileBytes = System.IO.File.ReadAllBytes(path);
-            //var response = new FileContentResult(fileBytes, "application/octet-stream")
-            //{
-            //    FileDownloadName = "IRSInputFile.txt"
-            //};
-            //return response;
             return File(path, "text", "IRSInputFile.txt");
         }
 
@@ -225,6 +216,7 @@ namespace Bill2Pay.Web.Controllers
         {
             return View();
         }
+
         public ActionResult Download(string file)
         {
             string path = string.Format(@"{0}App_Data\Download\Irs\" + file, HostingEnvironment.ApplicationPhysicalPath);
@@ -254,6 +246,14 @@ namespace Bill2Pay.Web.Controllers
                 TempData["errorMessage"] = "Requested status is not specified. Please select a list a try again.";
                 return RedirectToAction("Index", "Home");
             }
+            //changeble status;
+            //if Not Submitted(1)=> status can not be modified.
+            //if File Generated(2)=> status can be changed to => Submitted(6) Only.
+            //if Correction Required(3) => status can not be changed.
+            //if CorrectionUploaded(4) => status can not be changed.
+            //if ReSubmitted(5)=> 
+
+
 
             foreach (var item in selectedMerchants)
             {

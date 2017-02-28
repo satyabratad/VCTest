@@ -1754,7 +1754,7 @@
         "Name": "Number of “A” Records",
         "Position": "2-9",
         "Length": 8,
-        "Default": "1",
+        "Default": "",
         "Alternate": "",
         "Type": "Numeric",
         "Data": "",

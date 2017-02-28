@@ -30,27 +30,21 @@ namespace Bill2Pay.GenerateIRSFile
         string amount = string.Empty;
         decimal januaryAmount, februaryAmount, marchAmount, aprilAmount, mayAmount, juneAmount, julyAmount, augustAmount, septemberAmount, octoberAmount, novemberAmount, decemberAmount = 0;
         decimal grossAmount, cnpTransactionAmount, federalWithHoldingAmount, stateWithHolding, localWithHolding = 0;
-        int numberofPayee = 0;
-        int paymentYear = 0;
         long userId = 0;
         bool reSubmission = false;
         PSEDetails pseDetails = null;
         List<string> selectedAccounts = null;
         string currentAccountNumber = string.Empty;
-        int currentPayer = 0;
-        List<string> payerIds;
-        int pseMasterId = 0;
-        int totalNumberofPayee = 0;
+        int totalNumberofPayee, totalNumberofARecord, pseMasterId, currentPayer, paymentYear, numberofPayee = 0;
         string cfsf = string.Empty;
         #endregion
-        public GenerateTaxFile(bool testFile, int year, long user, List<string> selectedAccountNo, List<string> payerId, bool correction = false)
+        public GenerateTaxFile(bool testFile, int year, long user, List<string> selectedAccountNo, bool correction = false)
         {
             testFileIndicator = testFile;
             paymentYear = year;
             userId = user;
             reSubmission = correction;
             selectedAccounts = selectedAccountNo;
-            payerIds = payerId;
 
             dbContext = new ApplicationDbContext();
             pseDetails = new PSEDetails();
@@ -59,11 +53,9 @@ namespace Bill2Pay.GenerateIRSFile
 
             transmitterDetails = dbContext.TransmitterDetails.FirstOrDefault(x => x.IsActive == true);
 
-            payerDetails = dbContext.PayerDetails.Where(x => payerIds.Contains(x.Id.ToString()) && x.IsActive == true).ToList();
-
+            payerDetails = dbContext.PayerDetails.Where(x =>  x.IsActive == true).ToList();
         }
 
-        
         private void GenerateTRecord()
         {
             Records tRecords = records.FirstOrDefault(x => x.RecordType == "T");
@@ -103,41 +95,45 @@ namespace Bill2Pay.GenerateIRSFile
                 importDetaiils = dbContext.ImportDetails
                 .Join(dbContext.ImportSummary, d => d.ImportSummaryId, s => s.Id, (d, s) => new { detail = d, summary = s })
                 .Join(dbContext.MerchantDetails, d => d.detail.MerchantId, m => m.Id, (d, m) => new { d.detail, d.summary, merchant = m })
-                .Where(x => selectedAccounts.Contains(x.detail.AccountNo) && x.summary.PaymentYear == paymentYear && x.detail.IsActive == true && x.summary.IsActive == true && x.merchant.PayerId.Equals(data.Id))
+                .Where(x => selectedAccounts.Contains(x.detail.AccountNo) && x.summary.PaymentYear == paymentYear && 
+                x.detail.IsActive == true && x.summary.IsActive == true && x.merchant.PayerId.Equals(data.Id))
                 .Select(x => x.detail).ToList();
 
                 currentPayer = data.Id;
                 numberofPayee = importDetaiils.Count();
                 totalNumberofPayee = totalNumberofPayee + numberofPayee;
 
-                foreach (Field item in aRecords.Fields)
+                if (numberofPayee > 0)
                 {
-                    switch (item.Name.ToUpper())
+                    totalNumberofARecord++;
+                    foreach (Field item in aRecords.Fields)
                     {
-                        case "RECORD SEQUENCE NUMBER":
-                            item.Default = recordSequenceNumber.ToString();
-                            fileData.Append(GetFieldValue(item));
-                            recordSequenceNumber++;
-                            break;
-                        case "COMBINED FEDERAL/STATE FILING PROGRAM":
-                            fileData.Append(GetFieldValue(item));
-                            cfsf = GetFieldValue(item);
-                            break;
-                        default:
-                            fileData.Append(GetFieldValue(item));
-                            break;
+                        switch (item.Name.ToUpper())
+                        {
+                            case "RECORD SEQUENCE NUMBER":
+                                item.Default = recordSequenceNumber.ToString();
+                                fileData.Append(GetFieldValue(item));
+                                recordSequenceNumber++;
+                                break;
+                            case "COMBINED FEDERAL/STATE FILING PROGRAM":
+                                fileData.Append(GetFieldValue(item));
+                                cfsf = GetFieldValue(item);
+                                break;
+                            default:
+                                fileData.Append(GetFieldValue(item));
+                                break;
+                        }
                     }
+                    SavePSEMaster(aRecords);
+                    dbContext.PSEMaster.Add(pseDetails);
+                    dbContext.SaveChanges();
+                    pseMasterId = pseDetails.Id;
+
+                    GenerateBRecord();
+                    GenerateCRecord();
+                    if (!string.IsNullOrEmpty(cfsf.Trim()))
+                        GenerateKRecord();
                 }
-                SavePSEMaster(aRecords);
-                dbContext.PSEMaster.Add(pseDetails);
-                dbContext.SaveChanges();
-                pseMasterId = pseDetails.Id;
-
-                GenerateBRecord();
-                GenerateCRecord();
-                if (!string.IsNullOrEmpty(cfsf.Trim()))
-                    GenerateKRecord();
-
             }
         }
         private void GenerateBRecord()
@@ -559,6 +555,10 @@ namespace Bill2Pay.GenerateIRSFile
                         item.Default = totalNumberofPayee.ToString();
                         fileData.Append(GetFieldValue(item));
                         break;
+                    case "NUMBER OF “A” RECORDS":
+                        item.Default = totalNumberofARecord.ToString();
+                        fileData.Append(GetFieldValue(item));
+                        break;
                     default:
                         fileData.Append(GetFieldValue(item));
                         break;
@@ -957,9 +957,10 @@ namespace Bill2Pay.GenerateIRSFile
     public enum RecordStatus
     {
         NotSubmitted = 1,
-        Submitted = 2,
+        FileGenerated = 2,
         CorrectionRequired = 3,
         CorrectionUploaded = 4,
-        ReSubmitted = 5
+        ReSubmitted = 5,
+        Submitted=6
     }
 }
