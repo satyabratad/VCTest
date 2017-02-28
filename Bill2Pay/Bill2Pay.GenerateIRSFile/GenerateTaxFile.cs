@@ -678,6 +678,13 @@ namespace Bill2Pay.GenerateIRSFile
         {
             int submissionSummaryId = SaveSubmissionSummary();
 
+            importDetaiils = dbContext.ImportDetails
+                .Join(dbContext.ImportSummary, d => d.ImportSummaryId, s => s.Id, (d, s) => new { detail = d, summary = s })
+                .Join(dbContext.MerchantDetails, d => d.detail.MerchantId, m => m.Id, (d, m) => new { d.detail, d.summary, merchant = m })
+                .Where(x => selectedAccounts.Contains(x.detail.AccountNo) && x.summary.PaymentYear == paymentYear &&
+                x.detail.IsActive == true && x.summary.IsActive == true)
+                .Select(x => x.detail).ToList();
+
             foreach (var item in importDetaiils)
             {
                 var submissionDetails = new SubmissionDetail();
@@ -727,7 +734,7 @@ namespace Bill2Pay.GenerateIRSFile
                 item.SubmissionSummaryId = submissionSummaryId;
                 //item.PseId = pseMasterId;
                 submissionDetails.IsActive = true;
-                SaveSubmissionStatus(item.AccountNo, reSubmission ? (int)RecordStatus.ReSubmitted : (int)RecordStatus.Submitted);
+                SaveSubmissionStatus(item.AccountNo, reSubmission ? (int)RecordStatus.ReSubmitted : (int)RecordStatus.FileGenerated);
                 dbContext.SaveChanges();
             }
         }
