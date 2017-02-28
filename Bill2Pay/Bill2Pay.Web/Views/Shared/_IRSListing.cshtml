@@ -5,6 +5,23 @@
     function SetSelecAllMerchant()
     {
         $('.tblchk').attr('checked', $('#chkSelectAll').is(":checked"));
+
+        var strAcnos = $('#checkedAccountNo').val();
+
+        var acno = JSON.parse(strAcnos);
+
+        for (var i = 0; i < acno.length; i++) {
+
+            if ($('#chkSelectAll').is(":checked")) {
+                    acno[i].IsChecked = '1';
+                }
+                else {
+                    acno[i].IsChecked = '0';
+                }
+        }
+
+        strAcnos = JSON.stringify(acno);
+        $('#checkedAccountNo').val(strAcnos);
     }
 
 
