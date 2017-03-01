@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<Bill2Pay.Model.MerchantListVM>
-
+@*<link href="~/Content/w3.css" rel="stylesheet" />*@
 <script>
     
     function SetSelecAllMerchant()
     {
-        $('.tblchk').attr('checked', $('#chkSelectAll').is(":checked"));
-
+        $('.tblchk').prop('checked', $('#chkSelectAll').is(":checked"));
+        alert($('#chkSelectAll').is(":checked"));
         var strAcnos = $('#checkedAccountNo').val();
 
         var acno = JSON.parse(strAcnos);
@@ -63,6 +63,7 @@
         form.submit();
     }
 </script>
+
 
 
 <div class="row">
@@ -131,9 +132,9 @@
                                                 <input id="chkAccountNo" class="tblchk" onclick="GetSelectedMerchant('@item.ImportDetails.AccountNo');" type="checkbox" />&nbsp;
                                             </td>
                                             <td style="width:100px">
-
-                                                <a href="@Url.Action("Details", new { Id = item.ImportDetails.AccountNo })">
-                                                    <i class="fa fa-files-o fa-lg" title="Generate 1099-K Copies"></i>
+                                               
+                                                <a href="@Url.Action("Details", new { Id = item.ImportDetails.AccountNo })" alt="1099K" >
+                                                    <i class="fa fa-files-o fa-lg" title="Generate 1099-K Copies" alt="1099K" ></i>
                                                 </a>
 
 
@@ -235,3 +236,10 @@
             </div>
                     }
 </div>
+
+<style>
+    input[type="checkbox"] {
+        height: 18px;
+        width: 18px;
+    }
+</style>
