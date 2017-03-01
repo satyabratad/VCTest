@@ -18,11 +18,14 @@ namespace Bill2Pay.Web
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
+                        "~/Scripts/modernizr-*",
+                        "~/Scripts/jquery.min.js",
+                        "~/Scripts/angular.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                 "~/Scripts/pace.js",
                 "~/Scripts/jquery.min.js",
+                "~/Scripts/angular.min.js",
                 "~/Scripts//bootstrap.min.js",
                 "~/Scripts/blockui.min.js",
                 "~/Scripts/d3.min.js",
@@ -46,7 +49,7 @@ namespace Bill2Pay.Web
                         "~/Content/core.css",
                           "~/Content/components.css",
                            "~/Content/colors.css",
-
+                "~/Content/font-awesome-4.7.0/css/font-awesome.min.css",
                             "~/Content/bootstrap.css"));
         }
     }
