@@ -268,24 +268,33 @@ namespace Bill2Pay.Web.Controllers
             {
                 var previousData = dbContext.SubmissionStatus.Where(x => x.AccountNumber.Equals(item) && x.PaymentYear.Equals(year) && x.IsActive == true).ToList();
 
-                if (previousData != null)
+                if (previousData.Count > 0)
                 {
                     foreach (var data in previousData)
                     {
                         if (statusId == (int)RecordStatus.Submitted && data.StatusId != (int)RecordStatus.FileGenerated)
                         {
                             TempData["errorMessage"] = "Specified status can not be updated for : " + data.AccountNumber;
-                            return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
+                            return RedirectToAction("Index", "Home");
                         }
+                        else if (statusId == (int)RecordStatus.CorrectionRequired && data.StatusId != (int)RecordStatus.Submitted)
+                        {
+                            return DisplayStatusChangeError(data.AccountNumber);
+                        }
+                        else if (statusId == (int)RecordStatus.NotSubmitted && data.StatusId != (int)RecordStatus.Submitted)
+                        {
+                            return DisplayStatusChangeError(data.AccountNumber);
+                        }
+
                         data.IsActive = false;
                     }
                 }
                 else
                 {
-                    if (statusId == (int)RecordStatus.Submitted )
+                    if (statusId == (int)RecordStatus.Submitted)
                     {
                         TempData["errorMessage"] = "Specified status can not be updated for : " + item;
-                        return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
+                        return RedirectToAction("Index", "Home");
                     }
                 }
                 var submissionStatus = new SubmissionStatus();
@@ -300,9 +309,16 @@ namespace Bill2Pay.Web.Controllers
                 dbContext.SubmissionStatus.Add(submissionStatus);
                 dbContext.SaveChanges();
             }
+
             TempData["successMessage"] = "Submission status updated successfully.";
 
             return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
+        }
+
+        private ActionResult DisplayStatusChangeError(string accountNumber)
+        {
+            TempData["errorMessage"] = "Selected status can not be updated for : " + accountNumber;
+            return RedirectToAction("Index", "Home");
         }
     }
 }
