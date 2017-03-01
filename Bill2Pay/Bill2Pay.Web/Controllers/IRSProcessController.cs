@@ -26,9 +26,9 @@ namespace Bill2Pay.Web.Controllers
         // GET: IRSProcess
         public ActionResult Index(int? Id, int? payer)
         {
-            
+
             List<MerchantListVM> merchantlst;
-            if(payer==null)
+            if (payer == null)
             {
                 payer = 0;
             }
@@ -38,12 +38,13 @@ namespace Bill2Pay.Web.Controllers
                 var year = DateTime.Now.Year - 1;
                 return RedirectToAction("Index", "IRSProcess", new { id = year, payer = payer });
             }
-            
+
             TempData["year"] = Id.ToString();
+            List<string> selectedMerchants = (List<string>)TempData["CheckedMerchantList"];
 
             merchantlst = (dbContext.ImportDetails
                                .Include("ImportSummary")
-                               .GroupJoin(dbContext.SubmissionStatus.Where(s => s.IsActive == true), 
+                               .GroupJoin(dbContext.SubmissionStatus.Where(s => s.IsActive == true),
                                imp => imp.AccountNo,
                                stat => stat.AccountNumber,
                                (imp, stat) => new MerchantListVM() { ImportDetails = imp, SubmissionStatus = stat.FirstOrDefault() })
@@ -51,20 +52,20 @@ namespace Bill2Pay.Web.Controllers
                                        && (payer == 0 || x.ImportDetails.Merchant.PayerId == payer))
                                ).OrderBy(x => x.ImportDetails.AccountNo).ToList();
 
-           
+
             var merchantAccList = merchantlst.Select(t =>
                                         new MerchantVM
                                         {
                                             AccountNo = t.ImportDetails.AccountNo,
                                             IsChecked = 0
-                                        }).ToList(); 
-                                    
-            
+                                        }).ToList();
+            if (selectedMerchants != null)
+                merchantAccList.ForEach(i => i.IsChecked = (selectedMerchants.FirstOrDefault(x => x.Equals(i.AccountNo))) == null ? 0 : 1);
 
             ViewBag.SelectedYear = Id;
             ViewBag.lstmerchantAcc = JsonConvert.SerializeObject(merchantAccList);
-            ViewBag.ErrorMsg = string.Empty ;
-            if (TempData["ErrorMsg"]!=null)
+            ViewBag.ErrorMsg = string.Empty;
+            if (TempData["ErrorMsg"] != null)
             {
                 ViewBag.ErrorMsg = TempData["ErrorMsg"];
             }
@@ -73,7 +74,7 @@ namespace Bill2Pay.Web.Controllers
 
         public ActionResult Details(string Id)
         {
-           
+
             var data = ApplicationDbContext.Instence
                 .ImportDetails
                 .Include("Merchant")
@@ -87,11 +88,8 @@ namespace Bill2Pay.Web.Controllers
         public ActionResult Process(string btnPressed)
         {
             var chkList = Request.Form["checkedAccountNo"];
-            var year =int.Parse( Request.Form["ddlYear"]);
+            var year = int.Parse(Request.Form["ddlYear"]);
             string statusId = Request.Form["statusId"];
-
-
-            string mk = HttpContext.Request.QueryString["payer"];
 
             List<MerchantVM> Merchatlist = new JavaScriptSerializer().Deserialize<List<MerchantVM>>(chkList);
 
@@ -130,7 +128,7 @@ namespace Bill2Pay.Web.Controllers
             {
                 return RedirectToAction("IRScorrection");
             }
-            else if(!string.IsNullOrEmpty(statusId))
+            else if (!string.IsNullOrEmpty(statusId))
             {
                 return RedirectToAction("ChangeStatus");
             }
@@ -149,33 +147,33 @@ namespace Bill2Pay.Web.Controllers
                 TempData["errorMessage"] = "Select atleast one record to generate IRS Test File";
                 return RedirectToAction("Index", "Home");
             }
-            
+
             GenerateTaxFile taxFile = new GenerateTaxFile(true, year, User.Identity.GetUserId<long>(), selectedMerchants);
 
             taxFile.ReadFromSchemaFile();
             ViewBag.fileName = "IRSInputFile_Test.txt";
 
-            string path = string.Format(@"{0}App_Data\Download\Irs\IRSInputFile_Test.txt" , HostingEnvironment.ApplicationPhysicalPath);
+            string path = string.Format(@"{0}App_Data\Download\Irs\IRSInputFile_Test.txt", HostingEnvironment.ApplicationPhysicalPath);
 
             if (!System.IO.File.Exists(path))
             {
                 return HttpNotFound();
             }
 
-            return File(path,"text", "IRSInputFile_Test.txt");
+            return File(path, "text", "IRSInputFile_Test.txt");
         }
 
         public ActionResult IRSFireFile()
         {
             List<string> selectedMerchants = (List<string>)TempData["CheckedMerchantList"];
-            
+
             Int32 year = Convert.ToInt32(TempData["SelectedYear"]);
 
             string errorTINResult = "1,2,3,4,5";
 
             var tinCheckedPayeeList = ApplicationDbContext.Instence.ImportDetails
                 .Join(ApplicationDbContext.Instence.ImportSummary, d => d.ImportSummaryId, s => s.Id, (d, s) => new { detail = d, summary = s })
-                .Where(x => selectedMerchants.Contains(x.detail.AccountNo) && x.summary.PaymentYear == year && x.detail.IsActive==true && x.summary.IsActive==true).ToList();
+                .Where(x => selectedMerchants.Contains(x.detail.AccountNo) && x.summary.PaymentYear == year && x.detail.IsActive == true && x.summary.IsActive == true).ToList();
 
             var incorrectTINresult = tinCheckedPayeeList.Where(x => x.detail.TINCheckStatus == null || errorTINResult.Contains(x.detail.TINCheckStatus)).ToList();
 
@@ -189,7 +187,7 @@ namespace Bill2Pay.Web.Controllers
             string doNotSubmit = "3,5,6";
             var alreadySubmitted = ApplicationDbContext.Instence.ImportDetails
                 .Join(ApplicationDbContext.Instence.SubmissionStatus, d => d.AccountNo, s => s.AccountNumber, (d, s) => new { details = d, status = s })
-                .Where(x => selectedMerchants.Contains(x.details.AccountNo) && x.details.IsActive==true && x.status.IsActive==true &&
+                .Where(x => selectedMerchants.Contains(x.details.AccountNo) && x.details.IsActive == true && x.status.IsActive == true &&
                 doNotSubmit.Contains(x.status.StatusId.ToString())).ToList();
 
             if (alreadySubmitted.Count != 0)
@@ -221,7 +219,7 @@ namespace Bill2Pay.Web.Controllers
         public ActionResult Download(string file)
         {
             string path = string.Format(@"{0}App_Data\Download\Irs\" + file, HostingEnvironment.ApplicationPhysicalPath);
-            
+
             if (!System.IO.File.Exists(path))
             {
                 return HttpNotFound();
@@ -254,8 +252,6 @@ namespace Bill2Pay.Web.Controllers
             //if CorrectionUploaded(4) => status can not be changed.
             //if ReSubmitted(5)=> 
 
-
-
             foreach (var item in selectedMerchants)
             {
                 var previousData = dbContext.SubmissionStatus.Where(x => x.AccountNumber.Equals(item) && x.PaymentYear.Equals(year) && x.IsActive == true).ToList();
@@ -264,7 +260,20 @@ namespace Bill2Pay.Web.Controllers
                 {
                     foreach (var data in previousData)
                     {
+                        if (statusId == (int)RecordStatus.Submitted && data.StatusId != (int)RecordStatus.FileGenerated)
+                        {
+                            TempData["errorMessage"] = "Specified status can not be updated for : " + data.AccountNumber;
+                            return RedirectToAction("Index", "Home");
+                        }
                         data.IsActive = false;
+                    }
+                }
+                else
+                {
+                    if (statusId == (int)RecordStatus.Submitted )
+                    {
+                        TempData["errorMessage"] = "Specified status can not be updated for : " + item;
+                        return RedirectToAction("Index", "Home");
                     }
                 }
                 var submissionStatus = new SubmissionStatus();

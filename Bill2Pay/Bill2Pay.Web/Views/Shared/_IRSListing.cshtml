@@ -5,9 +5,7 @@
     function SetSelecAllMerchant()
     {
         $('.tblchk').prop('checked', $('#chkSelectAll').is(":checked"));
-
         var strAcnos = $('#checkedAccountNo').val();
-
         var acno = JSON.parse(strAcnos);
 
         for (var i = 0; i < acno.length; i++) {
@@ -19,7 +17,6 @@
                     acno[i].IsChecked = '0';
                 }
         }
-
         strAcnos = JSON.stringify(acno);
         $('#checkedAccountNo').val(strAcnos);
     }
@@ -28,13 +25,10 @@
     function GetSelectedMerchant(accno) {
         
         var strAcnos = $('#checkedAccountNo').val();
-       
         var acno=JSON.parse(strAcnos);
         
         for(var i=0;i<acno.length;i++)
         {
-
-         
             if(acno[i].AccountNo==accno)
             {
                 if(acno[i].IsChecked=='0')
@@ -51,8 +45,6 @@
         strAcnos=JSON.stringify(acno);
 
         $('#checkedAccountNo').val(strAcnos);
-  
-
     }
 
     function submitForm(statusId)
@@ -62,6 +54,18 @@
         $('#statusId').val(statusId);
         form.submit();
     }
+
+    $(document).ready(function () {
+        var strAcnos = $('#checkedAccountNo').val();
+        var acno = JSON.parse(strAcnos);
+
+        for (var i = 0; i < acno.length; i++) {
+            $("input[name='" + acno[i].AccountNo + "']").attr('checked', acno[i].IsChecked == 0 ? false : true)
+        }
+
+        strAcnos = JSON.stringify(acno);
+        $('#checkedAccountNo').val(strAcnos);
+    });
 </script>
 
 
@@ -147,7 +151,7 @@
                                         {
                                         <tr>
                                             <td>
-                                                <input id="chkAccountNo" class="tblchk" onclick="GetSelectedMerchant('@item.ImportDetails.AccountNo');" type="checkbox" />&nbsp;
+                                                <input id="chkAccountNo" class="tblchk" onclick="GetSelectedMerchant('@item.ImportDetails.AccountNo');" type="checkbox" name="@item.ImportDetails.AccountNo" />&nbsp;
                                             </td>
                                             <td style="width:100px" align="center" >
                                                
