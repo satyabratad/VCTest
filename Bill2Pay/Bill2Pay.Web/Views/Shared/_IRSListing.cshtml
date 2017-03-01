@@ -73,7 +73,7 @@
 
         @Html.Hidden("checkedAccountNo", (object)@ViewBag.lstmerchantAcc)
         @Html.Hidden("statusId", "");
-        @Html.Partial("_SelectYear", new Bill2Pay.Web.YearSelection() { AllowPostback =true})
+        @Html.Partial("_SelectYear", new Bill2Pay.Web.YearSelection() { AllowPostback = true })
 
         <div class="col-md-12">
            
@@ -109,7 +109,7 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th class="btn-primary"><input id="chkSelectAll"  onclick="SetSelecAllMerchant();" type="checkbox" /></th>
+                                <th class="btn-primary"><input id="chkSelectAll"  onclick="SetSelecAllMerchant();" title="Select All" type="checkbox" /></th>
                                 <th class="btn-primary">1099-K Copies</th>
                                 <th class="btn-primary">Account Number</th>
                                 <th class="btn-primary">TIN</th>
@@ -122,16 +122,34 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @{ 
+                            @{
+
                                 if (Model != null)
                                 {
-                                    foreach (var item in Model)
+                                    if (Model.Count() == 0)
                                     {
+                                        <tr>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td><span>No data found </span></td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                        </tr>
+
+                                    }
+                                    else
+                                    {
+                                        foreach (var item in Model)
+                                        {
                                         <tr>
                                             <td>
                                                 <input id="chkAccountNo" class="tblchk" onclick="GetSelectedMerchant('@item.ImportDetails.AccountNo');" type="checkbox" />&nbsp;
                                             </td>
-                                            <td style="width:100px">
+                                            <td style="width:100px" align="center" >
                                                
                                                 <a href="@Url.Action("Details", new { Id = item.ImportDetails.AccountNo })" alt="1099K" >
                                                     <i class="fa fa-files-o fa-lg" title="Generate 1099-K Copies" alt="1099K" ></i>
@@ -144,7 +162,7 @@
                                             <td>@item.ImportDetails.FirstPayeeName  </td>
                                             <td>@item.ImportDetails.PayeeMailingAddress </td>
                                             <td>@item.ImportDetails.MerchantCategoryCode</td>
-                                            <td>
+                                            <td align="center" >
                                                 @{
                                                     if (!string.IsNullOrEmpty(@item.ImportDetails.TINCheckStatus))
                                                     {
@@ -167,7 +185,7 @@
 
 
                                             </td>
-                                            <td>
+                                            <td align="center">
                                                 @{
 
                                                     if (@item.SubmissionStatus != null)
@@ -198,12 +216,9 @@
                                             </td>
 
                                         </tr>
-                                      }
-                                  }
-                                  else
-                                  {
-                                            <span>No data found</span>
-                                  }
+                                        }
+                                    }
+                                }
                              }
                         </tbody>
                     </table>
