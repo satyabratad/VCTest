@@ -154,6 +154,11 @@ namespace Bill2Pay.GenerateIRSFile
             }
         }
 
+        public static void CreateZip(string rootpath)
+        {
+            //TODO
+        }
+
         private void ExecutePostImportDataProcessing(int year, long userId, string fileName, int totalCount,int payerId)
         {
             Logger.LogInstance.LogInfo("PostImportDataProcessing Starts year:'{0}' User:'{1}' FileName: '{2}' Total Count: {3}", year, userId, fileName, totalCount);

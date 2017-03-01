@@ -1,5 +1,1 @@
-﻿enable-migrations -ContextTypeName Bill2Pay.Model.ApplicationDbContext -EnableAutomaticMigrations -MigrationsDirectory:DataContextMigrations -ProjectName Bill2Pay.Model
-
-Add-Migration -ProjectName Bill2Pay.Model -StartUpProjectName Bill2Pay.Web
-
-Update-Database -configuration Bill2Pay.Model.DataContextMigrations.Configuration -Verbose -ProjectName Bill2Pay.Model -StartUpProjectName Bill2Pay.Web
+﻿this is a dummy file.

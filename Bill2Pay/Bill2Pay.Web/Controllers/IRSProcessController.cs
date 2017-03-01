@@ -116,6 +116,7 @@ namespace Bill2Pay.Web.Controllers
                     return RedirectToAction("Index");
                 }
                 return RedirectToAction("TINMatchingInput", "TINProcess");
+                //return RedirectToAction("PrintAllCopies", "Print");
             }
             else if (!string.IsNullOrEmpty(Request.Form["irstest"]))
             {
