@@ -324,6 +324,7 @@
     <Content Include="Content\font-awesome-4.7.0\scss\_screen-reader.scss" />
     <Content Include="Content\font-awesome-4.7.0\scss\_stacked.scss" />
     <Content Include="Content\font-awesome-4.7.0\scss\_variables.scss" />
+    <Content Include="App_Data\CFSFStates.json" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <Content Include="Reports\CopyA.rdlc">
       <SubType>Designer</SubType>
