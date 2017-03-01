@@ -32,6 +32,7 @@
             {
                 <option value="@payer.Id" @Bill2Pay.Web.MenuGenerator.IsSelectedPayer(payer.Id)>@payer.FirstPayerName</option>
             }
+
         </select>
 
 
@@ -49,6 +50,7 @@
 
     var year = @(Request.RequestContext.RouteData.Values["ID"] == null ? 0: Request.RequestContext.RouteData.Values["ID"]);
     var payer = @(Request["payer"] == null ? "0" : Request["payer"]);
+   
     SelectYear = function (oBj) {
         year = $(oBj).val();
         Redirect();
@@ -62,5 +64,7 @@
         if (AllowSubmit == 'True' && year > 0 ) {
             location.href = '@Url.Content("~/"+Bill2Pay.Web.MenuGenerator.CurrentUrl)' + year + '/?payer=' + payer;
         }
+        
+    
     }
 </script>

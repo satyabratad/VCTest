@@ -31,6 +31,12 @@ namespace Bill2Pay.Web.Controllers
             if (payer == null)
             {
                 payer = 0;
+                if (TempData["SelectedPayer"]!=null)
+                {
+                    Int32 selectedpayer = Convert.ToInt32(TempData["SelectedPayer"]);
+                    payer = selectedpayer;
+                }
+               
             }
 
             if (Id == null)
@@ -89,6 +95,7 @@ namespace Bill2Pay.Web.Controllers
         {
             var chkList = Request.Form["checkedAccountNo"];
             var year = int.Parse(Request.Form["ddlYear"]);
+            var selectedPayer = int.Parse(Request.Form["ddlPayer"]);
             string statusId = Request.Form["statusId"];
 
             List<MerchantVM> Merchatlist = new JavaScriptSerializer().Deserialize<List<MerchantVM>>(chkList);
@@ -99,6 +106,7 @@ namespace Bill2Pay.Web.Controllers
             TempData["CheckedMerchantList"] = list;
             TempData["SelectedYear"] = year;
             TempData["statusId"] = statusId;
+            TempData["SelectedPayer"] = selectedPayer;
 
             if (checkedList.Count == 0)
             {
@@ -134,7 +142,7 @@ namespace Bill2Pay.Web.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
             }
         }
 
@@ -142,10 +150,11 @@ namespace Bill2Pay.Web.Controllers
         {
             List<string> selectedMerchants = (List<string>)TempData["CheckedMerchantList"];
             Int32 year = Convert.ToInt32(TempData["SelectedYear"]);
+            Int32 selectedPayer = Convert.ToInt32(TempData["SelectedPayer"]);
             if (selectedMerchants.Count == 0)
             {
                 TempData["errorMessage"] = "Select atleast one record to generate IRS Test File";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
             }
 
             GenerateTaxFile taxFile = new GenerateTaxFile(true, year, User.Identity.GetUserId<long>(), selectedMerchants);
@@ -168,6 +177,8 @@ namespace Bill2Pay.Web.Controllers
             List<string> selectedMerchants = (List<string>)TempData["CheckedMerchantList"];
 
             Int32 year = Convert.ToInt32(TempData["SelectedYear"]);
+            Int32 selectedPayer = Convert.ToInt32(TempData["SelectedPayer"]);
+
 
             string errorTINResult = "1,2,3,4,5";
 
@@ -180,7 +191,7 @@ namespace Bill2Pay.Web.Controllers
             if (incorrectTINresult.Count != 0)
             {
                 TempData["errorMessage"] = "At least one of the selected merchant has negative or void TIN check result. IRS FIRE Input file cannot be generated for this selection.";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
             }
 
             //var alreadySubmitted = tinCheckedPayeeList.Where(x => x.detail.SubmissionSummaryId != null).ToList();
@@ -193,7 +204,7 @@ namespace Bill2Pay.Web.Controllers
             if (alreadySubmitted.Count != 0)
             {
                 TempData["errorMessage"] = "One or more than one selected merchant's 1009K file already submitted. IRS file can not be generated for this selection";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", new { Id=year,payer= selectedPayer });
             }
 
             GenerateTaxFile taxFile = new GenerateTaxFile(false, year, User.Identity.GetUserId<long>(), selectedMerchants);
@@ -237,13 +248,14 @@ namespace Bill2Pay.Web.Controllers
         {
 
             Int32 year = Convert.ToInt32(TempData["year"]);
+            Int32 selectedPayer = Convert.ToInt32(TempData["SelectedPayer"]);
             List<string> selectedMerchants = (List<string>)TempData["CheckedMerchantList"];
             Int32 statusId = Convert.ToInt32(TempData["statusId"]);
 
             if (statusId < 1)
             {
                 TempData["errorMessage"] = "Requested status is not specified. Please select a list a try again.";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
             }
             //changeble status;
             //if Not Submitted(1)=> status can not be modified.
@@ -263,7 +275,7 @@ namespace Bill2Pay.Web.Controllers
                         if (statusId == (int)RecordStatus.Submitted && data.StatusId != (int)RecordStatus.FileGenerated)
                         {
                             TempData["errorMessage"] = "Specified status can not be updated for : " + data.AccountNumber;
-                            return RedirectToAction("Index", "Home");
+                            return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
                         }
                         data.IsActive = false;
                     }
@@ -273,7 +285,7 @@ namespace Bill2Pay.Web.Controllers
                     if (statusId == (int)RecordStatus.Submitted )
                     {
                         TempData["errorMessage"] = "Specified status can not be updated for : " + item;
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
                     }
                 }
                 var submissionStatus = new SubmissionStatus();
@@ -290,7 +302,7 @@ namespace Bill2Pay.Web.Controllers
             }
             TempData["successMessage"] = "Submission status updated successfully.";
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
         }
     }
 }

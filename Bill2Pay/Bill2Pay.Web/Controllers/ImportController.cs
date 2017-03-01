@@ -106,7 +106,7 @@ namespace Bill2Pay.Web.Controllers
 
 
 
-        public ActionResult Tin(int? Id)
+        public ActionResult Tin(int? Id, int? payer)
         {
 
             if (Id == null)
@@ -202,7 +202,7 @@ namespace Bill2Pay.Web.Controllers
 
             try
             {
-                var imps = dbContext.ImportSummary.Where(s => s.PaymentYear == year).OrderByDescending(s => s.Id).FirstOrDefault();
+                var imps = dbContext.ImportSummary.Where(s => s.PaymentYear == year && s.IsActive==true).OrderByDescending(s => s.Id).FirstOrDefault();
                 ImportDetail impd = null;
                 foreach (DataRow dr in dtTin.Rows)
                 {
@@ -216,9 +216,11 @@ namespace Bill2Pay.Web.Controllers
                     if (payer == 0)
                     {
                         //ImportDetail impd1 = dbContext.ImportDetails.Where(i => i.TIN == tin && i.AccountNo == accNo && i.ImportSummary.Id == imps.Id).FirstOrDefault();
-                         impd = dbContext.ImportDetails.Where(i => i.TIN.Equals(tin, StringComparison.InvariantCultureIgnoreCase)
+                         impd = dbContext.ImportDetails
+                                .Include("ImportSummary")
+                                .Where(i => i.TIN.Equals(tin, StringComparison.InvariantCultureIgnoreCase)
                                                                          && i.FirstPayeeName.Equals(accName, StringComparison.InvariantCultureIgnoreCase)
-                                                                         && i.ImportSummary.Id == imps.Id
+                                                                         && i.ImportSummary.Id ==i.ImportSummary.Id // imps.Id
                                                                          && i.IsActive == true
                                                                          ).FirstOrDefault();
 
@@ -226,9 +228,11 @@ namespace Bill2Pay.Web.Controllers
                     else
                     {
 
-                         impd = dbContext.ImportDetails.Where(i => i.TIN.Equals(tin, StringComparison.InvariantCultureIgnoreCase)
+                         impd = dbContext.ImportDetails
+                            .Include("ImportSummary")
+                            .Where(i => i.TIN.Equals(tin, StringComparison.InvariantCultureIgnoreCase)
                                                                          && i.FirstPayeeName.Equals(accName, StringComparison.InvariantCultureIgnoreCase)
-                                                                         && i.ImportSummary.Id == imps.Id
+                                                                         && i.ImportSummary.Id == i.ImportSummary.Id //imps.Id
                                                                          && i.Merchant.Payer.Id == payer && i.IsActive==true
                                                                          ).FirstOrDefault();
                     }
