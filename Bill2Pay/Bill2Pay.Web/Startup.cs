@@ -11,7 +11,9 @@ namespace Bill2Pay.Web
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+#if DEBUG
             CreateRolesandUsers();
+#endif 
         }
 
         // In this method we will create default User roles and Admin user for login

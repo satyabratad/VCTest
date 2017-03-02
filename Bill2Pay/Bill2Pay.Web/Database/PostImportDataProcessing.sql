@@ -1,4 +1,7 @@
-﻿ALTER PROCEDURE [dbo].[PostImportDataProcessing]
+﻿IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'PostImportDataProcessing')
+DROP PROCEDURE PostImportDataProcessing
+GO
+CREATE PROCEDURE [dbo].[PostImportDataProcessing]
 	@YEAR INT = 2016,
 	@UserId BIGINT=1,
 	@TotalCount INT=0,
