@@ -108,15 +108,20 @@ namespace Bill2Pay.Web.Controllers
 
         public ActionResult Tin(int? Id, int? payer)
         {
-
+            //sint year = 0;
             if (Id == null)
             {
-                var year = DateTime.Now.Year - 1;
-                return RedirectToAction("Tin", new { id = year });
+                Id = DateTime.Now.Year - 1;
+                return RedirectToAction("Tin", new { id = Id, payer=payer });
+            }
+            if(payer== null)
+            {
+                payer = 0;
             }
 
             ViewBag.Message = "";
             return View();
+            //return RedirectToAction("Tin", new { id = Id, payer = payer });
         }
 
         [HttpPost]
@@ -156,7 +161,7 @@ namespace Bill2Pay.Web.Controllers
                 result = UpdateTinMatchingStatus(dtTin, year, ddlPayer);
                 ViewBag.Message = result;
             }
-            return View();
+            return View("Tin", new { id = year, payer= ddlPayer });
         }
 
 
