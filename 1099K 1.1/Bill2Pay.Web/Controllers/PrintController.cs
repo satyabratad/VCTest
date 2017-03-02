@@ -13,8 +13,6 @@ namespace Bill2Pay.Web.Controllers
 {
     public class PrintController : Controller
     {
-        // GET: Print
-
         [HttpPost]
         public ActionResult CopyA(string Id)
         {
