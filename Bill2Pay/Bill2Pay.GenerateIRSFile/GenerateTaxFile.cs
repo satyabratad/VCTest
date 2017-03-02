@@ -116,8 +116,17 @@ namespace Bill2Pay.GenerateIRSFile
                                 recordSequenceNumber++;
                                 break;
                             case "COMBINED FEDERAL/STATE FILING PROGRAM":
-                                fileData.Append(GetFieldValue(item));
-                                cfsf = GetFieldValue(item);
+                                var isCFSFrequired = importDetaiils.Where(y => cfsfStates.Select(x => x.State).ToList().Contains(y.PayeeState)).ToList();
+                                if (isCFSFrequired.Count > 0)
+                                {
+                                    fileData.Append(GetFieldValue(item));
+                                    cfsf = GetFieldValue(item);
+                                }
+                                else
+                                {
+                                    fileData.Append(" ");
+                                    cfsf = " ";
+                                }
                                 break;
                             default:
                                 fileData.Append(GetFieldValue(item));
