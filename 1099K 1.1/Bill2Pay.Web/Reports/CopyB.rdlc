@@ -836,33 +836,6 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
-      <Textbox Name="Void">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=IIF((First(Fields!SubmissionType.Value,"SubmissionDetails") And 1)=1, "x","")</Value>
-                <Style />
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <Left>4.91082cm</Left>
-        <Height>0.65292cm</Height>
-        <Width>0.56854cm</Width>
-        <ZIndex>29</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
       <Textbox Name="Corrected">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
