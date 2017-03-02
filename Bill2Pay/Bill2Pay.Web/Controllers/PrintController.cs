@@ -167,7 +167,10 @@ namespace Bill2Pay.Web.Controllers
             LocalReport localReport = new LocalReport();
             localReport.ReportPath = Server.MapPath("~/Reports/" + reportName + ".rdlc");
             ReportDataSource reportDataSource = new ReportDataSource("SubmissionDetails", data);
+            int TransactionYear = item.SubmissionSummary.PaymentYear + 1;
 
+            var yearParam = new ReportParameter("TransactionYear", TransactionYear.ToString());
+            localReport.SetParameters(yearParam);
             localReport.DataSources.Add(reportDataSource);
 
             ReportDataSource pseDataSource = new ReportDataSource("PSEMaster", pseData);
