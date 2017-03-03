@@ -49,21 +49,26 @@ namespace Bill2Pay.Model
         public string ForeignCountryIndicator { get; set; }
 
         [MaxLength(40)]
+        [Display(Name ="Name")]
         public string FirstPayeeName { get; set; }
 
         [MaxLength(40)]
         public string SecondPayeeName { get; set; }
 
         [MaxLength(40)]
+        [Display(Name = "Address")]
         public string PayeeMailingAddress { get; set; }
 
         [MaxLength(40)]
+        [Display(Name = "City")]
         public string PayeeCity { get; set; }
 
         [MaxLength(2)]
+        [Display(Name = "State")]
         public string PayeeState { get; set; }
 
         [MaxLength(9)]
+        [Display(Name = "Zip")]
         public string PayeeZipCode { get; set; }
 
         [MaxLength(1)]
@@ -77,6 +82,7 @@ namespace Bill2Pay.Model
         public int TransactionCount { get; set; }
 
         [MaxLength(4)]
+        [Display(Name = "MCC")]
         public string MerchantCategoryCode { get; set; }
 
         [MaxLength(60)]

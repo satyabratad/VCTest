@@ -1,7 +1,46 @@
-﻿
+﻿@model IEnumerable<Bill2Pay.Model.ImportDetail>
+
 @{
-    ViewBag.Title = "Tin";
+    ViewBag.Title = "TIN Matching Report";
 }
 
-<h2>TIN Report</h2>
+<h2>TIN Matching Report</h2>
 
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AccountNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TIN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstPayeeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TINCheckStatus)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccountNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TIN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstPayeeName)
+                @Html.DisplayFor(modelItem => item.SecondPayeeName)
+            </td>
+            <td>
+                @Bill2Pay.Web.TinStatus.GetName( item.TINCheckStatus)
+            </td>
+           
+        </tr>
+    }
+
+</table>

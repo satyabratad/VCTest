@@ -161,4 +161,29 @@ namespace Bill2Pay.Web
     {
         public bool AllowPostback { get; set; }
     }
+
+    public static class TinStatus
+    {
+        public static string GetName(string id)
+        {
+            string value = "";
+            if(string.IsNullOrEmpty(id))
+            {
+                value = "Not Verified";
+                return value;
+            }
+
+            int statusId = Convert.ToInt32(id);
+            var status = ApplicationDbContext.Instence.TINStatus.FirstOrDefault(p => p.Id == statusId);
+            if(status != null)
+            {
+                value = status.Name;
+            }
+            else
+            {
+                value = "Not Verified";
+            }
+            return value;
+        }
+    }
 }

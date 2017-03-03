@@ -11,6 +11,7 @@ namespace Bill2Pay.Model
         [Key]
         public int Id { get; set; }
 
+        [Display(Name = "Account")]
         public string AccountNo { get; set; }
 
         [ForeignKey("ImportSummary")]
@@ -19,6 +20,7 @@ namespace Bill2Pay.Model
         public virtual ImportSummary ImportSummary { get; set; }
 
         [MaxLength(2)]
+        [Display(Name ="TIN Status")]
         public string TINCheckStatus { get; set; }
 
         [MaxLength(512)]
