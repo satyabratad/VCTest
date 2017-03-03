@@ -20,11 +20,13 @@ namespace Bill2Pay.Model
         [Key]
         public int Id { get; set; }
 
+        [Display(Name = "Account")]
         public string AccountNo { get; set; }
 
         [ForeignKey("SubmissionSummary")]
         public int SubmissionId { get; set; }
 
+        [Display(Name = "Status")]
         public int SubmissionType { get; set; }
 
         public virtual SubmissionSummary SubmissionSummary { get; set; }

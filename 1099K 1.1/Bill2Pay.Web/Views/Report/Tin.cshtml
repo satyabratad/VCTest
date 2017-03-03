@@ -6,41 +6,52 @@
 
 <h2>TIN Matching Report</h2>
 
+<button id="export" style="float:right;margin-top:-60px;" type="submit" class="btn btn-primary btn-lg " title="Export to CSV">
+    <span class="glyphicon glyphicon-export"></span>
+</button>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.AccountNo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TIN)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstPayeeName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TINCheckStatus)
-        </th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<div class="table-responsive">
+    <table class="table" id="TTIN">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.AccountNo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TIN)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstPayeeName)
-                @Html.DisplayFor(modelItem => item.SecondPayeeName)
-            </td>
-            <td>
-                @Bill2Pay.Web.TinStatus.GetName( item.TINCheckStatus)
-            </td>
-           
+            <th>
+                @Html.DisplayNameFor(model => model.AccountNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TIN)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstPayeeName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TINCheckStatus)
+            </th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AccountNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TIN)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstPayeeName)
+                    @Html.DisplayFor(modelItem => item.SecondPayeeName)
+                </td>
+                <td>
+                    @Bill2Pay.Web.TinStatus.GetName(item.TINCheckStatus)
+                </td>
+
+            </tr>
+        }
+
+    </table>
+</div>
+<script>
+    $("#export").click(function () {
+        $("#TTIN").tableToCSV("TIN_");
+    });
+
+</script>

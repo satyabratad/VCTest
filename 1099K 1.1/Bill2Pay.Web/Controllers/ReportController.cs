@@ -25,7 +25,9 @@ namespace Bill2Pay.Web.Controllers
 
         public ActionResult K1099()
         {
-            return View();
+            var items = dbContext.SubmissionDetails.Where(p => p.IsActive == true);
+
+            return View(items);
         }
 
         public ActionResult Merchant()

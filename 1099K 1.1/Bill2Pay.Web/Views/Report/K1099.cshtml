@@ -1,7 +1,133 @@
-﻿
+﻿@model IEnumerable<Bill2Pay.Model.SubmissionDetail>
+
 @{
-    ViewBag.Title = "K1099";
+    ViewBag.Title = "IRS 1099K Report";
 }
 
-<h2>K1099 Report</h2>
+<h2>IRS 1099K Report</h2>
 
+<button id="export" style="float:right;margin-top:-60px;" type="submit" class="btn btn-primary btn-lg " title="Export to CSV">
+    <span class="glyphicon glyphicon-export"></span>
+</button>
+<div class="table-responsive">
+    
+    <table class="table" id="T1099K">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountNo)
+            </th>
+            <th align="right">
+                @Html.DisplayNameFor(model => model.JanuaryAmount)
+            </th>
+            <th align="right">
+                @Html.DisplayNameFor(model => model.FebruaryAmount)
+            </th>
+            <th align="right">
+                @Html.DisplayNameFor(model => model.MarchAmount)
+            </th>
+            <th align="right">
+                @Html.DisplayNameFor(model => model.AprilAmount)
+            </th>
+            <th align="right">
+                @Html.DisplayNameFor(model => model.MayAmount)
+            </th>
+            <th align="right">
+                @Html.DisplayNameFor(model => model.JuneAmount)
+            </th>
+            <th align="right">
+                @Html.DisplayNameFor(model => model.JulyAmount)
+            </th>
+            <th align="right">
+                @Html.DisplayNameFor(model => model.AugustAmount)
+            </th>
+            <th align="right">
+                @Html.DisplayNameFor(model => model.SeptemberAmount)
+            </th>
+            <th align="right">
+                @Html.DisplayNameFor(model => model.OctoberAmount)
+            </th>
+            <th align="right">
+                @Html.DisplayNameFor(model => model.NovemberAmount)
+            </th>
+            <th align="right">
+                @Html.DisplayNameFor(model => model.DecemberAmount)
+            </th>
+            <th align="right">
+                @Html.DisplayNameFor(model => model.GrossAmount)
+            </th>
+            <th align="right">
+                @Html.DisplayNameFor(model => model.CNPTransactionAmount)
+            </th>
+            <th align="right">
+                @Html.DisplayNameFor(model => model.TransactionCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SubmissionType)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccountNo)
+            </td>
+            <td align="right">
+                @Bill2Pay.Web.SubmissionType.FormatAmount(item.JanuaryAmount)
+            </td>
+            <td align="right">
+                @Bill2Pay.Web.SubmissionType.FormatAmount(item.FebruaryAmount)
+            </td>
+            <td align="right">
+                @Bill2Pay.Web.SubmissionType.FormatAmount(item.MarchAmount)
+            </td>
+            <td align="right">
+                @Bill2Pay.Web.SubmissionType.FormatAmount(item.AprilAmount)
+            </td>
+            <td align="right">
+                @Bill2Pay.Web.SubmissionType.FormatAmount(item.MayAmount)
+            </td>
+            <td align="right">
+                @Bill2Pay.Web.SubmissionType.FormatAmount(item.JuneAmount)
+            </td>
+            <td align="right">
+                @Bill2Pay.Web.SubmissionType.FormatAmount(item.JulyAmount)
+            </td>
+            <td align="right">
+                @Bill2Pay.Web.SubmissionType.FormatAmount(item.AugustAmount)
+            </td>
+            <td align="right">
+                @Bill2Pay.Web.SubmissionType.FormatAmount(item.SeptemberAmount)
+            </td>
+            <td align="right">
+                @Bill2Pay.Web.SubmissionType.FormatAmount(item.OctoberAmount)
+            </td>
+            <td align="right">
+                @Bill2Pay.Web.SubmissionType.FormatAmount(item.NovemberAmount)
+            </td>
+            <td align="right">
+                @Bill2Pay.Web.SubmissionType.FormatAmount(item.DecemberAmount)
+            </td>
+            <td align="right">
+                @Bill2Pay.Web.SubmissionType.FormatAmount(item.GrossAmount)
+            </td>
+            <td align="right">
+                @Bill2Pay.Web.SubmissionType.FormatAmount(item.CNPTransactionAmount)
+            </td>
+            <td align="right">
+                @Html.DisplayFor(modelItem => item.TransactionCount)
+            </td>
+            <td>
+                @Bill2Pay.Web.SubmissionType.GetName(item.SubmissionType)
+            </td>
+        </tr>
+    }
+
+    </table>
+</div>
+<script>
+    $("#export").click(function () {
+        $("#T1099K").tableToCSV("1099K_");
+    });
+
+</script>

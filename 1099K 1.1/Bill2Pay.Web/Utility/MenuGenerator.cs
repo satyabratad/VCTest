@@ -167,7 +167,7 @@ namespace Bill2Pay.Web
         public static string GetName(string id)
         {
             string value = "";
-            if(string.IsNullOrEmpty(id))
+            if (string.IsNullOrEmpty(id))
             {
                 value = "Not Verified";
                 return value;
@@ -175,7 +175,7 @@ namespace Bill2Pay.Web
 
             int statusId = Convert.ToInt32(id);
             var status = ApplicationDbContext.Instence.TINStatus.FirstOrDefault(p => p.Id == statusId);
-            if(status != null)
+            if (status != null)
             {
                 value = status.Name;
             }
@@ -184,6 +184,41 @@ namespace Bill2Pay.Web
                 value = "Not Verified";
             }
             return value;
+        }
+    }
+
+    public static class SubmissionType
+    {
+        public static string GetName(int? id)
+        {
+            string value = "";
+            if (id == null)
+            {
+                value = "Not Submitted";
+                return value;
+            }
+
+            int statusId = Convert.ToInt32(id);
+            var status = ApplicationDbContext.Instence.Status.FirstOrDefault(p => p.Id == statusId);
+            if (status != null)
+            {
+                value = status.Name;
+            }
+            else
+            {
+                value = "Not Submitted";
+            }
+            return value;
+        }
+
+        public static string FormatAmount(decimal? amount)
+        {
+            if(amount == null)
+            {
+                return "0.00";
+            }
+
+            return string.Format("{0:0.00}", amount);
         }
     }
 }

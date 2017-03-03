@@ -35,11 +35,13 @@ namespace Bill2Pay.Web
                 "~/Scripts/bootstrap_multiselect.js",
                 "~/Scripts/moment.min.js",
                 "~/Scripts/daterangepicker.js",
-                "~/Scripts/app.js"));
+                "~/Scripts/app.js",
+                "~/Scripts/jscsv.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/custom").Include(
                       "~/Scripts/Custom/Common.js",
-                      "~/Scripts/Custom/Account.js"));
+                      "~/Scripts/Custom/Account.js"
+                      ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                  "~/Content/Site.css",

@@ -15,34 +15,49 @@ namespace Bill2Pay.Model
         [MaxLength(4)]
         public string PayerOfficeCode { get; set; }
 
+        [Display(Name = "Gross")]
         public Nullable<decimal> GrossAmount { get; set; }
 
+        [Display(Name = "CNP")]
         public Nullable<decimal> CNPTransactionAmount { get; set; }
 
+        [Display(Name = "FederalWithHolding")]
         public Nullable<decimal> FederalWithHoldingAmount { get; set; }
 
+        [Display(Name = "January")]
         public Nullable<decimal> JanuaryAmount { get; set; }
 
+        [Display(Name = "February")]
         public Nullable<decimal> FebruaryAmount { get; set; }
 
+        [Display(Name = "March")]
         public Nullable<decimal> MarchAmount { get; set; }
 
+        [Display(Name = "April")]
         public Nullable<decimal> AprilAmount { get; set; }
 
+        [Display(Name = "May")]
         public Nullable<decimal> MayAmount { get; set; }
 
+        [Display(Name = "June")]
         public Nullable<decimal> JuneAmount { get; set; }
 
+        [Display(Name = "July")]
         public Nullable<decimal> JulyAmount { get; set; }
 
+        [Display(Name = "August")]
         public Nullable<decimal> AugustAmount { get; set; }
 
+        [Display(Name = "September")]
         public Nullable<decimal> SeptemberAmount { get; set; }
 
+        [Display(Name = "October")]
         public Nullable<decimal> OctoberAmount { get; set; }
 
+        [Display(Name = "November")]
         public Nullable<decimal> NovemberAmount { get; set; }
 
+        [Display(Name = "December")]
         public Nullable<decimal> DecemberAmount { get; set; }
 
         [MaxLength(1)]
@@ -79,6 +94,7 @@ namespace Bill2Pay.Model
         [MaxLength(1)]
         public string PaymentIndicatorType { get; set; }
 
+        [Display(Name = "Count")]
         public int TransactionCount { get; set; }
 
         [MaxLength(4)]
