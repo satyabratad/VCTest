@@ -222,6 +222,36 @@
     <Compile Include="Utility\MenuGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\DataTables\DataTables-1.10.13\css\dataTables.bootstrap.css" />
+    <Content Include="Content\DataTables\DataTables-1.10.13\css\dataTables.bootstrap.min.css" />
+    <Content Include="Content\DataTables\DataTables-1.10.13\css\dataTables.foundation.css" />
+    <Content Include="Content\DataTables\DataTables-1.10.13\css\dataTables.foundation.min.css" />
+    <Content Include="Content\DataTables\DataTables-1.10.13\css\dataTables.jqueryui.css" />
+    <Content Include="Content\DataTables\DataTables-1.10.13\css\dataTables.jqueryui.min.css" />
+    <Content Include="Content\DataTables\DataTables-1.10.13\css\dataTables.semanticui.css" />
+    <Content Include="Content\DataTables\DataTables-1.10.13\css\dataTables.semanticui.min.css" />
+    <Content Include="Content\DataTables\DataTables-1.10.13\css\jquery.dataTables.css" />
+    <Content Include="Content\DataTables\DataTables-1.10.13\css\jquery.dataTables.min.css" />
+    <Content Include="Content\DataTables\DataTables-1.10.13\css\jquery.dataTables_themeroller.css" />
+    <Content Include="Content\DataTables\DataTables-1.10.13\images\sort_asc.png" />
+    <Content Include="Content\DataTables\DataTables-1.10.13\images\sort_asc_disabled.png" />
+    <Content Include="Content\DataTables\DataTables-1.10.13\images\sort_both.png" />
+    <Content Include="Content\DataTables\DataTables-1.10.13\images\sort_desc.png" />
+    <Content Include="Content\DataTables\DataTables-1.10.13\images\sort_desc_disabled.png" />
+    <Content Include="Content\DataTables\DataTables-1.10.13\js\dataTables.bootstrap.js" />
+    <Content Include="Content\DataTables\DataTables-1.10.13\js\dataTables.bootstrap.min.js" />
+    <Content Include="Content\DataTables\DataTables-1.10.13\js\dataTables.foundation.js" />
+    <Content Include="Content\DataTables\DataTables-1.10.13\js\dataTables.foundation.min.js" />
+    <Content Include="Content\DataTables\DataTables-1.10.13\js\dataTables.jqueryui.js" />
+    <Content Include="Content\DataTables\DataTables-1.10.13\js\dataTables.jqueryui.min.js" />
+    <Content Include="Content\DataTables\DataTables-1.10.13\js\dataTables.semanticui.js" />
+    <Content Include="Content\DataTables\DataTables-1.10.13\js\dataTables.semanticui.min.js" />
+    <Content Include="Content\DataTables\DataTables-1.10.13\js\jquery.dataTables.js" />
+    <Content Include="Content\DataTables\DataTables-1.10.13\js\jquery.dataTables.min.js" />
+    <Content Include="Content\DataTables\datatables.css" />
+    <Content Include="Content\DataTables\datatables.js" />
+    <Content Include="Content\DataTables\datatables.min.css" />
+    <Content Include="Content\DataTables\datatables.min.js" />
     <Content Include="Content\font-awesome-4.7.0\css\font-awesome.css" />
     <Content Include="Content\font-awesome-4.7.0\css\font-awesome.min.css" />
     <Content Include="Content\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
@@ -246,8 +276,6 @@
     <Content Include="Content\sidebar.css" />
     <Content Include="Content\simple-sidebar.css" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\fontawesome-webfont.svg" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\admin.jpg" />
@@ -327,11 +355,6 @@
     <Content Include="Content\font-awesome-4.7.0\scss\_stacked.scss" />
     <Content Include="Content\font-awesome-4.7.0\scss\_variables.scss" />
     <Content Include="App_Data\CFSFStates.json" />
-    <Content Include="fonts\fontawesome-webfont.eot" />
-    <Content Include="fonts\fontawesome-webfont.ttf" />
-    <Content Include="fonts\fontawesome-webfont.woff" />
-    <Content Include="fonts\fontawesome-webfont.woff2" />
-    <Content Include="fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <Content Include="Reports\CopyA.rdlc">
       <SubType>Designer</SubType>
@@ -443,6 +466,8 @@
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\UnauthorizedAccess.cshtml" />
+    <Content Include="SqlServerTypes\x64\_sgbak\SqlServerSpatial110.dll.406099.1.2017-03-01.04-51-34.1175" />
+    <Content Include="SqlServerTypes\x86\_sgbak\SqlServerSpatial110.dll.406098.1.2017-03-01.04-51-34.1771" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -450,9 +475,6 @@
     <Folder Include="Views\TIN\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>

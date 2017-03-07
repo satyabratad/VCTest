@@ -31,12 +31,12 @@ namespace Bill2Pay.Web.Controllers
             if (payer == null)
             {
                 payer = 0;
-                if (TempData["SelectedPayer"]!=null)
+                if (TempData["SelectedPayer"] != null)
                 {
                     Int32 selectedpayer = Convert.ToInt32(TempData["SelectedPayer"]);
                     payer = selectedpayer;
                 }
-               
+
             }
 
             if (Id == null)
@@ -204,7 +204,7 @@ namespace Bill2Pay.Web.Controllers
             if (alreadySubmitted.Count != 0)
             {
                 TempData["errorMessage"] = "One or more than one selected merchant's 1009K file already submitted. IRS file can not be generated for this selection";
-                return RedirectToAction("Index", new { Id=year,payer= selectedPayer });
+                return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
             }
 
             GenerateTaxFile taxFile = new GenerateTaxFile(false, year, User.Identity.GetUserId<long>(), selectedMerchants);
@@ -291,12 +291,10 @@ namespace Bill2Pay.Web.Controllers
                 }
                 else
                 {
-                    if (statusId == (int)RecordStatus.Submitted)
-                    {
-                        TempData["errorMessage"] = "Specified status can not be updated for : " + item;
-                        return RedirectToAction("Index", "Home");
-                    }
+                    TempData["errorMessage"] = "Specified status can not be updated for : " + item;
+                    return RedirectToAction("Index", "Home");
                 }
+
                 var submissionStatus = new SubmissionStatus();
 
                 submissionStatus.PaymentYear = year;
