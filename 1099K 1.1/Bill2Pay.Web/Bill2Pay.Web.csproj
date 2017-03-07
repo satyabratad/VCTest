@@ -276,6 +276,7 @@
     <Content Include="Content\sidebar.css" />
     <Content Include="Content\simple-sidebar.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\admin.jpg" />
@@ -355,6 +356,11 @@
     <Content Include="Content\font-awesome-4.7.0\scss\_stacked.scss" />
     <Content Include="Content\font-awesome-4.7.0\scss\_variables.scss" />
     <Content Include="App_Data\CFSFStates.json" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <Content Include="Reports\CopyA.rdlc">
       <SubType>Designer</SubType>
