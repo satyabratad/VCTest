@@ -77,21 +77,22 @@ namespace Bill2Pay.Model
 
         public static void Clear()
         {
-            var result = ApplicationDbContext.Instence.Database
+            using(var dbContext = new ApplicationDbContext())
+            {
+                var result = dbContext.Database
                 .ExecuteSqlCommand("PreImportDataProcessing");
-
+            }
         }
 
 
 
         public static void AddBulkAsync()
         {
-            if (ApplicationDbContext.Instence.Database.Connection.State != ConnectionState.Open)
+            using (var dbContext = new ApplicationDbContext())
             {
-                ApplicationDbContext.Instence.Database.Connection.Open();
+                dbContext.RawTransactionStaging.AddRange(list);
+                dbContext.SaveChanges();
             }
-            ApplicationDbContext.Instence.RawTransactionStaging.AddRange(list);
-            ApplicationDbContext.Instence.SaveChanges();
         }
 
         static List<RawTransactionStaging> list = null;
@@ -180,18 +181,19 @@ namespace Bill2Pay.Model
         {
             try
             {
+                using (var dbContext = new ApplicationDbContext())
+                {
+                    var yearParam = new SqlParameter("@YEAR", year);
+                    var userParam = new SqlParameter("@UserId", userId);
+                    var totalParam = new SqlParameter("@TotalCount", totalCount);
+                    var fileParam = new SqlParameter("@FileName", fileName);
+                    var payerParam = new SqlParameter("@PayerId", payerId);
 
-                var yearParam = new SqlParameter("@YEAR", year);
-                var userParam = new SqlParameter("@UserId", userId);
-                var totalParam = new SqlParameter("@TotalCount", totalCount);
-                var fileParam = new SqlParameter("@FileName", fileName);
-                var payerParam = new SqlParameter("@PayerId", payerId);
+                    dbContext.Database.CommandTimeout = RawTransactionStaging.ProcessTimeOut;
 
-                ApplicationDbContext.Instence.Database.CommandTimeout = RawTransactionStaging.ProcessTimeOut;
-
-                var result = ApplicationDbContext.Instence.Database
-                    .ExecuteSqlCommand("PostImportDataProcessing @YEAR, @UserId, @TotalCount, @FileName,@PayerId", yearParam, userParam, totalParam, fileParam, payerParam);
-
+                    var result = dbContext.Database
+                        .ExecuteSqlCommand("PostImportDataProcessing @YEAR, @UserId, @TotalCount, @FileName,@PayerId", yearParam, userParam, totalParam, fileParam, payerParam);
+                }
             }
             catch (Exception ex)
             {
