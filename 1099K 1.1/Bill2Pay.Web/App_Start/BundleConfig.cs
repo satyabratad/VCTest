@@ -26,7 +26,7 @@ namespace Bill2Pay.Web
                 "~/Scripts/pace.js",
                 "~/Scripts/jquery.min.js",
                 "~/Scripts/angular.min.js",
-                "~/Scripts//bootstrap.min.js",
+                "~/Scripts/bootstrap.min.js",
                 "~/Scripts/blockui.min.js",
                 "~/Scripts/d3.min.js",
                 "~/Scripts/d3_tooltip.js",
@@ -35,6 +35,7 @@ namespace Bill2Pay.Web
                 "~/Scripts/bootstrap_multiselect.js",
                 "~/Scripts/moment.min.js",
                 "~/Scripts/daterangepicker.js",
+                "~/Content/DataTables/datatables.min.js",
                 "~/Scripts/app.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/custom").Include(
