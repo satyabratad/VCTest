@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -167,7 +168,7 @@ namespace Bill2Pay.Web.Controllers
 
         private DataTable ReadTinInput(string fileName)
         {
-            DataTable dtTin = new DataTable(); ;
+            DataTable dtTin = new DataTable(); 
 
             string Feedback = string.Empty;
             string line = string.Empty;
@@ -197,7 +198,7 @@ namespace Bill2Pay.Web.Controllers
 
         }
 
-        private string UpdateTinMatchingStatus(DataTable dtTin, int year,int? payer)
+        private string UpdateTinMatchingStatus(DataTable dtTin, int year, int? payer)
         {
             string result = string.Empty;
             string accNo = string.Empty;
@@ -205,108 +206,78 @@ namespace Bill2Pay.Web.Controllers
             string tin = string.Empty;
             string tinStaus = string.Empty;
 
-            try
+            using (var scope = new TransactionScope())
             {
-                var imps = dbContext.ImportSummary.Where(s => s.PaymentYear == year && s.IsActive==true).OrderByDescending(s => s.Id).FirstOrDefault();
-                ImportDetail impd = null;
-                foreach (DataRow dr in dtTin.Rows)
+
+                try
                 {
-                    tin = dr[1].ToString();
-                    accName = dr[2].ToString();
-                    accNo = dr[3].ToString();
-                    tinStaus = dr[4].ToString();
+                    // var imps = dbContext.ImportSummary.Where(s => s.PaymentYear == year && s.IsActive==true).OrderByDescending(s => s.Id).FirstOrDefault();
 
-                    var tinStatusName = dbContext.TINStatus.Where(t => t.Id.ToString() == tinStaus).FirstOrDefault();
-
-                    if (payer == 0)
+                    ImportDetail impd = null;
+                    foreach (DataRow dr in dtTin.Rows)
                     {
-                        //ImportDetail impd1 = dbContext.ImportDetails.Where(i => i.TIN == tin && i.AccountNo == accNo && i.ImportSummary.Id == imps.Id).FirstOrDefault();
-                         impd = dbContext.ImportDetails
+                        if (dr.ItemArray.Length < 5)
+                        {
+                            result = "TIN matching updated faild as one or more record does not have required no. of column.";
+                            return result;
+                        }
+                        tin = dr[1].ToString();
+                        accName = dr[2].ToString();
+                        accNo = dr[3].ToString();
+                        tinStaus = dr[4].ToString();
+
+                        var tinStatusName = dbContext.TINStatus.Where(t => t.Id.ToString() == tinStaus).FirstOrDefault();
+
+                        if (payer == 0)
+                        {
+
+                            impd = dbContext.ImportDetails
                                 .Include("ImportSummary")
-                                .Where(i => i.TIN.Equals(tin, StringComparison.InvariantCultureIgnoreCase)
-                                                                         && i.FirstPayeeName.Equals(accName, StringComparison.InvariantCultureIgnoreCase)
-                                                                         && i.ImportSummary.Id ==i.ImportSummary.Id // imps.Id
-                                                                         && i.IsActive == true
-                                                                         ).FirstOrDefault();
+                                .Where(i => i.AccountNo.Equals(accNo, StringComparison.InvariantCultureIgnoreCase)
+                                                            && i.ImportSummary.Id == i.ImportSummaryId
+                                                            && i.ImportSummary.PaymentYear == year
+                                                            && i.IsActive == true).FirstOrDefault();
 
+                        }
+                        else
+                        {
+
+                            impd = dbContext.ImportDetails
+                                .Include("ImportSummary")
+                                .Where(i => i.AccountNo.Equals(accNo, StringComparison.InvariantCultureIgnoreCase)
+                                                           && i.ImportSummary.Id == i.ImportSummaryId
+                                                           && i.ImportSummary.PaymentYear == year
+                                                           && i.Merchant.Payer.Id == payer && i.IsActive == true).FirstOrDefault();
+                        }
+                        if (impd != null)
+                        {
+                            ImportDetail newimpd = impd;
+
+
+                            impd.IsActive = false;
+                            dbContext.Entry(impd).State = System.Data.Entity.EntityState.Modified;
+                            dbContext.SaveChanges();
+
+                            newimpd.TINCheckStatus = tinStaus;
+                            newimpd.TINCheckRemarks = tinStatusName.Name;
+                            newimpd.IsActive = true;
+                            newimpd.DateAdded = DateTime.Now;
+
+                            dbContext.ImportDetails.Add(newimpd);
+
+                            dbContext.SaveChanges();
+                        }
                     }
-                    else
-                    {
-
-                         impd = dbContext.ImportDetails
-                            .Include("ImportSummary")
-                            .Where(i => i.TIN.Equals(tin, StringComparison.InvariantCultureIgnoreCase)
-                                                                         && i.FirstPayeeName.Equals(accName, StringComparison.InvariantCultureIgnoreCase)
-                                                                         && i.ImportSummary.Id == i.ImportSummary.Id //imps.Id
-                                                                         && i.Merchant.Payer.Id == payer && i.IsActive==true
-                                                                         ).FirstOrDefault();
-                    }
-                    ImportDetail newimpd = impd;
-                    //ImportDetail newimpd1 = new ImportDetail()
-                    //{
-                    //    AccountNo = impd.AccountNo,
-                    //    ImportSummaryId = impd.ImportSummaryId,
-                    //    TINCheckStatus = impd.TINCheckStatus,
-                    //    TINCheckRemarks = impd.TINCheckRemarks,
-                    //    SubmissionSummaryId = impd.SubmissionSummaryId,
-                    //    TINType = impd.TINType,
-                    //    TIN = impd.TIN,
-                    //    PayerOfficeCode = impd.PayerOfficeCode,
-                    //    GrossAmount = impd.GrossAmount,
-                    //    CNPTransactionAmount = impd.CNPTransactionAmount,
-                    //    FederalWithHoldingAmount = impd.FederalWithHoldingAmount,
-                    //    JanuaryAmount = impd.JanuaryAmount,
-                    //    FebruaryAmount = impd.FebruaryAmount,
-                    //    MarchAmount = impd.MarchAmount,
-                    //    AprilAmount = impd.AprilAmount,
-                    //    MayAmount = impd.MayAmount,
-                    //    JuneAmount = impd.JuneAmount,
-                    //    JulyAmount = impd.JulyAmount,
-                    //    AugustAmount = impd.AugustAmount,
-                    //    SeptemberAmount = impd.SeptemberAmount,
-                    //    OctoberAmount = impd.OctoberAmount,
-                    //    NovemberAmount = impd.NovemberAmount,
-                    //    DecemberAmount = impd.DecemberAmount,
-                    //    ForeignCountryIndicator = impd.ForeignCountryIndicator,
-                    //    FirstPayeeName = impd.FirstPayeeName,
-                    //    SecondPayeeName = impd.SecondPayeeName,
-                    //    PayeeMailingAddress = impd.PayeeMailingAddress,
-                    //    PayeeCity = impd.PayeeCity,
-                    //    PayeeState = impd.PayeeState,
-                    //    PayeeZipCode = impd.PayeeZipCode,
-                    //    SecondTINNoticed = impd.SecondTINNoticed,
-                    //    FillerIndicatorType = impd.FillerIndicatorType,
-                    //    PaymentIndicatorType = impd.PaymentIndicatorType,
-                    //    TransactionCount = impd.TransactionCount,
-                    //    MerchantCategoryCode = impd.MerchantCategoryCode,
-                    //    SpecialDataEntry = impd.SpecialDataEntry,
-                    //    StateWithHolding = impd.StateWithHolding,
-                    //    LocalWithHolding = impd.LocalWithHolding,
-                    //    CFSF = impd.CFSF
-                    //};
-
-
-                    impd.IsActive = false;
-                    dbContext.Entry(impd).State = System.Data.Entity.EntityState.Modified;
-
-                    dbContext.SaveChanges();
-
-                    newimpd.TINCheckStatus = tinStaus;
-                    newimpd.TINCheckRemarks = tinStatusName.Name;
-                    newimpd.IsActive = true;
-                    newimpd.DateAdded = DateTime.Now;
-
-                    dbContext.ImportDetails.Add(newimpd);
-                    dbContext.SaveChanges();
+                    scope.Complete();
+                   
+                    result = "TIN matching updated successfully";
                 }
-                result = "TIN matching updated successfully";
+                catch (Exception ex)
+                {
+                    result = "TIN matching updation failed";
+                    throw ex;
+                }
             }
-            catch (Exception ex)
-            {
-                result = "TIN matching updation failed";
-            }
-
-
             return result;
 
         }
