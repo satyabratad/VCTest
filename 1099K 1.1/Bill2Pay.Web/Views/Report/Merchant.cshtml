@@ -1,7 +1,96 @@
-﻿
+﻿@model IEnumerable<Bill2Pay.Model.MerchantDetails>
+
 @{
-    ViewBag.Title = "Merchant";
+    ViewBag.Title = "Test1";
 }
 
-<h2>Merchant Report</h2>
+<h2>Merchant Details</h2>
 
+@Html.Partial("_SelectYear", new Bill2Pay.Web.YearSelection() { AllowPostback = true })
+
+<button id="export" style="float:right;margin-top:-146px;" type="submit" class="btn btn-primary btn-lg " title="Export to CSV">
+    <span class="glyphicon glyphicon-export"></span>
+</button>
+<div class="col-md-12">
+    <div class="row">
+        <div class="table-responsive">
+            <table id="TMERCHANT" class="table">
+                <tr>
+                    <th class="btn-primary">
+                        Payer Name
+                    </th>
+                    <th class="btn-primary">
+                        @Html.DisplayNameFor(model => model.PayeeAccountNumber)
+                    </th>
+                    <th class="btn-primary">
+                        @Html.DisplayNameFor(model => model.PayeeTIN)
+                    </th>
+                    <th class="btn-primary">
+                        @Html.DisplayNameFor(model => model.PayeeFirstName)
+                    </th>
+                    <th class="btn-primary">
+                        @Html.DisplayNameFor(model => model.PayeeSecondName)
+                    </th>
+                    <th class="btn-primary">
+                        @Html.DisplayNameFor(model => model.PayeeMailingAddress)
+                    </th>
+                    <th class="btn-primary">
+                        @Html.DisplayNameFor(model => model.PayeeCity)
+                    </th>
+                    <th class="btn-primary">
+                        @Html.DisplayNameFor(model => model.PayeeState)
+                    </th>
+                    <th class="btn-primary">
+                        @Html.DisplayNameFor(model => model.PayeeZIP)
+                    </th>
+                    <th class="btn-primary">
+                        @Html.DisplayNameFor(model => model.MCC)
+                    </th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @item.Payer.FirstPayerName
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PayeeAccountNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PayeeTIN)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PayeeFirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PayeeSecondName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PayeeMailingAddress)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PayeeCity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PayeeState)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PayeeZIP)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MCC)
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    $("#export").click(function () {
+        $("#TMERCHANT").tableToCSV("Merchant_");
+    });
+
+</script>

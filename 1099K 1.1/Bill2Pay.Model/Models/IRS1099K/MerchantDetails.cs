@@ -15,33 +15,42 @@ namespace Bill2Pay.Model
         public int Id { get; set; }
 
         [MaxLength(255)]
+        [Display(Name ="Account")]
         public string PayeeAccountNumber { get; set; }
 
         [MaxLength(255)]
         public string TINType { get; set; }
 
         [MaxLength(255)]
+        [Display(Name = "TIN")]
         public string PayeeTIN { get; set; }
 
         [MaxLength(255)]
+        [Display(Name = "Office Code")]
         public string PayeeOfficeCode { get; set; }
 
         [MaxLength(255)]
+        [Display(Name = "First Name")]
         public string PayeeFirstName { get; set; }
 
         [MaxLength(255)]
+        [Display(Name = "Second Name")]
         public string PayeeSecondName { get; set; }
 
         [MaxLength(255)]
+        [Display(Name = "Address")]
         public string PayeeMailingAddress { get; set; }
 
         [MaxLength(255)]
+        [Display(Name = "City")]
         public string PayeeCity { get; set; }
 
         [MaxLength(255)]
+        [Display(Name = "State")]
         public string PayeeState { get; set; }
 
         [MaxLength(255)]
+        [Display(Name = "Zip")]
         public string PayeeZIP { get; set; }
 
         [MaxLength(255)]
