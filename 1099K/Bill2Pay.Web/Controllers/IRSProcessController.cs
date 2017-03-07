@@ -83,10 +83,10 @@ namespace Bill2Pay.Web.Controllers
 
             MerchantListVM detail = dbContext.ImportDetails //ApplicationDbContext.Instence.ImportDetails
                 .Include("Merchant")
-                .Join(dbContext.SubmissionStatus.Where(s => s.IsActive == true),
+                .GroupJoin(dbContext.SubmissionStatus.Where(s => s.IsActive == true),
                     imp=> imp.AccountNo,
                     stat => stat.AccountNumber,
-                    (imp, stat)=> new MerchantListVM() { ImportDetails = imp, SubmissionStatus = stat }) 
+                    (imp, stat)=> new MerchantListVM() { ImportDetails = imp, SubmissionStatus = stat.FirstOrDefault() }) 
                 .OrderByDescending(p => p.ImportDetails.ImportSummaryId)
                 .FirstOrDefault(p => p.ImportDetails.AccountNo.Equals(Id, StringComparison.OrdinalIgnoreCase) && p.ImportDetails.IsActive == true);
 
