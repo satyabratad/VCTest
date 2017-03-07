@@ -361,6 +361,7 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <Content Include="Reports\CopyA.rdlc">
       <SubType>Designer</SubType>
@@ -390,6 +391,8 @@
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
+    <Content Include="Scripts\jquery-ui.1.9.1.min.js" />
+    <Content Include="Scripts\jquery.1.9.1.min.js" />
     <Content Include="Scripts\jquery.bootgrid.fa.js" />
     <Content Include="Scripts\jquery.bootgrid.fa.min.js" />
     <Content Include="Scripts\jquery.bootgrid.js" />
