@@ -1,4 +1,5 @@
-﻿using Bill2Pay.GenerateIRSFile;
+﻿using Bill2Pay.ExceptionLogger;
+using Bill2Pay.GenerateIRSFile;
 using Bill2Pay.Model;
 using Microsoft.AspNet.Identity;
 using System;
@@ -129,6 +130,7 @@ namespace Bill2Pay.Web.Controllers
         public ActionResult Tin(int? Id, int? ddlPayer, HttpPostedFileBase fileBase)
         {
             DataTable dtTin = null;
+            bool isSuccess = false;
             
             string result = string.Empty;
             //if (ddlPayer != null)
@@ -159,7 +161,8 @@ namespace Bill2Pay.Web.Controllers
                 var path = Path.Combine(Server.MapPath("~/App_Data/Uploads/Tin"), fileName);
                 fileBase.SaveAs(path);
                 dtTin = ReadTinInput(path);
-                result = UpdateTinMatchingStatus(dtTin, year, ddlPayer);
+                result = UpdateTinMatchingStatus(dtTin, year, ddlPayer, ref isSuccess);
+                ViewBag.isSuccess = isSuccess;
                 ViewBag.Message = result;
             }
             return View("Tin", new { id = year, payer= ddlPayer });
@@ -198,7 +201,7 @@ namespace Bill2Pay.Web.Controllers
 
         }
 
-        private string UpdateTinMatchingStatus(DataTable dtTin, int year, int? payer)
+        private string UpdateTinMatchingStatus(DataTable dtTin, int year, int? payer, ref bool isSuccess)
         {
             string result = string.Empty;
             string accNo = string.Empty;
@@ -218,7 +221,8 @@ namespace Bill2Pay.Web.Controllers
                     {
                         if (dr.ItemArray.Length < 5)
                         {
-                            result = "TIN matching updated faild as one or more record does not have required no. of column.";
+                            result = "TIN matching updation failed as one or more records does not have required no. of column.";
+                            isSuccess = false;
                             return result;
                         }
                         tin = dr[1].ToString();
@@ -271,10 +275,13 @@ namespace Bill2Pay.Web.Controllers
                     scope.Complete();
                    
                     result = "TIN matching updated successfully";
+                    isSuccess = true;
                 }
                 catch (Exception ex)
                 {
                     result = "TIN matching updation failed";
+                    isSuccess = false;
+                    Logger.LogInstance.LogInfo("TIN matching updation failed:{0}", ex.StackTrace.ToString());
                     throw ex;
                 }
             }

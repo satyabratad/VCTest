@@ -458,6 +458,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Bill2Pay.ExceptionLogger\Bill2Pay.ExceptionLogger.csproj">
+      <Project>{fb7be443-ba1c-44cb-bd5c-8a8fef3b61fe}</Project>
+      <Name>Bill2Pay.ExceptionLogger</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Bill2Pay.GenerateIRSFile\Bill2Pay.GenerateIRSFile.csproj">
       <Project>{F85B0A62-95F3-46C3-87F0-A16D881CB0AD}</Project>
       <Name>Bill2Pay.GenerateIRSFile</Name>
