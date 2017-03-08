@@ -52,13 +52,22 @@ namespace Bill2Pay.Web.Controllers
         }
         public void PrintCopies()
         {
-            var rootpath = Server.MapPath(string.Format("~/App_Data/Download/k1099/{0}/", DateTime.Now.Ticks));
-            System.IO.Directory.CreateDirectory(rootpath);
+            //var rootpath = Server.MapPath(string.Format("~/App_Data/Download/k1099/{0}/", DateTime.Now.Ticks));
+            
 
             var list = (List<string>)TempData["CheckedMerchantList"];
+            var year=(int)TempData["SelectedYear"] ;
+            string folderName = string.Empty;
             //var accno = list[0].ToString();
             foreach (var accno in list)
             {
+               
+
+                folderName = accno + "-" + year.ToString();
+
+                var rootpath = Server.MapPath(string.Format("~/App_Data/Download/k1099/{0}", folderName));
+                System.IO.Directory.CreateDirectory(rootpath);
+
                 var item = ApplicationDbContext.Instence.SubmissionDetails
                    .Include("PSE")
                    .OrderByDescending(p => p.SubmissionId)
