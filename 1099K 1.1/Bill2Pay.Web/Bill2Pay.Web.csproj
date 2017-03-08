@@ -363,6 +363,7 @@
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="App_Data\Download\k1099\_dummy.b2p" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <Content Include="Reports\CopyA.rdlc">
       <SubType>Designer</SubType>
