@@ -974,9 +974,10 @@ namespace Bill2Pay.GenerateIRSFile
     {
         NotSubmitted = 1,
         FileGenerated = 2,
-        CorrectionRequired = 3,
+        OneTransactionCorrection = 3,
         CorrectionUploaded = 4,
         ReSubmitted = 5,
-        Submitted=6
+        Submitted=6,
+        TwoTransactionCorrection = 7
     }
 }
