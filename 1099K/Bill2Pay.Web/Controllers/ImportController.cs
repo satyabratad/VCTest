@@ -282,7 +282,7 @@ namespace Bill2Pay.Web.Controllers
                     result = "TIN matching updation failed";
                     isSuccess = false;
                     Logger.LogInstance.LogInfo("TIN matching updation failed:{0}", ex.StackTrace.ToString());
-                    throw ex;
+                    //throw ex;
                 }
             }
             return result;
