@@ -133,7 +133,7 @@ namespace Bill2Pay.Web.Controllers
                     return RedirectToAction("Index");
                 }
                 return RedirectToAction("TINMatchingInput", "TINProcess");
-                //return RedirectToAction("PrintAllCopies", "Print");
+                
             }
             else if (!string.IsNullOrEmpty(Request.Form["irstest"]))
             {
@@ -150,6 +150,10 @@ namespace Bill2Pay.Web.Controllers
             else if (!string.IsNullOrEmpty(statusId))
             {
                 return RedirectToAction("ChangeStatus");
+            }
+            else if(!string.IsNullOrEmpty(Request.Form["generatepdf"]))
+            {
+                return RedirectToAction("PrintAllCopies", "Print");
             }
             else
             {

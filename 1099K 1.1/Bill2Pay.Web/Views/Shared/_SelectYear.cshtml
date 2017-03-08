@@ -27,11 +27,13 @@
                         <option value="">-- Select --</option>
                     }
 
-                    @foreach (var payer in ApplicationDbContext.Instence.PayerDetails.Where(p => p.IsActive))
+                    @using (var dbContext = new ApplicationDbContext())
                     {
+                        foreach (var payer in dbContext.PayerDetails.Where(p => p.IsActive))
+                        {
                         <option value="@payer.Id" @Bill2Pay.Web.MenuGenerator.IsSelectedPayer(payer.Id)>@payer.FirstPayerName</option>
+                        }
                     }
-
                 </select>
 
 

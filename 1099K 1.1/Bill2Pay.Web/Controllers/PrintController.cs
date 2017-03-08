@@ -53,7 +53,8 @@ namespace Bill2Pay.Web.Controllers
         public void PrintCopies()
         {
             //var rootpath = Server.MapPath(string.Format("~/App_Data/Download/k1099/{0}/", DateTime.Now.Ticks));
-            
+            var rootpath = Server.MapPath(string.Format("~/App_Data/Download/k1099/"));
+            System.IO.Directory.CreateDirectory(rootpath);
 
             var list = (List<string>)TempData["CheckedMerchantList"];
             var year=(int)TempData["SelectedYear"] ;
@@ -65,36 +66,55 @@ namespace Bill2Pay.Web.Controllers
 
                 folderName = accno + "-" + year.ToString();
 
-                var rootpath = Server.MapPath(string.Format("~/App_Data/Download/k1099/{0}", folderName));
-                System.IO.Directory.CreateDirectory(rootpath);
 
-                var item = ApplicationDbContext.Instence.SubmissionDetails
-                   .Include("PSE")
-                   .OrderByDescending(p => p.SubmissionId)
-                   .FirstOrDefault(p => p.AccountNo.Equals(accno, StringComparison.OrdinalIgnoreCase));
+
+                // MerchantListVM detail = ApplicationDbContext.Instence.ImportDetails //ApplicationDbContext.Instence.ImportDetails
+                //.Include("Merchant")
+                //.GroupJoin(ApplicationDbContext.Instence.SubmissionStatus.Where(s => s.IsActive == true),
+                //    imp => imp.AccountNo,
+                //    stat => stat.AccountNumber,
+                //    (imp, stat) => new MerchantListVM() { ImportDetails = imp, SubmissionStatus = stat.FirstOrDefault() })
+                //.OrderByDescending(p => p.ImportDetails.ImportSummaryId)
+                //.FirstOrDefault(p => p.ImportDetails.AccountNo.Equals(Id, StringComparison.OrdinalIgnoreCase) && p.ImportDetails.IsActive == true);
+
+
+                // var merchantData = (ImportDetail)detail.ImportDetails;
+                // if (detail.SubmissionStatus == null || detail.SubmissionStatus.Status.Id <= 2)
+                //     merchantData.SubmissionSummaryId = null;
+
+                // var merchant = ApplicationDbContext.Instence.MerchantDetails.Where(m => m.Id == data.MerchantId).FirstOrDefault();
+                // merchantData.Merchant = merchant;
+
+                var merchantData = ApplicationDbContext.Instence.SubmissionDetails
+                  .Include("PSE")
+                  .OrderByDescending(p => p.SubmissionId)
+                  .FirstOrDefault(p => p.AccountNo.Equals(accno, StringComparison.OrdinalIgnoreCase));
 
                 var data = new List<SubmissionDetail>();
-                if (item != null)
+                if (merchantData != null)
                 {
-                    data.Add(item);
+                    data.Add(merchantData);
                 }
 
                 var pseData = new List<PSEDetails>();
-                if (item.PSE != null)
+                if (merchantData.PSE != null)
                 {
-                    pseData.Add(item.PSE);
+                    pseData.Add(merchantData.PSE);
                 }
-
+                int TransactionYear = merchantData.SubmissionSummary.PaymentYear + 1;
                 string[] reportNames = { "CopyA", "Copy1", "CopyB", "Copy2", "CopyC" };
                 LocalReport localReport;
-                foreach (var reportName in reportNames)
-                {
-                    // var reportName = "CopyA";
-                    //yield return DetailsReport(reportName, accno);
+                //foreach (var reportName in reportNames)
+                //{
+                     var reportName = "CopyA";
+                    //yield return DetailsReport(reportName, accno);merchantData
                     localReport = new LocalReport();
                     localReport.ReportPath = Server.MapPath("~/Reports/" + reportName + ".rdlc");
                     ReportDataSource reportDataSource = new ReportDataSource("SubmissionDetails", data);
+                    
 
+                    var yearParam = new ReportParameter("TransactionYear", TransactionYear.ToString());
+                    localReport.SetParameters(yearParam);
                     localReport.DataSources.Add(reportDataSource);
 
                     ReportDataSource pseDataSource = new ReportDataSource("PSEMaster", pseData);
@@ -134,19 +154,19 @@ namespace Bill2Pay.Web.Controllers
                         out warnings);
 
 
-                    var path = string.Format("{0}/{1}/", rootpath, accno);
+                    var path = string.Format("{0}/{1}/", rootpath, folderName);
                     if (!System.IO.Directory.Exists(path))
                     {
                         System.IO.Directory.CreateDirectory(path);
                     }
 
-                    path = string.Format("{0}/{1}/{2}.pdf", rootpath, accno, reportName);
+                    path = string.Format("{0}/{1}/{2}.pdf", rootpath, folderName, reportName);
                     //File(renderedBytes, mimeType);
                     System.IO.File.WriteAllBytes(path, renderedBytes); // Requires System.IO
                                                                        //Response.AddHeader("content-disposition", "attachment; filename=NorthWindCustomers." + fileNameExtension);
-                }
+                //}
 
-                ImportUtility.CreateZip(rootpath);
+                //ImportUtility.CreateZip(rootpath);
             }
 
         }
