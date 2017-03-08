@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Bill2Pay.Model.SubmissionDetail>
+﻿@model IEnumerable<Bill2Pay.Model.ImportDetail>
 
 @{
     ViewBag.Title = "IRS 1099K Report";
@@ -6,11 +6,13 @@
 
 <h2>IRS 1099K Report</h2>
 
-<button id="export" style="float:right;margin-top:-60px;" type="submit" class="btn btn-primary btn-lg " title="Export to CSV">
-    <span class="glyphicon glyphicon-export"></span>
+@Html.Partial("_SelectYear", new Bill2Pay.Web.YearSelection() { AllowPostback = true })
+
+<button id="export" style="float:right;margin-top:-80px;" type="submit" class="btn btn-primary btn-lg " title="Export to CSV">
+    <span class="fa fa-file-excel-o fa-lg"></span>
 </button>
 <div class="table-responsive">
-    
+
     <table class="table" id="T1099K">
         <tr>
             <th class="btn-primary">
@@ -62,66 +64,82 @@
                 @Html.DisplayNameFor(model => model.TransactionCount)
             </th>
             <th class="btn-primary">
-                @Html.DisplayNameFor(model => model.SubmissionType)
+                Status
             </th>
         </tr>
 
         @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.AccountNo)
-            </td>
-            <td align="right">
-                @Bill2Pay.Web.SubmissionType.FormatAmount(item.JanuaryAmount)
-            </td>
-            <td align="right">
-                @Bill2Pay.Web.SubmissionType.FormatAmount(item.FebruaryAmount)
-            </td>
-            <td align="right">
-                @Bill2Pay.Web.SubmissionType.FormatAmount(item.MarchAmount)
-            </td>
-            <td align="right">
-                @Bill2Pay.Web.SubmissionType.FormatAmount(item.AprilAmount)
-            </td>
-            <td align="right">
-                @Bill2Pay.Web.SubmissionType.FormatAmount(item.MayAmount)
-            </td>
-            <td align="right">
-                @Bill2Pay.Web.SubmissionType.FormatAmount(item.JuneAmount)
-            </td>
-            <td align="right">
-                @Bill2Pay.Web.SubmissionType.FormatAmount(item.JulyAmount)
-            </td>
-            <td align="right">
-                @Bill2Pay.Web.SubmissionType.FormatAmount(item.AugustAmount)
-            </td>
-            <td align="right">
-                @Bill2Pay.Web.SubmissionType.FormatAmount(item.SeptemberAmount)
-            </td>
-            <td align="right">
-                @Bill2Pay.Web.SubmissionType.FormatAmount(item.OctoberAmount)
-            </td>
-            <td align="right">
-                @Bill2Pay.Web.SubmissionType.FormatAmount(item.NovemberAmount)
-            </td>
-            <td align="right">
-                @Bill2Pay.Web.SubmissionType.FormatAmount(item.DecemberAmount)
-            </td>
-            <td align="right">
-                @Bill2Pay.Web.SubmissionType.FormatAmount(item.GrossAmount)
-            </td>
-            <td align="right">
-                @Bill2Pay.Web.SubmissionType.FormatAmount(item.CNPTransactionAmount)
-            </td>
-            <td align="right">
-                @Html.DisplayFor(modelItem => item.TransactionCount)
-            </td>
-            <td>
-                @Bill2Pay.Web.SubmissionType.GetName(item.SubmissionType)
-            </td>
-        </tr>
-    }
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AccountNo)
+                </td>
+                <td align="right">
+                    @Bill2Pay.Web.SubmissionType.FormatAmount(item.JanuaryAmount)
+                </td>
+                <td align="right">
+                    @Bill2Pay.Web.SubmissionType.FormatAmount(item.FebruaryAmount)
+                </td>
+                <td align="right">
+                    @Bill2Pay.Web.SubmissionType.FormatAmount(item.MarchAmount)
+                </td>
+                <td align="right">
+                    @Bill2Pay.Web.SubmissionType.FormatAmount(item.AprilAmount)
+                </td>
+                <td align="right">
+                    @Bill2Pay.Web.SubmissionType.FormatAmount(item.MayAmount)
+                </td>
+                <td align="right">
+                    @Bill2Pay.Web.SubmissionType.FormatAmount(item.JuneAmount)
+                </td>
+                <td align="right">
+                    @Bill2Pay.Web.SubmissionType.FormatAmount(item.JulyAmount)
+                </td>
+                <td align="right">
+                    @Bill2Pay.Web.SubmissionType.FormatAmount(item.AugustAmount)
+                </td>
+                <td align="right">
+                    @Bill2Pay.Web.SubmissionType.FormatAmount(item.SeptemberAmount)
+                </td>
+                <td align="right">
+                    @Bill2Pay.Web.SubmissionType.FormatAmount(item.OctoberAmount)
+                </td>
+                <td align="right">
+                    @Bill2Pay.Web.SubmissionType.FormatAmount(item.NovemberAmount)
+                </td>
+                <td align="right">
+                    @Bill2Pay.Web.SubmissionType.FormatAmount(item.DecemberAmount)
+                </td>
+                <td align="right">
+                    @Bill2Pay.Web.SubmissionType.FormatAmount(item.GrossAmount)
+                </td>
+                <td align="right">
+                    @Bill2Pay.Web.SubmissionType.FormatAmount(item.CNPTransactionAmount)
+                </td>
+                <td align="right">
+                    @Html.DisplayFor(modelItem => item.TransactionCount)
+                </td>
+                <td>
+
+                    @{
+                        var status = 0;
+                        SubmissionStatus submission = null;
+                        if (item.SubmissionSummary != null)
+                        {
+                            submission = ApplicationDbContext.Instence.SubmissionStatus.FirstOrDefault(p => p.AccountNumber.Equals(item.AccountNo, StringComparison.OrdinalIgnoreCase) 
+                            && p.PaymentYear == item.SubmissionSummary.PaymentYear
+                            && p.IsActive == true);
+                        }
+
+                        if (submission != null)
+                        {
+                            status = submission.StatusId;
+                        }
+                    }
+                    @Bill2Pay.Web.SubmissionType.GetName(status)
+                </td>
+            </tr>
+                        }
 
     </table>
 </div>

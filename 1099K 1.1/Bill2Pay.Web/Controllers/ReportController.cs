@@ -16,16 +16,38 @@ namespace Bill2Pay.Web.Controllers
             dbContext = new ApplicationDbContext();
         }
 
-        public ActionResult Tin()
+        public ActionResult Tin(int? Id, int? payer)
         {
-            var items = dbContext.ImportDetails.Where(p => p.IsActive == true);
+            if (Id == null)
+            {
+                Id = DateTime.Now.Year - 1;
+
+                return RedirectToAction("Tin", new { id = Id });
+            }
+            if (payer == null)
+            {
+                payer = 0;
+            }
+
+            var items = dbContext.ImportDetails.Where(p => p.IsActive == true && p.ImportSummary.PaymentYear == Id && ((payer == 0) || (p.Merchant.PayerId == payer)));
 
             return View(items);
         }
 
-        public ActionResult K1099()
+        public ActionResult K1099(int? Id, int? payer)
         {
-            var items = dbContext.SubmissionDetails.Where(p => p.IsActive == true);
+            if (Id == null)
+            {
+                Id = DateTime.Now.Year - 1;
+
+                return RedirectToAction("K1099", new { id = Id });
+            }
+            if (payer == null)
+            {
+                payer = 0;
+            }
+
+            var items = dbContext.ImportDetails.Where(p => p.IsActive == true && p.ImportSummary.PaymentYear == Id && ((payer == 0) || (p.Merchant.PayerId == payer))).ToList();
 
             return View(items);
         }
