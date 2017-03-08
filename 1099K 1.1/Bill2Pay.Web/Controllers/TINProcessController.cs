@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -47,7 +48,8 @@ namespace Bill2Pay.Web.Controllers
 
                     foreach (var itm in lstTin)
                     {
-                        strFileline = strFileline + itm.TINType + ";" + itm.TIN + ";" + itm.FirstPayeeName + ";" + itm.AccountNo + Environment.NewLine;
+                        var payeeName = Regex.Replace(itm.FirstPayeeName, "[^0-9A-Za-z-& ]+", "");
+                        strFileline = strFileline + itm.TINType + ";" + itm.TIN + ";" + payeeName.Trim() + ";" + itm.AccountNo + Environment.NewLine;
                     }
 
 

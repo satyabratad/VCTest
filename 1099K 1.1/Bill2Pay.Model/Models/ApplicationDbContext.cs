@@ -66,13 +66,5 @@ namespace Bill2Pay.Model
                 return instence;
             }
         }
-
-        public void SetTimeout(int minute)
-        {
-            if (instence == null)
-            {
-                instence.Database.CommandTimeout = 60 * minute;
-            }
-        }
     }
 }

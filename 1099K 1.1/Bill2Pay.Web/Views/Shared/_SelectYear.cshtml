@@ -1,45 +1,48 @@
 ﻿@model Bill2Pay.Web.YearSelection
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-4">
+            <div class="col-md-5 text-bold left-justified">Select Year</div>
+            <div class="col-md-4">
+                <select name="ddlYear" onchange="SelectYear(this)" style="min-width:150px;" required>
+                    <option value="">-- Select Year --</option>
+                    <option value="2016" @Bill2Pay.Web.MenuGenerator.IsSelected(2016)>2016</option>
+                    <option value="2017" @Bill2Pay.Web.MenuGenerator.IsSelected(2017)>2017</option>
+                </select>
 
-<div class="col-md-12">
-    <div class="col-md-2 text-bold left-justified">Select Year</div>
-    <div class="col-md-4">
-        <select name="ddlYear" onchange="SelectYear(this)" style="min-width:150px;" required>
-            <option value="">-- Select Year --</option>
-            <option value="2016" @Bill2Pay.Web.MenuGenerator.IsSelected(2016)>2016</option>
-            <option value="2017" @Bill2Pay.Web.MenuGenerator.IsSelected(2017)>2017</option>
-        </select>
-        
-    </div>
-</div>
-<div class="col-md-12" style="height:5px;">
+            </div>
+        </div>
+    
+        <div class="col-md-4">
 
-</div>
-<div class="col-md-12">
+            <div class="col-md-5 text-bold left-justified">Select Payer</div>
+            <div class="col-md-4">
+                <select name="ddlPayer" style="min-width:150px;" onchange="SelectPayer(this)" required>
+                    @if (Model.AllowPostback)
+                    {
+                        <option value="0">-- All --</option>
+                    }
+                    else
+                    {
+                        <option value="">-- Select --</option>
+                    }
 
-    <div class="col-md-2 text-bold left-justified">Select Payer</div>
-    <div class="col-md-4">
-        <select name="ddlPayer" style="min-width:150px;" onchange="SelectPayer(this)" required>
-            @if (Model.AllowPostback)
-            {
-                <option value="0">-- All --</option>
-            }
-            else
-            {
-                <option value="">-- Select --</option>
-            }
+                    @foreach (var payer in ApplicationDbContext.Instence.PayerDetails.Where(p => p.IsActive))
+                    {
+                        <option value="@payer.Id" @Bill2Pay.Web.MenuGenerator.IsSelectedPayer(payer.Id)>@payer.FirstPayerName</option>
+                    }
+
+                </select>
+
+
+            </div>
             
-            @foreach (var payer in ApplicationDbContext.Instence.PayerDetails.Where(p=>p.IsActive))
-            {
-                <option value="@payer.Id" @Bill2Pay.Web.MenuGenerator.IsSelectedPayer(payer.Id)>@payer.FirstPayerName</option>
-            }
-
-        </select>
-
-
+        </div>
     </div>
     <br />
     <hr />
 </div>
+
 
 
 

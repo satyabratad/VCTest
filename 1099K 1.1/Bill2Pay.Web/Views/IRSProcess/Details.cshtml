@@ -15,10 +15,38 @@
                         .FirstOrDefault(p => p.AccountNumber.Equals(Model.AccountNo, StringComparison.OrdinalIgnoreCase) && p.PaymentYear == Model.ImportSummary.PaymentYear && p.IsActive == true);
     }
 }
+<style>
+
+    /*.nav-tabs>ul
+    {
+        padding-left:1px;}*/
+   
+    .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+  color: #fff;
+  background-color: #337ab7;
+  border-color:#2e6da4;
+  
+}
+    /* inactive tab color */
+/*.nav-tabs>li { 
+  background-color: #dceff7;
+  
+}*/
+    /* hover tab color */
+.nav-tabs>li>a:hover { 
+  background-color: #e1e1e1 ;
+  border-color:#d3d1d1;
+}
+
+./*nav-page{
+    background-color: #808080;
+}*/
+
+</style>
 <div class="row">
     <div ng-app="tabPanel" ng-controller="tabPanelCtrl as ctrl" ng-click="tabChange($event)">
         <div class="col-md-12">
-            <ul class="nav nav-tabs page-tabs">
+            <ul class="nav nav-tabs page-tabs" style="border-bottom:2px solid #337ab7">
                 <li ng-class="{'active':ctrl.tabSelected=='#copy-a'}"><a href="#copy-a">Copy A</a></li>
                 <li ng-class="{'active':ctrl.tabSelected=='#copy-1'}"><a href="#copy-1">Copy 1</a></li>
                 <li ng-class="{'active':ctrl.tabSelected=='#copy-b'}"><a href="#copy-b">Copy B</a></li>
@@ -27,9 +55,10 @@
             </ul>
 
         </div>
-        <div class="col-md-12">
+        <div class="col-md-12" >
             <br />
-            <div id="copy-a" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-a'">
+            <div id="copy-a"  class="ng-hide" ng-show="ctrl.tabSelected=='#copy-a'">
+
                 @if (status != null && status.Id > 2)
                 {
                     using (Html.BeginForm("CopyA", "Print", new { ReturnUrl = ViewBag.ReturnUrl, Id = Model.AccountNo }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -537,7 +566,10 @@
                 </div>
 
             </div>
+            <br />
         </div>
+
+        
     </div>
 </div>
 

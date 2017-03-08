@@ -81,11 +81,22 @@ namespace Bill2Pay.Web.Controllers
         public ActionResult Details(string Id)
         {
 
-            var data = ApplicationDbContext.Instence
-                .ImportDetails
+            MerchantListVM detail = dbContext.ImportDetails //ApplicationDbContext.Instence.ImportDetails
                 .Include("Merchant")
-                .OrderByDescending(p => p.ImportSummaryId)
-                .FirstOrDefault(p => p.AccountNo.Equals(Id, StringComparison.OrdinalIgnoreCase) && p.IsActive == true);
+                .GroupJoin(dbContext.SubmissionStatus.Where(s => s.IsActive == true),
+                    imp=> imp.AccountNo,
+                    stat => stat.AccountNumber,
+                    (imp, stat)=> new MerchantListVM() { ImportDetails = imp, SubmissionStatus = stat.FirstOrDefault() }) 
+                .OrderByDescending(p => p.ImportDetails.ImportSummaryId)
+                .FirstOrDefault(p => p.ImportDetails.AccountNo.Equals(Id, StringComparison.OrdinalIgnoreCase) && p.ImportDetails.IsActive == true);
+
+
+            var data=(ImportDetail) detail.ImportDetails ;
+            if (detail.SubmissionStatus == null || detail.SubmissionStatus.Status.Id <= 2)
+                data.SubmissionSummaryId = null;
+
+            var merchant = dbContext.MerchantDetails.Where(m => m.Id == data.MerchantId).FirstOrDefault();
+            data.Merchant = merchant;
 
             return View(data);
         }
@@ -272,7 +283,7 @@ namespace Bill2Pay.Web.Controllers
                 {
                     foreach (var data in previousData)
                     {
-                        if (statusId == (int)RecordStatus.Submitted && data.StatusId != (int)RecordStatus.FileGenerated)
+                        if (statusId == (int)RecordStatus.Submitted && (data.StatusId != (int)RecordStatus.FileGenerated && data.StatusId != (int)RecordStatus.CorrectionRequired))
                         {
                             TempData["errorMessage"] = "Specified status can not be updated for : " + data.AccountNumber;
                             return RedirectToAction("Index", "Home");
