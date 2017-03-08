@@ -283,12 +283,16 @@ namespace Bill2Pay.Web.Controllers
                 {
                     foreach (var data in previousData)
                     {
-                        if (statusId == (int)RecordStatus.Submitted && (data.StatusId != (int)RecordStatus.FileGenerated && data.StatusId != (int)RecordStatus.CorrectionRequired))
+                        if (statusId == (int)RecordStatus.Submitted && (data.StatusId != (int)RecordStatus.FileGenerated && data.StatusId != (int)RecordStatus.OneTransactionCorrection && data.StatusId != (int)RecordStatus.TwoTransactionCorrection))
                         {
                             TempData["errorMessage"] = "Specified status can not be updated for : " + data.AccountNumber;
                             return RedirectToAction("Index", "Home");
                         }
-                        else if (statusId == (int)RecordStatus.CorrectionRequired && data.StatusId != (int)RecordStatus.Submitted)
+                        else if (statusId == (int)RecordStatus.OneTransactionCorrection && data.StatusId != (int)RecordStatus.Submitted)
+                        {
+                            return DisplayStatusChangeError(data.AccountNumber);
+                        }
+                        else if (statusId == (int)RecordStatus.TwoTransactionCorrection && data.StatusId != (int)RecordStatus.Submitted)
                         {
                             return DisplayStatusChangeError(data.AccountNumber);
                         }
