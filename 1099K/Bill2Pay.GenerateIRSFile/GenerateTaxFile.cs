@@ -267,12 +267,12 @@ namespace Bill2Pay.GenerateIRSFile
                             }
                             break;
                         case "FIRST PAYEE NAME LINE":
-                            string firstName = GetFieldValue(item);
-                            fileData.Append(Regex.Replace(firstName, "[^0-9A-Za-z-& ]+", ""));
+                            string firstName = Regex.Replace(GetFieldValue(item), "[^0-9A-Za-z-& ]+", "");
+                            fileData.Append(item.PadValue(firstName));
                             break;
                         case "SECOND PAYEE NAME LINE":
-                            string secondName = GetFieldValue(item);
-                            fileData.Append(Regex.Replace(secondName, "[^0-9A-Za-z-& ]+", ""));
+                            string secondName = Regex.Replace(GetFieldValue(item), "[^0-9A-Za-z-& ]+", "");
+                            fileData.Append(item.PadValue(secondName));
                             break;
                         default:
                             fileData.Append(GetFieldValue(item));
