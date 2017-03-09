@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using Bill2Pay.GenerateIRSFile.Model;
 using System.Web.Hosting;
 using Bill2Pay.Model;
+using System.Text.RegularExpressions;
 
 namespace Bill2Pay.GenerateIRSFile
 {
@@ -264,6 +265,14 @@ namespace Bill2Pay.GenerateIRSFile
                                     item.Default = " ";
                                 fileData.Append(GetFieldValue(item));
                             }
+                            break;
+                        case "FIRST PAYEE NAME LINE":
+                            string firstName = GetFieldValue(item);
+                            fileData.Append(Regex.Replace(firstName, "[^0-9A-Za-z-& ]+", ""));
+                            break;
+                        case "SECOND PAYEE NAME LINE":
+                            string secondName = GetFieldValue(item);
+                            fileData.Append(Regex.Replace(secondName, "[^0-9A-Za-z-& ]+", ""));
                             break;
                         default:
                             fileData.Append(GetFieldValue(item));
