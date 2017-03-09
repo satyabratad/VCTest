@@ -48,7 +48,7 @@ namespace Bill2Pay.Web.Controllers
         public ActionResult PrintAllCopies()
         {
             HostingEnvironment.QueueBackgroundWorkItem(clt => PrintCopies());
-            TempData["successMessage"] = "Generate .pdf file process may take some time. Once completed you can find the files in the specified location. A transaction log is also available. ";
+            TempData["successMessage"] = "Generate .pdf file process may take some time. Once completed you can find the files in the '/App_Data/Download/k1099' location. A transaction log is also available. ";
             return RedirectToAction("Index", "IRSProcess");
         }
         public void PrintCopies()
@@ -149,12 +149,12 @@ namespace Bill2Pay.Web.Controllers
 
                         
                     }
-                    Logger.LogInstance.LogInfo("Pdf file(s) generated for :{0} and the same can be found {1}", accno, folderName);
+                    Logger.LogInstance.LogInfo("Pdf file(s) generated for :{0} and the same can be found in {1}/{2}", accno, rootpath, folderName);
                 }
                 else
                 {
-                    errorAccounts = errorAccounts + ", " + accno ;
-                    Logger.LogInstance.LogInfo("System unable to generate .pdf file(s) for :{0} ", accno);
+                    //errorAccounts = errorAccounts + ", " + accno ;
+                    Logger.LogInstance.LogInfo("System unable to generate .pdf file(s) for {0} as the record is not qualified for pdf generation", accno);
 
                 }
                 
