@@ -265,6 +265,11 @@ namespace Bill2Pay.GenerateIRSFile
                                     item.Default = " ";
                                 fileData.Append(GetFieldValue(item));
                             }
+                            else
+                            {
+                                item.Default = " ";
+                                fileData.Append(GetFieldValue(item));
+                            }
                             break;
                         case "FIRST PAYEE NAME LINE":
                             string firstName = Regex.Replace(GetFieldValue(item), "[^0-9A-Za-z-& ]+", "");
