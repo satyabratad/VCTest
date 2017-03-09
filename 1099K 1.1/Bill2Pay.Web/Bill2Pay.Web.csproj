@@ -286,6 +286,8 @@
     <Content Include="Images\CopyA.png" />
     <Content Include="Images\copyb.png" />
     <Content Include="Images\copyc.png" />
+    <Content Include="Images\Copy_B_extra.png" />
+    <Content Include="Images\Copy_C_extra.png" />
     <Content Include="Images\CorrectionRequired.png" />
     <Content Include="Images\CorrectionUpload.jpg" />
     <Content Include="Images\dislike.png" />

@@ -66,6 +66,21 @@ th {
     background-image: url('../Images/Copyb.png');
     background-repeat:no-repeat;
 }
+
+.copy-b-extra {
+    width: 807px;
+    height: 480px;
+    background-image: url('../Images/Copy_B_extra.png');
+    background-repeat:no-repeat;
+}
+
+.copy-c-extra {
+    width: 807px;
+    height: 260px;
+    background-image: url('../Images/Copy_C_extra.png');
+    background-repeat:no-repeat;
+   
+}
 .copy-c {
     width: 806px;
     height: 536px;
