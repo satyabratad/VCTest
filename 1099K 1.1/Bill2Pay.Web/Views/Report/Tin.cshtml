@@ -108,7 +108,7 @@
     });
 
     $("#exportpdf").click(function () {
-        var doc = new jsPDF('p', 'mm', [297, 210]);
+        var doc = new jsPDF('l', 'mm', [297, 210]);
 
         var elem = document.getElementById("TTIN");
         var res = doc.autoTableHtmlToJson(elem);
