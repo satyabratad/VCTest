@@ -17,19 +17,61 @@
     </button>
 </div>
 <div class="table-responsive" id="reportarea">
+    <table class="table" id="TTIN_HTML">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.AccountNo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TIN)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstPayeeName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TINCheckStatus)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AccountNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TIN)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstPayeeName)
+                        @Html.DisplayFor(modelItem => item.SecondPayeeName)
+                    </td>
+                    <td>
+                        @Bill2Pay.Web.TinStatus.GetName(item.TINCheckStatus)
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div style="visibility:hidden;display:none;">
     <table class="table" id="TTIN">
         <thead>
             <tr>
-                <th class="btn-primary">
+                <th>
                     @Html.DisplayNameFor(model => model.AccountNo)
                 </th>
-                <th class="btn-primary">
+                <th>
                     @Html.DisplayNameFor(model => model.TIN)
                 </th>
-                <th class="btn-primary">
+                <th>
                     @Html.DisplayNameFor(model => model.FirstPayeeName)
                 </th>
-                <th class="btn-primary">
+                <th>
                     @Html.DisplayNameFor(model => model.TINCheckStatus)
                 </th>
             </tr>
@@ -60,7 +102,6 @@
 </div>
 
 
-
 <script>
     $("#export").click(function () {
         $("#TTIN").tableToCSV("TIN_");
@@ -81,10 +122,50 @@
         });
 
         var ts = new Date().getTime();
-        var name = 'TIN_' + ts+'.pdf';
+        var name = 'TIN_' + ts + '.pdf';
 
         doc.save(name)
+    });
 
-        
+    $(document).ready(function () {
+        $('#TTIN_HTML').DataTable({
+            order: [[0, 'asc']],
+        });
     });
 </script>
+<link rel="stylesheet" type="text/css" href="~/Content/DataTables/datatables.min.css" />
+
+<style>
+    input[type="checkbox"] {
+        height: 18px;
+        width: 18px;
+    }
+
+    .dataTable thead .sorting:after, .dataTable thead .sorting_asc:after {
+        content: '';
+    }
+
+    .dataTable thead .sorting:before {
+        content: '';
+        margin-top: -2px;
+        color: #999;
+    }
+
+    .dataTable thead .sorting_desc:after {
+        content: '';
+    }
+
+    .dataTables_filter > label:after {
+        content: "";
+        font-family: icomoon;
+        font-size: 12px;
+        display: inline-block;
+        position: absolute;
+        top: 50%;
+        right: 12px;
+        margin-top: -6px;
+        color: #999;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+    }
+</style>

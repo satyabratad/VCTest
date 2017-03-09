@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Bill2Pay.Model.MerchantDetails>
 
 @{
-    ViewBag.Title = "Test1";
+    ViewBag.Title = "Merchant Details Report";
 }
 
 <h2>Merchant Details</h2>
@@ -20,76 +20,153 @@
 <div class="col-md-12">
     <div class="row">
         <div class="table-responsive">
-            <table id="TMERCHANT" class="table">
-                <tr>
-                    <th class="btn-primary">
-                        Payer Name
-                    </th>
-                    <th class="btn-primary">
-                        @Html.DisplayNameFor(model => model.PayeeAccountNumber)
-                    </th>
-                    <th class="btn-primary">
-                        @Html.DisplayNameFor(model => model.PayeeTIN)
-                    </th>
-                    <th class="btn-primary">
-                        @Html.DisplayNameFor(model => model.PayeeFirstName)
-                    </th>
-                    <th class="btn-primary">
-                        @Html.DisplayNameFor(model => model.PayeeSecondName)
-                    </th>
-                    <th class="btn-primary">
-                        @Html.DisplayNameFor(model => model.PayeeMailingAddress)
-                    </th>
-                    <th class="btn-primary">
-                        @Html.DisplayNameFor(model => model.PayeeCity)
-                    </th>
-                    <th class="btn-primary">
-                        @Html.DisplayNameFor(model => model.PayeeState)
-                    </th>
-                    <th class="btn-primary">
-                        @Html.DisplayNameFor(model => model.PayeeZIP)
-                    </th>
-                    <th class="btn-primary">
-                        @Html.DisplayNameFor(model => model.MCC)
-                    </th>
-                </tr>
-
-                @foreach (var item in Model)
-                {
+            <table id="TMERCHANT_HTML" class="table">
+                <thead>
                     <tr>
-                        <td>
-                            @item.Payer.FirstPayerName
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PayeeAccountNumber)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PayeeTIN)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PayeeFirstName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PayeeSecondName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PayeeMailingAddress)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PayeeCity)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PayeeState)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PayeeZIP)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.MCC)
-                        </td>
+                        <th>
+                            Payer Name
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PayeeAccountNumber)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PayeeTIN)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PayeeFirstName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PayeeSecondName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PayeeMailingAddress)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PayeeCity)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PayeeState)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PayeeZIP)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.MCC)
+                        </th>
                     </tr>
-                }
-
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.Payer.FirstPayerName
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PayeeAccountNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PayeeTIN)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PayeeFirstName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PayeeSecondName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PayeeMailingAddress)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PayeeCity)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PayeeState)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PayeeZIP)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MCC)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div style="visibility:hidden;display:none;">
+            <table id="TMERCHANT" class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Payer Name
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PayeeAccountNumber)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PayeeTIN)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PayeeFirstName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PayeeSecondName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PayeeMailingAddress)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PayeeCity)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PayeeState)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PayeeZIP)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.MCC)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.Payer.FirstPayerName
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PayeeAccountNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PayeeTIN)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PayeeFirstName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PayeeSecondName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PayeeMailingAddress)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PayeeCity)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PayeeState)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PayeeZIP)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MCC)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
             </table>
         </div>
     </div>
@@ -120,4 +197,46 @@
 
 
     });
+
+    $(document).ready(function () {
+        $('#TMERCHANT_HTML').DataTable({
+            order: [[0, 'asc']],
+        });
+    });
 </script>
+<link rel="stylesheet" type="text/css" href="~/Content/DataTables/datatables.min.css" />
+
+<style>
+    input[type="checkbox"] {
+        height: 18px;
+        width: 18px;
+    }
+
+    .dataTable thead .sorting:after, .dataTable thead .sorting_asc:after {
+        content: '';
+    }
+
+    .dataTable thead .sorting:before {
+        content: '';
+        margin-top: -2px;
+        color: #999;
+    }
+
+    .dataTable thead .sorting_desc:after {
+        content: '';
+    }
+
+    .dataTables_filter > label:after {
+        content: "";
+        font-family: icomoon;
+        font-size: 12px;
+        display: inline-block;
+        position: absolute;
+        top: 50%;
+        right: 12px;
+        margin-top: -6px;
+        color: #999;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+    }
+</style>
