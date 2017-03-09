@@ -8,52 +8,83 @@
 
 @Html.Partial("_SelectYear", new Bill2Pay.Web.YearSelection() { AllowPostback = true })
 
-<button id="export" style="float:right;margin-top:-80px;" type="submit" class="btn btn-primary btn-lg " title="Export to CSV">
-    <span class="fa fa-file-excel-o fa-lg"></span>
-</button>
-
-<div class="table-responsive">
+<div style="float:right;margin-top:-80px;">
+    <button id="export" type="submit" class="btn btn-primary btn-lg " title="Export to CSV">
+        <span class="fa fa-file-excel-o fa-lg"></span>
+    </button>
+    <button id="exportpdf" type="submit" class="btn btn-primary btn-lg " title="Export to PDF">
+        <span class="fa fa-file-pdf-o fa-lg"></span>
+    </button>
+</div>
+<div class="table-responsive" id="reportarea">
     <table class="table" id="TTIN">
-        <tr>
-            <th class="btn-primary">
-                @Html.DisplayNameFor(model => model.AccountNo)
-            </th>
-            <th class="btn-primary">
-                @Html.DisplayNameFor(model => model.TIN)
-            </th>
-            <th class="btn-primary">
-                @Html.DisplayNameFor(model => model.FirstPayeeName)
-            </th>
-            <th class="btn-primary">
-                @Html.DisplayNameFor(model => model.TINCheckStatus)
-            </th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AccountNo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TIN)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FirstPayeeName)
-                    @Html.DisplayFor(modelItem => item.SecondPayeeName)
-                </td>
-                <td>
-                    @Bill2Pay.Web.TinStatus.GetName(item.TINCheckStatus)
-                </td>
-
+                <th class="btn-primary">
+                    @Html.DisplayNameFor(model => model.AccountNo)
+                </th>
+                <th class="btn-primary">
+                    @Html.DisplayNameFor(model => model.TIN)
+                </th>
+                <th class="btn-primary">
+                    @Html.DisplayNameFor(model => model.FirstPayeeName)
+                </th>
+                <th class="btn-primary">
+                    @Html.DisplayNameFor(model => model.TINCheckStatus)
+                </th>
             </tr>
-        }
+        </thead>
+        <tbody>
 
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AccountNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TIN)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstPayeeName)
+                        @Html.DisplayFor(modelItem => item.SecondPayeeName)
+                    </td>
+                    <td>
+                        @Bill2Pay.Web.TinStatus.GetName(item.TINCheckStatus)
+                    </td>
+
+                </tr>
+            }
+        </tbody>
     </table>
 </div>
+
+
+
 <script>
     $("#export").click(function () {
         $("#TTIN").tableToCSV("TIN_");
     });
 
+    $("#exportpdf").click(function () {
+        var doc = new jsPDF('p', 'mm', [297, 210]);
+
+        var elem = document.getElementById("TTIN");
+        var res = doc.autoTableHtmlToJson(elem);
+        doc.autoTable(res.columns, res.data, {
+            startY: 10,
+            tableWidth: 'auto',
+            columnWidth: 'auto',
+            styles: {
+                overflow: 'linebreak'
+            }
+        });
+
+        var ts = new Date().getTime();
+        var name = 'TIN_' + ts+'.pdf';
+
+        doc.save(name)
+
+        
+    });
 </script>

@@ -8,9 +8,15 @@
 
 @Html.Partial("_SelectYear", new Bill2Pay.Web.YearSelection() { AllowPostback = true })
 
-<button id="export" style="float:right;margin-top:-80px;" type="submit" class="btn btn-primary btn-lg " title="Export to CSV">
-    <span class="fa fa-file-excel-o fa-lg"></span>
-</button>
+<div style="float:right;margin-top:-80px;">
+    <button id="export" type="submit" class="btn btn-primary btn-lg " title="Export to CSV">
+        <span class="fa fa-file-excel-o fa-lg"></span>
+    </button>
+    <button id="exportpdf" type="submit" class="btn btn-primary btn-lg " title="Export to PDF">
+        <span class="fa fa-file-pdf-o fa-lg"></span>
+    </button>
+</div>
+
 <div class="col-md-12">
     <div class="row">
         <div class="table-responsive">
@@ -93,4 +99,25 @@
         $("#TMERCHANT").tableToCSV("Merchant_");
     });
 
+    $("#exportpdf").click(function () {
+        var doc = new jsPDF('l', 'mm', [420, 297]);
+
+        var elem = document.getElementById("TMERCHANT");
+        var res = doc.autoTableHtmlToJson(elem);
+        doc.autoTable(res.columns, res.data, {
+            startY: 10,
+            tableWidth: 'auto',
+            columnWidth: 'auto',
+            styles: {
+                overflow: 'linebreak'
+            }
+        });
+
+        var ts = new Date().getTime();
+        var name = 'Merchant_' + ts + '.pdf';
+
+        doc.save(name)
+
+
+    });
 </script>
