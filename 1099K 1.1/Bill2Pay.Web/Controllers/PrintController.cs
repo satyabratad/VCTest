@@ -48,7 +48,7 @@ namespace Bill2Pay.Web.Controllers
         public ActionResult PrintAllCopies()
         {
             HostingEnvironment.QueueBackgroundWorkItem(clt => PrintCopies());
-            TempData["successMessage"] = "Generate .pdf file process may take some time. Once completed you can find the files in the '/App_Data/Download/k1099' location. A transaction log is also available. ";
+            //TempData["successMessage"] = "Generate .pdf file process may take some time. Once completed you can find the files in the '/App_Data/Download/k1099' location. A transaction log is also available. ";
             return RedirectToAction("Index", "IRSProcess");
         }
         public void PrintCopies()

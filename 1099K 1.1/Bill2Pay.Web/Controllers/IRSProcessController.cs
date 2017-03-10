@@ -153,12 +153,32 @@ namespace Bill2Pay.Web.Controllers
             }
             else if(!string.IsNullOrEmpty(Request.Form["generatepdf"]))
             {
-                return RedirectToAction("PrintAllCopies", "Print");
+                return RedirectToAction("GenerateBatchpdf");
             }
             else
             {
                 return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
             }
+        }
+
+        public ActionResult GenerateBatchpdf()
+        {
+            List<string>list=(List<string>)TempData.Peek("CheckedMerchantList");
+            int year=(int)TempData["SelectedYear"] ;
+
+            var substatusList = dbContext.SubmissionStatus.Where(s=>s.IsActive == true && s.StatusId > 2
+                                                              && s.PaymentYear == year).Select(p=>p.AccountNumber).ToList();
+
+
+            var exceptList = list.Where(l => !substatusList.Contains(l)).ToList();
+
+            var invalideAccounts = exceptList.Aggregate((i, j) => i + "," + j);
+
+            var strMsg = "Generate .pdf file process may take some time. Once completed you can find the files in the '/App_Data/Download/k1099' location. ";
+            var errMsg = "Unable to Generate pdf for "+ invalideAccounts +".";
+            TempData["successMessage"] = strMsg;
+            TempData["errorMessage"] = errMsg;
+            return RedirectToAction("PrintAllCopies", "Print");
         }
 
         public ActionResult IRSFireTestFile()
