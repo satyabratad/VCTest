@@ -56,8 +56,8 @@ namespace Bill2Pay.Web.Controllers
             var errorAccounts = string.Empty;
             var rootpath = Server.MapPath(string.Format("~/App_Data/Download/k1099/"));
             System.IO.Directory.CreateDirectory(rootpath);
-
-            var list = (List<string>)TempData["CheckedMerchantList"];
+            
+            var list = (List<string>)TempData["PrintableMerchantList"];
             var year=(int)TempData["SelectedYear"] ;
             string folderName = string.Empty;
             //var accno = list[0].ToString();
@@ -149,7 +149,7 @@ namespace Bill2Pay.Web.Controllers
 
                         
                     }
-                    Logger.LogInstance.LogInfo("Pdf file(s) generated for :{0} and the same can be found in {1}/{2}", accno, rootpath, folderName);
+                    Logger.LogInstance.LogInfo("Pdf file(s) generated for :{0} and the same can be found in {1}{2}", accno, rootpath, folderName);
                 }
                 else
                 {

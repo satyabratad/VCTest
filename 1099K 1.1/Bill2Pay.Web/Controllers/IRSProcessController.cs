@@ -170,7 +170,7 @@ namespace Bill2Pay.Web.Controllers
             var substatusList = dbContext.SubmissionStatus.Where(s=>s.IsActive == true && s.StatusId > 2
                                                               && s.PaymentYear == year).Select(p=>p.AccountNumber).ToList();
 
-
+            TempData["PrintableMerchantList"]= substatusList;
             var exceptList = list.Where(l => !substatusList.Contains(l)).ToList();
             if (exceptList != null && exceptList.Count>0)
             {
