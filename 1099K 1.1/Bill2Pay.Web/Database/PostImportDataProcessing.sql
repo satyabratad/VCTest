@@ -48,6 +48,11 @@ AS
 	DROP TABLE #SUBMITTED
 	END
 
+	IF OBJECT_ID('tempdb..#Importable') IS NOT NULL
+	BEGIN
+	DROP TABLE #Importable
+	END
+
 	BEGIN TRY  
 	BEGIN TRANSACTION K1099
 
@@ -63,7 +68,17 @@ AS
 	INNER JOIN [dbo].[MerchantDetails] M ON M.ID = D.MerchantId
 	INNER JOIN [dbo].[PayerDetails] P ON P.ID = M.PayerId AND P.ID = @PayerId
 	INNER JOIN [dbo].[SubmissionStatus] SS ON D.AccountNo = SS.AccountNumber AND S.PaymentYear = SS.PaymentYear
-	WHERE D.IsActive =1  AND S.IsActive = 1 AND SS.IsActive =1 AND   SS.StatusId > 2 AND S.PaymentYear = @YEAR
+	WHERE D.IsActive =1  AND S.IsActive = 1 AND SS.IsActive =1 AND S.PaymentYear = @YEAR
+	AND   SS.StatusId > 3 
+
+	SELECT D.Id, D.AccountNo,P.Id AS PayerId,D.TINCheckStatus,D.TINCheckRemarks, SS.StatusId ,D.SubmissionSummaryId  
+	INTO #Importable
+	FROM ImportDetails D
+	INNER JOIN [dbo].[ImportSummaries] S ON S.Id = D.ImportSummaryId
+	INNER JOIN [dbo].[MerchantDetails] M ON M.ID = D.MerchantId
+	INNER JOIN [dbo].[PayerDetails] P ON P.ID = M.PayerId AND P.ID = @PayerId
+	LEFT OUTER JOIN [dbo].[SubmissionStatus] SS ON D.AccountNo = SS.AccountNumber AND S.PaymentYear = SS.PaymentYear AND SS.IsActive =1
+	WHERE D.IsActive =1  AND S.IsActive = 1  AND S.PaymentYear = @YEAR
 
 	--FROM ImportDetails D
 	--INNER JOIN [dbo].[ImportSummaries] S ON S.Id = D.ImportSummaryId
@@ -71,6 +86,7 @@ AS
 	--INNER JOIN [dbo].[PayerDetails] P ON P.ID = M.PayerId AND P.ID = @PayerId
 	--LEFT JOIN [dbo].[SubmissionStatus] SS ON D.AccountNo = SS.AccountNumber AND S.PaymentYear = SS.PaymentYear
 	--WHERE D.IsActive =1 AND S.PaymentYear = @Year AND S.IsActive = 1 AND (D.SubmissionSummaryId IS NULL OR SS.StatusId <= 2)
+
 
 	-- ARCHIVE EXISTING DATA
 	UPDATE [dbo].[RawTransactions] SET Isactive = 0 WHERE IsActive=1
@@ -220,8 +236,29 @@ AS
 		AND D.IsActive = 1 AND D.PaymentYear = @YEAR AND D.PayerId = @PayerId
 	WHERE S.TransactionYear = @YEAR --AND O.Id IS NULL
 
-
 	SET @ProcessLog = @ProcessLog + 'Account associated with '+@PAYERNAME+':'+CAST(@@ROWCOUNT AS VARCHAR)+CHAR(13)+CHAR(10)
+
+	----- Correction ------
+	Update ID
+	SET ID.TINCheckStatus=IB.TINCheckStatus,ID.TINCheckRemarks=IB.TINCheckStatus,ID.SubmissionSummaryId=IB.SubmissionSummaryId 
+	FROM ImportDetails ID
+	INNER JOIN #Importable IB ON ID.AccountNo=IB.AccountNo 
+	WHERE ID.IsActive=1
+
+	INSERT INTO SubmissionStatus (PaymentYear,AccountNumber,ProcessingDate,StatusId,IsActive,DateAdded)
+	SELECT @YEAR ,IB.AccountNo ,GetDate(),4,1,GetDate()
+	FROM  #Importable IB
+	WHERE IB.StatusId=3
+
+
+	UPDATE SD
+	SET SD.IsActive=0
+	FROM SubmissionDetails SD
+	INNER JOIN SubmissionSummaries SS ON SS.Id=SD.SubmissionId 
+	INNER JOIN #Importable IB ON SD.SubmissionId=IB.SubmissionSummaryId  
+	WHERE IB.StatusId=3
+	---------------------------
+	
 
 	DECLARE @ORPHANT NVARCHAR(1024),@ORPHANTCOUNT INT
 
@@ -277,4 +314,9 @@ AS
 	DROP TABLE #SUBMITTED
 	END
 	
+	IF OBJECT_ID('tempdb..#Importable') IS NOT NULL
+	BEGIN
+	DROP TABLE #Importable
+	END
+
 RETURN
