@@ -163,6 +163,7 @@ namespace Bill2Pay.Web.Controllers
 
         public ActionResult GenerateBatchpdf()
         {
+            string errMsg = string.Empty;
             List<string>list=(List<string>)TempData.Peek("CheckedMerchantList");
             int year=(int)TempData["SelectedYear"] ;
 
@@ -171,11 +172,13 @@ namespace Bill2Pay.Web.Controllers
 
 
             var exceptList = list.Where(l => !substatusList.Contains(l)).ToList();
-
-            var invalideAccounts = exceptList.Aggregate((i, j) => i + "," + j);
-
+            if (exceptList != null && exceptList.Count>0)
+            {
+                var invalideAccounts = exceptList.Aggregate((i, j) => i + "," + j);
+                errMsg = "Unable to Generate pdf for " + invalideAccounts + ".";
+            }
             var strMsg = "Generate .pdf file process may take some time. Once completed you can find the files in the '/App_Data/Download/k1099' location. ";
-            var errMsg = "Unable to Generate pdf for "+ invalideAccounts +".";
+            
             TempData["successMessage"] = strMsg;
             TempData["errorMessage"] = errMsg;
             return RedirectToAction("PrintAllCopies", "Print");
