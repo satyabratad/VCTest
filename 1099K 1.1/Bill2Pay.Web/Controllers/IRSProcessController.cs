@@ -164,24 +164,41 @@ namespace Bill2Pay.Web.Controllers
         public ActionResult GenerateBatchpdf()
         {
             string errMsg = string.Empty;
+            string strMsg = string.Empty;
             List<string>list=(List<string>)TempData.Peek("CheckedMerchantList");
-            int year=(int)TempData["SelectedYear"] ;
+            int year=(int)TempData.Peek("SelectedYear") ;
+            int selectedPayer= (int)TempData.Peek("SelectedPayer") ;
 
             var substatusList = dbContext.SubmissionStatus.Where(s=>s.IsActive == true && s.StatusId > 2
                                                               && s.PaymentYear == year).Select(p=>p.AccountNumber).ToList();
+            var printableList= list.Where(l => substatusList.Contains(l)).ToList();
+            TempData["PrintableMerchantList"]= printableList;
 
-            TempData["PrintableMerchantList"]= substatusList;
             var exceptList = list.Where(l => !substatusList.Contains(l)).ToList();
             if (exceptList != null && exceptList.Count>0)
             {
                 var invalideAccounts = exceptList.Aggregate((i, j) => i + "," + j);
                 errMsg = "Unable to Generate pdf for " + invalideAccounts + ".";
             }
-            var strMsg = "Generate .pdf file process may take some time. Once completed you can find the files in the '/App_Data/Download/k1099' location. ";
             
-            TempData["successMessage"] = strMsg;
-            TempData["errorMessage"] = errMsg;
-            return RedirectToAction("PrintAllCopies", "Print");
+            if (printableList.Count()>0)
+            {
+                strMsg = "Generate .pdf file process may take some time. Once completed you can find the files in the '/App_Data/Download/k1099' location. ";
+                TempData["successMessage"] = strMsg;
+                TempData["errorMessage"] = errMsg;
+                return RedirectToAction("PrintAllCopies", "Print");
+            }
+            else
+            {
+                strMsg = string.Empty;
+                TempData["successMessage"] = strMsg;
+                TempData["errorMessage"] = errMsg;
+                return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
+            }
+            
+            
+            
+           
         }
 
         public ActionResult IRSFireTestFile()
