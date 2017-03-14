@@ -1,0 +1,114 @@
+﻿@model IEnumerable<Bill2Pay.Model.MerchantDetails>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    $(document).ready(function () {
+        $('#dataTable').DataTable({
+            "columnDefs": [
+              { "orderable": false, "targets": [0, 5,6] }
+            ],
+            order: [[0, 'asc']],
+        });
+    });
+
+</script>
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table id="dataTable" class="display" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Account Number</th>
+            <th>TIN</th>
+            <th>Name</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zip Code</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.PayeeAccountNumber)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.PayeeTIN)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.PayeeFirstName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.PayeeCity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PayeeState)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PayeeZIP)
+                </td>
+
+                <td>
+                    <a href="@Url.Action("Edit", new { Id = item.PayeeAccountNumber })" title="Edit">
+                    <span class="fa fa-edit fa-lg"></span></a>
+                    &nbsp; &nbsp; 
+                    <a href="@Url.Action("Delete", new { Id = item.PayeeAccountNumber })" title="Delete">
+                        <span class="fa fa-trash fa-lg"></span>
+                    </a>
+                    
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+
+
+<link rel="stylesheet" type="text/css" href="~/Content/DataTables/datatables.min.css" />
+
+<style>
+    input[type="checkbox"] {
+        height: 18px;
+        width: 18px;
+    }
+
+    .dataTable thead .sorting:after, .dataTable thead .sorting_asc:after {
+        content: '';
+    }
+
+    .dataTable thead .sorting:before {
+        content: '';
+        margin-top: -2px;
+        color: #999;
+    }
+
+    .dataTable thead .sorting_desc:after {
+        content: '';
+    }
+
+    .dataTables_filter > label:after {
+        content: "";
+        font-family: icomoon;
+        font-size: 12px;
+        display: inline-block;
+        position: absolute;
+        top: 50%;
+        right: 12px;
+        margin-top: -6px;
+        color: #999;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+    }
+</style>
