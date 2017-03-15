@@ -737,6 +737,12 @@ AS
 	UPDATE [dbo].[RawTransactions] SET Isactive = 0 WHERE IsActive=1
 	--## ALTERNATIVE --DELETE FROM [dbo].[RawTransactions]
 	
+	UPDATE S
+	SET S.IsActive = 0
+	FROM SubmissionStatus S
+	LEFT JOIN #SUBMITTED D ON S.AccountNumber = D.AccountNo AND S.PaymentYear = @YEAR AND S.IsActive = 1
+	WHERE D.Id IS NULL
+
 	BEGIN TRY
 
 		-- INSERT NEW DATA
