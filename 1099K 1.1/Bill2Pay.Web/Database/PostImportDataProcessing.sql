@@ -85,13 +85,13 @@ AS
 	UPDATE S
 	SET S.IsActive = 0
 	FROM SubmissionStatus S
-	INNER JOIN @K1099SUMMARYCHART C ON S.Id = C.SubmissionStatusId AND C.StatusId IN (1,2,3,4,7,8)
+	INNER JOIN @K1099SUMMARYCHART C ON S.Id = C.SubmissionStatusId AND ISNULL(C.StatusId,0) IN (0,1,2,3,4,7,8)
 	
 	-- CLEAR EXISTING DATA THAT ARE NOT SUBMITTED
 	UPDATE D
 	SET D.IsActive = 0
 	FROM ImportDetails D
-	INNER JOIN @K1099SUMMARYCHART C ON D.Id = C.ImportDetailsId AND C.StatusId IN (1,2,3,4,7,8)
+	INNER JOIN @K1099SUMMARYCHART C ON D.Id = C.ImportDetailsId AND ISNULL(C.StatusId,0) IN (0,1,2,3,4,7,8)
 
 	DECLARE @PAYERNAME VARCHAR(127)
 	SELECT @PAYERNAME = p.FirstPayerName FROM [dbo].[PayerDetails] p where Id = @PayerId
@@ -115,7 +115,7 @@ AS
 	FROM @K1099SUMMARYCHART C
 	INNER JOIN  [dbo].[MerchantDetails] D ON C.PayeeAccountNumber = D.PayeeAccountNumber 
 		AND D.IsActive = 1 AND D.PaymentYear = @YEAR AND D.PayerId = @PayerId
-	WHERE C.StatusId IN (1,2,3,4,7,8)
+	WHERE ISNULL(C.StatusId,0) IN (0,1,2,3,4,7,8)
 
 	SET @ProcessLog = @ProcessLog + 'Account associated with '+@PAYERNAME+':'+CAST(@@ROWCOUNT AS VARCHAR)+CHAR(13)+CHAR(10)
 
@@ -134,7 +134,7 @@ AS
 	FROM @K1099SUMMARYCHART S
 	LEFT JOIN  [dbo].[MerchantDetails] D ON S.PayeeAccountNumber = D.PayeeAccountNumber 
 		AND D.IsActive = 1 AND D.PaymentYear = @YEAR AND D.PayerId = @PayerId
-	WHERE S.TransactionYear = @YEAR AND D.Id IS NULL
+	WHERE S.TransactionYear = @YEAR AND ISNULL(S.StatusId,0) IN (0,1,2,3,4,7,8)
 
 
 	IF @ORPHANTCOUNT>0
