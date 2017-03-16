@@ -279,7 +279,51 @@ namespace Bill2Pay.Web.Controllers
 
         public ActionResult IRScorrection()
         {
-            return View();
+            List<string> selectedMerchants = (List<string>)TempData["CheckedMerchantList"];
+
+            Int32 year = Convert.ToInt32(TempData["SelectedYear"]);
+            Int32 selectedPayer = Convert.ToInt32(TempData["SelectedPayer"]);
+
+            string errorTINResult = "1,2,3,4,5";
+
+            var tinCheckedPayeeList = ApplicationDbContext.Instence.ImportDetails
+                .Join(ApplicationDbContext.Instence.ImportSummary, d => d.ImportSummaryId, s => s.Id, (d, s) => new { detail = d, summary = s })
+                .Where(x => selectedMerchants.Contains(x.detail.AccountNo) && x.summary.PaymentYear == year && x.detail.IsActive == true && x.summary.IsActive == true).ToList();
+
+            var incorrectTINresult = tinCheckedPayeeList.Where(x => x.detail.TINCheckStatus == null || errorTINResult.Contains(x.detail.TINCheckStatus)).ToList();
+
+            if (incorrectTINresult.Count != 0)
+            {
+                TempData["errorMessage"] = "At least one of the selected merchant has negative or void TIN check result. IRS FIRE Input file cannot be generated for this selection.";
+                return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
+            }
+
+            //var alreadySubmitted = tinCheckedPayeeList.Where(x => x.detail.SubmissionSummaryId != null).ToList();
+            string doNotSubmit = "3,5,6,7";
+            var alreadySubmitted = ApplicationDbContext.Instence.ImportDetails
+                .Join(ApplicationDbContext.Instence.SubmissionStatus, d => d.AccountNo, s => s.AccountNumber, (d, s) => new { details = d, status = s })
+                .Where(x => selectedMerchants.Contains(x.details.AccountNo) && x.details.IsActive == true && x.status.IsActive == true &&
+                doNotSubmit.Contains(x.status.StatusId.ToString())).ToList();
+
+            if (alreadySubmitted.Count != 0)
+            {
+                TempData["errorMessage"] = "One or more than one selected merchant's 1009K file already submitted. IRS file can not be generated for this selection";
+                return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
+            }
+
+            GenerateTaxFile taxFile = new GenerateTaxFile(false, year, User.Identity.GetUserId<long>(), selectedMerchants, correction:true);
+
+            taxFile.ReadFromSchemaFile();
+            ViewBag.fileName = "IRSCorrectionInputFile.txt";
+
+            string path = string.Format(@"{0}App_Data\Download\Irs\IRSCorrectionInputFile.txt", HostingEnvironment.ApplicationPhysicalPath);
+
+            if (!System.IO.File.Exists(path))
+            {
+                return HttpNotFound();
+            }
+
+            return File(path, "text", "IRSCorrectionInputFile.txt");
         }
 
         public ActionResult Download(string file)
