@@ -299,7 +299,7 @@ namespace Bill2Pay.Web.Controllers
             }
 
             //var alreadySubmitted = tinCheckedPayeeList.Where(x => x.detail.SubmissionSummaryId != null).ToList();
-            string doNotSubmit = "1,2,3,4,5,6,7";
+            string doNotSubmit = "1,2,3,5,6,7";
             var alreadySubmitted = ApplicationDbContext.Instence.ImportDetails
                 .Join(ApplicationDbContext.Instence.SubmissionStatus, d => d.AccountNo, s => s.AccountNumber, (d, s) => new { details = d, status = s })
                 .Where(x => selectedMerchants.Contains(x.details.AccountNo) && x.details.IsActive == true && x.status.IsActive == true &&

@@ -1091,6 +1091,7 @@ namespace Bill2Pay.GenerateIRSFile
         {
             GenerateTRecord();
             GenerateARecordForCorrection();
+            GenerateFRecord();
 
         }
         private void GenerateARecordForCorrection()
@@ -1154,8 +1155,8 @@ namespace Bill2Pay.GenerateIRSFile
 
                         GenerateBRecord();
                         GenerateCRecord();
-                        if (!string.IsNullOrEmpty(cfsf.Trim()))
-                            GenerateKRecord();
+                        //if (!string.IsNullOrEmpty(cfsf.Trim()))
+                        //    GenerateKRecord();
                     }
                 }
                
