@@ -279,6 +279,18 @@ namespace Bill2Pay.GenerateIRSFile
                             string secondName = Regex.Replace(GetFieldValue(item), "[^0-9A-Za-z-& ]+", "");
                             fileData.Append(item.PadValue(secondName));
                             break;
+                        case "CORRECTED RETURN INDICATOR":
+                            if(reSubmission)
+                            {
+                                //var val = ;
+                                Int32 status = Convert.ToInt32(dbContext.SubmissionStatus.Where(x => x.AccountNumber.Equals(data.AccountNo) && x.IsActive == true).Select(x => x.StatusId).Single());
+
+                                if (status == (int)RecordStatus.OneTransactionUploaded)
+                                    fileData.Append("G");
+                                else if (status == (int)RecordStatus.TwoTransactionUploaded)
+                                    fileData.Append("C");
+                            }
+                            break;
                         default:
                             fileData.Append(GetFieldValue(item));
                             break;
@@ -920,15 +932,19 @@ namespace Bill2Pay.GenerateIRSFile
             else
                 path = string.Format(@"{0}App_Data\Download\Irs\IRSInputFile.txt", HostingEnvironment.ApplicationPhysicalPath);
 
+            if(reSubmission)
+                path = string.Format(@"{0}App_Data\Download\Irs\IRSCorrectionInputFile.txt", HostingEnvironment.ApplicationPhysicalPath);
+
             var json = File.ReadAllText(jsonPath);
             var cfsfJson = File.ReadAllText(cfsfPath);
-
-
 
             records = JsonConvert.DeserializeObject<List<Records>>(json);
             cfsfStates = JsonConvert.DeserializeObject<List<CFSFStates>>(cfsfJson);
 
-            GenerateETaxFile();
+            if (!reSubmission)
+                GenerateETaxFile();
+            else
+                GenerateETaxFileforCorrection();
 
             // Delete the file if it exists.
             if (File.Exists(path))
@@ -941,8 +957,10 @@ namespace Bill2Pay.GenerateIRSFile
             {
                 Byte[] info = new UTF8Encoding(true).GetBytes(fileData.ToString());
                 fs.Write(info, 0, info.Length);
-                if (!testFileIndicator)
+                if (!testFileIndicator && !reSubmission)
                     SaveSubmissionDetails();
+                if (reSubmission)
+                    SaveSubmissionDetailsForCorrection();
             }
 
             #region "commented"
@@ -973,6 +991,92 @@ namespace Bill2Pay.GenerateIRSFile
             //        var result = JsonConvert.SerializeObject(x);
             #endregion
         }
+
+        private void SaveSubmissionDetailsForCorrection()
+        {
+            int submissionSummaryId = SaveSubmissionSummary();
+
+            importDetaiils = dbContext.ImportDetails
+                .Join(dbContext.ImportSummary, d => d.ImportSummaryId, s => s.Id, (d, s) => new { detail = d, summary = s })
+                .Join(dbContext.MerchantDetails, d => d.detail.MerchantId, m => m.Id, (d, m) => new { d.detail, d.summary, merchant = m })
+                .Where(x => selectedAccounts.Contains(x.detail.AccountNo) && x.summary.PaymentYear == paymentYear &&
+                x.detail.IsActive == true && x.summary.IsActive == true)
+                .Select(x => x.detail).ToList();
+
+            importDetaiils = dbContext.ImportDetails.Include("ImportSummary")
+                                   .Join(dbContext.MerchantDetails, d => d.MerchantId, m => m.Id, (d, m) => new { detail = d, merchant = m })
+                                   .Join(dbContext.SubmissionStatus, m => m.merchant.PayeeAccountNumber, s => s.AccountNumber, (m, s) => new { m.detail, status = s })
+                                   .Where(x => selectedAccounts.Contains(x.detail.AccountNo) && x.detail.ImportSummary.PaymentYear == paymentYear &&
+                                   x.detail.IsActive == true && x.detail.ImportSummary.IsActive == true &&
+                                   (new[] { (int)RecordStatus.OneTransactionUploaded, (int)RecordStatus.TwoTransactionUploaded }).Contains(x.status.StatusId) &&
+                                   x.status.IsActive == true)
+                                   .OrderBy(x => x.status.StatusId)
+                                   .Select(x => x.detail)
+                                   .ToList();
+
+            foreach (var item in importDetaiils)
+            {
+                Int32 status = Convert.ToInt32(dbContext.SubmissionStatus.Where(x => x.AccountNumber.Equals(item.AccountNo) && x.IsActive == true).Select(x => x.StatusId).Single());
+
+                if (status == (int)RecordStatus.OneTransactionUploaded)
+                {
+                    #region "a"
+                    var submissionDetails = new SubmissionDetail();
+
+                    submissionDetails.AccountNo = item.AccountNo;
+                    submissionDetails.SubmissionId = submissionSummaryId;
+                    submissionDetails.TINType = item.TINType;
+                    submissionDetails.TIN = item.TIN;
+                    submissionDetails.PayerOfficeCode = item.PayerOfficeCode;
+                    submissionDetails.GrossAmount = item.GrossAmount;
+                    submissionDetails.CNPTransactionAmount = item.CNPTransactionAmount;
+                    submissionDetails.FederalWithHoldingAmount = item.FederalWithHoldingAmount;
+                    submissionDetails.JanuaryAmount = item.JanuaryAmount;
+                    submissionDetails.FebruaryAmount = item.FebruaryAmount;
+                    submissionDetails.MarchAmount = item.MarchAmount;
+                    submissionDetails.AprilAmount = item.AprilAmount;
+                    submissionDetails.MayAmount = item.MayAmount;
+                    submissionDetails.JuneAmount = item.JuneAmount;
+                    submissionDetails.JulyAmount = item.JulyAmount;
+                    submissionDetails.AugustAmount = item.AugustAmount;
+                    submissionDetails.SeptemberAmount = item.SeptemberAmount;
+                    submissionDetails.OctoberAmount = item.OctoberAmount;
+                    submissionDetails.NovemberAmount = item.NovemberAmount;
+                    submissionDetails.DecemberAmount = item.DecemberAmount;
+                    submissionDetails.ForeignCountryIndicator = item.ForeignCountryIndicator;
+                    submissionDetails.FirstPayeeName = item.FirstPayeeName;
+                    submissionDetails.SecondPayeeName = item.SecondPayeeName;
+                    submissionDetails.PayeeMailingAddress = item.PayeeMailingAddress;
+                    submissionDetails.PayeeCity = item.PayeeCity;
+                    submissionDetails.PayeeState = item.PayeeState;
+                    submissionDetails.PayeeZipCode = item.PayeeZipCode;
+                    submissionDetails.SecondTINNoticed = item.SecondTINNoticed;
+                    submissionDetails.FillerIndicatorType = item.FillerIndicatorType;
+                    submissionDetails.PaymentIndicatorType = item.PaymentIndicatorType;
+                    submissionDetails.TransactionCount = item.TransactionCount;
+                    submissionDetails.PseId = pseMasterId;
+                    submissionDetails.MerchantCategoryCode = item.MerchantCategoryCode;
+                    submissionDetails.SpecialDataEntry = item.SpecialDataEntry;
+                    submissionDetails.StateWithHolding = item.StateWithHolding;
+                    submissionDetails.LocalWithHolding = item.LocalWithHolding;
+                    submissionDetails.CFSF = item.CFSF;
+                    submissionDetails.DateAdded = DateTime.Now;
+
+                    submissionDetails.SubmissionType = (!reSubmission) ? 1 : 2;
+
+                    dbContext.SubmissionDetails.Add(submissionDetails);
+                    item.SubmissionSummaryId = submissionSummaryId;
+                    //item.PseId = pseMasterId;
+                    submissionDetails.IsActive = true;
+
+                    #endregion
+                }
+                
+                SaveSubmissionStatus(item.AccountNo, reSubmission ? (int)RecordStatus.ReSubmitted : (int)RecordStatus.FileGenerated);
+                dbContext.SaveChanges();
+            }
+        }
+
         private void GenerateETaxFile()
         {
             GenerateTRecord();
@@ -982,6 +1086,81 @@ namespace Bill2Pay.GenerateIRSFile
             //GenerateKRecord();
             GenerateFRecord();
         }
+
+        private void GenerateETaxFileforCorrection()
+        {
+            GenerateTRecord();
+            GenerateARecordForCorrection();
+
+        }
+        private void GenerateARecordForCorrection()
+        {
+            Records aRecords = records.FirstOrDefault(x => x.RecordType == "A");
+
+            foreach (var data in payerDetails)
+            {
+
+                foreach (var transaction in (new[] {(int)RecordStatus.OneTransactionUploaded, (int)RecordStatus.TwoTransactionUploaded }))
+                {
+                    importDetaiils = dbContext.ImportDetails.Include("ImportSummary")
+                                   .Join(dbContext.MerchantDetails, d => d.MerchantId, m => m.Id, (d, m) => new { detail = d, merchant = m })
+                                   .Join(dbContext.SubmissionStatus, m => m.merchant.PayeeAccountNumber, s => s.AccountNumber, (m, s) => new { m.detail, status = s })
+                                   .Where(x => selectedAccounts.Contains(x.detail.AccountNo) && x.detail.ImportSummary.PaymentYear == paymentYear &&
+                                   x.detail.IsActive == true && x.detail.ImportSummary.IsActive == true && x.detail.Merchant.PayerId.Equals(data.Id) &&
+                                   (new[] { (int)RecordStatus.OneTransactionUploaded, (int)RecordStatus.TwoTransactionUploaded }).Contains(x.status.StatusId) &&
+                                   x.status.IsActive == true &&  x.status.StatusId == transaction)
+                                   .OrderBy(x => x.status.StatusId )
+                                   .Select(x => x.detail)
+                                   .ToList();
+
+                    currentPayer = data.Id;
+                    numberofPayee = importDetaiils.Count();
+                    totalNumberofPayee = totalNumberofPayee + numberofPayee;
+
+                    if (numberofPayee > 0)
+                    {
+                        totalNumberofARecord++;
+                        foreach (Field item in aRecords.Fields)
+                        {
+                            switch (item.Name.ToUpper())
+                            {
+                                case "RECORD SEQUENCE NUMBER":
+                                    item.Default = recordSequenceNumber.ToString();
+                                    fileData.Append(GetFieldValue(item));
+                                    recordSequenceNumber++;
+                                    break;
+                                case "COMBINED FEDERAL/STATE FILING PROGRAM":
+                                    var isCFSFrequired = importDetaiils.Where(y => cfsfStates.Select(x => x.State).ToList().Contains(y.PayeeState)).ToList();
+                                    if (isCFSFrequired.Count > 0)
+                                    {
+                                        fileData.Append(GetFieldValue(item));
+                                        cfsf = GetFieldValue(item);
+                                    }
+                                    else
+                                    {
+                                        fileData.Append(" ");
+                                        cfsf = " ";
+                                    }
+                                    break;
+                                default:
+                                    fileData.Append(GetFieldValue(item));
+                                    break;
+                            }
+                        }
+                        SavePSEMaster(aRecords);
+                        dbContext.PSEMaster.Add(pseDetails);
+                        dbContext.SaveChanges();
+                        pseMasterId = pseDetails.Id;
+
+                        GenerateBRecord();
+                        GenerateCRecord();
+                        if (!string.IsNullOrEmpty(cfsf.Trim()))
+                            GenerateKRecord();
+                    }
+                }
+               
+            }
+        }
     }
 
     public enum RecordStatus
@@ -989,9 +1168,11 @@ namespace Bill2Pay.GenerateIRSFile
         NotSubmitted = 1,
         FileGenerated = 2,
         OneTransactionCorrection = 3,
-        CorrectionUploaded = 4,
+        OneTransactionUploaded = 4,
         ReSubmitted = 5,
         Submitted=6,
-        TwoTransactionCorrection = 7
+        TwoTransactionCorrection = 7,
+        TwoTransactionUploaded=8
+
     }
 }
