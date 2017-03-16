@@ -82,7 +82,7 @@
 
         @Html.Hidden("checkedAccountNo", (object)@ViewBag.lstmerchantAcc)
         @Html.Hidden("statusId", "");
-        @Html.Partial("_SelectYear", new Bill2Pay.Web.YearSelection() { AllowPostback = true })
+        @Html.Partial("_SelectYear", new Bill2Pay.Web.YearSelection() { AllowPostback = true, IsVisible = true })
 
         <div class="col-md-12">
 
@@ -165,7 +165,31 @@
 
 
                                         </td>
-                                        <td>@item.ImportDetails.AccountNo</td>
+                                        <td>
+                                            @{
+                                                if (@item.SubmissionStatus != null)
+                                                {
+
+                                                    if (@item.SubmissionStatus.StatusId == 1 || @item.SubmissionStatus.StatusId == 2 || @item.SubmissionStatus.StatusId == 7)
+                                                    {
+                                                        <a href = "@Url.Action("Edit", "Merchant", new { Id = item.ImportDetails.AccountNo })" title = "Edit" >
+                                                               @item.ImportDetails.AccountNo
+                                                           </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        @item.ImportDetails.AccountNo
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <a href = "@Url.Action("Edit", "Merchant", new { Id = item.ImportDetails.AccountNo })" title = "Edit" >
+                                                        @item.ImportDetails.AccountNo
+                                                    </a>
+                                                }
+                                            }
+
+                                        </td>
                                         <td>@item.ImportDetails.TIN </td>
                                         <td>@item.ImportDetails.FirstPayeeName  </td>
                                         <td>@item.ImportDetails.PayeeMailingAddress </td>
@@ -205,11 +229,11 @@
                                                     }
                                                     else if (@item.SubmissionStatus.StatusId == 3)
                                                     {
-                                                        <img style="width:25px; height:25px" title='@item.SubmissionStatus.Status.Name' src="@Url.Content("~/Images/CorrectionRequired.png")" />
+                                                        <img style="width:25px; height:25px" title='@item.SubmissionStatus.Status.Name' src="@Url.Content("~/Images/oneCorrectionRequired.png")" />
                                                     }
                                                     else if (@item.SubmissionStatus.StatusId == 4)
                                                     {
-                                                        <img style="width:25px; height:25px" title='@item.SubmissionStatus.Status.Name' src="@Url.Content("~/Images/CorrectionUpload.jpg")" />
+                                                        <img style="width:25px; height:25px" title='@item.SubmissionStatus.Status.Name' src="@Url.Content("~/Images/oneCorrectionUploaded.png")" />
                                                     }
                                                     else if (@item.SubmissionStatus.StatusId == 5)
                                                     {
@@ -218,6 +242,14 @@
                                                     else if (@item.SubmissionStatus.StatusId == 6)
                                                     {
                                                         <img style="width:25px; height:25px" title='@item.SubmissionStatus.Status.Name' src="@Url.Content("~/Images/submitted.png")" />
+                                                    }
+                                                    else if (@item.SubmissionStatus.StatusId == 7)
+                                                    {
+                                                        <img style="width:25px; height:25px" title='@item.SubmissionStatus.Status.Name' src="@Url.Content("~/Images/TwoCorrectionRequired.png")" />
+                                                    }
+                                                    else if (@item.SubmissionStatus.StatusId == 8)
+                                                    {
+                                                        <img style="width:25px; height:25px" title='@item.SubmissionStatus.Status.Name' src="@Url.Content("~/Images/TwoCorrectionUploaded.png.png")" />
                                                     }
                                                 }
                                             }

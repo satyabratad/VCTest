@@ -13,6 +13,8 @@
             </div>
         </div>
     
+        @if (Model.IsVisible == true)
+        {
         <div class="col-md-4">
 
             <div class="col-md-5 text-bold left-justified">Select Payer</div>
@@ -40,7 +42,9 @@
             </div>
             
         </div>
+        }
     </div>
+        
     <br />
     <hr />
 </div>
