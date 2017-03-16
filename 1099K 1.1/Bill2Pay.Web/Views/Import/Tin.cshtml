@@ -7,7 +7,7 @@
     @using (Html.BeginForm("Tin", "Import", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
     { @Html.AntiForgeryToken()
 
-        @Html.Partial("_SelectYear", new Bill2Pay.Web.YearSelection() { AllowPostback = false })
+        @Html.Partial("_SelectYear", new Bill2Pay.Web.YearSelection() { AllowPostback = true, IsVisible = false  })
 
 
         <div class="col-md-12">
