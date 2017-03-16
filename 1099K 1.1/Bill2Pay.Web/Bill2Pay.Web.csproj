@@ -210,6 +210,7 @@
     <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Controllers\IRSProcessController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MerchantController.cs" />
     <Compile Include="Controllers\PrintController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
@@ -295,9 +296,13 @@
     <Content Include="Images\Generated.png" />
     <Content Include="Images\like.png" />
     <Content Include="Images\logo.png" />
+    <Content Include="Images\oneCorrectionRequired.png" />
+    <Content Include="Images\oneCorrectionUploaded.png" />
     <Content Include="Images\resubmitted.png" />
     <Content Include="Images\submitted.png" />
     <Content Include="Images\true.png" />
+    <Content Include="Images\TwoCorrectionRequired.png" />
+    <Content Include="Images\TwoCorrectionUploaded.png" />
     <Content Include="Images\user.jpg" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\app.js" />
@@ -484,6 +489,11 @@
     <Content Include="Views\Error\UnauthorizedAccess.cshtml" />
     <Content Include="SqlServerTypes\x64\_sgbak\SqlServerSpatial110.dll.406099.1.2017-03-01.04-51-34.1175" />
     <Content Include="SqlServerTypes\x86\_sgbak\SqlServerSpatial110.dll.406098.1.2017-03-01.04-51-34.1771" />
+    <Content Include="Views\Merchant\Create.cshtml" />
+    <Content Include="Views\Merchant\Delete.cshtml" />
+    <Content Include="Views\Merchant\Details.cshtml" />
+    <Content Include="Views\Merchant\Edit.cshtml" />
+    <Content Include="Views\Merchant\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

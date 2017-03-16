@@ -160,6 +160,7 @@ namespace Bill2Pay.Web
     public class YearSelection
     {
         public bool AllowPostback { get; set; }
+        public bool IsVisible { get; set; }
     }
 
     public static class TinStatus

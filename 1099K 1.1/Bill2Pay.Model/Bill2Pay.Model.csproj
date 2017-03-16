@@ -156,6 +156,7 @@
     <Compile Include="Models\Import\RawTransaction.cs" />
     <Compile Include="Models\Import\RawTransactionStaging.cs" />
     <Compile Include="Models\IRS1099K\MerchantDetails.cs" />
+    <Compile Include="Models\IRS1099K\MerchantDetailsVM.cs" />
     <Compile Include="Models\IRS1099K\MerchantListVM.cs" />
     <Compile Include="Models\IRS1099K\MerchantVM.cs" />
     <Compile Include="Models\IRS1099K\PayerDetail.cs" />

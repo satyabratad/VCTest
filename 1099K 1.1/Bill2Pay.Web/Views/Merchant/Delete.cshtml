@@ -1,0 +1,177 @@
+﻿@model Bill2Pay.Model.MerchantDetails
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>MerchantDetails</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedUser.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedUser.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Payer.CFSF)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Payer.CFSF)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PayeeAccountNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PayeeAccountNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TINType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TINType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PayeeTIN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PayeeTIN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PayeeOfficeCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PayeeOfficeCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PayeeFirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PayeeFirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PayeeSecondName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PayeeSecondName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PayeeMailingAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PayeeMailingAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PayeeCity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PayeeCity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PayeeState)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PayeeState)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PayeeZIP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PayeeZIP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FilerIndicatorType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FilerIndicatorType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentIndicatorType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentIndicatorType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MCC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MCC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CFSF)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CFSF)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateAdded)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateAdded)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentYear)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentYear)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

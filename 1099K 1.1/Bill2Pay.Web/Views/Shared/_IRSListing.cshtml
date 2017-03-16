@@ -103,7 +103,10 @@
                                     <ul class="dropdown-menu">
                                         <li><a href="#" onclick="submitForm(1);">Not Submitted</a></li>
                                         <li><a href="#" onclick="submitForm(6);">Submitted</a></li>
-                                        <li><a href="#" onclick="submitForm(3);">Correction Required</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#" onclick="submitForm(3);">One-Transaction Correction</a></li>
+                                        <li><a href="#" onclick="submitForm(7);">Two-Transaction Correction</a></li>
+
                                     </ul>
                                 </div>
                     <button class="btn  btn-primary" type="submit" name="generatepdf" value="Generate PDF File">Generate PDF File </button>
@@ -172,7 +175,7 @@
 
                                                     if (@item.SubmissionStatus.StatusId == 1 || @item.SubmissionStatus.StatusId == 2 || @item.SubmissionStatus.StatusId == 7)
                                                     {
-                                                        <a href = "@Url.Action("Edit", "Merchant", new { Id = item.ImportDetails.AccountNo })" title = "Edit" >
+                                                        <a href = "@Url.Action("Edit", "Merchant", new { Id = item.ImportDetails.AccountNo,year=ViewBag.SelectedYear })" title = "Edit" >
                                                                @item.ImportDetails.AccountNo
                                                            </a>
                                                     }
@@ -183,7 +186,7 @@
                                                 }
                                                 else
                                                 {
-                                                    <a href = "@Url.Action("Edit", "Merchant", new { Id = item.ImportDetails.AccountNo })" title = "Edit" >
+                                                    <a href = "@Url.Action("Edit", "Merchant", new { Id = item.ImportDetails.AccountNo,year=ViewBag.SelectedYear  })" title = "Edit" >
                                                         @item.ImportDetails.AccountNo
                                                     </a>
                                                 }
@@ -249,7 +252,7 @@
                                                     }
                                                     else if (@item.SubmissionStatus.StatusId == 8)
                                                     {
-                                                        <img style="width:25px; height:25px" title='@item.SubmissionStatus.Status.Name' src="@Url.Content("~/Images/TwoCorrectionUploaded.png.png")" />
+                                                        <img style="width:25px; height:25px" title='@item.SubmissionStatus.Status.Name' src="@Url.Content("~/Images/TwoCorrectionUploaded.png")" />
                                                     }
                                                 }
                                             }
@@ -283,7 +286,10 @@
                     <ul class="dropdown-menu">
                         <li><a href="#" onclick="submitForm(1);">Not Submitted</a></li>
                         <li><a href="#" onclick="submitForm(6);">Submitted</a></li>
-                        <li><a href="#" onclick="submitForm(3);">Correction Required</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#" onclick="submitForm(3);">One-Transaction Correction</a></li>
+                        <li><a href="#" onclick="submitForm(7);">Two-Transaction Correction</a></li>
+
                     </ul>
                 </div>
                     }

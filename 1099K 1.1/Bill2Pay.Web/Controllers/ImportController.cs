@@ -232,7 +232,7 @@ namespace Bill2Pay.Web.Controllers
 
                         var tinStatusName = dbContext.TINStatus.Where(t => t.Id.ToString() == tinStaus).FirstOrDefault();
 
-                        if (payer == 0)
+                        if (payer == 0 || payer == null )
                         {
 
                             impd = dbContext.ImportDetails
