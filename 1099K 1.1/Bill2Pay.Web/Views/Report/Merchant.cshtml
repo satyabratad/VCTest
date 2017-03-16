@@ -6,7 +6,7 @@
 
 <h2>Merchant Details</h2>
 
-@Html.Partial("_SelectYear", new Bill2Pay.Web.YearSelection() { AllowPostback = true })
+@Html.Partial("_SelectYear", new Bill2Pay.Web.YearSelection() { AllowPostback = true, IsVisible = true })
 
 <div style="float:right;margin-top:-80px;">
     <button id="export" type="submit" class="btn btn-primary btn-lg " title="Export to CSV">
