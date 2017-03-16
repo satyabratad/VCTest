@@ -98,11 +98,15 @@ namespace Bill2Pay.Web.Controllers
         }
 
         // GET: Merchant/Edit/5
-        public ActionResult Edit(string id,int year)
+        public ActionResult Edit(string id,int? year)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            if (year == null)
+            {
+                year = System.DateTime.Now.Year - 1;
             }
             MerchantDetails merchantDetails = db.MerchantDetails.Where(m=>m.PayeeAccountNumber.Equals(id,StringComparison.InvariantCultureIgnoreCase)
                                             && m.IsActive==true && m.PaymentYear== year).FirstOrDefault();
@@ -255,13 +259,18 @@ namespace Bill2Pay.Web.Controllers
         }
 
         // GET: Merchant/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(string id,int? year)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MerchantDetails merchantDetails = db.MerchantDetails.Find(id);
+            if (year == null)
+            {
+                year = System.DateTime.Now.Year - 1;
+            }
+            MerchantDetails merchantDetails = db.MerchantDetails.Where(m => m.PayeeAccountNumber.Equals(id, StringComparison.InvariantCultureIgnoreCase)
+                                            && m.IsActive == true && m.PaymentYear == year).FirstOrDefault();
             if (merchantDetails == null)
             {
                 return HttpNotFound();
@@ -272,11 +281,17 @@ namespace Bill2Pay.Web.Controllers
         // POST: Merchant/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(string id, int? year)
         {
-            MerchantDetails merchantDetails = db.MerchantDetails.Find(id);
-            db.MerchantDetails.Remove(merchantDetails);
-            db.SaveChanges();
+            MerchantDetails merchantDetails = db.MerchantDetails.Where(m => m.PayeeAccountNumber.Equals(id, StringComparison.InvariantCultureIgnoreCase)
+                                           && m.IsActive == true && m.PaymentYear == year).FirstOrDefault();
+            if (merchantDetails != null)
+            {
+                merchantDetails.IsActive = false;
+                db.Entry(merchantDetails).State = EntityState.Modified;
+               
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 
