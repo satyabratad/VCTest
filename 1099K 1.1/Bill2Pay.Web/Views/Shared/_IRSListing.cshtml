@@ -173,7 +173,7 @@
                                                 if (@item.SubmissionStatus != null)
                                                 {
 
-                                                    if (@item.SubmissionStatus.StatusId == 1 || @item.SubmissionStatus.StatusId == 2 || @item.SubmissionStatus.StatusId == 7)
+                                                    if (@item.SubmissionStatus.StatusId == 7)
                                                     {
                                                         <a href = "@Url.Action("Edit", "Merchant", new { Id = item.ImportDetails.AccountNo,year=ViewBag.SelectedYear })" title = "Edit" >
                                                                @item.ImportDetails.AccountNo
@@ -186,9 +186,7 @@
                                                 }
                                                 else
                                                 {
-                                                    <a href = "@Url.Action("Edit", "Merchant", new { Id = item.ImportDetails.AccountNo,year=ViewBag.SelectedYear  })" title = "Edit" >
-                                                        @item.ImportDetails.AccountNo
-                                                    </a>
+                                                    @item.ImportDetails.AccountNo
                                                 }
                                             }
 

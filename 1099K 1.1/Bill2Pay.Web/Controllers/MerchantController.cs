@@ -16,6 +16,17 @@ namespace Bill2Pay.Web.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+
+        private Dictionary<string,string>  GetStateList()
+        {
+            Dictionary<string, string> StateList = new Dictionary<string, string>();
+
+
+
+            return StateList;
+        }
+
+
         // GET: Merchant
         public ActionResult Index(int? Id,int? payer)
         { 
@@ -100,6 +111,9 @@ namespace Bill2Pay.Web.Controllers
         // GET: Merchant/Edit/5
         public ActionResult Edit(string id,int? year)
         {
+            ViewBag.StatusMessage = string.Empty;
+            var returnUrl = HttpContext.Request.UrlReferrer;
+            TempData["MerchantEditreturnUrl"] = returnUrl;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -114,6 +128,23 @@ namespace Bill2Pay.Web.Controllers
             {
                 return HttpNotFound();
             }
+
+            var subStatus = db.SubmissionStatus.Where(s => s.AccountNumber.Equals(id, StringComparison.InvariantCultureIgnoreCase)
+                                                  && s.IsActive == true && s.PaymentYear == year).FirstOrDefault();
+            if(subStatus != null)
+            {
+                switch (subStatus.StatusId)
+                {
+                    case 6: case 3: case 4:
+                    case 5: case 8: case 9:
+                        ViewBag.StatusMessage = " Data of this merchant is already submitted for this year's 1099K. Updated information will effect on next year's 1099K data.   ";
+                        break;
+                    case 7:
+                        ViewBag.StatusMessage = " This merchant data is for Two transaction correction. Corrected data will be effect on 1099K data.   ";
+                        break; 
+                }
+            }
+
             //ViewBag.UserId = new SelectList(db.ApplicationUsers, "Id", "Email", merchantDetails.UserId);
             ViewBag.PayerId = new SelectList(db.PayerDetails, "Id", "FirstPayerName", merchantDetails.PayerId);
             ModelState.Clear();
@@ -130,7 +161,11 @@ namespace Bill2Pay.Web.Controllers
             if (ModelState.IsValid)
             {
                 //MerchantDetails Merchant = merchantDetails;
-                
+                var returnUrl = TempData["MerchantEditreturnUrl"].ToString();
+               
+
+
+
                 var status = db.SubmissionStatus.Where(s => s.AccountNumber.Equals(merchantDetails.PayeeAccountNumber, StringComparison.InvariantCultureIgnoreCase)
                                                   && s.PaymentYear == merchantDetails.PaymentYear  && s.IsActive==true).FirstOrDefault();
 
@@ -251,11 +286,14 @@ namespace Bill2Pay.Web.Controllers
 
                 }
 
-                return RedirectToAction("Index");
+
+                //return RedirectToAction("Index");
+                return Redirect(returnUrl);
             }
             //ViewBag.UserId = new SelectList(db.ApplicationUsers, "Id", "Email", merchantDetails.UserId);
             ViewBag.PayerId = new SelectList(db.PayerDetails, "Id", "CFSF", merchantDetails.PayerId);
             return View(merchantDetails);
+            
         }
 
         // GET: Merchant/Delete/5

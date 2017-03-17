@@ -13,7 +13,6 @@
             order: [[0, 'asc']],
         });
     });
-
 </script>
 @Html.Partial("_SelectYear", new Bill2Pay.Web.YearSelection() { AllowPostback = true , IsVisible=true })
 <h2>Merchant List</h2>
@@ -105,15 +104,7 @@
                 <td>
                     <a href="@Url.Action("Edit", new { Id = item.Merchant.PayeeAccountNumber,year=ViewBag.SelectedYear })" title="Edit">
                     <span class="fa fa-edit fa-lg"></span></a>
-                    &nbsp; &nbsp; 
-                    @if (@item.Status == null)
-                    {
-                        
-                            <a href="@Url.Action("Delete", new { Id = item.Merchant.PayeeAccountNumber,year=ViewBag.SelectedYear  })" title="Delete">
-                                <span class="fa fa-trash fa-lg"> </span>
-                            </a>
-                       
-                    }
+                   
                 </td>
             </tr>
 
