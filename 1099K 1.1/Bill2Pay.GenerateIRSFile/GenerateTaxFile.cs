@@ -290,6 +290,8 @@ namespace Bill2Pay.GenerateIRSFile
                                 else if (status == (int)RecordStatus.TwoTransactionUploaded)
                                     fileData.Append("C");
                             }
+                            else
+                                fileData.Append(GetFieldValue(item));
                             break;
                         default:
                             fileData.Append(GetFieldValue(item));
@@ -1155,8 +1157,8 @@ namespace Bill2Pay.GenerateIRSFile
 
                         GenerateBRecord();
                         GenerateCRecord();
-                        //if (!string.IsNullOrEmpty(cfsf.Trim()))
-                        //    GenerateKRecord();
+                        if (!string.IsNullOrEmpty(cfsf.Trim()))
+                            GenerateKRecord();
                     }
                 }
                
