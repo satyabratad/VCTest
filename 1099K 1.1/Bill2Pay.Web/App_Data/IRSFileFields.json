@@ -1151,11 +1151,11 @@
         "Name": "Merchant Category Code (MCC)",
         "Position": "605-608",
         "Length": 4,
-        "Default": "MCC",
-        "Alternate": "0",
-        "Type": "Alphanumeric",
+        "Default": "",
+        "Alternate": "",
+        "Type": "Numeric",
         "Data": "MerchantCategoryCode",
-        "Alignment": "Left",
+        "Alignment": "Right",
         "Table" : "ImportDetails"
       },
       {
