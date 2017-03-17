@@ -293,6 +293,12 @@ namespace Bill2Pay.GenerateIRSFile
                             else
                                 fileData.Append(GetFieldValue(item));
                             break;
+                        case "MERCHANT CATEGORY CODE (MCC)":
+                            string mcc = GetFieldValue(item);
+                            if (string.IsNullOrEmpty(mcc))
+                                mcc = "0000";
+                            fileData.Append(mcc);
+                            break;
                         default:
                             fileData.Append(GetFieldValue(item));
                             break;
