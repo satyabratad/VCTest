@@ -376,7 +376,7 @@ namespace Bill2Pay.Web.Controllers
                             TempData["errorMessage"] = "Specified status can not be updated for : " + data.AccountNumber;
                             return RedirectToAction("Index", "Home");
                         }
-                        else if (statusId == (int)RecordStatus.OneTransactionCorrection && data.StatusId != (int)RecordStatus.Submitted)
+                        else if (statusId == (int)RecordStatus.OneTransactionCorrection && data.StatusId != (int)RecordStatus.Submitted && data.StatusId != (int)RecordStatus.ReSubmitted)
                         {
                             return DisplayStatusChangeError(data.AccountNumber);
                         }
