@@ -27,7 +27,8 @@
         <div class="form-group">
             @Html.Label("TIN Type", htmlAttributes: new { @class = "control-label col-md-3" })
             <div class="col-md-8">
-                @Html.EditorFor(model => model.TINType, new { htmlAttributes = new { @class = "form-control", @required = "true" } })
+                @*@Html.EditorFor(model => model.TINType, new { htmlAttributes = new { @class = "form-control", @required = "true" } })*@
+                @Html.DropDownListFor(model => model.TINType, (IEnumerable<SelectListItem>)ViewBag.TINTypeLstList, "Select", htmlAttributes: new { @class = "form-control require" })
                 @Html.ValidationMessageFor(model => model.TINType, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -83,7 +84,8 @@
         <div class="form-group">
             @Html.Label("State", htmlAttributes: new { @class = "control-label col-md-3" })
             <div class="col-md-8">
-                @Html.EditorFor(model => model.PayeeState, new { htmlAttributes = new { @class = "form-control", @required = "true", @maxlength = "2" } })
+                @Html.DropDownListFor(model=>model.PayeeState,(IEnumerable<SelectListItem>)ViewBag.StateList, "Select",  htmlAttributes: new { @class = "form-control require" } )
+
                 @Html.ValidationMessageFor(model => model.PayeeState, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -99,7 +101,8 @@
         <div class="form-group">
             @Html.Label("Filer Indicator Type", htmlAttributes: new { @class = "control-label col-md-3" })
             <div class="col-md-8">
-                @Html.EditorFor(model => model.FilerIndicatorType, new { htmlAttributes = new { @class = "form-control", @required = "true" } })
+                @*@Html.EditorFor(model => model.FilerIndicatorType, new { htmlAttributes = new { @class = "form-control", @required = "true" } })*@
+                @Html.DropDownListFor(model => model.FilerIndicatorType, (IEnumerable<SelectListItem>)ViewBag.FilerList, "Select", htmlAttributes: new { @class = "form-control require" })
                 @Html.ValidationMessageFor(model => model.FilerIndicatorType, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -107,7 +110,10 @@
         <div class="form-group">
             @Html.Label("Payment Indicator Type", htmlAttributes: new { @class = "control-label col-md-3" })
             <div class="col-md-8">
-                @Html.EditorFor(model => model.PaymentIndicatorType, new { htmlAttributes = new { @class = "form-control", @required = "true" } })
+                @*@Html.EditorFor(model => model.PaymentIndicatorType, new { htmlAttributes = new { @class = "form-control", @required = "true" } })*@
+                @Html.DropDownListFor(model => model.PaymentIndicatorType, (IEnumerable<SelectListItem>)ViewBag.PaymentIndicatorList, "Select", htmlAttributes: new { @class = "form-control require" })
+
+
                 @Html.ValidationMessageFor(model => model.PaymentIndicatorType, "", new { @class = "text-danger" })
             </div>
         </div>

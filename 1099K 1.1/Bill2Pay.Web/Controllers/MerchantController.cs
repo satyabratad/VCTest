@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Bill2Pay.Model;
 using Microsoft.AspNet.Identity;
 using System.Data.Entity.Validation;
+using Newtonsoft.Json;
 
 namespace Bill2Pay.Web.Controllers
 {
@@ -16,10 +17,96 @@ namespace Bill2Pay.Web.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        private Dictionary<string, string> GetpaymentIndicator()
+        {
+            Dictionary<string, string> IndicatorList = new Dictionary<string, string>();
+ 
+            IndicatorList.Add("Payment Card Payment	", "1");
+            IndicatorList.Add("Third Party Network Payment	", "2");
+            return IndicatorList;
+        }
 
+        private Dictionary<string, string> GetTINTypes()
+        {
+            Dictionary<string, string> TINTypeList = new Dictionary<string, string>();
+
+            TINTypeList.Add("EIN", "1");
+            TINTypeList.Add("SSN / ITIN / ATIN", "2");
+            return TINTypeList;
+        }
+
+        private Dictionary<string, string>  GetFilerIndicatore()
+        {
+            Dictionary<string, string> FilerList = new Dictionary<string, string>();
+
+            FilerList.Add("Payment Settlement Entity(PSE)", "1");
+            FilerList.Add("Electronic PaymentFacilitator(EPF) / Other third party", "2");
+
+            return FilerList;
+
+        }
         private Dictionary<string,string>  GetStateList()
         {
             Dictionary<string, string> StateList = new Dictionary<string, string>();
+
+            StateList.Add("Alabama	", "AL");
+            StateList.Add("Alaska	", "AK");
+            StateList.Add("American Samoa", "AS");
+            StateList.Add("Arizona	", "AZ");
+            StateList.Add("Arkansas	", "AR");
+            StateList.Add("California	", "CA");
+            StateList.Add("Colorado	", "CO");
+            StateList.Add("Connecticut	", "CT");
+            StateList.Add("Delaware	", "DE");
+            StateList.Add("District of Columbia	", "DC");
+            StateList.Add("Florida	", "FL");
+            StateList.Add("Georgia	", "GA");
+            StateList.Add("Guam	", "GU");
+            StateList.Add("Hawaii	", "HI");
+            StateList.Add("Idaho	", "ID");
+            StateList.Add("Illinois	", "IL");
+            StateList.Add("Indiana	", "IN");
+            StateList.Add("Iowa	", "	IA");
+            StateList.Add("Kansas	", "KS");
+            StateList.Add("Kentucky	", "KY");
+            StateList.Add("Louisiana	", "LA");
+            StateList.Add("Maine	", "ME");
+            StateList.Add("Maryland	", "MD");
+            StateList.Add("Massachusetts", "MA");
+            StateList.Add("Michigan	", "MI");
+            StateList.Add("Minnesota	", "MN");
+            StateList.Add("Mississippi	", "MS");
+            StateList.Add("Missouri	", "MO");
+            StateList.Add("Montana	", "MT");
+            StateList.Add("Nebraska	", "NE");
+            StateList.Add("Nevada	", "NV");
+            StateList.Add("New Hampshire	", "NH");
+            StateList.Add("New Jersey	", "NJ");
+            StateList.Add("New Mexico	", "NM");
+            StateList.Add("New York	", "NY");
+            StateList.Add("North Carolina	", "NC");
+            StateList.Add("North Dakota	", "ND");
+            StateList.Add("No. Mariana Islands	", "MP");
+            StateList.Add("Ohio	", "OH");
+            StateList.Add("Oklahoma	", "OK");
+            StateList.Add("Oregon	", "OR");
+            StateList.Add("Pennsylvania	", "PA");
+            StateList.Add("Puerto Rico	", "PR");
+            StateList.Add("Rhode Island	", "RI");
+            StateList.Add("South Carolina	", "SC");
+            StateList.Add("South Dakota	", "SD");
+            StateList.Add("Tennessee	", "TN");
+            StateList.Add("Texas	", "TX");
+            StateList.Add("Utah	", "UT");
+            StateList.Add("Vermont	", "VT");
+            StateList.Add("Virginia	", "VA");
+            StateList.Add("U.S. Virgin Islands	", "VI");
+            StateList.Add("Washington	", "WA");
+            StateList.Add("West Virginia	", "WV");
+            StateList.Add("Wisconsin	", "WI");
+            StateList.Add("Wyoming	", "WY");
+            
+
 
 
 
@@ -79,6 +166,17 @@ namespace Bill2Pay.Web.Controllers
         // GET: Merchant/Create
         public ActionResult Create()
         {
+            var statelst = GetStateList().Select(s => new SelectListItem() { Text = s.Key, Value = s.Value }).ToList();
+            ViewBag.StateList = statelst;
+            var IndicatorLst = GetpaymentIndicator().Select(s => new SelectListItem() { Text = s.Key, Value = s.Value }).ToList();
+            ViewBag.PaymentIndicatorList = IndicatorLst;
+
+            var filerLst= GetFilerIndicatore().Select(s => new SelectListItem() { Text = s.Key, Value = s.Value }).ToList();
+            ViewBag.FilerList = filerLst;
+
+            var TINTypeLst = GetTINTypes().Select(s => new SelectListItem() { Text = s.Key, Value = s.Value }).ToList();
+            ViewBag.TINTypeLstList = TINTypeLst;
+            
             //ViewBag.UserId = new SelectList(db.ApplicationUsers, "Id", "Email");
             ViewBag.PayerId = new SelectList(db.PayerDetails, "Id", "FirstPayerName");
             return View();
@@ -145,6 +243,16 @@ namespace Bill2Pay.Web.Controllers
                 }
             }
 
+            var statelst = GetStateList().Select(s => new SelectListItem() { Text = s.Key, Value = s.Value }).ToList();
+            ViewBag.StateList = statelst;
+            var IndicatorLst = GetpaymentIndicator().Select(s => new SelectListItem() { Text = s.Key, Value = s.Value }).ToList();
+            ViewBag.PaymentIndicatorList = IndicatorLst;
+
+            var filerLst = GetFilerIndicatore().Select(s => new SelectListItem() { Text = s.Key, Value = s.Value }).ToList();
+            ViewBag.FilerList = filerLst;
+
+            var TINTypeLst = GetTINTypes().Select(s => new SelectListItem() { Text = s.Key, Value = s.Value }).ToList();
+            ViewBag.TINTypeLstList = TINTypeLst;
             //ViewBag.UserId = new SelectList(db.ApplicationUsers, "Id", "Email", merchantDetails.UserId);
             ViewBag.PayerId = new SelectList(db.PayerDetails, "Id", "FirstPayerName", merchantDetails.PayerId);
             ModelState.Clear();
