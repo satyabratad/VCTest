@@ -115,6 +115,8 @@ namespace Bill2Pay.Model
         public string NameControl { get; set; }
 
         public bool IsActive { get; set; }
+
+        [Column(TypeName = "datetime2")]
         public DateTime DateAdded { get; set; }
 
         [ForeignKey("Merchant")]

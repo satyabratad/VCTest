@@ -49,17 +49,17 @@ namespace Bill2Pay.Model
         [RegularExpression("^[^<>,<|>]+$", ErrorMessage = "Html tags are not allowed.")]
         public string PayeeMailingAddress { get; set; }
 
-        [MaxLength(255)]
+        [MaxLength(40)]
         [Display(Name = "City")]
         [RegularExpression("^[^<>,<|>]+$", ErrorMessage = "Html tags are not allowed.")]
         public string PayeeCity { get; set; }
 
-        [MaxLength(255)]
+        [MaxLength(2)]
         [Display(Name = "State")]
         [RegularExpression("^[^<>,<|>]+$", ErrorMessage = "Html tags are not allowed.")]
         public string PayeeState { get; set; }
 
-        [MaxLength(255)]
+        [MaxLength(9)]
         [Display(Name = "Zip")]
         [RegularExpression("^[^<>,<|>]+$", ErrorMessage = "Html tags are not allowed.")]
         public string PayeeZIP { get; set; }
@@ -87,6 +87,8 @@ namespace Bill2Pay.Model
         public virtual PayerDetail Payer { get; set; }
 
         public bool IsActive { get; set; }
+
+        [Column(TypeName = "datetime2")]
         public DateTime DateAdded { get; set; }
 
         [ForeignKey("CreatedUser")]

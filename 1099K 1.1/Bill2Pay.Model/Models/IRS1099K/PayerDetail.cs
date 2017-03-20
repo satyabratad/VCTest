@@ -14,7 +14,7 @@ namespace Bill2Pay.Model
         [Key]
         public int Id { get; set; }
 
-        [MaxLength(1)]
+        [MaxLength(2)]
         public string CFSF { get; set; }
 
         [MaxLength(9)]
@@ -65,6 +65,8 @@ namespace Bill2Pay.Model
         public virtual TransmitterDetail Transmitter { get; set; }
 
         public bool IsActive { get; set; }
+
+        [Column(TypeName = "datetime2")]
         public DateTime DateAdded { get; set; }
 
         public int PaymentYear { get; set; }

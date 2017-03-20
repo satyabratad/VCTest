@@ -29,7 +29,7 @@ AS
 		JULY DECIMAL(19,2),
 		AUGUST DECIMAL(19,2),
 		SEPTEMBER DECIMAL(19,2),
-		OCTOBOR DECIMAL(19,2),
+		OCTOBER DECIMAL(19,2),
 		NOVEMBER DECIMAL(19,2),
 		DECEMBER DECIMAL(19,2),
 		TotalCPAmount DECIMAL(19,2),
@@ -85,13 +85,13 @@ AS
 	UPDATE S
 	SET S.IsActive = 0
 	FROM SubmissionStatus S
-	INNER JOIN @K1099SUMMARYCHART C ON S.Id = C.SubmissionStatusId AND ISNULL(C.StatusId,0) IN (0,1,2,3,4,7,8)
+	INNER JOIN @K1099SUMMARYCHART C ON S.Id = C.SubmissionStatusId AND ISNULL(C.StatusId,0) IN (0,1,2,3,4)
 	
 	-- CLEAR EXISTING DATA THAT ARE NOT SUBMITTED
 	UPDATE D
 	SET D.IsActive = 0
 	FROM ImportDetails D
-	INNER JOIN @K1099SUMMARYCHART C ON D.Id = C.ImportDetailsId AND ISNULL(C.StatusId,0) IN (0,1,2,3,4,7,8)
+	INNER JOIN @K1099SUMMARYCHART C ON D.Id = C.ImportDetailsId AND ISNULL(C.StatusId,0) IN (0,1,2,3,4)
 
 	DECLARE @PAYERNAME VARCHAR(127)
 	SELECT @PAYERNAME = p.FirstPayerName FROM [dbo].[PayerDetails] p where Id = @PayerId
@@ -107,7 +107,7 @@ AS
 	SELECT C.PayeeAccountNumber,@SummaryId,C.TINCheckStatus,C.TINCheckRemarks,C.SubmissionSummaryId,D.TINType,D.PayeeTIN,
 	D.PayeeOfficeCode,C.GrossAmount,C.TotalCPAmount,NULL,
 	C.JANUARY,C.FEBRUARY,C.MARCH,C.APRIL,C.MAY,C.JUNE,C.JULY,C.AUGUST,
-	C.SEPTEMBER,C.OCTOBOR,C.NOVEMBER,C.DECEMBER,NULL,SUBSTRING(D.[PayeeFirstName],1,40), 
+	C.SEPTEMBER,C.OCTOBER,C.NOVEMBER,C.DECEMBER,NULL,SUBSTRING(D.[PayeeFirstName],1,40), 
 	SUBSTRING(D.[PayeeSecondName],1,40),SUBSTRING(D.[PayeeMailingAddress],1,40),SUBSTRING(D.[PayeeCity],1,40),D.[PayeeState],REPLACE(D.[PayeeZIP],'-',''),null,D.[FilerIndicatorType], 
 	D.[PaymentIndicatorType],C.TotalTransaction,D.Id,D.[MCC],NULL,NULL,
 	NULL,D.CFSF,1,GETDATE()
@@ -115,7 +115,7 @@ AS
 	FROM @K1099SUMMARYCHART C
 	INNER JOIN  [dbo].[MerchantDetails] D ON C.PayeeAccountNumber = D.PayeeAccountNumber 
 		AND D.IsActive = 1 AND D.PaymentYear = @YEAR AND D.PayerId = @PayerId
-	WHERE ISNULL(C.StatusId,0) IN (0,1,2,3,4,7,8)
+	WHERE ISNULL(C.StatusId,0) IN (0,1,2,3,4)
 
 	SET @ProcessLog = @ProcessLog + 'Account associated with '+@PAYERNAME+':'+CAST(@@ROWCOUNT AS VARCHAR)+CHAR(13)+CHAR(10)
 
@@ -134,7 +134,7 @@ AS
 	FROM @K1099SUMMARYCHART S
 	LEFT JOIN  [dbo].[MerchantDetails] D ON S.PayeeAccountNumber = D.PayeeAccountNumber 
 		AND D.IsActive = 1 AND D.PaymentYear = @YEAR AND D.PayerId = @PayerId
-	WHERE S.TransactionYear = @YEAR AND ISNULL(S.StatusId,0) IN (0,1,2,3,4,7,8)
+	WHERE S.TransactionYear = @YEAR AND ISNULL(S.StatusId,0) IN (0,1,2,3,4)
 
 
 	IF @ORPHANTCOUNT>0

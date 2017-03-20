@@ -134,6 +134,8 @@ namespace Bill2Pay.Model
         public string PayerTelephoneNumber { get; set; }
 
         public bool IsActive { get; set; }
+
+        [Column(TypeName = "datetime2")]
         public DateTime DateAdded { get; set; }
 
         public virtual ICollection<ImportDetail> ImportDetails { get; set; }

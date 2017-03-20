@@ -22,9 +22,10 @@ namespace Bill2Pay.Model
 
         public int PaymentYear { get; set; }
 
-        [MaxLength(255)]
+        [MaxLength(20)]
         public string AccountNumber { get; set; }
 
+        [Column(TypeName = "datetime2")]
         public DateTime ProcessingDate { get; set; }
 
         [ForeignKey("Status")]
@@ -33,6 +34,8 @@ namespace Bill2Pay.Model
         public virtual Status Status { get; set; }
 
         public bool IsActive { get; set; }
+
+        [Column(TypeName = "datetime2")]
         public DateTime DateAdded { get; set; }
     }
 }

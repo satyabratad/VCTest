@@ -18,6 +18,7 @@ INSERT INTO [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (2, 2)
 
 DELETE  FROM [dbo].[Status]  
 GO
+SET IDENTITY_INSERT [dbo].[Status] ON
 INSERT INTO [dbo].[Status]  (Id,Name) values(1,'Not Submitted')
 INSERT INTO [dbo].[Status]  (Id,Name) values(2,'File Generated')
 INSERT INTO [dbo].[Status]  (Id,Name) values(3,'One-Transaction Correction')
@@ -26,11 +27,12 @@ INSERT INTO [dbo].[Status]  (Id,Name) values(5,'ReSubmitted')
 INSERT INTO [dbo].[Status]  (Id,Name) values(6,'Submitted')
 INSERT INTO [dbo].[Status]  (Id,Name) values(7,'Two-Transaction Correction')
 INSERT INTO [dbo].[Status]  (Id,Name) values(8,'Two-Correction Uploaded')
-INSERT INTO [dbo].[Status]  (Id,Name) values(9,'Re-Submitted')
+SET IDENTITY_INSERT [dbo].[Status] OFF
 GO
 
 TRUNCATE TABLE [dbo].[TINStatus]
 GO
+SET IDENTITY_INSERT [dbo].[TINStatus] ON
 INSERT INTO [dbo].[TINStatus] (Id,Name) values(0,'Name TIN combination matches IRS records')
 INSERT INTO [dbo].[TINStatus] (Id,Name) values(1,'TIN was missing or TIN is not a 9 digit number')
 INSERT INTO [dbo].[TINStatus] (Id,Name) values(2,'TIN entered is not currently issued')
@@ -40,6 +42,7 @@ INSERT INTO [dbo].[TINStatus] (Id,Name) values(5,'Duplicate TIN Matching request
 INSERT INTO [dbo].[TINStatus] (Id,Name) values(6,'Matched on SSN')
 INSERT INTO [dbo].[TINStatus] (Id,Name) values(7,'Matched on EIN')
 INSERT INTO [dbo].[TINStatus] (Id,Name) values(8,'Matched on EIN and SSN')
+SET IDENTITY_INSERT [dbo].[TINStatus] OFF
 GO
 
 declare @TransmitterID int

@@ -259,6 +259,7 @@
     <Content Include="Content\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\font-awesome-4.7.0\HELP-US-OUT.txt" />
     <Content Include="Database\Bill2Pay_K1099_DB.sql" />
+    <Content Include="Database\ImportDataSummary.sql" />
     <Content Include="Database\Tables.sql" />
     <Content Include="Database\Data.sql" />
     <Content Include="Database\PostImportDataProcessing.sql" />
@@ -277,6 +278,7 @@
     <Content Include="Content\Login.css" />
     <Content Include="Content\sidebar.css" />
     <Content Include="Content\simple-sidebar.css" />
+    <Content Include="Database\UAT_MIgration.sql" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />

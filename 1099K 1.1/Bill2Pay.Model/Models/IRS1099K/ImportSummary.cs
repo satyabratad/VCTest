@@ -22,6 +22,7 @@ namespace Bill2Pay.Model
 
         public int PaymentYear { get; set; }
 
+        [Column(TypeName = "datetime2")]
         public DateTime ImportDate { get; set; }
 
         [MaxLength(100)]
@@ -35,6 +36,8 @@ namespace Bill2Pay.Model
         public virtual ICollection<ImportDetail> ImportDetails { get; set; }
 
         public bool IsActive { get; set; }
+
+        [Column(TypeName = "datetime2")]
         public DateTime DateAdded { get; set; }
 
         [ForeignKey("CreatedUser")]

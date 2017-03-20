@@ -132,25 +132,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataContextMigrations\201702230921494_P1.cs" />
-    <Compile Include="DataContextMigrations\201702230921494_P1.Designer.cs">
-      <DependentUpon>201702230921494_P1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataContextMigrations\201702231046373_p2.cs" />
-    <Compile Include="DataContextMigrations\201702231046373_p2.Designer.cs">
-      <DependentUpon>201702231046373_p2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataContextMigrations\201702231104167_p3.cs" />
-    <Compile Include="DataContextMigrations\201702231104167_p3.Designer.cs">
-      <DependentUpon>201702231104167_p3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataContextMigrations\201702241005450_p31.cs" />
-    <Compile Include="DataContextMigrations\201702241005450_p31.Designer.cs">
-      <DependentUpon>201702241005450_p31.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataContextMigrations\201702241027134_p4.cs" />
-    <Compile Include="DataContextMigrations\201702241027134_p4.Designer.cs">
-      <DependentUpon>201702241027134_p4.cs</DependentUpon>
+    <Compile Include="DataContextMigrations\201703200937411_UAT.cs" />
+    <Compile Include="DataContextMigrations\201703200937411_UAT.Designer.cs">
+      <DependentUpon>201703200937411_UAT.cs</DependentUpon>
     </Compile>
     <Compile Include="DataContextMigrations\Configuration.cs" />
     <Compile Include="Models\Import\RawTransaction.cs" />
@@ -204,20 +188,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DataContextMigrations\201702230921494_P1.resx">
-      <DependentUpon>201702230921494_P1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataContextMigrations\201702231046373_p2.resx">
-      <DependentUpon>201702231046373_p2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataContextMigrations\201702231104167_p3.resx">
-      <DependentUpon>201702231104167_p3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataContextMigrations\201702241005450_p31.resx">
-      <DependentUpon>201702241005450_p31.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataContextMigrations\201702241027134_p4.resx">
-      <DependentUpon>201702241027134_p4.cs</DependentUpon>
+    <EmbeddedResource Include="DataContextMigrations\201703200937411_UAT.resx">
+      <DependentUpon>201703200937411_UAT.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

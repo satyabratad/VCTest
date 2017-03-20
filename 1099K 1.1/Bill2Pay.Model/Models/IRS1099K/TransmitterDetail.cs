@@ -89,6 +89,8 @@ namespace Bill2Pay.Model
         public string VendorForeignEntityIndicator { get; set; }
 
         public bool IsActive { get; set; }
+
+        [Column(TypeName = "datetime2")]
         public DateTime DateAdded { get; set; }
 
         public int PaymentYear { get; set; }

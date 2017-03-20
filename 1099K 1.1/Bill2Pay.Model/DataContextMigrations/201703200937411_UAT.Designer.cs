@@ -7,13 +7,13 @@ namespace Bill2Pay.Model.DataContextMigrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class P1 : IMigrationMetadata
+    public sealed partial class UAT : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(P1));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(UAT));
         
         string IMigrationMetadata.Id
         {
-            get { return "201702230921494_P1"; }
+            get { return "201703200937411_UAT"; }
         }
         
         string IMigrationMetadata.Source

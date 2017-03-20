@@ -10,12 +10,18 @@ namespace Bill2Pay.Model
         [Key]
         public int Id { get; set; }
 
-        [MaxLength(256)]
+        [MaxLength(20)]
         public string PayeeAccountNumber { get; set; }
         public Nullable<decimal> TransactionAmount { get; set; }
+
+        [Column(TypeName = "datetime2")]
         public DateTime TransactionDate { get; set; }
+
+        [MaxLength(3)]
         public string TransactionType { get; set; }
         public bool IsActive { get; set; }
+
+        [Column(TypeName = "datetime2")]
         public DateTime DateAdded { get; set; }
        
         [ForeignKey("CreatedUser")]
