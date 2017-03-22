@@ -23,150 +23,128 @@
         @Html.HiddenFor(model => model.PaymentYear)
        
 
+        <div class="form-group">
+            @Html.LabelFor(model => model.PayerId, "PayerId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.DropDownList("PayerId", null, htmlAttributes: new { @class = "form-control", @required = "true" })
+                @Html.ValidationMessageFor(model => model.PayerId, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.MCC, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.MCC, new { htmlAttributes = new { @class = "form-control", @required = "true", @maxlength = "4" } })
+                @Html.ValidationMessageFor(model => model.MCC, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PayeeAccountNumber, htmlAttributes: new { @class = "control-label col-md-3" })
-            <div class="col-md-8">
+            @Html.LabelFor(model => model.PayeeAccountNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
                 @Html.EditorFor(model => model.PayeeAccountNumber, new { htmlAttributes = new { @class = "form-control", @required = "true" } })
                 @Html.ValidationMessageFor(model => model.PayeeAccountNumber, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TINType, htmlAttributes: new { @class = "control-label col-md-3" })
-            <div class="col-md-8">
-                @*@Html.EditorFor(model => model.TINType, new { htmlAttributes = new { @class = "form-control", @required = "true" } })*@
-                @Html.DropDownListFor(model => model.TINType, (IEnumerable<SelectListItem>)ViewBag.TINTypeLstList, "Select", htmlAttributes: new { @class = "form-control require" })
-
-
-                @Html.ValidationMessageFor(model => model.TINType, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PayeeTIN, htmlAttributes: new { @class = "control-label col-md-3" })
-            <div class="col-md-8">
-                @Html.EditorFor(model => model.PayeeTIN, new { htmlAttributes = new { @class = "form-control", @required = "true", @maxlength = "9" } })
-                @Html.ValidationMessageFor(model => model.PayeeTIN, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PayeeOfficeCode, htmlAttributes: new { @class = "control-label col-md-3" })
-            <div class="col-md-8">
-                
+            @Html.LabelFor(model => model.PayeeOfficeCode, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
                 @Html.EditorFor(model => model.PayeeOfficeCode, new { htmlAttributes = new { @class = "form-control", @maxlength = "4" } })
                 @Html.ValidationMessageFor(model => model.PayeeOfficeCode, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PayeeFirstName, htmlAttributes: new { @class = "control-label col-md-3" })
-            <div class="col-md-8">
-                @Html.EditorFor(model => model.PayeeFirstName, new { htmlAttributes = new { @class = "form-control", @required = "true", @maxlength = "40"  } })
-                @Html.ValidationMessageFor(model => model.PayeeFirstName, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.TINType, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @*@Html.EditorFor(model => model.TINType, new { htmlAttributes = new { @class = "form-control", @required = "true" } })*@
+                @Html.DropDownListFor(model => model.TINType, (IEnumerable<SelectListItem>)ViewBag.TINTypeLstList, "Select", htmlAttributes: new { @class = "form-control require" })
+
+
+                @Html.ValidationMessageFor(model => model.TINType, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.PayeeTIN, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.PayeeTIN, new { htmlAttributes = new { @class = "form-control", @required = "true", @maxlength = "9" } })
+                @Html.ValidationMessageFor(model => model.PayeeTIN, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PayeeSecondName, htmlAttributes: new { @class = "control-label col-md-3" })
-            <div class="col-md-8">
+            @Html.LabelFor(model => model.PayeeFirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.PayeeFirstName, new { htmlAttributes = new { @class = "form-control", @required = "true", @maxlength = "40"  } })
+                @Html.ValidationMessageFor(model => model.PayeeFirstName, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.PayeeSecondName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
                 @Html.EditorFor(model => model.PayeeSecondName, new { htmlAttributes = new { @class = "form-control", @maxlength = "40" } })
                 @Html.ValidationMessageFor(model => model.PayeeSecondName, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PayeeMailingAddress, htmlAttributes: new { @class = "control-label col-md-3" })
-            <div class="col-md-8">
+            @Html.LabelFor(model => model.PayeeMailingAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
                 @Html.EditorFor(model => model.PayeeMailingAddress, new { htmlAttributes = new { @class = "form-control", @required = "true", @maxlength = "40" } })
                 @Html.ValidationMessageFor(model => model.PayeeMailingAddress, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PayeeCity, htmlAttributes: new { @class = "control-label col-md-3" })
-            <div class="col-md-8">
+            @Html.LabelFor(model => model.PayeeCity, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
                 @Html.EditorFor(model => model.PayeeCity, new { htmlAttributes = new { @class = "form-control", @required = "true", @maxlength = "40" } })
                 @Html.ValidationMessageFor(model => model.PayeeCity, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PayeeState, htmlAttributes: new { @class = "control-label col-md-3" })
-            <div class="col-md-8">
-                
+            
+            @Html.LabelFor(model => model.PayeeState, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
                 @Html.DropDownListFor(model => model.PayeeState, (IEnumerable<SelectListItem>)ViewBag.StateList, "Select", htmlAttributes: new { @class = "form-control require" })
                 @Html.ValidationMessageFor(model => model.PayeeState, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PayeeZIP, htmlAttributes: new { @class = "control-label col-md-3" })
-            <div class="col-md-8">
+            @Html.LabelFor(model => model.PayeeZIP, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
                 @Html.EditorFor(model => model.PayeeZIP, new { htmlAttributes = new { @class = "form-control", @required = "true", @maxlength = "9" } })
                 @Html.ValidationMessageFor(model => model.PayeeZIP, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.FilerIndicatorType, htmlAttributes: new { @class = "control-label col-md-3" })
-            <div class="col-md-8">
+            @Html.LabelFor(model => model.FilerIndicatorType, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
                 @*@Html.EditorFor(model => model.FilerIndicatorType, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.DropDownListFor(model => model.FilerIndicatorType, (IEnumerable<SelectListItem>)ViewBag.FilerList, "Select", htmlAttributes: new { @class = "form-control require" })
 
 
                 @Html.ValidationMessageFor(model => model.FilerIndicatorType, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PaymentIndicatorType, htmlAttributes: new { @class = "control-label col-md-3" })
-            <div class="col-md-8">
+            @Html.LabelFor(model => model.PaymentIndicatorType, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
                 @*@Html.EditorFor(model => model.PaymentIndicatorType, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.DropDownListFor(model => model.PaymentIndicatorType, (IEnumerable<SelectListItem>)ViewBag.PaymentIndicatorList, "Select", htmlAttributes: new { @class = "form-control require" })
                 @Html.ValidationMessageFor(model => model.PaymentIndicatorType, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.MCC, htmlAttributes: new { @class = "control-label col-md-3" })
-            <div class="col-md-8">
-                @Html.EditorFor(model => model.MCC, new { htmlAttributes = new { @class = "form-control", @required = "true", @maxlength="4" } })
-                @Html.ValidationMessageFor(model => model.MCC, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.CFSF, htmlAttributes: new { @class = "control-label col-md-3" })
             <div class="col-md-8">
                 @Html.EditorFor(model => model.CFSF, new { htmlAttributes = new { @class = "form-control", @maxlength = "2" } })
                 @Html.ValidationMessageFor(model => model.CFSF, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.PayerId, "PayerId", htmlAttributes: new { @class = "control-label col-md-3" })
-            <div class="col-md-8">
-                @Html.DropDownList("PayerId", null, htmlAttributes: new { @class = "form-control", @required = "true" })
-                @Html.ValidationMessageFor(model => model.PayerId, "", new { @class = "text-danger" })
+
+        <div class="row">
+            <div class="col-md-6">
+                @Html.ActionLink("Cancel", "Index", "Merchant", new { @class = "btn btn-default pull-right" })
+            </div>
+            <div class="col-md-6">
+                <input type="submit" value="Save" class="btn btn-primary " />
             </div>
         </div>
-
         
-
-        
-
-        <div class="form-group">
-            <div class="col-md-offset-3 col-md-8">
-                <input type="submit" value="Save" class="btn btn-primary btn-block " />
-            </div>
-        </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    
 </div>
 
 @section Scripts {
