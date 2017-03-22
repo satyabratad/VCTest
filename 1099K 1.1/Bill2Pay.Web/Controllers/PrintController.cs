@@ -56,14 +56,14 @@ namespace Bill2Pay.Web.Controllers
             var errorAccounts = string.Empty;
             var rootpath = Server.MapPath(string.Format("~/App_Data/Download/k1099/"));
             System.IO.Directory.CreateDirectory(rootpath);
-            
+
             var list = (List<string>)TempData["PrintableMerchantList"];
-            var year=(int)TempData["SelectedYear"] ;
+            var year = (int)TempData["SelectedYear"];
             string folderName = string.Empty;
             //var accno = list[0].ToString();
             foreach (var accno in list)
             {
-               
+
 
                 folderName = accno + "-" + year.ToString();
 
@@ -147,7 +147,7 @@ namespace Bill2Pay.Web.Controllers
                         System.IO.File.WriteAllBytes(path, renderedBytes); // Requires System.IO
                                                                            //Response.AddHeader("content-disposition", "attachment; filename=NorthWindCustomers." + fileNameExtension);
 
-                        
+
                     }
                     Logger.LogInstance.LogInfo("Pdf file(s) generated for :{0} and the same can be found in {1}{2}", accno, rootpath, folderName);
                 }
@@ -157,8 +157,8 @@ namespace Bill2Pay.Web.Controllers
                     Logger.LogInstance.LogInfo("System unable to generate .pdf file(s) for {0} as the record is not qualified for pdf generation", accno);
 
                 }
-                
-                
+
+
 
                 //ImportUtility.CreateZip(rootpath);
             }
@@ -177,8 +177,25 @@ namespace Bill2Pay.Web.Controllers
             var item = ApplicationDbContext.Instence.SubmissionDetails
                 .Include("PSE")
                 .OrderByDescending(p => p.SubmissionId)
+                .Where(s => s.IsActive == true)
                 .FirstOrDefault(p => p.AccountNo.Equals(Id, StringComparison.OrdinalIgnoreCase));
 
+            var status = ApplicationDbContext.Instence.SubmissionStatus
+                .OrderByDescending(p => p.Id)
+                .FirstOrDefault(p => p.AccountNumber.Equals(Id, StringComparison.OrdinalIgnoreCase) && p.IsActive == true);
+
+            item.SubmissionType = 0;
+            if (status != null)
+            {
+                if (status.StatusId == 6)
+                {
+                    item.SubmissionType = 1;// Void
+                }
+                if (status.StatusId == 3 || status.StatusId == 4 || status.StatusId == 5)
+                {
+                    item.SubmissionType = 2;//Corrected
+                }
+            }
             var data = new List<SubmissionDetail>();
             if (item != null)
             {

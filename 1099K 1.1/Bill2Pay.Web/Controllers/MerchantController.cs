@@ -127,7 +127,7 @@ namespace Bill2Pay.Web.Controllers
             if (Id == null)
             {
                 year = DateTime.Now.Year - 1;
-                //return RedirectToAction("Index", new { id = year, payer = payer });
+                return RedirectToAction("Index", new { id = year, payer = payer });
             }
             else
             {

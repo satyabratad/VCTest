@@ -954,16 +954,21 @@ INSERT INTO [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (2, 2)
 
 DELETE  FROM [dbo].[Status]  
 GO
+SET IDENTITY_INSERT [dbo].[Status] ON
 INSERT INTO [dbo].[Status]  (Id,Name) values(1,'Not Submitted')
 INSERT INTO [dbo].[Status]  (Id,Name) values(2,'File Generated')
-INSERT INTO [dbo].[Status]  (Id,Name) values(3,'Correction Required')
-INSERT INTO [dbo].[Status]  (Id,Name) values(4,'CorrectionUploaded')
+INSERT INTO [dbo].[Status]  (Id,Name) values(3,'One-Transaction Correction')
+INSERT INTO [dbo].[Status]  (Id,Name) values(4,'One-Correction Uploaded')
 INSERT INTO [dbo].[Status]  (Id,Name) values(5,'ReSubmitted')
 INSERT INTO [dbo].[Status]  (Id,Name) values(6,'Submitted')
+INSERT INTO [dbo].[Status]  (Id,Name) values(7,'Two-Transaction Correction')
+INSERT INTO [dbo].[Status]  (Id,Name) values(8,'Two-Correction Uploaded')
+SET IDENTITY_INSERT [dbo].[Status] OFF
 GO
 
 TRUNCATE TABLE [dbo].[TINStatus]
 GO
+SET IDENTITY_INSERT [dbo].[TINStatus] ON
 INSERT INTO [dbo].[TINStatus] (Id,Name) values(0,'Name TIN combination matches IRS records')
 INSERT INTO [dbo].[TINStatus] (Id,Name) values(1,'TIN was missing or TIN is not a 9 digit number')
 INSERT INTO [dbo].[TINStatus] (Id,Name) values(2,'TIN entered is not currently issued')
@@ -973,19 +978,20 @@ INSERT INTO [dbo].[TINStatus] (Id,Name) values(5,'Duplicate TIN Matching request
 INSERT INTO [dbo].[TINStatus] (Id,Name) values(6,'Matched on SSN')
 INSERT INTO [dbo].[TINStatus] (Id,Name) values(7,'Matched on EIN')
 INSERT INTO [dbo].[TINStatus] (Id,Name) values(8,'Matched on EIN and SSN')
+SET IDENTITY_INSERT [dbo].[TINStatus] OFF
 GO
 
 declare @TransmitterID int
 DELETE FROM [dbo].[TransmitterDetails]
 INSERT INTO [dbo].[TransmitterDetails] ([TransmitterTIN], [TransmitterControlCode], [TestFileIndicator], [TransmitterForeignEntityIndicator], [TransmitterName], [TransmitterNameContinued], [CompanyName], [CompanyNameContinued], [CompanyMailingAddress], [CompanyCity], [CompanyState], [CompanyZIP], [TotalNumberofPayees], [ContactName], [ContactTelephoneNumber], [ContactEmailAddress], [VendorIndicator], [VendorName], [VendorMailingAddress], [VendorCity], [VendorState], [VendorZIP], [VendorContactName], [VendorContactTelephoneNumber], [VendorForeignEntityIndicator], [IsActive], [DateAdded], [PaymentYear]) 
-VALUES ( N'471471912', N'90T19', N'', N'', N'Bill2Pay, LLC', N'', N'Bill2Pay, LLC', N'', N'9428 Baymeadows Road, #600', N'Jacksonville', N'FL', N'32256', 0, N'Contact Name', N'123456789098765', N'test@test.com', N'I', N'', N'', N'', N'', N'', N'', N'', N'', 1, N'2017-02-23 04:45:25', 2016)
+VALUES ( N'471471912', N'90T19', N'', N'', N'Bill2Pay, LLC', N'', N'Bill2Pay, LLC', N'', N'9428 Baymeadows Road, #600', N'Jacksonville', N'FL', N'32256', 0, N'Bill2Pay Support', N'8777676148', N'Help@Bill2Pay.com', N'I', N'', N'', N'', N'', N'', N'', N'', N'', 1, N'2017-02-23 04:45:25', 2016)
 
 set @TransmitterID = @@IDENTITY
 
 DECLARE @PayerID int
 DELETE FROM [dbo].[PayerDetails]
 INSERT INTO [dbo].[PayerDetails] ([CFSF], [PayerTIN], [PayerNameControl], [LastFilingIndicator], [ReturnType], [AmountCodes], [PayerForeignEntityIndicator], [FirstPayerName], [SecondPayerName], [TransferAgentIndicator], [PayerShippingAddress], [PayerCity], [PayerState], [PayerZIP], [PayerTelephoneNumber], [TransmitterId], [IsActive], [DateAdded], [PaymentYear])
-VALUES ( N'1', N'471471912', N'', N'', N'MC', N'12456789ABCDEFG', N'', N'Bill2Pay, LLC', N'', N'0', N'9428 Baymeadows Road, #600', N'Jacksonville', N'FL', N'32256', N'9044214100', @TransmitterID, 1, N'2017-02-23 04:45:25', 2016)
+VALUES ( N'1', N'471471912', N'BILL', N'', N'MC', N'12456789ABCDEFG', N'', N'Bill2Pay, LLC', N'', N'0', N'9428 Baymeadows Road, #600', N'Jacksonville', N'FL', N'32256', N'9044214100', @TransmitterID, 1, N'2017-02-23 04:45:25', 2016)
 SET @PayerID = @@IDENTITY
 
 DECLARE @USEERID BIGINT,@PaymentYear int = 2016
@@ -1004,7 +1010,7 @@ INSERT INTO [dbo].[MerchantDetails](PayeeAccountNumber,TINType,PayeeTIN,PayeeOff
 INSERT INTO [dbo].[MerchantDetails](PayeeAccountNumber,TINType,PayeeTIN,PayeeOfficeCode,PayeeFirstName,PayeeSecondName,PayeeMailingAddress,PayeeCity,PayeeState,PayeeZIP,FilerIndicatorType,PaymentIndicatorType,MCC,IsActive,DateAdded,UserId,PayerId,PaymentYear) VALUES ('CYPAGENT',NULL,'593540757',NULL,'Cypress Insurance Group, Inc.',NULL,'13901 SUTTON PARK DR S STE 310 ','Jacksonville ','FL','32224',1,1,9399,1,GETDATE(),@USEERID,@PayerId,@PaymentYear)
 INSERT INTO [dbo].[MerchantDetails](PayeeAccountNumber,TINType,PayeeTIN,PayeeOfficeCode,PayeeFirstName,PayeeSecondName,PayeeMailingAddress,PayeeCity,PayeeState,PayeeZIP,FilerIndicatorType,PaymentIndicatorType,MCC,IsActive,DateAdded,UserId,PayerId,PaymentYear) VALUES ('DIXIE',NULL,'596032854',NULL,'Dixie County Tax Collector',NULL,'214 NE HIGHWAY 351 STE A ','Cross City ','FL','32628',1,1,9399,1,GETDATE(),@USEERID,@PayerId,@PaymentYear)
 INSERT INTO [dbo].[MerchantDetails](PayeeAccountNumber,TINType,PayeeTIN,PayeeOfficeCode,PayeeFirstName,PayeeSecondName,PayeeMailingAddress,PayeeCity,PayeeState,PayeeZIP,FilerIndicatorType,PaymentIndicatorType,MCC,IsActive,DateAdded,UserId,PayerId,PaymentYear) VALUES ('DUVAL',NULL,'596000344',NULL,'Duval county Tax Collector',NULL,'231 E FORSYTH ST Room 212 ','Jacksonville ','FL','32202',1,1,9399,1,GETDATE(),@USEERID,@PayerId,@PaymentYear)
-INSERT INTO [dbo].[MerchantDetails](PayeeAccountNumber,TINType,PayeeTIN,PayeeOfficeCode,PayeeFirstName,PayeeSecondName,PayeeMailingAddress,PayeeCity,PayeeState,PayeeZIP,FilerIndicatorType,PaymentIndicatorType,MCC,IsActive,DateAdded,UserId,PayerId,PaymentYear) VALUES ('DOT',NULL,'',NULL,'Florida Department of Transportation',NULL,'605 Suwannee Street','Tallahassee ','FL','32399',1,1,NULL,1,GETDATE(),@USEERID,@PayerId,@PaymentYear)
+INSERT INTO [dbo].[MerchantDetails](PayeeAccountNumber,TINType,PayeeTIN,PayeeOfficeCode,PayeeFirstName,PayeeSecondName,PayeeMailingAddress,PayeeCity,PayeeState,PayeeZIP,FilerIndicatorType,PaymentIndicatorType,MCC,IsActive,DateAdded,UserId,PayerId,PaymentYear) VALUES ('DOT',NULL,'592870670',NULL,'Florida Department of Transportation',NULL,'605 Suwannee Street','Tallahassee ','FL','32399',1,1,NULL,1,GETDATE(),@USEERID,@PayerId,@PaymentYear)
 INSERT INTO [dbo].[MerchantDetails](PayeeAccountNumber,TINType,PayeeTIN,PayeeOfficeCode,PayeeFirstName,PayeeSecondName,PayeeMailingAddress,PayeeCity,PayeeState,PayeeZIP,FilerIndicatorType,PaymentIndicatorType,MCC,IsActive,DateAdded,UserId,PayerId,PaymentYear) VALUES ('HYDESCHOOL',NULL,'016021559',NULL,'Hyde Schools',NULL,'616 Hights','Bath ','ME','04530',1,1,8211,1,GETDATE(),@USEERID,@PayerId,@PaymentYear)
 INSERT INTO [dbo].[MerchantDetails](PayeeAccountNumber,TINType,PayeeTIN,PayeeOfficeCode,PayeeFirstName,PayeeSecondName,PayeeMailingAddress,PayeeCity,PayeeState,PayeeZIP,FilerIndicatorType,PaymentIndicatorType,MCC,IsActive,DateAdded,UserId,PayerId,PaymentYear) VALUES ('JAXFIRE',NULL,'596000344',NULL,'Jacksonville Fire & Rescue/Duval County Tax Collector',NULL,'231 E FORSYTH ST Room 212 ','Jacksonville ','FL','32202',1,1,9399,1,GETDATE(),@USEERID,@PayerId,@PaymentYear)
 INSERT INTO [dbo].[MerchantDetails](PayeeAccountNumber,TINType,PayeeTIN,PayeeOfficeCode,PayeeFirstName,PayeeSecondName,PayeeMailingAddress,PayeeCity,PayeeState,PayeeZIP,FilerIndicatorType,PaymentIndicatorType,MCC,IsActive,DateAdded,UserId,PayerId,PaymentYear) VALUES ('JEA',NULL,'592983007',NULL,'Jacksonville Electric Authority',NULL,'21 W CHURCH ST','Jacksonville ','FL','32202',1,1,9399,1,GETDATE(),@USEERID,@PayerId,@PaymentYear)
@@ -1012,7 +1018,7 @@ INSERT INTO [dbo].[MerchantDetails](PayeeAccountNumber,TINType,PayeeTIN,PayeeOff
 INSERT INTO [dbo].[MerchantDetails](PayeeAccountNumber,TINType,PayeeTIN,PayeeOfficeCode,PayeeFirstName,PayeeSecondName,PayeeMailingAddress,PayeeCity,PayeeState,PayeeZIP,FilerIndicatorType,PaymentIndicatorType,MCC,IsActive,DateAdded,UserId,PayerId,PaymentYear) VALUES ('LASALLE',NULL,'366006612',NULL,'La Salle County',NULL,'707 E ETNA RD','Ottawa ','IL','61350',1,1,9399,1,GETDATE(),@USEERID,@PayerId,@PaymentYear)
 INSERT INTO [dbo].[MerchantDetails](PayeeAccountNumber,TINType,PayeeTIN,PayeeOfficeCode,PayeeFirstName,PayeeSecondName,PayeeMailingAddress,PayeeCity,PayeeState,PayeeZIP,FilerIndicatorType,PaymentIndicatorType,MCC,IsActive,DateAdded,UserId,PayerId,PaymentYear) VALUES ('LAUDERHILL',NULL,'596044104',NULL,'City of Lauderhill',NULL,'5581 W OAKLAND PARK BLVD ','Lauderhill ','FL','33313',1,1,4900,1,GETDATE(),@USEERID,@PayerId,@PaymentYear)
 INSERT INTO [dbo].[MerchantDetails](PayeeAccountNumber,TINType,PayeeTIN,PayeeOfficeCode,PayeeFirstName,PayeeSecondName,PayeeMailingAddress,PayeeCity,PayeeState,PayeeZIP,FilerIndicatorType,PaymentIndicatorType,MCC,IsActive,DateAdded,UserId,PayerId,PaymentYear) VALUES ('LDRHILL',NULL,'596044104',NULL,'City of Lauderhill',NULL,'5581 W OAKLAND PARK BLVD ','Lauderhill ','FL','33313',1,1,4900,1,GETDATE(),@USEERID,@PayerId,@PaymentYear)
-INSERT INTO [dbo].[MerchantDetails](PayeeAccountNumber,TINType,PayeeTIN,PayeeOfficeCode,PayeeFirstName,PayeeSecondName,PayeeMailingAddress,PayeeCity,PayeeState,PayeeZIP,FilerIndicatorType,PaymentIndicatorType,MCC,IsActive,DateAdded,UserId,PayerId,PaymentYear) VALUES ('LCU',NULL,'',NULL,'Lee County Electric Cooperative, Inc',NULL,'4980 Bayline Drive','North Fort Myers','FL','33917',1,1,NULL,1,GETDATE(),@USEERID,@PayerId,@PaymentYear)
+INSERT INTO [dbo].[MerchantDetails](PayeeAccountNumber,TINType,PayeeTIN,PayeeOfficeCode,PayeeFirstName,PayeeSecondName,PayeeMailingAddress,PayeeCity,PayeeState,PayeeZIP,FilerIndicatorType,PaymentIndicatorType,MCC,IsActive,DateAdded,UserId,PayerId,PaymentYear) VALUES ('LCU',NULL,'596000702',NULL,'County of Lee Office of County','Commissioners','4980 Bayline Drive','North Fort Myers','FL','33917',1,1,NULL,1,GETDATE(),@USEERID,@PayerId,@PaymentYear)
 INSERT INTO [dbo].[MerchantDetails](PayeeAccountNumber,TINType,PayeeTIN,PayeeOfficeCode,PayeeFirstName,PayeeSecondName,PayeeMailingAddress,PayeeCity,PayeeState,PayeeZIP,FilerIndicatorType,PaymentIndicatorType,MCC,IsActive,DateAdded,UserId,PayerId,PaymentYear) VALUES ('LEON',NULL,'596000714',NULL,'Leon County Tax Collector',NULL,'1276 METROPOLITAN BLVD ','Tallahassee ','FL','32312',1,1,9399,1,GETDATE(),@USEERID,@PayerId,@PaymentYear)
 INSERT INTO [dbo].[MerchantDetails](PayeeAccountNumber,TINType,PayeeTIN,PayeeOfficeCode,PayeeFirstName,PayeeSecondName,PayeeMailingAddress,PayeeCity,PayeeState,PayeeZIP,FilerIndicatorType,PaymentIndicatorType,MCC,IsActive,DateAdded,UserId,PayerId,PaymentYear) VALUES ('MADISON',NULL,'376001410',NULL,'Madson County Treasurer',NULL,'157 N MAIN ST RM 125 ','Edwardsville ','IL','62025',1,1,9311,1,GETDATE(),@USEERID,@PayerId,@PaymentYear)
 INSERT INTO [dbo].[MerchantDetails](PayeeAccountNumber,TINType,PayeeTIN,PayeeOfficeCode,PayeeFirstName,PayeeSecondName,PayeeMailingAddress,PayeeCity,PayeeState,PayeeZIP,FilerIndicatorType,PaymentIndicatorType,MCC,IsActive,DateAdded,UserId,PayerId,PaymentYear) VALUES ('MANATEE',NULL,'596000733',NULL,'Manatee County Tax Collector',NULL,'819 301 BLVD W ','Bradenton ','FL','34205',1,1,9399,1,GETDATE(),@USEERID,@PayerId,@PaymentYear)
@@ -1034,7 +1040,7 @@ INSERT INTO [dbo].[MerchantDetails](PayeeAccountNumber,TINType,PayeeTIN,PayeeOff
 
 
 INSERT INTO [dbo].[PayerDetails] ([CFSF], [PayerTIN], [PayerNameControl], [LastFilingIndicator], [ReturnType], [AmountCodes], [PayerForeignEntityIndicator], [FirstPayerName], [SecondPayerName], [TransferAgentIndicator], [PayerShippingAddress], [PayerCity], [PayerState], [PayerZIP], [PayerTelephoneNumber], [TransmitterId], [IsActive], [DateAdded], [PaymentYear]) 
-VALUES ( NULL, N'12345678', N'', N'', N'MC', N'12456789ABCDEFG', N'', N'College Savings ', N'', N'0', N'9428 Baymeadows Road, #600', N'Jacksonville', N'FL', N'32256', N'9044214100', @TransmitterID, 1, N'2017-02-23 04:45:25', 2016)
+VALUES ( 1, N'471481558', N'', N'', N'MC', N'12456789ABCDEFG', N'', N'Intuition College Savings Solutions, LLC', N'', N'0', N'9428 Baymeadows Road, #600', N'Jacksonville', N'FL', N'32256', N'9044214100', @TransmitterID, 1, N'2017-02-23 04:45:25', 2016)
 
 SET @PayerID = @@IDENTITY
 
@@ -1043,6 +1049,7 @@ INSERT INTO [dbo].[MerchantDetails](PayeeAccountNumber,TINType,PayeeTIN,PayeeOff
 INSERT INTO [dbo].[MerchantDetails](PayeeAccountNumber,TINType,PayeeTIN,PayeeOfficeCode,PayeeFirstName,PayeeSecondName,PayeeMailingAddress,PayeeCity,PayeeState,PayeeZIP,FilerIndicatorType,PaymentIndicatorType,MCC,IsActive,DateAdded,UserId,PayerId,PaymentYear) VALUES ('IllinoisCS',2,'521752528',NULL,'College Illinois! ',NULL,'1755 Lake Cook Rd','Deerfield','IL','600155209',1,1,8299,1,GETDATE(),@USEERID,@PayerId,@PaymentYear)
 
 UPDATE [dbo].[MerchantDetails] SET TINType = 1 WHERE TINType IS NULL
+
 GO
 SELECT * FROM [dbo].[AspNetUserRoles]
 SELECT * FROM [dbo].[AspNetUsers]

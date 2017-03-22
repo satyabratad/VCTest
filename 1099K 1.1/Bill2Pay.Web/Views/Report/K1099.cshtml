@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<Bill2Pay.Model.ImportDetail>
 
 @{
-    ViewBag.Title = "IRS 1099K Report";
+    ViewBag.Title = "IRS 1099-K Submission Report";
 }
 
-<h2>IRS 1099K Report</h2>
+<h2>IRS 1099-K Submission Report</h2>
 
 @Html.Partial("_SelectYear", new Bill2Pay.Web.YearSelection() { AllowPostback = true, IsVisible = true })
 

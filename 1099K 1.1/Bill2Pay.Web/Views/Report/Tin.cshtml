@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<Bill2Pay.Model.ImportDetail>
 
 @{
-    ViewBag.Title = "TIN Matching Report";
+    ViewBag.Title = "TIN Matching Status Report";
 }
 
-<h2>TIN Matching Report</h2>
+<h2>TIN Matching Status Report</h2>
 
 @Html.Partial("_SelectYear", new Bill2Pay.Web.YearSelection() { AllowPostback = true, IsVisible = true })
 
@@ -88,8 +88,7 @@
                         @Html.DisplayFor(modelItem => item.TIN)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.FirstPayeeName)
-                        @Html.DisplayFor(modelItem => item.SecondPayeeName)
+                        @string.Format("{0} {1}", item.FirstPayeeName.Trim(),item.SecondPayeeName)
                     </td>
                     <td>
                         @Bill2Pay.Web.TinStatus.GetName(item.TINCheckStatus)
