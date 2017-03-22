@@ -64,8 +64,8 @@ populateBillingDetails: function(){
 	if(dbObject.BillingDetails!=null){
 		var paymentMethod="Visa ***"+dbObject.BillingDetails.CardNumber.substr(dbObject.BillingDetails.CardNumber.length-4,4);
 		$("#paymentMethod").html(paymentMethod);
-		$("#ExpDate").html(dbObject.BillingDetails.ExpDate);
-	 	$("#Zip").html(dbObject.BillingDetails.Zip);	
+		$("#expDate").html(dbObject.BillingDetails.ExpDate.replace('_','/'));
+	 	$("#billZip").html(dbObject.BillingDetails.Zip);	
 	} 
 },
 populateGrid: function () {

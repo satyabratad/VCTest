@@ -48,7 +48,7 @@ addCreditCardDetails:function(){
 								"PaymentType": "CC",
 								"NameOnCard": $("#txtNameonCard").val(),
 								"CardNumber": $("#txtCreditCardNumber").val(),
-								"ExpDate":  $("#txtExpireDate").val(),
+								"ExpDate":  $("#txtExpireDate").val().replace('/','_'),
 								"CVV":  $("#txtCCV").val(),
 								"Country":  $("#ddlCountry").val(),
 								"Zip":  $("#txtBillingZip").val(),								
@@ -59,10 +59,19 @@ addCreditCardDetails:function(){
 },
 populateCreditCardDetails:function(){
 	debugger;
+		
+	$("#txtNameonCard").val('');
+	$("#txtExpireDate").val('');
+	$("#ddlCountry").val('');
+	$("#txtBillingZip").val('');
+	if(dbObject.BillingDetails!=null){
+		
 	$("#txtNameonCard").val(dbObject.BillingDetails.NameOnCard);
-	$("#txtExpireDate").val(dbObject.BillingDetails.ExpDate);
+	$("#txtExpireDate").val(dbObject.BillingDetails.ExpDate.replace('_','/'));
 	$("#ddlCountry").val(dbObject.BillingDetails.Country);
 	$("#txtBillingZip").val(dbObject.BillingDetails.Zip);
+	
+	}
 	
 },
 addBankDetails:function(){
@@ -132,8 +141,8 @@ populateOrderDetails: function(){
         html += '</div>';
  		html +=       '</div>';
         
-	  	$('#pnlOrderDetails').html('');
-	    $('#pnlOrderDetails').append(html); 
+	  	$('#orderDetails').html('');
+	    $('#orderDetails').append(html); 
 },
 
 };

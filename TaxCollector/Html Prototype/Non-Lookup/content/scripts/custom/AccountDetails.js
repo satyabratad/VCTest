@@ -10,9 +10,10 @@ var bill2payAccountDetails = {
     },
     showCart: function(){
 		debugger;
-		if(dbObject.Products!=null){
-			var param=getParameterByName('dbObject');
+		var param=getParameterByName('dbObject');
 			DeSrializeDbObject(param);
+		if(dbObject.Products!=null){
+			
 			$("#cartCount").html(dbObject.Products.length);	
 			//show cart grid
 			param=getParameterByName('ShowCart');		
