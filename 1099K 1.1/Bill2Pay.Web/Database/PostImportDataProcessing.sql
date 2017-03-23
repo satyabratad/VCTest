@@ -114,7 +114,7 @@ AS
 
 	FROM @K1099SUMMARYCHART C
 	INNER JOIN  [dbo].[MerchantDetails] D ON C.PayeeAccountNumber = D.PayeeAccountNumber 
-		AND D.IsActive = 1 AND D.PaymentYear = @YEAR AND D.PayerId = @PayerId
+		AND D.IsActive = 1 AND D.PayerId = @PayerId
 	WHERE ISNULL(C.StatusId,0) IN (0,1,2,3,4)
 
 	SET @ProcessLog = @ProcessLog + 'Account associated with '+@PAYERNAME+':'+CAST(@@ROWCOUNT AS VARCHAR)+CHAR(13)+CHAR(10)
@@ -133,8 +133,8 @@ AS
 	SELECT @ORPHANTCOUNT = COUNT(*)
 	FROM @K1099SUMMARYCHART S
 	LEFT JOIN  [dbo].[MerchantDetails] D ON S.PayeeAccountNumber = D.PayeeAccountNumber 
-		AND D.IsActive = 1 AND D.PaymentYear = @YEAR AND D.PayerId = @PayerId
-	WHERE S.TransactionYear = @YEAR AND ISNULL(S.StatusId,0) IN (0,1,2,3,4)
+		AND D.IsActive = 1 AND D.PayerId = @PayerId
+	WHERE S.TransactionYear = @YEAR AND ISNULL(S.StatusId,0) NOT IN (0,1,2,3,4)
 
 
 	IF @ORPHANTCOUNT>0

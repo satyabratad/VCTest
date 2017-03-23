@@ -191,7 +191,7 @@ namespace Bill2Pay.Web.Controllers
                 {
                     item.SubmissionType = 1;// Void
                 }
-                if (status.StatusId == 3 || status.StatusId == 4 || status.StatusId == 5)
+                if (status.StatusId == 8 || status.StatusId == 4 || status.StatusId == 5)
                 {
                     item.SubmissionType = 2;//Corrected
                 }
