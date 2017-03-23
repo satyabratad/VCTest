@@ -23,7 +23,7 @@ namespace Bill2Pay.Web.Controllers
         }
 
 
-        // GET: IRSProcess
+
         public ActionResult Index(int? Id, int? payer)
         {
 

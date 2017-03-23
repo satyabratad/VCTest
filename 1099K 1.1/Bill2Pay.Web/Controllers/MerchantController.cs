@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 using System.Data.Entity.Validation;
 using Newtonsoft.Json;
 using System.Transactions;
+using Bill2Pay.GenerateIRSFile;
 
 namespace Bill2Pay.Web.Controllers
 {
@@ -115,7 +116,7 @@ namespace Bill2Pay.Web.Controllers
         }
 
 
-        // GET: Merchant
+
         public ActionResult Index(int? Id,int? payer)
         { 
             int year = 0;
@@ -128,7 +129,7 @@ namespace Bill2Pay.Web.Controllers
             if (Id == null)
             {
                 year = DateTime.Now.Year - 1;
-                //return RedirectToAction("Index", new { id = year, payer = payer });
+
             }
             else
             {
@@ -268,7 +269,6 @@ namespace Bill2Pay.Web.Controllers
 
                 var returnUrl = TempData["MerchantEditreturnUrl"].ToString();
 
-
                 using (TransactionScope scope = new TransactionScope())
                 {
 
@@ -280,7 +280,6 @@ namespace Bill2Pay.Web.Controllers
 
                     merchantDetails.DateAdded = System.DateTime.Now;
                     merchantDetails.UserId = int.Parse(User.Identity.GetUserId());
-                    //merchantDetails.PaymentYear = System.DateTime.Now.Year;
                     merchantDetails.IsActive = true;
                     db.MerchantDetails.Add(merchantDetails);
                     db.SaveChanges();
@@ -298,7 +297,7 @@ namespace Bill2Pay.Web.Controllers
                     {
                         foreach (MerchantListVM impdstat in iDet)
                         {
-                            if (impdstat.SubmissionStatus == null || impdstat.SubmissionStatus.StatusId <= 2 || impdstat.SubmissionStatus.StatusId == 7)
+                            if (impdstat.SubmissionStatus == null || impdstat.SubmissionStatus.StatusId <= (int)RecordStatus.FileGenerated || impdstat.SubmissionStatus.StatusId == (int)RecordStatus.TwoTransactionCorrection)
                             {
                                 ImportDetail newimpdet = impdstat.ImportDetails;
                                 ImportDetail impdet = impdstat.ImportDetails;
@@ -367,7 +366,7 @@ namespace Bill2Pay.Web.Controllers
                                     db.SaveChanges();
 
                                     newStatus.IsActive = true;
-                                    newStatus.StatusId = 8; // TODO: status will get from enum
+                                    newStatus.StatusId =(int) RecordStatus.ReSubmitted; // Resubmitted= 8
                                     newStatus.DateAdded = System.DateTime.Now;
                                     db.SubmissionStatus.Add(newStatus);
                                     db.SaveChanges();
