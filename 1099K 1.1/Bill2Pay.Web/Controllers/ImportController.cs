@@ -4,6 +4,7 @@ using Bill2Pay.Model;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -59,13 +60,14 @@ namespace Bill2Pay.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Transaction(int? Id,int ddlPayer, HttpPostedFileBase fileBase)
+        public async Task<ActionResult> Transaction(int ddlYear, int ddlPayer, HttpPostedFileBase fileBase)
         {
-            if (Id == null || Id < 2015)
+            var sysYear = Convert.ToInt32(ConfigurationManager.AppSettings["SystemStartYear"]);
+            if ( ddlYear < sysYear)
             {
                 return View();
             }
-            int year = (int)Id;
+            int year = (int)ddlYear;
             string[] whiteListing = new string[] { ".zip", ".ZIP" };
 
             // Verify that the user selected a file
@@ -100,7 +102,7 @@ namespace Bill2Pay.Web.Controllers
                 utility.ProcessInputFileAsync(year, path, User.Identity.GetUserId<long>(), ddlPayer);
 
 
-                return RedirectToAction("Transaction", new { Id = Id, Status = true });
+                return RedirectToAction("Transaction", new { Id = ddlYear, Status = true });
             }
 
             return View();
@@ -127,22 +129,19 @@ namespace Bill2Pay.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Tin(int? Id, int? ddlPayer, HttpPostedFileBase fileBase)
+        public ActionResult Tin(int ddlYear, int? ddlPayer, HttpPostedFileBase fileBase)
         {
             DataTable dtTin = null;
             bool isSuccess = false;
             
             string result = string.Empty;
-            //if (ddlPayer != null)
-            //{
-            //    payer = Convert.ToInt32(ddlPayer);
-            //}
-
-            if (Id == null || Id < 2015)
+            var sysYear = Convert.ToInt32(ConfigurationManager.AppSettings["SystemStartYear"]);
+            if (ddlYear < sysYear)
             {
                 return View();
             }
-            int year = (int)Id;
+
+            int year = (int)ddlYear;
             if (fileBase != null && fileBase.ContentLength > 0)
             {
                 var extention = Path.GetExtension(fileBase.FileName);
