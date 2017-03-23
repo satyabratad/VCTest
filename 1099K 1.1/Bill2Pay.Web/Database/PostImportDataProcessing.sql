@@ -1,7 +1,7 @@
 ﻿IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'PostImportDataProcessing')
 DROP PROCEDURE PostImportDataProcessing
 GO
-CREATE PROCEDURE [dbo].[PostImportDataProcessing]
+CREATE PROCEDURE [PostImportDataProcessing]
 	@YEAR INT = 2016,
 	@UserId BIGINT=1,
 	@TotalCount INT=0,
@@ -52,12 +52,12 @@ AS
 	SET @ProcessLog = @ProcessLog + 'Transaction Count: '+CAST(@TotalCount AS VARCHAR) +CHAR(13)+CHAR(10)
 	
 	-- ARCHIVE EXISTING DATA
-	UPDATE [dbo].[RawTransactions] SET Isactive = 0 WHERE IsActive=1
+	UPDATE [RawTransactions] SET Isactive = 0 WHERE IsActive=1
 	
 	BEGIN TRY
 
 		-- INSERT NEW DATA
-		INSERT INTO [dbo].[RawTransactions](PayeeAccountNumber,TransactionType,TransactionAmount,TransactionDate,IsActive,UserID,DateAdded)
+		INSERT INTO [RawTransactions](PayeeAccountNumber,TransactionType,TransactionAmount,TransactionDate,IsActive,UserID,DateAdded)
 		SELECT 
 		[PayeeAccountNumber], 
 		CASE WHEN [TransactionType] = 7 THEN 'CNP' ELSE 'CP' END AS [TransactionType],
@@ -66,7 +66,7 @@ AS
 		1,
 		@UserId,
 		GETDATE()
-		FROM [dbo].[RawTransactionStagings]
+		FROM [RawTransactionStagings]
 
 		SET @RecordCount = @@ROWCOUNT
 		
@@ -79,7 +79,7 @@ AS
 	END CATCH;
 	
 	INSERT INTO @K1099SUMMARYCHART
-	SELECT * FROM [dbo].[ImportDataSummary](@PayerId,@YEAR)
+	SELECT * FROM [ImportDataSummary](@PayerId,@YEAR)
 
 	-- ARCHIVE EXISTING SUBMISSION STATUS
 	UPDATE S
@@ -94,9 +94,9 @@ AS
 	INNER JOIN @K1099SUMMARYCHART C ON D.Id = C.ImportDetailsId AND ISNULL(C.StatusId,0) IN (0,1,2,3,4)
 
 	DECLARE @PAYERNAME VARCHAR(127)
-	SELECT @PAYERNAME = p.FirstPayerName FROM [dbo].[PayerDetails] p where Id = @PayerId
+	SELECT @PAYERNAME = p.FirstPayerName FROM [PayerDetails] p where Id = @PayerId
 
-	INSERT INTO ImportDetails (AccountNo,ImportSummaryId,TINCheckStatus,TINCheckRemarks,SubmissionSummaryId,TINType,TIN,
+	INSERT INTO ImportDetails (AccountNumber,ImportSummaryId,TINCheckStatus,TINCheckRemarks,SubmissionSummaryId,TINType,TIN,
 	PayerOfficeCode,GrossAmount,CNPTransactionAmount,FederalWithHoldingAmount,
 	JanuaryAmount,FebruaryAmount,MarchAmount,AprilAmount,MayAmount,JuneAmount,JulyAmount,AugustAmount,
 	SeptemberAmount,OctoberAmount,NovemberAmount,DecemberAmount,ForeignCountryIndicator,FirstPayeeName,
@@ -107,13 +107,13 @@ AS
 	SELECT C.PayeeAccountNumber,@SummaryId,C.TINCheckStatus,C.TINCheckRemarks,C.SubmissionSummaryId,D.TINType,D.PayeeTIN,
 	D.PayeeOfficeCode,C.GrossAmount,C.TotalCPAmount,NULL,
 	C.JANUARY,C.FEBRUARY,C.MARCH,C.APRIL,C.MAY,C.JUNE,C.JULY,C.AUGUST,
-	C.SEPTEMBER,C.OCTOBER,C.NOVEMBER,C.DECEMBER,NULL,SUBSTRING(D.[PayeeFirstName],1,40), 
-	SUBSTRING(D.[PayeeSecondName],1,40),SUBSTRING(D.[PayeeMailingAddress],1,40),SUBSTRING(D.[PayeeCity],1,40),D.[PayeeState],REPLACE(D.[PayeeZIP],'-',''),null,D.[FilerIndicatorType], 
+	C.SEPTEMBER,C.OCTOBER,C.NOVEMBER,C.DECEMBER,NULL,SUBSTRING(D.[FirstPayeeName],1,40), 
+	SUBSTRING(D.[SecondPayeeName],1,40),SUBSTRING(D.[PayeeMailingAddress],1,40),SUBSTRING(D.[PayeeCity],1,40),D.[PayeeState],REPLACE(D.[PayeeZIP],'-',''),null,D.[FilerIndicatorType], 
 	D.[PaymentIndicatorType],C.TotalTransaction,D.Id,D.[MCC],NULL,NULL,
 	NULL,D.CFSF,1,GETDATE()
 
 	FROM @K1099SUMMARYCHART C
-	INNER JOIN  [dbo].[MerchantDetails] D ON C.PayeeAccountNumber = D.PayeeAccountNumber 
+	INNER JOIN  [MerchantDetails] D ON C.PayeeAccountNumber = D.PayeeAccountNumber 
 		AND D.IsActive = 1 AND D.PayerId = @PayerId
 	WHERE ISNULL(C.StatusId,0) IN (0,1,2,3,4)
 
@@ -132,7 +132,7 @@ AS
 
 	SELECT @ORPHANTCOUNT = COUNT(*)
 	FROM @K1099SUMMARYCHART S
-	LEFT JOIN  [dbo].[MerchantDetails] D ON S.PayeeAccountNumber = D.PayeeAccountNumber 
+	LEFT JOIN  [MerchantDetails] D ON S.PayeeAccountNumber = D.PayeeAccountNumber 
 		AND D.IsActive = 1 AND D.PayerId = @PayerId
 	WHERE S.TransactionYear = @YEAR AND ISNULL(S.StatusId,0) NOT IN (0,1,2,3,4)
 

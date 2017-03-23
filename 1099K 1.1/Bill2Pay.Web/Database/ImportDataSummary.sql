@@ -7,7 +7,7 @@ GO
 -- Create date: 03/10/2017
 -- Description:	Generating Import Summary data 
 -- =============================================
-CREATE FUNCTION [dbo].[ImportDataSummary]
+CREATE FUNCTION [ImportDataSummary]
 (
 	@PAYERID INT,
 	@YEAR INT
@@ -56,7 +56,7 @@ BEGIN
 	FROM 
 		(SELECT [PayeeAccountNumber],YEAR(TransactionDate) AS TransactionYear,
 		MONTH(TransactionDate) AS TransactionMonth,TransactionAmount,TransactionType
-		FROM [dbo].[RawTransactions] where IsActive = 1
+		FROM [RawTransactions] where IsActive = 1
 	) P
 	
 	GROUP BY 
@@ -91,8 +91,8 @@ BEGIN
 	  SUM(TransactionAmount) 
 	  FOR TransactionMonth in ([1], [2], [3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
 	) PIV
-	INNER JOIN [dbo].[MerchantDetails] M ON M.PayeeAccountNumber = PIV.PayeeAccountNumber AND M.IsActive = 1
-	INNER JOIN [dbo].[PayerDetails] P ON P.ID = M.PayerId AND P.IsActive = 1 AND P.ID = @PAYERID
+	INNER JOIN [MerchantDetails] M ON M.PayeeAccountNumber = PIV.PayeeAccountNumber AND M.IsActive = 1
+	INNER JOIN [PayerDetails] P ON P.ID = M.PayerId AND P.IsActive = 1 AND P.ID = @PAYERID
 	WHERE TransactionYear = @YEAR
 
 
@@ -137,19 +137,19 @@ BEGIN
 		
 	FROM @K1099SUMMARYCHART CHART
 	INNER JOIN (
-	SELECT D.AccountNo,
+	SELECT D.AccountNumber,
 		D.Id ImportDetailsId, 
 		D.SubmissionSummaryId ,
 		SS.Id SubmissionStatusId,
 		SS.StatusId ,
 		D.TINCheckStatus,
-		D.TINCheckRemarks FROM [dbo].[ImportDetails] D 
-	INNER JOIN [dbo].[ImportSummaries] S ON S.Id = D.ImportSummaryId AND S.IsActive = 1 AND S.PaymentYear = @YEAR
-	INNER JOIN [dbo].[MerchantDetails] M ON M.ID = D.MerchantId AND M.IsActive = 1
-	INNER JOIN [dbo].[PayerDetails] P ON P.ID = M.PayerId AND P.IsActive = 1 AND P.ID = @PAYERID
-	LEFT JOIN [dbo].[SubmissionStatus] SS ON D.AccountNo = SS.AccountNumber AND SS.IsActive =1
+		D.TINCheckRemarks FROM [ImportDetails] D 
+	INNER JOIN [ImportSummaries] S ON S.Id = D.ImportSummaryId AND S.IsActive = 1 AND S.PaymentYear = @YEAR
+	INNER JOIN [MerchantDetails] M ON M.ID = D.MerchantId AND M.IsActive = 1
+	INNER JOIN [PayerDetails] P ON P.ID = M.PayerId AND P.IsActive = 1 AND P.ID = @PAYERID
+	LEFT JOIN [SubmissionStatus] SS ON D.AccountNumber = SS.AccountNumber AND SS.IsActive =1
 	WHERE D.IsActive =1   
-	) EXT ON CHART.PayeeAccountNumber = EXT.AccountNo 
+	) EXT ON CHART.PayeeAccountNumber = EXT.AccountNumber 
 
 	RETURN
 END

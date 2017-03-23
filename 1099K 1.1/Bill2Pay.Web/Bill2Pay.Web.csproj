@@ -294,6 +294,14 @@
     <Content Include="Images\CorrectionRequired.png" />
     <Content Include="Images\CorrectionUpload.jpg" />
     <Content Include="Images\dislike.png" />
+    <Content Include="Images\f1099k-page-001.jpg" />
+    <Content Include="Images\f1099k-page-002.jpg" />
+    <Content Include="Images\f1099k-page-003.jpg" />
+    <Content Include="Images\f1099k-page-004.jpg" />
+    <Content Include="Images\f1099k-page-005.jpg" />
+    <Content Include="Images\f1099k-page-006.jpg" />
+    <Content Include="Images\f1099k-page-007.jpg" />
+    <Content Include="Images\f1099k-page-008.jpg" />
     <Content Include="Images\false.png" />
     <Content Include="Images\Generated.png" />
     <Content Include="Images\like.png" />

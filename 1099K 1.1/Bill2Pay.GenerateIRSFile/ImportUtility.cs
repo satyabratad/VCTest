@@ -171,7 +171,7 @@ namespace Bill2Pay.GenerateIRSFile
             var line = string.Format("{0},{1}", iteration, fileLine);
             line_records = line.Split(',');
 
-            if (line_records.Length < 5)
+            if (line_records.Length != 5)
             {
                 throw new Exception("Import File not in  correct format");
             }

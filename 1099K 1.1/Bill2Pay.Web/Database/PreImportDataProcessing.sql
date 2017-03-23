@@ -1,7 +1,7 @@
 ﻿IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'PreImportDataProcessing')
 DROP PROCEDURE PreImportDataProcessing
 GO
-CREATE PROCEDURE [dbo].[PreImportDataProcessing]
+CREATE PROCEDURE [PreImportDataProcessing]
 	
 AS
 	-- CLEAR ALL RECORD

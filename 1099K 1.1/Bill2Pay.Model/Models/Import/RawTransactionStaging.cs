@@ -105,7 +105,7 @@ namespace Bill2Pay.Model
                 dbConnection.Open();
                 using (SqlBulkCopy s = new SqlBulkCopy(dbConnection))
                 {
-                    s.DestinationTableName = "dbo.RawTransactionStagings";
+                    s.DestinationTableName = "RawTransactionStagings";
                     foreach (var column in dt.Columns)
                         s.ColumnMappings.Add(column.ToString(), column.ToString());
                     s.WriteToServer(dt);
