@@ -81,7 +81,7 @@ namespace Bill2Pay.Web.Controllers
         public ActionResult Details(string Id)
         {
 
-            MerchantListVM detail = dbContext.ImportDetails //ApplicationDbContext.Instence.ImportDetails
+            MerchantListVM detail = dbContext.ImportDetails 
                 .Include("Merchant")
                 .GroupJoin(dbContext.SubmissionStatus.Where(s => s.IsActive == true),
                     imp=> imp.AccountNo,
