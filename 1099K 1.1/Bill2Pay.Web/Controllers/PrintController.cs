@@ -44,6 +44,11 @@ namespace Bill2Pay.Web.Controllers
             return DetailsReport("CopyC", Id);
         }
 
+        [HttpPost]
+        public ActionResult IRS1099K(string Id)
+        {
+            return DetailsReport("1099K", Id);
+        }
 
         public ActionResult PrintAllCopies()
         {
@@ -253,7 +258,8 @@ namespace Bill2Pay.Web.Controllers
                 out streams,
                 out warnings);
             //Response.AddHeader("content-disposition", "attachment; filename=NorthWindCustomers." + fileNameExtension);
-            return File(renderedBytes, mimeType);
+            var fileName = string.Format("{0}_1099-K_{1}_{2}.pdf",Id, reportName, TransactionYear);
+            return File(renderedBytes, mimeType, fileName);
         }
     }
 }
