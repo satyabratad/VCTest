@@ -23,11 +23,22 @@
     
 
         <div class="container" style="max-width:970px;">
-            <div class="row">
-                <div class="col-xs-12 header" style="padding:0px;">
-                    <img id="imgClientLogo" alt="Client Logo" title="The Client Logo" class="img-responsive" onerror="this.src=&#39;img/B2P-Logo4.png&#39;;" src="./content/images/B2P-Logo4.png" />
-                </div>
-            </div>
+           <header class="container">
+        		<!--Logo-->
+               <div class="row">
+                  <div class="col-xs-12 header" style="padding:0px;">
+                   <div class="row">
+                   <div class="col-xs-12">
+                     <img id="imgClientLogo" alt="Client Logo" title="The Client Logo" class="img-responsive" onerror="this.src=&#39;/img/B2P-Logo4.png&#39;;" src="./content/images/B2P-Logo4.png">  
+                     </div>
+                     <div class="col-xs-12">
+                     <span id="clientName" class="customer" style="vertical-align:bottom "></span> 
+                     </div>
+                     </div>     
+                  </div>
+               </div>
+               <!--End Logo-->
+            </header>
             <div class="container-maincontent" style="padding: 0px;">
                 <div class="row" style="padding-top: 10px; padding-bottom: 20px;">
                     <h1 class="text-hide">
@@ -241,15 +252,15 @@
                                                                     <div class="col-xs-12 col-sm-4">
                                                                         <div class="form-group form-group-sm">
                                                                             <label class="control-label" for="txtZip">Billing Zip: </label>
-                                                                            <input name="txtBillingZip" maxlength="4" id="txtBillingZip" class="form-control input-sm " type="tel" placeholder="Billing Zip" autocomplete="off" />
+                                                                            <input name="txtBillingZip" id="txtBillingZip" class="form-control input-sm " type="tel" placeholder="Billing Zip" autocomplete="off" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <br />
                                                                 <div class="pull-right">
                                                                     <input type="button" onclick="bill2payPaymentDetails.redirectToCartGrid();" name="btnCancelCredit" value="Cancel" id="btnCancelCredit" title="Cancel" class="btn btn-link btn-sm" />
-                                                                    <input type="button" onclick="bill2payPaymentDetails.addMoreItems();" name="btnAddMore" value="Add More Items" id="btnAddMore" title="Add More Items" class="btn btn-primary btn-sm" />
-                                                                    <input type="submit" name="btnSubmitCredit" value="Continue" onclick="bill2payPaymentDetails.redirectToPaymentConfirm();" id="btnSubmitCredit" title="Continue" class="btn btn-primary btn-sm" />
+                                                                    <input type="button" onclick="bill2payPaymentDetails.addMoreItems();" name="btnAddMore" value="Add More Items" id="btnAddMore" title="Add More Items" class="btn btn-primary" />
+                                                                    <input type="submit" name="btnSubmitCredit" value="Continue" onclick="bill2payPaymentDetails.redirectToPaymentConfirm();" id="btnSubmitCredit" title="Continue" class="btn btn-primary" />
                                                     <br>
                                                   </div>
                                             

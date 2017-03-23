@@ -3,6 +3,7 @@
 var bill2payPaymentDetails = {
 showCart: function(){
 	debugger;
+	$("#clientName").html(dbObject.CustomerName);
 	var param=getParameterByName('dbObject');
 	DeSrializeDbObject(param);
 	$("#cartCount").html((dbObject.Products.length==0?"":dbObject.Products.length));
@@ -106,7 +107,7 @@ populateOrderDetails: function(){
            for (var i = 0; i < dbObject.Products.length; i++) {
            		var row=dbObject.Products[i];
           		html += '<tr class="bg-primarydark">';
-          		html += '<td class="col-sm-6 text-uppercase"><label id="ItemName">Order Item'+(i+1)+' </label> </td>';
+          		html += '<td class="col-sm-6 text-uppercase"><label id="ItemName">'+row.ProductName+' </label> </td>';
            		html += '<td style="text-align:right"><label id="ItemAmount">$' + parseFloat(row.Amount).toFixed(2)+'</label> </td>';
           		html +=  '</tr>';
           		html +=  '<tr>';

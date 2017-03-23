@@ -1,10 +1,14 @@
 ﻿.contentHeading {
     color: blue;
-    font-size: 18px;
+  	font-weight: bold;
 }
 .caption {
     color: blue;
      font-size: 16px;
+}
+.customer {
+    color: gray;
+          font-weight: bold;
 }
 .contentHeadingBlack14 {
      font-weight: bold;
@@ -28,6 +32,13 @@
        width:30px; 
        height:30px; 
        background-image: url("../../content/images/cart.png");
+ }
+ .submenu-caption{
+ 	background-color: #5E889E;
+ 	display: table-cell;
+ 	border-right: 2px solid white;
+    font-weight: bold;
+    color: White;
  }
  .table-header{
  	background-color: #5E889E;

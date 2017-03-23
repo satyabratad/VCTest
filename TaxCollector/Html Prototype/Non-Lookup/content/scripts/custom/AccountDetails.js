@@ -8,8 +8,14 @@ var bill2payAccountDetails = {
 		bill2payAccountDetails.populateGrid();			
        //window.location.href = 'file:///D:/Bill2Pay%20Html/Home.html?products=' + JSON.stringify(products)
     },
+    redirectToSelt: function(){
+	debugger;
+	var json=SerializeDbObject();	
+	redirect('Home.html?dbObject=' + json);		
+},
     showCart: function(){
 		debugger;
+		$("#clientName").html(dbObject.CustomerName);
 		var param=getParameterByName('dbObject');
 			DeSrializeDbObject(param);
 		if(dbObject.Products!=null){
@@ -22,6 +28,7 @@ var bill2payAccountDetails = {
 				bill2payAccountDetails.showgridFromCart();
 			}
 		}
+		
 	},
     showgridFromCart: function(){
     	var x = document.getElementById("divAccountDetails1");
@@ -54,8 +61,8 @@ var bill2payAccountDetails = {
 		 html += '<thead>';
          html += '<tr>';
           html += '<td class="table-header" width="5%"></td>';
-         html += '<td class="table-header" width="40%">Item</td>';
-         html += '<td class="table-header" width="45%">Details</td>';
+         html += '<td class="table-header" width="30%">Item</td>';
+         html += '<td class="table-header" width="55%">Details</td>';
          html += '<td class="table-header" width="10%">Amount</td>';
          html += '</tr>';
          html += '</thead>';
@@ -71,24 +78,24 @@ var bill2payAccountDetails = {
 	        //Product Info
 	        var details='';
 	        if(row.ACC1!=null){
-				details+=getValueFromJson(row.ACC1)+",";
+				details+=getValueFromJson(row.ACC1)+", ";
 			}
 			 if(row.ACC2!=null){
-				details+=getValueFromJson(row.ACC2)+",";
+				details+=getValueFromJson(row.ACC2)+", ";
 			}
 			 if(row.ACC3!=null){
-				details+=getValueFromJson(row.ACC3)+",";
+				details+=getValueFromJson(row.ACC3)+", ";
 			}
 			//Property Address
 			var propAddr='<br/><strong>Property Address:</strong><br/>';
 			if(row.Address1.length>0){
-				propAddr+=row.Address1+",";
+				propAddr+=row.Address1+", ";
 			}
 			if(row.Address2.length>0){
-				propAddr+=row.Address2+",";
+				propAddr+=row.Address2+", ";
 			}
 			if(row.City.length>0){
-				propAddr+=row.City+",";
+				propAddr+=row.City+", ";
 			}
 			if(row.State.length>0){
 				propAddr+=row.State+" ";
@@ -97,7 +104,7 @@ var bill2payAccountDetails = {
 				propAddr+=row.Zip;
 			}
 			if(propAddr!=null){
-				details=details.substring(0,details.length - 1);
+				details=details.substring(0,details.length - 2);
 				details+=propAddr;
 			}
 			
@@ -108,7 +115,7 @@ var bill2payAccountDetails = {
 			
 			html += '<td class='+cellClass+'>' 
 			html+= '<a onclick="removeItems('+i+');" >';
-            html+= '<span class="glyphicon glyphicon-trash"></span>';
+            html+= '<span style="color:#000000;cursor:pointer;" class="glyphicon glyphicon-trash"></span>';
             html+='</a>';
 			html+= '</td>';
 			
@@ -122,7 +129,7 @@ var bill2payAccountDetails = {
 	    
 	    //subtotal
 	     html += '<tr>';
-	     html += ' <td class="table-row-bold" colspan="3" align="right">Sub Total (' + products.length + ' items) </td>';
+	     html += ' <td class="table-row-bold" colspan="3" align="right">Subtotal (' + products.length + ' items) </td>';
 		 html += '<td class="table-row-bold" align="right">$' + totalAmount + '</td>';
 		 html += '</tr>';
 		  	

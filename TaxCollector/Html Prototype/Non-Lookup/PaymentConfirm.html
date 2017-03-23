@@ -25,12 +25,21 @@
     <form method="post" action="https://betapay.bill2pay.com/pay/" id="frmDefault" autocomplete="off">
         <div class="container" style="max-width: 970px;">
             <!--// START LOGO, HEADER AND NAV //-->
-            <header class="container">
-                <div class="row">
-                    <div class="col-xs-12 header" style="padding:0px;">
-                        <img id="imgClientLogo" alt="Client Logo" title="The Client Logo" class="img-responsive" onerror="this.src=&#39;/img/B2P-Logo4.png&#39;;" src="./content/images/B2P-Logo4.png">
-                    </div>
-                </div>
+         <header class="container">
+        		<!--Logo-->
+               <div class="row">
+                  <div class="col-xs-12 header" style="padding:0px;">
+                   <div class="row">
+                   <div class="col-xs-12">
+                     <img id="imgClientLogo" alt="Client Logo" title="The Client Logo" class="img-responsive" onerror="this.src=&#39;/img/B2P-Logo4.png&#39;;" src="./content/images/B2P-Logo4.png">  
+                     </div>
+                     <div class="col-xs-12">
+                     <span id="clientName" class="customer" style="vertical-align:bottom "></span> 
+                     </div>
+                     </div>     
+                  </div>
+               </div>
+               <!--End Logo-->
             </header>
             <!--// END LOGO, HEADER AND NAV //-->
             <div class="container-maincontent" style="padding: 0px;">
@@ -157,7 +166,7 @@
                                     </div>
                                     <div class="pull-right">
                                             <input type="button" onclick="bill2payPaymentConfirm.redirectToCartGrid();" name="btnCancel" value="Cancel" id="btnCancel" title="Cancel" class="btn btn-link btn-sm">
-                                            <input type="button" onclick="bill2payPaymentConfirm.redirectToPaymentSuccess();" name="btnSubmit" value="Make a Payment" onclick="return validateForm();" id="btnSubmit" title="Make a Payment" class="btn btn-primary btn-sm">
+                                            <input type="button" onclick="bill2payPaymentConfirm.redirectToPaymentSuccess();" name="btnSubmit" value="Make a Payment" onclick="return validateForm();" id="btnSubmit" title="Make a Payment" class="btn btn-primary">
                                             <input type="submit" name="btnPleaseWait" value="Please wait" id="btnPleaseWait" disabled="disabled" title="Pay Now" class="aspNetDisabled btn btn-primary btn-sm" style="display: none;">
                                             <br><br>
                                         </div>

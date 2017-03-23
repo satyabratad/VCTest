@@ -17,6 +17,11 @@
 	background: #005d92; 
     font-weight:bold;
 }
+.breadcrumb li.success a {
+	background: blue;                   /* fallback color */
+	background: #005d92; 
+    font-weight:bold;
+}
 .breadcrumb li.completed a {
 	background: brown;                   /* fallback color */
 	background: #005d92; 
@@ -96,5 +101,10 @@
 .badge-inverse {
     background-color:white;
     color:darkslategrey;
+
+}
+.badge-blue {
+    background-color:#005d92;
+    color:#005d92;
 
 }

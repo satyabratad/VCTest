@@ -2,6 +2,7 @@
 var bill2payPaymentSuccess = {
 showCart: function(){
 	debugger;
+	$("#clientName").html(dbObject.CustomerName);
 	var param=getParameterByName('dbObject');
 	DeSrializeDbObject(param);
 	bill2payPaymentSuccess.populateGrid();
@@ -55,8 +56,8 @@ populateGrid: function () {
 		 html += '<thead>';
          html += '<tr>';
           html += '<td class="table-header" width="5%"></td>';
-         html += '<td class="table-header" width="40%">Item</td>';
-         html += '<td class="table-header" width="45%">Details</td>';
+         html += '<td class="table-header" width="30%">Item</td>';
+         html += '<td class="table-header" width="55%">Details</td>';
          html += '<td class="table-header" width="10%">Amount</td>';
          html += '</tr>';
          html += '</thead>';
@@ -72,24 +73,24 @@ populateGrid: function () {
 	        //Product Info
 	        var details='';
 	        if(row.ACC1!=null){
-				details+=getValueFromJson(row.ACC1)+",";
+				details+=getValueFromJson(row.ACC1)+", ";
 			}
 			 if(row.ACC2!=null){
-				details+=getValueFromJson(row.ACC2)+",";
+				details+=getValueFromJson(row.ACC2)+", ";
 			}
 			 if(row.ACC3!=null){
-				details+=getValueFromJson(row.ACC3)+",";
+				details+=getValueFromJson(row.ACC3)+", ";
 			}
 			//Property Address
 			var propAddr='<br/><strong>Property Address:</strong><br/>';
 			if(row.Address1.length>0){
-				propAddr+=row.Address1+",";
+				propAddr+=row.Address1+", ";
 			}
 			if(row.Address2.length>0){
-				propAddr+=row.Address2+",";
+				propAddr+=row.Address2+", ";
 			}
 			if(row.City.length>0){
-				propAddr+=row.City+",";
+				propAddr+=row.City+", ";
 			}
 			if(row.State.length>0){
 				propAddr+=row.State+" ";
@@ -98,7 +99,7 @@ populateGrid: function () {
 				propAddr+=row.Zip;
 			}
 			if(propAddr!=null){
-				details=details.substring(0,details.length - 1);
+				details=details.substring(0,details.length - 2);
 				details+=propAddr;
 			}
 			
@@ -121,13 +122,13 @@ populateGrid: function () {
 	    
 	    //subtotal
 	     html += '<tr>';
-	     html += ' <td class="table-row-bold" colspan="3" align="right">Sub Total (' + products.length + ' items) </td>';
+	     html += ' <td class="table-row-bold" colspan="3" align="right">Subtotal (' + products.length + ' items) </td>';
 		 html += '<td class="table-row-bold" align="right">$' + totalAmount + '</td>';
 		 html += '</tr>';
 		 //Conv fee
 		   html += '<tr>';
            html += '<td class="table-alternateRow" colspan="3" align="right">';
-           html += '<span>Convenience Fee</span>';
+           html += '<span>Convenience Fee </span>';
            html += '<a href="#" data-toggle="modal" data-target="#feeInfoModal"  data-keyboard="false" title="Fee Info" tabindex="-1">';
            html +='<i class="fa fa-question-circle fa-1" aria-hidden="true"></i>';
            html += '<span class="text-hide">Fee Information</span>';

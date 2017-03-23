@@ -14,7 +14,7 @@ var bill2payProducts = {
 			var product = {
 								//Product Details
 								"ProductName": selectedProduct,
-								"ACC1":{"PERCEL":$("#txtLookupAccount1").val()},
+								"ACC1":{"PARCEL":$("#txtLookupAccount1").val()},
 								"ACC2":{"TAX YEAR":$("#txtLookupAccount2").val()},
 								"ACC3":{"OWNER NAME":$("#txtLookupAccount3").val()},								
 								

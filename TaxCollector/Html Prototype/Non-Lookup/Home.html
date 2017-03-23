@@ -25,11 +25,20 @@
     <div class="container" style="max-width: 970px;">
         <!--// START LOGO, HEADER AND NAV //-->
         <header class="container">
+        		<!--Logo-->
                <div class="row">
                   <div class="col-xs-12 header" style="padding:0px;">
-                     <img id="imgClientLogo" alt="Client Logo" title="The Client Logo" class="img-responsive" onerror="this.src=&#39;/img/B2P-Logo4.png&#39;;" src="./content/images/B2P-Logo4.png">        
+                   <div class="row">
+                   <div class="col-xs-12">
+                     <img id="imgClientLogo" alt="Client Logo" title="The Client Logo" class="img-responsive" onerror="this.src=&#39;/img/B2P-Logo4.png&#39;;" src="./content/images/B2P-Logo4.png">  
+                     </div>
+                     <div class="col-xs-12">
+                     <span id="clientName" class="customer" style="vertical-align:bottom "></span> 
+                     </div>
+                     </div>     
                   </div>
                </div>
+               <!--End Logo-->
             </header>
         <!--// END LOGO, HEADER AND NAV //-->
         <div class="container-maincontent" style="padding: 0px;">
@@ -90,7 +99,7 @@
                                 <div class="row">
                                     <div class="col-md-11">
                                         <ul class="breadcrumb">
-                                            <li class="active"><a href="https://betapay.bill2pay.com/pay/"><span class="badge badge-inverse">
+                                            <li class="active"><a href="#" onclick=bill2payAccountDetails.submit();"><span class="badge badge-inverse">
                                                 1</span> Account <span class="hidden-xs hidden-sm">Details</span></a></li>
                                             <li><a href="https://betapay.bill2pay.com/pay/#" class="inactiveLink"><span class="badge">
                                                 2</span><span class="hidden-xs hidden-sm"> Contact Info</span></a></li>
@@ -118,8 +127,8 @@
                                                 <div class="col-xs-12">
                                                     <div class="form-group form-group-sm">
                                                         <label class="control-label" for="ddlBankAccountType">
-                                                            Select Product/Service</label>
-                                                        <select name="ddlCategories" onchange=""
+                                                            Select Item</label>
+                                                        <select name="ddlCategories" onchange="changeAccountLabel();"
                                                             id="ddlCategories" class="form-control input-sm">
                                                             <option value="DMV Application">DMV Application</option>
                                                             <option selected="selected" value="Tax Bill">Tax Bill</option>
@@ -276,7 +285,7 @@
                                                             <span id="lblAccountNumber3">Amount</span>
                                                         </label>
                                                         <input name="txtPropAmount" required="true" type="text" maxlength="40" id="txtPropAmount"
-                                                            class="form-control input-sm" onkeypress="return restrictInput(event, restrictionTypes.NumbersOnly)" onpaste="return reformatInput(this, restrictionTypes.NumbersOnly)">
+                                                            class="form-control input-sm" onkeypress="return isNumberKey(event);">
                                                     </div>
                                                 </div>
                                                 <br>
@@ -300,8 +309,8 @@
                                    
                                     <table class="table" style="width: 100%;">
                                     <tr>
-                                    	<td id="tdDisplayCartMsg" class="table-alternateRow-bold" style="border-collapse: !important;" align="right"><span id="cartProduct"></span>&nbsp;Added to Cart</td>
-                                    	<td class="table-row-bold" style="border-collapse: !important;" align="right">Cart Subtotal (<span id="cartHeadingCount"></span>items):<span id="cartHeadingAmount"></span></td>
+                                    	<td width="65%" id="tdDisplayCartMsg" class="table-row-bold" style="border-collapse: !important;" align="right"><span id="cartProduct"></span>&nbsp;Added to Cart</td>
+                                    	<td width="35%" class="submenu-caption" style="border-collapse: !important;" align="right">Cart Subtotal (<span id="cartHeadingCount"></span>items): <span id="cartHeadingAmount"></span></td>
                                     </tr>
                                     </table>
                                        
@@ -459,6 +468,19 @@
             <script src="./content/scripts/custom/Products.js"></script>
              <script src="./content/scripts/custom/AccountDetails.js"></script>
             <script type="text/javascript">
+                function changeAccountLabel() {
+                    if ($("#ddlCategories").val().toUpperCase() == "DMV APPLICATION") {
+                        $("#lblAccountNumber1").text('License Number');
+                        $("#pnlAccount2").hide();
+                        $("#pnlAccount3").hide();
+                    }
+                    else {
+                        $("#lblAccountNumber1").text('Parcel');
+                        $("#pnlAccount1").show();
+                        $("#pnlAccount2").show();
+                        $("#pnlAccount3").show();
+                    }
+                }
                 function validateForm() {
                     var doc = document;
                     var item = new ValidationItem();
@@ -472,25 +494,25 @@
                     // Add validation items to validator
 
                     // Check to see if account 1 is present
-                    acct1 = doc.getElementById('hdAccount1').value;
-                    if (acct1 !== '') {
-                        // Set the validator
-                        validator.addValidationItem(new ValidationItem("txtLookupAccount1", fieldTypes.NonEmptyField, true, "Required."));
-                    }
+//                    acct1 = doc.getElementById('hdAccount1').value;
+//                    if (acct1 !== '') {
+//                        // Set the validator
+//                        validator.addValidationItem(new ValidationItem("txtLookupAccount1", fieldTypes.NonEmptyField, true, "Required."));
+//                    }
 
-                    // Check to see if account 2 is required
-                    acct2 = doc.getElementById('hdAccount2').value;
-                    if (acct2 !== '') {
-                        // Set the validator
-                        validator.addValidationItem(new ValidationItem("txtLookupAccount2", fieldTypes.NonEmptyField, true, "Required."));
-                    }
+//                    // Check to see if account 2 is required
+//                    acct2 = doc.getElementById('hdAccount2').value;
+//                    if (acct2 !== '') {
+//                        // Set the validator
+//                        validator.addValidationItem(new ValidationItem("txtLookupAccount2", fieldTypes.NonEmptyField, true, "Required."));
+//                    }
 
-                    // Check to see if account 3 is required
-                    acct3 = doc.getElementById('hdAccount3').value;
-                    if (acct3 !== '') {
-                        // Set the validator
-                        validator.addValidationItem(new ValidationItem("txtLookupAccount3", fieldTypes.NonEmptyField, true, "Required."));
-                    }
+//                    // Check to see if account 3 is required
+//                    acct3 = doc.getElementById('hdAccount3').value;
+//                    if (acct3 !== '') {
+//                        // Set the validator
+//                        validator.addValidationItem(new ValidationItem("txtLookupAccount3", fieldTypes.NonEmptyField, true, "Required."));
+//                    }
                     debugger;
                     txtPropAmount = doc.getElementById('hdPropAmount').value;
                     if (txtPropAmount !== '') {

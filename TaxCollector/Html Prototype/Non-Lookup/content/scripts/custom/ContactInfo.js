@@ -2,11 +2,13 @@
 var bill2payContactInfo = {
 showCart: function(){
 	debugger;
+	$("#clientName").html(dbObject.CustomerName);
 	var param=getParameterByName('dbObject');
 	DeSrializeDbObject(param);
 	$("#cartCount").html((dbObject.Products.length==0?"":dbObject.Products.length));
 	bill2payContactInfo.populateContactInfo();
 },
+ 
 populateContactInfo:function(){
 	debugger;
 	if(dbObject.ContactInfo.ContactName!=null)
