@@ -43,13 +43,13 @@ namespace Bill2Pay.Web.Controllers
 
                     var lstTin = dbContext.ImportDetails
                                           .Include("ImportSummary")
-                                          .Where(p => Merchantlist.Contains(p.AccountNo) && p.ImportSummary.PaymentYear == year && p.IsActive == true);
+                                          .Where(p => Merchantlist.Contains(p.AccountNumber) && p.ImportSummary.PaymentYear == year && p.IsActive == true);
 
 
                     foreach (var itm in lstTin)
                     {
                         var payeeName = Regex.Replace(itm.FirstPayeeName, "[^0-9A-Za-z-& ]+", "");
-                        strFileline = strFileline + itm.TINType + ";" + itm.TIN + ";" + payeeName.Trim() + ";" + itm.AccountNo + Environment.NewLine;
+                        strFileline = strFileline + itm.TINType + ";" + itm.TIN + ";" + payeeName.Trim() + ";" + itm.AccountNumber + Environment.NewLine;
                     }
 
 

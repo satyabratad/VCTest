@@ -51,22 +51,22 @@ namespace Bill2Pay.Web.Controllers
             merchantlst = (dbContext.ImportDetails
                                .Include("ImportSummary")
                                .GroupJoin(dbContext.SubmissionStatus.Where(s => s.IsActive == true && s.PaymentYear==Id),
-                               imp => imp.AccountNo,
+                               imp => imp.AccountNumber,
                                stat => stat.AccountNumber,
                                (imp, stat) => new MerchantListVM() { ImportDetails = imp, SubmissionStatus = stat.FirstOrDefault() })
                                .Where(x => x.ImportDetails.ImportSummary.PaymentYear == Id && x.ImportDetails.IsActive == true && x.ImportDetails.TIN != null
                                        && (payer == 0 || x.ImportDetails.Merchant.PayerId == payer))
-                               ).OrderBy(x => x.ImportDetails.AccountNo).ToList();
+                               ).OrderBy(x => x.ImportDetails.AccountNumber).ToList();
 
 
             var merchantAccList = merchantlst.Select(t =>
                                         new MerchantVM
                                         {
-                                            AccountNo = t.ImportDetails.AccountNo,
+                                            AccountNumber = t.ImportDetails.AccountNumber,
                                             IsChecked = 0
                                         }).ToList();
             if (selectedMerchants != null)
-                merchantAccList.ForEach(i => i.IsChecked = (selectedMerchants.FirstOrDefault(x => x.Equals(i.AccountNo))) == null ? 0 : 1);
+                merchantAccList.ForEach(i => i.IsChecked = (selectedMerchants.FirstOrDefault(x => x.Equals(i.AccountNumber))) == null ? 0 : 1);
 
             ViewBag.SelectedYear = Id;
             ViewBag.lstmerchantAcc = JsonConvert.SerializeObject(merchantAccList);
@@ -84,11 +84,11 @@ namespace Bill2Pay.Web.Controllers
             MerchantListVM detail = dbContext.ImportDetails 
                 .Include("Merchant")
                 .GroupJoin(dbContext.SubmissionStatus.Where(s => s.IsActive == true && s.PaymentYear== year),
-                    imp=> imp.AccountNo,
+                    imp=> imp.AccountNumber,
                     stat => stat.AccountNumber,
                     (imp, stat)=> new MerchantListVM() { ImportDetails = imp, SubmissionStatus = stat.FirstOrDefault() }) 
                 .OrderByDescending(p => p.ImportDetails.ImportSummaryId)
-                .FirstOrDefault(p => p.ImportDetails.AccountNo.Equals(Id, StringComparison.OrdinalIgnoreCase) && p.ImportDetails.ImportSummary.PaymentYear == year && p.ImportDetails.IsActive == true);
+                .FirstOrDefault(p => p.ImportDetails.AccountNumber.Equals(Id, StringComparison.OrdinalIgnoreCase) && p.ImportDetails.ImportSummary.PaymentYear == year && p.ImportDetails.IsActive == true);
 
 
             var data=(ImportDetail) detail.ImportDetails ;
@@ -112,7 +112,7 @@ namespace Bill2Pay.Web.Controllers
             List<MerchantVM> Merchatlist = new JavaScriptSerializer().Deserialize<List<MerchantVM>>(chkList);
 
             List<MerchantVM> checkedList = Merchatlist.Where(m => m.IsChecked == 1).ToList();
-            var list = Merchatlist.Where(m => m.IsChecked == 1).Select(m => m.AccountNo).ToList();
+            var list = Merchatlist.Where(m => m.IsChecked == 1).Select(m => m.AccountNumber).ToList();
 
             TempData["CheckedMerchantList"] = list;
             TempData["SelectedYear"] = year;
@@ -239,7 +239,7 @@ namespace Bill2Pay.Web.Controllers
 
             var tinCheckedPayeeList = ApplicationDbContext.Instence.ImportDetails
                 .Join(ApplicationDbContext.Instence.ImportSummary, d => d.ImportSummaryId, s => s.Id, (d, s) => new { detail = d, summary = s })
-                .Where(x => selectedMerchants.Contains(x.detail.AccountNo) && x.summary.PaymentYear == year && x.detail.IsActive == true && x.summary.IsActive == true).ToList();
+                .Where(x => selectedMerchants.Contains(x.detail.AccountNumber) && x.summary.PaymentYear == year && x.detail.IsActive == true && x.summary.IsActive == true).ToList();
 
             var incorrectTINresult = tinCheckedPayeeList.Where(x => x.detail.TINCheckStatus == null || errorTINResult.Contains(x.detail.TINCheckStatus)).ToList();
 
@@ -252,8 +252,8 @@ namespace Bill2Pay.Web.Controllers
             //var alreadySubmitted = tinCheckedPayeeList.Where(x => x.detail.SubmissionSummaryId != null).ToList();
             string doNotSubmit = "3,5,6";
             var alreadySubmitted = ApplicationDbContext.Instence.ImportDetails
-                .Join(ApplicationDbContext.Instence.SubmissionStatus, d => d.AccountNo, s => s.AccountNumber, (d, s) => new { details = d, status = s })
-                .Where(x => selectedMerchants.Contains(x.details.AccountNo) && x.details.IsActive == true && x.status.IsActive == true &&
+                .Join(ApplicationDbContext.Instence.SubmissionStatus, d => d.AccountNumber, s => s.AccountNumber, (d, s) => new { details = d, status = s })
+                .Where(x => selectedMerchants.Contains(x.details.AccountNumber) && x.details.IsActive == true && x.status.IsActive == true &&
                 doNotSubmit.Contains(x.status.StatusId.ToString())).ToList();
 
             if (alreadySubmitted.Count != 0)
@@ -288,7 +288,7 @@ namespace Bill2Pay.Web.Controllers
 
             var tinCheckedPayeeList = ApplicationDbContext.Instence.ImportDetails
                 .Join(ApplicationDbContext.Instence.ImportSummary, d => d.ImportSummaryId, s => s.Id, (d, s) => new { detail = d, summary = s })
-                .Where(x => selectedMerchants.Contains(x.detail.AccountNo) && x.summary.PaymentYear == year && x.detail.IsActive == true && x.summary.IsActive == true).ToList();
+                .Where(x => selectedMerchants.Contains(x.detail.AccountNumber) && x.summary.PaymentYear == year && x.detail.IsActive == true && x.summary.IsActive == true).ToList();
 
             var incorrectTINresult = tinCheckedPayeeList.Where(x => x.detail.TINCheckStatus == null || errorTINResult.Contains(x.detail.TINCheckStatus)).ToList();
 
@@ -301,8 +301,8 @@ namespace Bill2Pay.Web.Controllers
             //var alreadySubmitted = tinCheckedPayeeList.Where(x => x.detail.SubmissionSummaryId != null).ToList();
             string doNotSubmit = "1,2,3,5,6,7";
             var alreadySubmitted = ApplicationDbContext.Instence.ImportDetails
-                .Join(ApplicationDbContext.Instence.SubmissionStatus, d => d.AccountNo, s => s.AccountNumber, (d, s) => new { details = d, status = s })
-                .Where(x => selectedMerchants.Contains(x.details.AccountNo) && x.details.IsActive == true && x.status.IsActive == true &&
+                .Join(ApplicationDbContext.Instence.SubmissionStatus, d => d.AccountNumber, s => s.AccountNumber, (d, s) => new { details = d, status = s })
+                .Where(x => selectedMerchants.Contains(x.details.AccountNumber) && x.details.IsActive == true && x.status.IsActive == true &&
                 doNotSubmit.Contains(x.status.StatusId.ToString())).ToList();
 
             if (alreadySubmitted.Count != 0)

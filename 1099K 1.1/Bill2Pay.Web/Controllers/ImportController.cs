@@ -236,7 +236,7 @@ namespace Bill2Pay.Web.Controllers
 
                             impd = dbContext.ImportDetails
                                 .Include("ImportSummary")
-                                .Where(i => i.AccountNo.Equals(accNo, StringComparison.InvariantCultureIgnoreCase)
+                                .Where(i => i.AccountNumber.Equals(accNo, StringComparison.InvariantCultureIgnoreCase)
                                                             && i.ImportSummary.Id == i.ImportSummaryId
                                                             && i.ImportSummary.PaymentYear == year
                                                             && i.IsActive == true).FirstOrDefault();
@@ -247,7 +247,7 @@ namespace Bill2Pay.Web.Controllers
 
                             impd = dbContext.ImportDetails
                                 .Include("ImportSummary")
-                                .Where(i => i.AccountNo.Equals(accNo, StringComparison.InvariantCultureIgnoreCase)
+                                .Where(i => i.AccountNumber.Equals(accNo, StringComparison.InvariantCultureIgnoreCase)
                                                            && i.ImportSummary.Id == i.ImportSummaryId
                                                            && i.ImportSummary.PaymentYear == year
                                                            && i.Merchant.Payer.Id == payer && i.IsActive == true).FirstOrDefault();

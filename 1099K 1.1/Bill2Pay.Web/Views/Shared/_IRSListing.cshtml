@@ -158,11 +158,11 @@
                                 {
                                     <tr>
                                         <td>
-                                            <input id="chkAccountNo" class="tblchk" onclick="GetSelectedMerchant('@item.ImportDetails.AccountNo');" type="checkbox" name="@item.ImportDetails.AccountNo" />&nbsp;
+                                            <input id="chkAccountNo" class="tblchk" onclick="GetSelectedMerchant('@item.ImportDetails.AccountNumber');" type="checkbox" name="@item.ImportDetails.AccountNumber" />&nbsp;
                                         </td>
                                         <td style="width:100px" align="center">
 
-                                            <a href="@Url.Action("Details", new { Id = item.ImportDetails.AccountNo,year=ViewBag.SelectedYear })" alt="1099K">
+                                            <a href="@Url.Action("Details", new { Id = item.ImportDetails.AccountNumber,year=ViewBag.SelectedYear })" alt="1099K">
                                                 <i class="fa fa-files-o fa-lg" title="Generate 1099-K Copies" alt="1099K"></i>
                                             </a>
 
@@ -175,18 +175,18 @@
 
                                                     if (@item.SubmissionStatus.StatusId == 7)
                                                     {
-                                                        <a href = "@Url.Action("Edit", "Merchant", new { Id = item.ImportDetails.AccountNo,year=ViewBag.SelectedYear })" title = "Edit" >
-                                                               @item.ImportDetails.AccountNo
+                                                        <a href = "@Url.Action("Edit", "Merchant", new { Id = item.ImportDetails.AccountNumber,year=ViewBag.SelectedYear })" title = "Edit" >
+                                                               @item.ImportDetails.AccountNumber
                                                            </a>
                                                     }
                                                     else
                                                     {
-                                                        @item.ImportDetails.AccountNo
+                                                        @item.ImportDetails.AccountNumber
                                                     }
                                                 }
                                                 else
                                                 {
-                                                    @item.ImportDetails.AccountNo
+                                                    @item.ImportDetails.AccountNumber
                                                 }
                                             }
 

@@ -12,7 +12,7 @@
     if (Model.SubmissionSummaryId != null)
     {
         status = ApplicationDbContext.Instence.SubmissionStatus
-                        .FirstOrDefault(p => p.AccountNumber.Equals(Model.AccountNo, StringComparison.OrdinalIgnoreCase) && p.PaymentYear == Model.ImportSummary.PaymentYear && p.IsActive == true);
+                        .FirstOrDefault(p => p.AccountNumber.Equals(Model.AccountNumber, StringComparison.OrdinalIgnoreCase) && p.PaymentYear == Model.ImportSummary.PaymentYear && p.IsActive == true);
     }
 }
 <style>
@@ -61,7 +61,7 @@
 
                 @if (status != null && status.Id > 2)
                 {
-                    using (Html.BeginForm("CopyA", "Print", new { ReturnUrl = ViewBag.ReturnUrl, Id = Model.AccountNo }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    using (Html.BeginForm("CopyA", "Print", new { ReturnUrl = ViewBag.ReturnUrl, Id = Model.AccountNumber }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
                         @Html.AntiForgeryToken()
                         <button style="float:right;" type="submit" class="btn btn-primary btn-lg " title="Print to PDF">
@@ -120,7 +120,7 @@
                     <div>
                         <span style="position:absolute; left:25px; top:440px">@Model.Merchant.Payer.FirstPayerName</span>
                         <span style="position:absolute; left:25px; top:460px">@Model.Merchant.Payer.PayerTelephoneNumber</span>
-                        <span style="position:absolute; left:25px; top:500px">@Model.AccountNo</span>
+                        <span style="position:absolute; left:25px; top:500px">@Model.AccountNumber</span>
                         @{
                             if (@Model.SecondTINNoticed != null)
                             {
@@ -160,7 +160,7 @@
             <div id="copy-1" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-1'">
                 @if (status != null && status.Id > 2)
                 {
-                    using (Html.BeginForm("Copy1", "Print", new { ReturnUrl = ViewBag.ReturnUrl, Id = Model.AccountNo }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    using (Html.BeginForm("Copy1", "Print", new { ReturnUrl = ViewBag.ReturnUrl, Id = Model.AccountNumber }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
                         @Html.AntiForgeryToken()
                         <button style="float:right;" type="submit" class="btn btn-primary btn-lg " title="Print to PDF">
@@ -224,7 +224,7 @@
                     <div>
                         <span style="position:absolute; left:25px; top:440px">@Model.Merchant.Payer.FirstPayerName</span>
                         <span style="position:absolute; left:25px; top:460px">@Model.Merchant.Payer.PayerTelephoneNumber</span>
-                        <span style="position:absolute; left:25px; top:500px">@Model.AccountNo</span>
+                        <span style="position:absolute; left:25px; top:500px">@Model.AccountNumber</span>
 
 
 
@@ -260,7 +260,7 @@
             <div id="copy-b" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-b'">
                 @if (status != null && status.Id > 2)
                 {
-                    using (Html.BeginForm("CopyB", "Print", new { ReturnUrl = ViewBag.ReturnUrl, Id = Model.AccountNo }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    using (Html.BeginForm("CopyB", "Print", new { ReturnUrl = ViewBag.ReturnUrl, Id = Model.AccountNumber }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
                         @Html.AntiForgeryToken()
                         <button style="float:right;" type="submit" class="btn btn-primary btn-lg " title="Print to PDF">
@@ -322,7 +322,7 @@
                     <div>
                         <span style="position:absolute; left:25px; top:440px">@Model.Merchant.Payer.FirstPayerName</span>
                         <span style="position:absolute; left:25px; top:460px">@Model.Merchant.Payer.PayerTelephoneNumber</span>
-                        <span style="position:absolute; left:25px; top:500px">@Model.AccountNo</span>
+                        <span style="position:absolute; left:25px; top:500px">@Model.AccountNumber</span>
 
 
                     </div>
@@ -360,7 +360,7 @@
             <div id="copy-2" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-2'">
                 @if (status != null && status.Id > 2)
                 {
-                    using (Html.BeginForm("Copy2", "Print", new { ReturnUrl = ViewBag.ReturnUrl, Id = Model.AccountNo }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    using (Html.BeginForm("Copy2", "Print", new { ReturnUrl = ViewBag.ReturnUrl, Id = Model.AccountNumber }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
                         @Html.AntiForgeryToken()
                         <button style="float:right;" type="submit" class="btn btn-primary btn-lg " title="Print to PDF">
@@ -426,7 +426,7 @@
                     <div>
                         <span style="position:absolute; left:25px; top:440px">@Model.Merchant.Payer.FirstPayerName</span>
                         <span style="position:absolute; left:25px; top:460px">@Model.Merchant.Payer.PayerTelephoneNumber</span>
-                        <span style="position:absolute; left:25px; top:500px">@Model.AccountNo</span>
+                        <span style="position:absolute; left:25px; top:500px">@Model.AccountNumber</span>
 
 
 
@@ -462,7 +462,7 @@
             <div id="copy-c" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-c'">
                 @if (status != null && status.Id > 2)
                 {
-                    using (Html.BeginForm("CopyC", "Print", new { ReturnUrl = ViewBag.ReturnUrl, Id = Model.AccountNo }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    using (Html.BeginForm("CopyC", "Print", new { ReturnUrl = ViewBag.ReturnUrl, Id = Model.AccountNumber }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
                         @Html.AntiForgeryToken()
                         <button style="float:right;" type="submit" class="btn btn-primary btn-lg " title="Print to PDF">
@@ -528,7 +528,7 @@
                     <div>
                         <span style="position:absolute; left:25px; top:440px">@Model.Merchant.Payer.FirstPayerName</span>
                         <span style="position:absolute; left:25px; top:460px">@Model.Merchant.Payer.PayerTelephoneNumber</span>
-                        <span style="position:absolute; left:25px; top:500px">@Model.AccountNo</span>
+                        <span style="position:absolute; left:25px; top:500px">@Model.AccountNumber</span>
                         @{
                             if (@Model.SecondTINNoticed != null)
                             {

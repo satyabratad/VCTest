@@ -14,7 +14,7 @@ namespace Bill2Pay.Model
         [Key]
         public int Id { get; set; }
 
-        [MaxLength(2)]
+        [MaxLength(1)]
         public string CFSF { get; set; }
 
         [MaxLength(9)]

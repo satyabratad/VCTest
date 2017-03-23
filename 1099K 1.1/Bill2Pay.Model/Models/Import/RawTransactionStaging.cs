@@ -18,62 +18,19 @@ namespace Bill2Pay.Model
         [Key]
         public int Id { get; set; }
 
-        [MaxLength(255)]
-        public string TINType { get; set; }
-
-        [MaxLength(255)]
-        public string PayeeTIN { get; set; }
-
-        [MaxLength(255)]
+        [MaxLength(20)]
         public string PayeeAccountNumber { get; set; }
 
-        [MaxLength(255)]
-        public string PayeeOfficeCode { get; set; }
-
-        [MaxLength(255)]
-        public string CardPresentTransactions { get; set; }
-
-        [MaxLength(255)]
-        public string FederalIncomeTaxWithheld { get; set; }
-
-        [MaxLength(255)]
-        public string StateIncomeTaxWithheld { get; set; }
-
-        [MaxLength(255)]
-        public string TransactionAmount { get; set; }
-
-        [MaxLength(255)]
-        public string TransactionDate { get; set; }
-
-        [MaxLength(255)]
+        [MaxLength(1)]
         public string TransactionType { get; set; }
 
-        [MaxLength(255)]
-        public string PayeeFirstName { get; set; }
+        [MaxLength(20)]
+        public string TransactionAmount { get; set; }
 
-        [MaxLength(255)]
-        public string PayeeSecondName { get; set; }
+        [MaxLength(32)]
+        public string TransactionDate { get; set; }
 
-        [MaxLength(255)]
-        public string PayeeMailingAddress { get; set; }
-
-        [MaxLength(255)]
-        public string PayeeCity { get; set; }
-
-        [MaxLength(255)]
-        public string PayeeState { get; set; }
-
-        [MaxLength(255)]
-        public string PayeeZIP { get; set; }
-
-        [MaxLength(255)]
-        public string FilerIndicatorType { get; set; }
-
-        [MaxLength(255)]
-        public string PaymentIndicatorType { get; set; }
-
-        [MaxLength(255)]
-        public string MCC { get; set; }
+        
 
         public static void Clear()
         {
@@ -122,27 +79,6 @@ namespace Bill2Pay.Model
                     dt.Columns.Add("TransactionType");
                     dt.Columns.Add("TransactionAmount");
                     dt.Columns.Add("TransactionDate");
-
-                    dt.Columns.Add("PayeeFirstName");
-                    dt.Columns.Add("PayeeSecondName");
-                    dt.Columns.Add("PayeeMailingAddress");
-                    dt.Columns.Add("PayeeCity");
-                    dt.Columns.Add("PayeeState");
-                    dt.Columns.Add("PayeeZIP");
-
-
-                    dt.Columns.Add("FilerIndicatorType");
-
-                    dt.Columns.Add("MCC");
-
-                    dt.Columns.Add("PaymentIndicatorType");
-                    dt.Columns.Add("TINType");
-                    dt.Columns.Add("PayeeTIN");
-                    dt.Columns.Add("PayeeOfficeCode");
-                    dt.Columns.Add("CardPresentTransactions");
-                    dt.Columns.Add("FederalIncomeTaxWithheld");
-                    dt.Columns.Add("StateIncomeTaxWithheld");
-
                 }
 
                 return dt;

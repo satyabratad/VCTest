@@ -75,7 +75,7 @@ namespace Bill2Pay.Web.Controllers
                 var merchantData = ApplicationDbContext.Instence.SubmissionDetails
                   .Include("PSE")
                   .OrderByDescending(p => p.SubmissionId)
-                  .FirstOrDefault(p => p.AccountNo.Equals(accno, StringComparison.OrdinalIgnoreCase));
+                  .FirstOrDefault(p => p.AccountNumber.Equals(accno, StringComparison.OrdinalIgnoreCase));
 
                 var data = new List<SubmissionDetail>();
                 if (merchantData != null)
@@ -183,7 +183,7 @@ namespace Bill2Pay.Web.Controllers
                 .Include("PSE")
                 .OrderByDescending(p => p.SubmissionId)
                 .Where(s => s.IsActive == true)
-                .FirstOrDefault(p => p.AccountNo.Equals(Id, StringComparison.OrdinalIgnoreCase));
+                .FirstOrDefault(p => p.AccountNumber.Equals(Id, StringComparison.OrdinalIgnoreCase));
 
             var status = ApplicationDbContext.Instence.SubmissionStatus
                 .OrderByDescending(p => p.Id)

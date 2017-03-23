@@ -96,7 +96,7 @@ namespace Bill2Pay.GenerateIRSFile
                 importDetaiils = dbContext.ImportDetails
                 .Join(dbContext.ImportSummary, d => d.ImportSummaryId, s => s.Id, (d, s) => new { detail = d, summary = s })
                 .Join(dbContext.MerchantDetails, d => d.detail.MerchantId, m => m.Id, (d, m) => new { d.detail, d.summary, merchant = m })
-                .Where(x => selectedAccounts.Contains(x.detail.AccountNo) && x.summary.PaymentYear == paymentYear && 
+                .Where(x => selectedAccounts.Contains(x.detail.AccountNumber) && x.summary.PaymentYear == paymentYear && 
                 x.detail.IsActive == true && x.summary.IsActive == true && x.merchant.PayerId.Equals(data.Id))
                 .Select(x => x.detail).ToList();
 
@@ -161,7 +161,7 @@ namespace Bill2Pay.GenerateIRSFile
 
             foreach (var data in importDetaiils)
             {
-                currentAccountNumber = data.AccountNo;
+                currentAccountNumber = data.AccountNumber;
                 Records bRecords = records.FirstOrDefault(x => x.RecordType == "B");
                 foreach (Field item in bRecords.Fields)
                 {
@@ -290,7 +290,7 @@ namespace Bill2Pay.GenerateIRSFile
                         case "CORRECTED RETURN INDICATOR":
                             if(reSubmission)
                             {
-                                Int32 status = Convert.ToInt32(dbContext.SubmissionStatus.Where(x => x.AccountNumber.Equals(data.AccountNo) && x.IsActive == true).Select(x => x.StatusId).Single());
+                                Int32 status = Convert.ToInt32(dbContext.SubmissionStatus.Where(x => x.AccountNumber.Equals(data.AccountNumber) && x.IsActive == true).Select(x => x.StatusId).Single());
 
                                 if (status == (int)RecordStatus.OneTransactionUploaded)
                                     fileData.Append("G");
@@ -416,7 +416,7 @@ namespace Bill2Pay.GenerateIRSFile
 
             var stateWieSummary = importDetaiils.Join(cfsfStates, d=> d.PayeeState, s=> s.State, (d,s)=> new {details=d, state=s } )
                 .Where(x => x.details.IsActive == true)
-                .Where(xy => selectedAccounts.Contains(xy.details.AccountNo))
+                .Where(xy => selectedAccounts.Contains(xy.details.AccountNumber))
                 .Where(y => states.Contains(y.details.PayeeState))
                 .GroupBy(x => x.state.Code)
                 .Select(s => new
@@ -641,7 +641,7 @@ namespace Bill2Pay.GenerateIRSFile
                     case "IMPORTDETAILS":
                         if (!string.IsNullOrEmpty(currentAccountNumber))
                         {
-                            var importDetail = importDetaiils.FirstOrDefault(x => x.AccountNo.Equals(currentAccountNumber));
+                            var importDetail = importDetaiils.FirstOrDefault(x => x.AccountNumber.Equals(currentAccountNumber));
                             pi = importDetail.GetType().GetProperty(field.Data.Trim());
                             value = Convert.ToString((pi.GetValue(importDetail, null)));
                         }
@@ -699,7 +699,7 @@ namespace Bill2Pay.GenerateIRSFile
             importDetaiils = dbContext.ImportDetails
                 .Join(dbContext.ImportSummary, d => d.ImportSummaryId, s => s.Id, (d, s) => new { detail = d, summary = s })
                 .Join(dbContext.MerchantDetails, d => d.detail.MerchantId, m => m.Id, (d, m) => new { d.detail, d.summary, merchant = m })
-                .Where(x => selectedAccounts.Contains(x.detail.AccountNo) && x.summary.PaymentYear == paymentYear &&
+                .Where(x => selectedAccounts.Contains(x.detail.AccountNumber) && x.summary.PaymentYear == paymentYear &&
                 x.detail.IsActive == true && x.summary.IsActive == true)
                 .Select(x => x.detail).ToList();
 
@@ -707,7 +707,7 @@ namespace Bill2Pay.GenerateIRSFile
             {
                 var submissionDetails = new SubmissionDetail();
 
-                submissionDetails.AccountNo = item.AccountNo;
+                submissionDetails.AccountNumber = item.AccountNumber;
                 submissionDetails.SubmissionId = submissionSummaryId;
                 submissionDetails.TINType = item.TINType;
                 submissionDetails.TIN = item.TIN;
@@ -751,7 +751,7 @@ namespace Bill2Pay.GenerateIRSFile
                 dbContext.SubmissionDetails.Add(submissionDetails);
                 item.SubmissionSummaryId = submissionSummaryId;
                 submissionDetails.IsActive = true;
-                SaveSubmissionStatus(item.AccountNo, reSubmission ? (int)RecordStatus.ReSubmitted : (int)RecordStatus.FileGenerated);
+                SaveSubmissionStatus(item.AccountNumber, reSubmission ? (int)RecordStatus.ReSubmitted : (int)RecordStatus.FileGenerated);
                 dbContext.SaveChanges();
             }
         }
@@ -952,7 +952,7 @@ namespace Bill2Pay.GenerateIRSFile
             importDetaiils = dbContext.ImportDetails.Include("ImportSummary")
                                    .Join(dbContext.MerchantDetails, d => d.MerchantId, m => m.Id, (d, m) => new { detail = d, merchant = m })
                                    .Join(dbContext.SubmissionStatus, m => m.merchant.PayeeAccountNumber, s => s.AccountNumber, (m, s) => new { m.detail, status = s })
-                                   .Where(x => selectedAccounts.Contains(x.detail.AccountNo) && x.detail.ImportSummary.PaymentYear == paymentYear &&
+                                   .Where(x => selectedAccounts.Contains(x.detail.AccountNumber) && x.detail.ImportSummary.PaymentYear == paymentYear &&
                                    x.detail.IsActive == true && x.detail.ImportSummary.IsActive == true &&
                                    (new[] { (int)RecordStatus.OneTransactionUploaded, (int)RecordStatus.TwoTransactionUploaded }).Contains(x.status.StatusId) &&
                                    x.status.IsActive == true)
@@ -962,13 +962,13 @@ namespace Bill2Pay.GenerateIRSFile
 
             foreach (var item in importDetaiils)
             {
-                Int32 status = Convert.ToInt32(dbContext.SubmissionStatus.Where(x => x.AccountNumber.Equals(item.AccountNo) && x.IsActive == true).Select(x => x.StatusId).Single());
+                Int32 status = Convert.ToInt32(dbContext.SubmissionStatus.Where(x => x.AccountNumber.Equals(item.AccountNumber) && x.IsActive == true).Select(x => x.StatusId).Single());
 
                 if (status == (int)RecordStatus.OneTransactionUploaded)
                 {
                     var submissionDetails = new SubmissionDetail();
 
-                    submissionDetails.AccountNo = item.AccountNo;
+                    submissionDetails.AccountNumber = item.AccountNumber;
                     submissionDetails.SubmissionId = submissionSummaryId;
                     submissionDetails.TINType = item.TINType;
                     submissionDetails.TIN = item.TIN;
@@ -1013,7 +1013,7 @@ namespace Bill2Pay.GenerateIRSFile
                     item.SubmissionSummaryId = submissionSummaryId;
                     submissionDetails.IsActive = true;
                 }
-                SaveSubmissionStatus(item.AccountNo, reSubmission ? (int)RecordStatus.ReSubmitted : (int)RecordStatus.FileGenerated);
+                SaveSubmissionStatus(item.AccountNumber, reSubmission ? (int)RecordStatus.ReSubmitted : (int)RecordStatus.FileGenerated);
                 dbContext.SaveChanges();
             }
         }
@@ -1043,7 +1043,7 @@ namespace Bill2Pay.GenerateIRSFile
                     importDetaiils = dbContext.ImportDetails.Include("ImportSummary")
                                    .Join(dbContext.MerchantDetails, d => d.MerchantId, m => m.Id, (d, m) => new { detail = d, merchant = m })
                                    .Join(dbContext.SubmissionStatus, m => m.merchant.PayeeAccountNumber, s => s.AccountNumber, (m, s) => new { m.detail, status = s })
-                                   .Where(x => selectedAccounts.Contains(x.detail.AccountNo) && x.detail.ImportSummary.PaymentYear == paymentYear &&
+                                   .Where(x => selectedAccounts.Contains(x.detail.AccountNumber) && x.detail.ImportSummary.PaymentYear == paymentYear &&
                                    x.detail.IsActive == true && x.detail.ImportSummary.IsActive == true && x.detail.Merchant.PayerId.Equals(data.Id) &&
                                    (new[] { (int)RecordStatus.OneTransactionUploaded, (int)RecordStatus.TwoTransactionUploaded }).Contains(x.status.StatusId) &&
                                    x.status.IsActive == true &&  x.status.StatusId == transaction)

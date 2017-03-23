@@ -8,7 +8,7 @@ namespace Bill2Pay.Model
 {
     public  class MerchantVM
     {
-        public string AccountNo { get; set; }
+        public string AccountNumber { get; set; }
         public int IsChecked { get; set; }
     }
 }

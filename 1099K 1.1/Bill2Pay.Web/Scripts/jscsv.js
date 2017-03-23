@@ -29,7 +29,12 @@
         });
         title = title.join(",");
         rows = rows.join("\n");
-        var ts = new Date().getTime();
+        var d = new Date();
+        var curr_date = d.getDate();
+        var curr_month = d.getMonth() + 1; //Months are zero based
+        var curr_year = d.getFullYear();
+
+        var ts = curr_month + '_' + curr_date + "_" + curr_year;
         name = name + ts;
         var csv = title + rows;
         var blob = new Blob([csv], { type: "text/csv" });

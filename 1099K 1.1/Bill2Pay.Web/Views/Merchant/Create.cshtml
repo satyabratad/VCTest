@@ -58,15 +58,15 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PayeeFirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.FirstPayeeName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-4">
-                @Html.EditorFor(model => model.PayeeFirstName, new { htmlAttributes = new { @class = "form-control", @required = "true", @maxlength = "40" } })
-                @Html.ValidationMessageFor(model => model.PayeeFirstName, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.FirstPayeeName, new { htmlAttributes = new { @class = "form-control", @required = "true", @maxlength = "40" } })
+                @Html.ValidationMessageFor(model => model.FirstPayeeName, "", new { @class = "text-danger" })
             </div>
-            @Html.LabelFor(model => model.PayeeSecondName, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.SecondPayeeName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-4">
-                @Html.EditorFor(model => model.PayeeSecondName, new { htmlAttributes = new { @class = "form-control", @maxlength = "40" } })
-                @Html.ValidationMessageFor(model => model.PayeeSecondName, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.SecondPayeeName, new { htmlAttributes = new { @class = "form-control", @maxlength = "40" } })
+                @Html.ValidationMessageFor(model => model.SecondPayeeName, "", new { @class = "text-danger" })
             </div>
         </div>
 

@@ -22,7 +22,7 @@ namespace Bill2Pay.Model
 
         [MaxLength(20)]
         [Display(Name = "Account")]
-        public string AccountNo { get; set; }
+        public string AccountNumber { get; set; }
 
         [ForeignKey("SubmissionSummary")]
         public int SubmissionId { get; set; }

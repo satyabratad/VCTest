@@ -33,10 +33,10 @@
                             @Html.DisplayNameFor(model => model.PayeeTIN)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.PayeeFirstName)
+                            @Html.DisplayNameFor(model => model.FirstPayeeName)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.PayeeSecondName)
+                            @Html.DisplayNameFor(model => model.SecondPayeeName)
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.PayeeMailingAddress)
@@ -69,10 +69,10 @@
                                 @Html.DisplayFor(modelItem => item.PayeeTIN)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.PayeeFirstName)
+                                @Html.DisplayFor(modelItem => item.FirstPayeeName)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.PayeeSecondName)
+                                @Html.DisplayFor(modelItem => item.SecondPayeeName)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.PayeeMailingAddress)
@@ -108,10 +108,10 @@
                             @Html.DisplayNameFor(model => model.PayeeTIN)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.PayeeFirstName)
+                            @Html.DisplayNameFor(model => model.FirstPayeeName)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.PayeeSecondName)
+                            @Html.DisplayNameFor(model => model.SecondPayeeName)
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.PayeeMailingAddress)
@@ -144,10 +144,10 @@
                                 @Html.DisplayFor(modelItem => item.PayeeTIN)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.PayeeFirstName)
+                                @Html.DisplayFor(modelItem => item.FirstPayeeName)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.PayeeSecondName)
+                                @Html.DisplayFor(modelItem => item.SecondPayeeName)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.PayeeMailingAddress)
@@ -190,7 +190,12 @@
             }
         });
 
-        var ts = new Date().getTime();
+        var d = new Date();
+        var curr_date = d.getDate();
+        var curr_month = d.getMonth() + 1; //Months are zero based
+        var curr_year = d.getFullYear();
+       
+        var ts = curr_month+'_'+curr_date + "_" + curr_year;
         var name = 'Merchant_' + ts + '.pdf';
 
         doc.save(name)

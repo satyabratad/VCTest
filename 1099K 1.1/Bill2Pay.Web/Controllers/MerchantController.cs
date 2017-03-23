@@ -141,7 +141,7 @@ namespace Bill2Pay.Web.Controllers
                                     stat=>stat.AccountNumber,
                                     (mer,stat)=> new MerchantDetailsVM() { Merchant = mer, Status = stat.FirstOrDefault() }) 
                                         .Where(m => m.Merchant.IsActive == true && (payer == 0 || m.Merchant.PayerId == payer))
-                                        .OrderBy(m=>m.Merchant.PayeeFirstName).ToList() ;
+                                        .OrderBy(m=>m.Merchant.FirstPayeeName).ToList() ;
 
             var payerlst = db.PayerDetails.Where(p => p.IsActive == true)
                 .Select(p => new SelectListItem() { Text = p.FirstPayerName, Value =p.Id.ToString() }).OrderBy(p => p.Text).ToList();
@@ -286,9 +286,9 @@ namespace Bill2Pay.Web.Controllers
 
 
 
-                    var iDet = db.ImportDetails.Where(i => i.IsActive && i.AccountNo.Equals(merchantDetails.PayeeAccountNumber, StringComparison.InvariantCultureIgnoreCase))
+                    var iDet = db.ImportDetails.Where(i => i.IsActive && i.AccountNumber.Equals(merchantDetails.PayeeAccountNumber, StringComparison.InvariantCultureIgnoreCase))
                                 .GroupJoin(db.SubmissionStatus.Where(s => s.IsActive),
-                                imp => imp.AccountNo,
+                                imp => imp.AccountNumber,
                                 stat => stat.AccountNumber,
                                 (imp, stat) => new MerchantListVM() { ImportDetails = imp, SubmissionStatus = stat.FirstOrDefault() })
                                 .ToList();
@@ -308,10 +308,10 @@ namespace Bill2Pay.Web.Controllers
                                 db.SaveChanges();
 
                                 newimpdet.IsActive = true;
-                                newimpdet.AccountNo = merchantDetails.PayeeAccountNumber;
+                                newimpdet.AccountNumber = merchantDetails.PayeeAccountNumber;
                                 newimpdet.TIN = merchantDetails.PayeeTIN;
-                                newimpdet.FirstPayeeName = merchantDetails.PayeeFirstName;
-                                newimpdet.SecondPayeeName = merchantDetails.PayeeSecondName;
+                                newimpdet.FirstPayeeName = merchantDetails.FirstPayeeName;
+                                newimpdet.SecondPayeeName = merchantDetails.SecondPayeeName;
                                 newimpdet.PayeeMailingAddress = merchantDetails.PayeeMailingAddress;
                                 newimpdet.PayeeCity = merchantDetails.PayeeCity;
                                 newimpdet.PayeeState = merchantDetails.PayeeState;
@@ -330,7 +330,7 @@ namespace Bill2Pay.Web.Controllers
                                     SubmissionDetail subdet = db.SubmissionDetails
                                             .Include("SubmissionSummary")
                                             .Where(s => s.SubmissionSummary.Id == newimpdet.SubmissionSummaryId && s.IsActive == true
-                                                 && s.AccountNo.Equals(newimpdet.AccountNo, StringComparison.InvariantCultureIgnoreCase)
+                                                 && s.AccountNumber.Equals(newimpdet.AccountNumber, StringComparison.InvariantCultureIgnoreCase)
                                                  && s.SubmissionSummary.PaymentYear == impdstat.SubmissionStatus.PaymentYear).FirstOrDefault();
 
 
@@ -342,10 +342,10 @@ namespace Bill2Pay.Web.Controllers
                                     db.SaveChanges();
 
                                     newsubdet.IsActive = true;
-                                    newsubdet.AccountNo = merchantDetails.PayeeAccountNumber;
+                                    newsubdet.AccountNumber = merchantDetails.PayeeAccountNumber;
                                     newsubdet.TIN = merchantDetails.PayeeTIN;
-                                    newsubdet.FirstPayeeName = merchantDetails.PayeeFirstName;
-                                    newsubdet.SecondPayeeName = merchantDetails.PayeeSecondName;
+                                    newsubdet.FirstPayeeName = merchantDetails.FirstPayeeName;
+                                    newsubdet.SecondPayeeName = merchantDetails.SecondPayeeName;
                                     newsubdet.PayeeMailingAddress = merchantDetails.PayeeMailingAddress;
                                     newsubdet.PayeeCity = merchantDetails.PayeeCity;
                                     newsubdet.PayeeState = merchantDetails.PayeeState;

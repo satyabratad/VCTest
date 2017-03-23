@@ -14,37 +14,37 @@ namespace Bill2Pay.Model
         [Key]
         public int Id { get; set; }
 
-        [MaxLength(255)]
+        [MaxLength(20)]
         [Display(Name ="Account")]
         
         [RegularExpression("^[^<><|>]+$", ErrorMessage = "Html tags are not allowed.")]
         public string PayeeAccountNumber { get; set; }
 
-        [MaxLength(255)]
+        [MaxLength(1)]
         [RegularExpression("^[^<>,<|>]+$", ErrorMessage = "Html tags are not allowed.")]
         public string TINType { get; set; }
 
-        [MaxLength(255)]
+        [MaxLength(9)]
         [Display(Name = "TIN")]
         [RegularExpression("^[^<>,<|>]+$", ErrorMessage = "Html tags are not allowed.")]
         public string PayeeTIN { get; set; }
 
-        [MaxLength(255)]
+        [MaxLength(4)]
         [Display(Name = "Office Code")]
         [RegularExpression("^[^<>,<|>]+$", ErrorMessage = "Html tags are not allowed.")]
         public string PayeeOfficeCode { get; set; }
 
-        [MaxLength(255)]
+        [MaxLength(40)]
         [Display(Name = "First Payee Name")]
         [RegularExpression("^[^<>,<|>]+$", ErrorMessage = "Html tags are not allowed.")]
-        public string PayeeFirstName { get; set; }
+        public string FirstPayeeName { get; set; }
 
-        [MaxLength(255)]
+        [MaxLength(40)]
         [Display(Name = "Second Payee Name")]
         [RegularExpression("^[^<>,<|>]+$", ErrorMessage = "Html tags are not allowed.")]
-        public string PayeeSecondName { get; set; }
+        public string SecondPayeeName { get; set; }
 
-        [MaxLength(255)]
+        [MaxLength(40)]
         [Display(Name = "Address")]
         [RegularExpression("^[^<><|>]+$", ErrorMessage = "Html tags are not allowed.")]
         public string PayeeMailingAddress { get; set; }
@@ -64,22 +64,22 @@ namespace Bill2Pay.Model
         [RegularExpression("^[^<>,<|>]+$", ErrorMessage = "Html tags are not allowed.")]
         public string PayeeZIP { get; set; }
 
-        [MaxLength(255)]
+        [MaxLength(1)]
         [Display(Name = "FilerIndicator Type")]
         [RegularExpression("^[^<><|>]+$", ErrorMessage = "Html tags are not allowed.")]
         public string FilerIndicatorType { get; set; }
 
 
-        [MaxLength(255)]
+        [MaxLength(1)]
         [Display(Name = "PaymentIndicator Type")]
         [RegularExpression("^[^<><|>]+$", ErrorMessage = "Html tags are not allowed.")]
         public string PaymentIndicatorType { get; set; }
 
-        [MaxLength(255)]
+        [MaxLength(4)]
         [RegularExpression("^[^<><|>]+$", ErrorMessage = "Html tags are not allowed.")]
         public string MCC { get; set; }
 
-        [MaxLength(2)]
+        [MaxLength(1)]
         [RegularExpression("^[^<><|>]+$", ErrorMessage = "Html tags are not allowed.")]
         public string CFSF { get; set; }
 
