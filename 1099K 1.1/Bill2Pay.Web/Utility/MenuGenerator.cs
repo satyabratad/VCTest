@@ -161,6 +161,20 @@ namespace Bill2Pay.Web
     {
         public bool AllowPostback { get; set; }
         public bool IsVisible { get; set; }
+
+        bool isYearVisible = true;
+        public bool IsYearVisible
+        {
+            get
+            {
+                return isYearVisible;
+            }
+            set
+            {
+                isYearVisible = value;
+            }
+        }
+
     }
 
     public static class TinStatus
@@ -214,7 +228,7 @@ namespace Bill2Pay.Web
 
         public static string FormatAmount(decimal? amount)
         {
-            if(amount == null)
+            if (amount == null)
             {
                 return "0.00";
             }
