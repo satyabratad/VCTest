@@ -10,7 +10,9 @@
                 <select name="ddlYear" onchange="SelectYear(this)" style="min-width:150px;" required>
                     <option value="">-- Select Year --</option>
                     @{ 
-                        for (int yr = 2016; yr < System.DateTime.Now.Year; yr++)
+                        var startYear =int.Parse(@System.Configuration.ConfigurationManager.AppSettings["SystemStartYear"].ToString());
+                         
+                        for (int yr = startYear; yr < System.DateTime.Now.Year; yr++)
                         {
                             <option value='@yr' @Bill2Pay.Web.MenuGenerator.IsSelected(yr)>@yr</option>
 

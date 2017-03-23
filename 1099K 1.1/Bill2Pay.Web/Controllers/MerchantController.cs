@@ -366,7 +366,7 @@ namespace Bill2Pay.Web.Controllers
                                     db.SaveChanges();
 
                                     newStatus.IsActive = true;
-                                    newStatus.StatusId =(int) RecordStatus.ReSubmitted; // Resubmitted= 8
+                                    newStatus.StatusId =(int) RecordStatus.TwoTransactionUploaded; 
                                     newStatus.DateAdded = System.DateTime.Now;
                                     db.SubmissionStatus.Add(newStatus);
                                     db.SaveChanges();
