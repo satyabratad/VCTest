@@ -50,7 +50,7 @@ namespace Bill2Pay.Web.Controllers
 
             merchantlst = (dbContext.ImportDetails
                                .Include("ImportSummary")
-                               .GroupJoin(dbContext.SubmissionStatus.Where(s => s.IsActive == true),
+                               .GroupJoin(dbContext.SubmissionStatus.Where(s => s.IsActive == true && s.PaymentYear==Id),
                                imp => imp.AccountNo,
                                stat => stat.AccountNumber,
                                (imp, stat) => new MerchantListVM() { ImportDetails = imp, SubmissionStatus = stat.FirstOrDefault() })
