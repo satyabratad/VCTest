@@ -21,27 +21,27 @@ namespace Bill2Pay.Model
         public string PayeeAccountNumber { get; set; }
 
         [MaxLength(255)]
-        [RegularExpression("^[^<><|>]+$", ErrorMessage = "Html tags are not allowed.")]
+        [RegularExpression("^[^<>,<|>]+$", ErrorMessage = "Html tags are not allowed.")]
         public string TINType { get; set; }
 
         [MaxLength(255)]
         [Display(Name = "TIN")]
-        [RegularExpression("^[^<><|>]+$", ErrorMessage = "Html tags are not allowed.")]
+        [RegularExpression("^[^<>,<|>]+$", ErrorMessage = "Html tags are not allowed.")]
         public string PayeeTIN { get; set; }
 
         [MaxLength(255)]
         [Display(Name = "Office Code")]
-        [RegularExpression("^[^<><|>]+$", ErrorMessage = "Html tags are not allowed.")]
+        [RegularExpression("^[^<>,<|>]+$", ErrorMessage = "Html tags are not allowed.")]
         public string PayeeOfficeCode { get; set; }
 
         [MaxLength(255)]
         [Display(Name = "First Name")]
-        [RegularExpression("^[^<><|>]+$", ErrorMessage = "Html tags are not allowed.")]
+        [RegularExpression("^[^<>,<|>]+$", ErrorMessage = "Html tags are not allowed.")]
         public string PayeeFirstName { get; set; }
 
         [MaxLength(255)]
         [Display(Name = "Second Name")]
-        [RegularExpression("^[^<><|>]+$", ErrorMessage = "Html tags are not allowed.")]
+        [RegularExpression("^[^<>,<|>]+$", ErrorMessage = "Html tags are not allowed.")]
         public string PayeeSecondName { get; set; }
 
         [MaxLength(255)]
@@ -51,17 +51,17 @@ namespace Bill2Pay.Model
 
         [MaxLength(40)]
         [Display(Name = "City")]
-        [RegularExpression("^[^<><|>]+$", ErrorMessage = "Html tags are not allowed.")]
+        [RegularExpression("^[^<>,<|>]+$", ErrorMessage = "Html tags are not allowed.")]
         public string PayeeCity { get; set; }
 
         [MaxLength(2)]
         [Display(Name = "State")]
-        [RegularExpression("^[^<><|>]+$", ErrorMessage = "Html tags are not allowed.")]
+        [RegularExpression("^[^<>,<|>]+$", ErrorMessage = "Html tags are not allowed.")]
         public string PayeeState { get; set; }
 
         [MaxLength(9)]
         [Display(Name = "Zip")]
-        [RegularExpression("^[^<><|>]+$", ErrorMessage = "Html tags are not allowed.")]
+        [RegularExpression("^[^<>,<|>]+$", ErrorMessage = "Html tags are not allowed.")]
         public string PayeeZIP { get; set; }
 
         [MaxLength(255)]
