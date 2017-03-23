@@ -35,12 +35,12 @@ namespace Bill2Pay.Model
         public string PayeeOfficeCode { get; set; }
 
         [MaxLength(255)]
-        [Display(Name = "First Name")]
+        [Display(Name = "First Payee Name")]
         [RegularExpression("^[^<>,<|>]+$", ErrorMessage = "Html tags are not allowed.")]
         public string PayeeFirstName { get; set; }
 
         [MaxLength(255)]
-        [Display(Name = "Second Name")]
+        [Display(Name = "Second Payee Name")]
         [RegularExpression("^[^<>,<|>]+$", ErrorMessage = "Html tags are not allowed.")]
         public string PayeeSecondName { get; set; }
 
@@ -65,11 +65,13 @@ namespace Bill2Pay.Model
         public string PayeeZIP { get; set; }
 
         [MaxLength(255)]
+        [Display(Name = "FilerIndicator Type")]
         [RegularExpression("^[^<><|>]+$", ErrorMessage = "Html tags are not allowed.")]
         public string FilerIndicatorType { get; set; }
 
 
         [MaxLength(255)]
+        [Display(Name = "PaymentIndicator Type")]
         [RegularExpression("^[^<><|>]+$", ErrorMessage = "Html tags are not allowed.")]
         public string PaymentIndicatorType { get; set; }
 
