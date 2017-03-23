@@ -162,7 +162,7 @@
                                         </td>
                                         <td style="width:100px" align="center">
 
-                                            <a href="@Url.Action("Details", new { Id = item.ImportDetails.AccountNo })" alt="1099K">
+                                            <a href="@Url.Action("Details", new { Id = item.ImportDetails.AccountNo,year=ViewBag.SelectedYear })" alt="1099K">
                                                 <i class="fa fa-files-o fa-lg" title="Generate 1099-K Copies" alt="1099K"></i>
                                             </a>
 

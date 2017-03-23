@@ -78,17 +78,17 @@ namespace Bill2Pay.Web.Controllers
             return View(merchantlst);
         }
 
-        public ActionResult Details(string Id)
+        public ActionResult Details(string Id,int? year)
         {
 
             MerchantListVM detail = dbContext.ImportDetails 
                 .Include("Merchant")
-                .GroupJoin(dbContext.SubmissionStatus.Where(s => s.IsActive == true),
+                .GroupJoin(dbContext.SubmissionStatus.Where(s => s.IsActive == true && s.PaymentYear== year),
                     imp=> imp.AccountNo,
                     stat => stat.AccountNumber,
                     (imp, stat)=> new MerchantListVM() { ImportDetails = imp, SubmissionStatus = stat.FirstOrDefault() }) 
                 .OrderByDescending(p => p.ImportDetails.ImportSummaryId)
-                .FirstOrDefault(p => p.ImportDetails.AccountNo.Equals(Id, StringComparison.OrdinalIgnoreCase) && p.ImportDetails.IsActive == true);
+                .FirstOrDefault(p => p.ImportDetails.AccountNo.Equals(Id, StringComparison.OrdinalIgnoreCase) && p.ImportDetails.ImportSummary.PaymentYear == year && p.ImportDetails.IsActive == true);
 
 
             var data=(ImportDetail) detail.ImportDetails ;
