@@ -192,7 +192,7 @@ namespace Bill2Pay.Web.Controllers
             {
                 merchantDetails.DateAdded = System.DateTime.Now;
                 merchantDetails.UserId =int.Parse(User.Identity.GetUserId());
-                merchantDetails.PaymentYear = System.DateTime.Now.Year;
+                //merchantDetails.PaymentYear = System.DateTime.Now.Year;
                 merchantDetails.IsActive = true;
                 db.MerchantDetails.Add(merchantDetails);
                 db.SaveChanges();
