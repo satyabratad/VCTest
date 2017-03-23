@@ -290,7 +290,6 @@ namespace Bill2Pay.GenerateIRSFile
                         case "CORRECTED RETURN INDICATOR":
                             if(reSubmission)
                             {
-                                //var val = ;
                                 Int32 status = Convert.ToInt32(dbContext.SubmissionStatus.Where(x => x.AccountNumber.Equals(data.AccountNo) && x.IsActive == true).Select(x => x.StatusId).Single());
 
                                 if (status == (int)RecordStatus.OneTransactionUploaded)
@@ -301,12 +300,6 @@ namespace Bill2Pay.GenerateIRSFile
                             else
                                 fileData.Append(GetFieldValue(item));
                             break;
-                        //case "MERCHANT CATEGORY CODE (MCC)":
-                        //    string mcc = GetFieldValue(item);
-                        //    if (string.IsNullOrEmpty(mcc))
-                        //        mcc = "0000";
-                        //    fileData.Append(mcc);
-                        //    break;
                         default:
                             fileData.Append(GetFieldValue(item));
                             break;
@@ -448,33 +441,7 @@ namespace Bill2Pay.GenerateIRSFile
                     cnp = s.Sum(w => w.details.CNPTransactionAmount),
                     fWH = s.Sum(w => w.details.FederalWithHoldingAmount)
                 }).ToList();
-            //var stateWieSummary = dbContext.ImportDetails.Where(x => x.IsActive == true)
-            //    .Where(xy => selectedAccounts.Contains(xy.AccountNo))
-            //    .Where(y => states.Contains(y.PayeeState))
-            //    .GroupBy(x => x.PayeeState)
-            //    .Select(s => new
-            //    {
-            //        state = s.Key,
-            //        count = s.Count(),
-            //        jan = s.Sum(w => w.JanuaryAmount),
-            //        feb = s.Sum(w => w.FebruaryAmount),
-            //        mar = s.Sum(w => w.MarchAmount),
-            //        apr = s.Sum(w => w.AprilAmount),
-            //        may = s.Sum(w => w.MayAmount),
-            //        jun = s.Sum(w => w.JuneAmount),
-            //        jul = s.Sum(w => w.JulyAmount),
-            //        aug = s.Sum(w => w.AugustAmount),
-            //        sep = s.Sum(w => w.SeptemberAmount),
-            //        oct = s.Sum(w => w.OctoberAmount),
-            //        nov = s.Sum(w => w.NovemberAmount),
-            //        dec = s.Sum(w => w.DecemberAmount),
-            //        stateWH = s.Sum(w => w.StateWithHolding),
-            //        localWH = s.Sum(w => w.LocalWithHolding),
-            //        gross = s.Sum(w => w.GrossAmount),
-            //        cnp = s.Sum(w => w.CNPTransactionAmount),
-            //        fWH = s.Sum(w => w.FederalWithHoldingAmount)
-            //    }).ToList();
-
+            
             foreach (var data in stateWieSummary)
             {
                 foreach (Field item in tRecords.Fields)
@@ -783,7 +750,6 @@ namespace Bill2Pay.GenerateIRSFile
 
                 dbContext.SubmissionDetails.Add(submissionDetails);
                 item.SubmissionSummaryId = submissionSummaryId;
-                //item.PseId = pseMasterId;
                 submissionDetails.IsActive = true;
                 SaveSubmissionStatus(item.AccountNo, reSubmission ? (int)RecordStatus.ReSubmitted : (int)RecordStatus.FileGenerated);
                 dbContext.SaveChanges();
@@ -933,7 +899,6 @@ namespace Bill2Pay.GenerateIRSFile
                         break;
                     default:
                         break;
-
                 }
                 pseDetails.DateAdded = DateTime.Now;
             }
@@ -978,46 +943,11 @@ namespace Bill2Pay.GenerateIRSFile
                 if (reSubmission)
                     SaveSubmissionDetailsForCorrection();
             }
-
-            #region "commented"
-            //var result = (Records)JsonConvert.DeserializeObject(json, typeof(Records));
-
-            //        Records []x= new Records[2];
-
-            //Model.Field fl = new Model.Field();
-            //        x[0] = new Records();
-            //        x[0].Fields = new List<Model.Field>();
-
-            //        fl.Name = "Name1";
-            //        x[0].Fields.Add(fl);
-            //        fl.Name = "Name2";
-            //        x[0].Fields.Add(fl);
-            //        fl.Name = "Name3";
-            //        x[0].Fields.Add(fl);
-
-            //        x[1] = new Records();
-            //        x[1].Fields = new List<Model.Field>();
-            //        fl.Name = "Name4";
-            //        x[1].Fields.Add(fl);
-            //        fl.Name = "Name5";
-            //        x[1].Fields.Add(fl);
-            //        fl.Name = "Name6";
-            //        x[1].Fields.Add(fl);
-
-            //        var result = JsonConvert.SerializeObject(x);
-            #endregion
         }
 
         private void SaveSubmissionDetailsForCorrection()
         {
             int submissionSummaryId = SaveSubmissionSummary();
-
-            //importDetaiils = dbContext.ImportDetails
-            //    .Join(dbContext.ImportSummary, d => d.ImportSummaryId, s => s.Id, (d, s) => new { detail = d, summary = s })
-            //    .Join(dbContext.MerchantDetails, d => d.detail.MerchantId, m => m.Id, (d, m) => new { d.detail, d.summary, merchant = m })
-            //    .Where(x => selectedAccounts.Contains(x.detail.AccountNo) && x.summary.PaymentYear == paymentYear &&
-            //    x.detail.IsActive == true && x.summary.IsActive == true)
-            //    .Select(x => x.detail).ToList();
 
             importDetaiils = dbContext.ImportDetails.Include("ImportSummary")
                                    .Join(dbContext.MerchantDetails, d => d.MerchantId, m => m.Id, (d, m) => new { detail = d, merchant = m })
@@ -1036,7 +966,6 @@ namespace Bill2Pay.GenerateIRSFile
 
                 if (status == (int)RecordStatus.OneTransactionUploaded)
                 {
-                    #region "a"
                     var submissionDetails = new SubmissionDetail();
 
                     submissionDetails.AccountNo = item.AccountNo;
@@ -1082,12 +1011,8 @@ namespace Bill2Pay.GenerateIRSFile
 
                     dbContext.SubmissionDetails.Add(submissionDetails);
                     item.SubmissionSummaryId = submissionSummaryId;
-                    //item.PseId = pseMasterId;
                     submissionDetails.IsActive = true;
-
-                    #endregion
                 }
-                
                 SaveSubmissionStatus(item.AccountNo, reSubmission ? (int)RecordStatus.ReSubmitted : (int)RecordStatus.FileGenerated);
                 dbContext.SaveChanges();
             }
@@ -1097,9 +1022,6 @@ namespace Bill2Pay.GenerateIRSFile
         {
             GenerateTRecord();
             GenerateARecord();
-            //GenerateBRecord();
-            //GenerateCRecord();
-            //GenerateKRecord();
             GenerateFRecord();
         }
 
@@ -1116,7 +1038,6 @@ namespace Bill2Pay.GenerateIRSFile
 
             foreach (var data in payerDetails)
             {
-
                 foreach (var transaction in (new[] {(int)RecordStatus.OneTransactionUploaded, (int)RecordStatus.TwoTransactionUploaded }))
                 {
                     importDetaiils = dbContext.ImportDetails.Include("ImportSummary")
@@ -1175,7 +1096,6 @@ namespace Bill2Pay.GenerateIRSFile
                             GenerateKRecord();
                     }
                 }
-               
             }
         }
     }
