@@ -27,7 +27,8 @@ namespace Bill2Pay.Model
         [MaxLength(9)]
         [MinLength(9, ErrorMessage = "TIN must be 9 digit")]
         [Display(Name = "TIN")]
-        [RegularExpression("^[^<>,<|>]+$", ErrorMessage = "Html tags are not allowed.")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "TIN must be numeric")]
+        
         public string PayeeTIN { get; set; }
 
         [MaxLength(4)]
@@ -62,7 +63,8 @@ namespace Bill2Pay.Model
 
         [MaxLength(9)]
         [Display(Name = "Zip")]
-        [RegularExpression("^[^<>,<|>]+$", ErrorMessage = "Html tags are not allowed.")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Zip must be numeric")]
+        
         public string PayeeZIP { get; set; }
 
         [MaxLength(1)]
@@ -78,7 +80,8 @@ namespace Bill2Pay.Model
 
         [MaxLength(4)]
         [MinLength(4, ErrorMessage ="MCC must be 4 digit")]
-        [RegularExpression("^[^<><|>]+$", ErrorMessage = "Html tags are not allowed.")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "MCC must be numeric")]
+        //[RegularExpression("^[^<><|>]+$", ErrorMessage = "Html tags are not allowed.")]
         public string MCC { get; set; }
 
         [MaxLength(1)]
