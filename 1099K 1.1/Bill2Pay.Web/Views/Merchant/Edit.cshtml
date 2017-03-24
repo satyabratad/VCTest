@@ -19,7 +19,7 @@
 
         @Html.HiddenFor(model=> model.Id)
         @Html.HiddenFor(model => model.DateAdded)
-        @*@Html.HiddenFor(model => model.PaymentYear)*@
+
        
 
         <div class="form-group">
@@ -51,7 +51,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.TINType, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-4">
-                @*@Html.EditorFor(model => model.TINType, new { htmlAttributes = new { @class = "form-control", @required = "true" } })*@
+ 
                 @Html.DropDownListFor(model => model.TINType, (IEnumerable<SelectListItem>)ViewBag.TINTypeLstList, "Select", htmlAttributes: new { @class = "form-control require" })
 
 
@@ -107,7 +107,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.FilerIndicatorType, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-4">
-                @*@Html.EditorFor(model => model.FilerIndicatorType, new { htmlAttributes = new { @class = "form-control" } })*@
+
                 @Html.DropDownListFor(model => model.FilerIndicatorType, (IEnumerable<SelectListItem>)ViewBag.FilerList, "Select", htmlAttributes: new { @class = "form-control require" })
 
 
@@ -115,19 +115,13 @@
             </div>
             @Html.LabelFor(model => model.PaymentIndicatorType, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-4">
-                @*@Html.EditorFor(model => model.PaymentIndicatorType, new { htmlAttributes = new { @class = "form-control" } })*@
+
                 @Html.DropDownListFor(model => model.PaymentIndicatorType, (IEnumerable<SelectListItem>)ViewBag.PaymentIndicatorList, "Select", htmlAttributes: new { @class = "form-control require" })
                 @Html.ValidationMessageFor(model => model.PaymentIndicatorType, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.CFSF, htmlAttributes: new { @class = "control-label col-md-3" })
-            <div class="col-md-8">
-                @Html.EditorFor(model => model.CFSF, new { htmlAttributes = new { @class = "form-control", @maxlength = "2" } })
-                @Html.ValidationMessageFor(model => model.CFSF, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
+       
 
 
         <div class="row">
