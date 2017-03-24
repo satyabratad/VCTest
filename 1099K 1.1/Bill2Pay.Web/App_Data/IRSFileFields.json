@@ -735,7 +735,7 @@
         "Default": "",
         "Alternate": "",
         "Type": "Alphanumeric",
-        "Data": "AccountNo",
+        "Data": "AccountNumber",
         "Alignment": "Right",
         "Table" : "ImportDetails"
       },
