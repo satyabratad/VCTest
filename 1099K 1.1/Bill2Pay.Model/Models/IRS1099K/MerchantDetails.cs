@@ -25,6 +25,7 @@ namespace Bill2Pay.Model
         public string TINType { get; set; }
 
         [MaxLength(9)]
+        [MinLength(9, ErrorMessage = "TIN must be 9 digit")]
         [Display(Name = "TIN")]
         [RegularExpression("^[^<>,<|>]+$", ErrorMessage = "Html tags are not allowed.")]
         public string PayeeTIN { get; set; }
@@ -76,6 +77,7 @@ namespace Bill2Pay.Model
         public string PaymentIndicatorType { get; set; }
 
         [MaxLength(4)]
+        [MinLength(4, ErrorMessage ="MCC must be 4 digit")]
         [RegularExpression("^[^<><|>]+$", ErrorMessage = "Html tags are not allowed.")]
         public string MCC { get; set; }
 
