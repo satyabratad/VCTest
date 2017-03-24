@@ -58,7 +58,7 @@ namespace Bill2Pay.GenerateIRSFile
             dbContext = new ApplicationDbContext();
             pseDetails = new PSEDetails();
 
-            importSummaries = dbContext.ImportSummary.OrderByDescending(x => x.Id).Where(x => x.IsActive == true).FirstOrDefault();
+            importSummaries = dbContext.ImportSummary.OrderByDescending(x => x.Id).Where(x => x.IsActive == true && x.PaymentYear==paymentYear).FirstOrDefault();
 
             transmitterDetails = dbContext.TransmitterDetails.FirstOrDefault(x => x.IsActive == true);
 
