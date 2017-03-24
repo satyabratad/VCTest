@@ -49,6 +49,10 @@ namespace Bill2Pay.Web.Controllers
                     foreach (var itm in lstTin)
                     {
                         var payeeName = Regex.Replace(itm.FirstPayeeName, "[^0-9A-Za-z-& ]+", "");
+                        if(payeeName.Length > 40)
+                        {
+                            payeeName = payeeName.Substring(0, 40);
+                        }
                         strFileline = strFileline + itm.TINType + ";" + itm.TIN + ";" + payeeName.Trim() + ";" + itm.AccountNumber + Environment.NewLine;
                     }
 
