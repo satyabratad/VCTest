@@ -97,7 +97,7 @@ namespace Bill2Pay.Web.Controllers
 
             var merchant = dbContext.MerchantDetails.Where(m => m.Id == data.MerchantId).FirstOrDefault();
             data.Merchant = merchant;
-
+            ViewBag.SelectedYear = year;
             return View(data);
         }
 
