@@ -1,11 +1,12 @@
-// JavaScript source code
+﻿// JavaScript source code
 
 var bill2payPaymentDetails = {
 showCart: function(){
-	debugger;
+	
 	$("#clientName").html(dbObject.CustomerName);
 	var param=getParameterByName('dbObject');
 	DeSrializeDbObject(param);
+	populateBreadcrumb();
 	$("#cartCount").html((dbObject.Products.length==0?"":dbObject.Products.length));
 	bill2payPaymentDetails.populateSubtotal();
 	bill2payPaymentDetails.populateOrderDetails();
@@ -16,14 +17,14 @@ redirectToCartGrid: function(){
       redirect('Home.html?ShowCart=Y&dbObject=' + json);	
 },
 redirectToPaymentConfirm: function(){
-	debugger;
+	
 	var firstTab = $('a[data-toggle="tab"]:first');
             var tabName = null;
 			var paymentType=null;
             // Get the last active tab before postback
             tabName = $("[id*=hdfTabName]").val() != "" ? $("[id*=hdfTabName]").val() : firstTab.attr("href").replace("#", "");
             
-            if(tabName=='pnlTabCredit')
+            if(tabName.indexOf('pnlTabCredit')>=0)
             {
             	paymentType='CC';
 				bill2payPaymentDetails.addCreditCardDetails();
@@ -44,7 +45,7 @@ redirectToPaymentConfirm: function(){
 	
 },
 addCreditCardDetails:function(){
-	debugger;
+	
 	var cc = {
 								"PaymentType": "CC",
 								"NameOnCard": $("#txtNameonCard").val(),
@@ -59,7 +60,7 @@ addCreditCardDetails:function(){
 		UpdateDbObject();
 },
 populateCreditCardDetails:function(){
-	debugger;
+	
 		
 	$("#txtNameonCard").val('');
 	$("#txtExpireDate").val('');
@@ -88,7 +89,7 @@ addBankDetails:function(){
 						  UpdateDbObject();
 },
 addMoreItems: function(){
-	debugger;
+	
 	var json=SerializeDbObject();		
     redirect('Home.html?dbObject=' + json);	
 },
@@ -97,7 +98,7 @@ populateSubtotal: function(){
 	$("#paysubTotalAmount").html(total);
 },
 populateOrderDetails: function(){
-	debugger;
+
 		var html = '';
 		var totalAmount=0;
 		var cellClass='';

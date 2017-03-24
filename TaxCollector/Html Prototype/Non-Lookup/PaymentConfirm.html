@@ -100,28 +100,15 @@
                                 <!--// START BREADCRUMBS //-->
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-md-11">
-                                            <ul class="breadcrumb">
-                                                <li class="active"><a href="https://betapay.bill2pay.com/pay/"><span class="badge badge-inverse">
-                                          1</span> Account <span class="hidden-xs hidden-sm">Details</span></a>
-                                                </li>
-                                                <li class="active"><a href="https://betapay.bill2pay.com/pay/#" class="inactiveLink"><span class="badge badge-inverse">
-                                          2</span><span class="hidden-xs hidden-sm"> Contact Info</span></a>
-                                                </li>
-                                                <li class="active"><a href="https://betapay.bill2pay.com/pay/#" class="inactiveLink"><span class="badge badge-inverse">
-                                          3</span><span class="hidden-xs hidden-sm"> Payment Details</span></a>
-                                                </li>
-                                                <li class="active"><a href="https://betapay.bill2pay.com/pay/#" class="inactiveLink"><span class="badge badge-inverse">
-                                          4</span><span class="hidden-xs hidden-sm"> Confirm Payment</span></a>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                         <div class="col-md-11" id="brdCrumb">
+                                        
+                                    </div>
                                         <!--Cart-->
                                          <!--Cart-->
                                                         <div class="col-md-1">
                                                             <a href="#" onclick="bill2payPaymentConfirm.redirectToCartGrid();">
                                      <div id="cartDiv" class="caption img-responsive pull-right" style="min-width:30px; max-width: 35px;min-height:30px; max-height: 35px;">
-                                     	<span id="cartCount"></span>
+                                     	<span id="cartCount" style="font-size: 14px;line-height: 16px;font-family: arial,sans-serif;color:#000000;font-weight: 700;"></span>
                                      </div>     
                                      </a>   
                                                         </div>
@@ -166,7 +153,7 @@
                                     </div>
                                     <div class="pull-right">
                                             <input type="button" onclick="bill2payPaymentConfirm.redirectToCartGrid();" name="btnCancel" value="Cancel" id="btnCancel" title="Cancel" class="btn btn-link btn-sm">
-                                            <input type="button" onclick="bill2payPaymentConfirm.redirectToPaymentSuccess();" name="btnSubmit" value="Make a Payment" onclick="return validateForm();" id="btnSubmit" title="Make a Payment" class="btn btn-primary">
+                                            <input type="button" onclick="bill2payPaymentConfirm.redirectToPaymentSuccess();" name="btnSubmit" value="Submit Payment" onclick="return validateForm();" id="btnSubmit" title="Submit Payment" class="btn btn-primary">
                                             <input type="submit" name="btnPleaseWait" value="Please wait" id="btnPleaseWait" disabled="disabled" title="Pay Now" class="aspNetDisabled btn btn-primary btn-sm" style="display: none;">
                                             <br><br>
                                         </div>
@@ -189,7 +176,7 @@
 	                              	<span class="contentBlack13" id="paymentMethod">Visa ***1111</span>
 	                              </div>
 	                               <div class="row">
-	                              	<div class="col-xs-5 contentHeadingBlack13">Expiration Date:</div>
+	                              	<div class="col-xs-5 contentHeadingBlack13"  id="expDateCap">Expiration Date:</div>
 	                              	<span class="contentBlack13"  id="expDate">6/2018</span>	                              
 	                              </div>
 	                               <div class="row">

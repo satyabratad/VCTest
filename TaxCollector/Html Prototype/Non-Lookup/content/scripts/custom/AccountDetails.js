@@ -2,22 +2,31 @@
 var bill2payAccountDetails = {
 
 	submit: function () {
-		debugger;
+		
 		bill2payProducts.addProducts();
 		bill2payAccountDetails.updateCartHeader();		
-		bill2payAccountDetails.populateGrid();			
+		bill2payAccountDetails.populateGrid();	
+		
        //window.location.href = 'file:///D:/Bill2Pay%20Html/Home.html?products=' + JSON.stringify(products)
     },
     redirectToSelt: function(){
-	debugger;
+	
 	var json=SerializeDbObject();	
 	redirect('Home.html?dbObject=' + json);		
 },
     showCart: function(){
-		debugger;
+		
+				
 		$("#clientName").html(dbObject.CustomerName);
-		var param=getParameterByName('dbObject');
+		try{
+			var param=getParameterByName('dbObject');
 			DeSrializeDbObject(param);
+		}
+		catch(err){
+			
+		}
+		
+		populateBreadcrumb();	
 		if(dbObject.Products!=null){
 			
 			$("#cartCount").html(dbObject.Products.length);	
@@ -52,7 +61,7 @@ var bill2payAccountDetails = {
 	},
     
 	populateGrid: function () {
-		debugger;
+		
 		$("#cartGrid").css("display","block");
 		var html = '';
 		var totalAmount=0;
@@ -129,7 +138,7 @@ var bill2payAccountDetails = {
 	    
 	    //subtotal
 	     html += '<tr>';
-	     html += ' <td class="table-row-bold" colspan="3" align="right">Subtotal (' + products.length + ' items) </td>';
+	     html += ' <td class="table-row-bold" colspan="3" align="right">Subtotal (' + products.length + ' items): </td>';
 		 html += '<td class="table-row-bold" align="right">$' + totalAmount + '</td>';
 		 html += '</tr>';
 		  	
@@ -141,9 +150,57 @@ var bill2payAccountDetails = {
 	    $('#cartGrid').append(html);
 	   
     },
+   validateDuplicateItem: function (){
    
+        var status = true;
+
+        var acct1 =  $('#txtLookupAccount1').val();
+        var acct2 =  $('#txtLookupAccount2').val();
+        var acct3 =  $('#txtLookupAccount3').val();
+        var flag = 0;
+
+        for (var i = 0; i < dbObject.Products.length; i++) {
+            
+            flag = 0;
+            if (dbObject.Products[i].ProductName.toUpperCase()=="TAX BILL"){
+			    if (acct1 == getValueFromJson(dbObject.Products[i].ACC1))
+                {
+                    flag++;
+                }
+                if (acct2 == getValueFromJson(dbObject.Products[i].ACC2))
+                {                
+                    flag++;
+                }
+                if (acct3 == getValueFromJson(dbObject.Products[i].ACC3))
+                {                
+                    flag++;
+                }
+           
+                if (flag==3)
+                {
+                    status=false;
+                    break;
+                }    
+            }  
+            else
+            {
+                if (acct1 == getValueFromJson(dbObject.Products[i].ACC1))
+                {
+                    flag++;
+                }
+
+                if (flag==1)
+                {
+                    status=false;
+                    break;
+                }  
+            }  
+		}	
+
+        return status;
+   },
     removeItemsFromCart: function () {
-    	debugger;
+    	
     	var itemIndex=$('#selectedIndex').val();
 		bill2payProducts.removeProduct(itemIndex);
 		bill2payAccountDetails.updateCartHeader();		

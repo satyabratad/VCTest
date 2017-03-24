@@ -29,7 +29,7 @@
                   <div class="col-xs-12 header" style="padding:0px;">
                    <div class="row">
                    <div class="col-xs-12">
-                     <img id="imgClientLogo" alt="Client Logo" title="The Client Logo" class="img-responsive" onerror="this.src=&#39;/img/B2P-Logo4.png&#39;;" src="./content/images/B2P-Logo4.png">  
+                     <img id="imgClientLogo" alt="Client Logo" title="The Client Logo" class="img-responsive" onerror="this.src=&#39;/img/B2P-Logo4.jpg&#39;;" src="./content/images/B2P-Logo4.jpg">  
                      </div>
                      <div class="col-xs-12">
                      <span id="clientName" class="customer" style="vertical-align:bottom "></span> 
@@ -96,23 +96,14 @@
                             <!--// START BREADCRUMBS //-->
                             <div class="container">
                                 <div class="row">
-                                <div class="col-md-11">
-                                        <ul class="breadcrumb">
-                                         <li class="active"><a href="#" onclick="breadcrumbRedirect('Home');"><span class="badge badge-inverse">
-                                                1</span> Account <span class="hidden-xs hidden-sm">Details</span></a></li>
-                                            <li class="active"><a href="#" onclick="breadcrumbRedirect('ContactInfo');"><span class="badge badge-inverse">
-                                                2</span><span class="hidden-xs hidden-sm"> Contact Info</span></a></li>
-                                            <li><a href="https://betapay.bill2pay.com/pay/#" class="inactiveLink"><span class="badge">
-                                                3</span><span class="hidden-xs hidden-sm"> Payment Details</span></a></li>
-                                            <li><a href="https://betapay.bill2pay.com/pay/#" class="inactiveLink"><span class="badge">
-                                                4</span><span class="hidden-xs hidden-sm"> Confirm Payment</span></a></li>
-                                        </ul>
+                               <div class="col-md-11" id="brdCrumb">
+                                        
                                     </div>
                                     <!--Cart-->
                                     <div class="col-md-1">
                                     <a href="#" onclick="bill2payContactInfo.redirectToCartGrid();">
                                      <div id="cartDiv" class="caption img-responsive pull-right" style="min-width:30px; max-width: 35px;min-height:30px; max-height: 35px;">
-                                     	<span id="cartCount"></span>
+                                     	<span id="cartCount" style="font-size: 14px;line-height: 16px;font-family: arial,sans-serif;color:#000000;font-weight: 700;"></span>
                                      </div>     
                                      </a>                               
                                     </div>
@@ -245,8 +236,8 @@
                                                         <span id="lblAccountNumber3">Zip</span>
                                                     </label>
                                                     <input name="txtZip" type="text" maxlength="40" id="txtZip"
-                                                        class="form-control input-sm" onkeypress="return restrictInput(event, restrictionTypes.AlphaNumericAndExtraChars)"
-                                                        onpaste="return reformatInput(this, restrictionTypes.AlphaNumericAndExtraChars)">
+                                                        class="form-control input-sm" onkeypress="return restrictInput(event, restrictionTypes.NumbersOnly)"
+                                                            onpaste="return reformatInput(this, restrictionTypes.NumbersOnly)">
                                                 </div>
                                             </div>
                                             <div class="form-group form-group-sm">

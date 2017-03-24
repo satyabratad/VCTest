@@ -1,5 +1,4 @@
 ﻿<!DOCTYPE html>
-
 <html lang="en">
 <!--<![endif]-->
 <head id="docHead">
@@ -97,25 +96,16 @@
                             <!--// START BREADCRUMBS //-->
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-md-11">
-                                        <ul class="breadcrumb">
-                                            <li class="active"><a href="#" onclick=bill2payAccountDetails.submit();"><span class="badge badge-inverse">
-                                                1</span> Account <span class="hidden-xs hidden-sm">Details</span></a></li>
-                                            <li><a href="https://betapay.bill2pay.com/pay/#" class="inactiveLink"><span class="badge">
-                                                2</span><span class="hidden-xs hidden-sm"> Contact Info</span></a></li>
-                                            <li><a href="https://betapay.bill2pay.com/pay/#" class="inactiveLink"><span class="badge">
-                                                3</span><span class="hidden-xs hidden-sm"> Payment Details</span></a></li>
-                                            <li><a href="https://betapay.bill2pay.com/pay/#" class="inactiveLink"><span class="badge">
-                                                4</span><span class="hidden-xs hidden-sm"> Confirm Payment</span></a></li>
-                                        </ul>
+                                    <div class="col-md-11" id="brdCrumb">
                                     </div>
                                     <!--Cart-->
                                     <div class="col-md-1">
-                                    <a href="#" onclick="bill2payAccountDetails.showgridFromCart();">
-                                     <div id="cartDiv" class="caption img-responsive pull-right" style="min-width:30px; max-width: 35px;min-height:30px; max-height: 35px;">
-                                     	<span id="cartCount"></span>
-                                     </div>     
-                                     </a>                               
+                                        <a href="#" onclick="bill2payAccountDetails.showgridFromCart();">
+                                            <div id="cartDiv" class="caption img-responsive pull-right" style="min-width: 30px;
+                                                max-width: 35px; min-height: 30px; max-height: 35px;">
+                                                <span id="cartCount" style="font-size: 14px;line-height: 16px;font-family: arial,sans-serif;color:#000000;font-weight: 700;"></span>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
                                 <!--// END BREADCRUMBS //-->
@@ -128,8 +118,8 @@
                                                     <div class="form-group form-group-sm">
                                                         <label class="control-label" for="ddlBankAccountType">
                                                             Select Item</label>
-                                                        <select name="ddlCategories" onchange="changeAccountLabel();"
-                                                            id="ddlCategories" class="form-control input-sm">
+                                                        <select name="ddlCategories" onchange="changeAccountLabel();" id="ddlCategories"
+                                                            class="form-control input-sm">
                                                             <option value="DMV Application">DMV Application</option>
                                                             <option selected="selected" value="Tax Bill">Tax Bill</option>
                                                         </select>
@@ -142,7 +132,7 @@
                                                 <input type="hidden" name="hdAccount1" id="hdAccount1" value="required">
                                                 <input type="hidden" name="hdAccount2" id="hdAccount2" value="required">
                                                 <input type="hidden" name="hdAccount3" id="hdAccount3" value="required">
-                                                 <input type="hidden" name="hdPropAmount" id="hdPropAmount" value="required">
+                                                <input type="hidden" name="hdPropAmount" id="hdPropAmount" value="required">
                                                 <div class="form-group form-group-sm">
                                                     <div id="pnlAccount1">
                                                         <label class="control-label" for="txtLookupAccount1" id="lblLookupAccount1">
@@ -183,8 +173,8 @@
                                                         <label class="control-label" for="txtLookupAccount3" id="lblLookupAccount3">
                                                             <span id="lblAccountNumber3">Address1</span>
                                                         </label>
-                                                        <input name="txtPropAddress1" type="text" maxlength="40" id="txtPropAddress1"
-                                                            class="form-control input-sm" onkeypress="return restrictInput(event, restrictionTypes.AlphaNumericAndExtraChars)"
+                                                        <input name="txtPropAddress1" type="text" maxlength="40" id="txtPropAddress1" class="form-control input-sm"
+                                                            onkeypress="return restrictInput(event, restrictionTypes.AlphaNumericAndExtraChars)"
                                                             onpaste="return reformatInput(this, restrictionTypes.AlphaNumericAndExtraChars)">
                                                     </div>
                                                 </div>
@@ -193,8 +183,8 @@
                                                         <label class="control-label" for="txtLookupAccount3" id="lblLookupAccount3">
                                                             <span id="lblAccountNumber3">Address2</span>
                                                         </label>
-                                                        <input name="txtPropAddress2" type="text" maxlength="40" id="txtPropAddress2"
-                                                            class="form-control input-sm" onkeypress="return restrictInput(event, restrictionTypes.AlphaNumericAndExtraChars)"
+                                                        <input name="txtPropAddress2" type="text" maxlength="40" id="txtPropAddress2" class="form-control input-sm"
+                                                            onkeypress="return restrictInput(event, restrictionTypes.AlphaNumericAndExtraChars)"
                                                             onpaste="return reformatInput(this, restrictionTypes.AlphaNumericAndExtraChars)">
                                                     </div>
                                                 </div>
@@ -203,8 +193,8 @@
                                                         <label class="control-label" for="txtLookupAccount3" id="lblLookupAccount3">
                                                             <span id="lblAccountNumber3">City</span>
                                                         </label>
-                                                        <input name="txtPropCity" type="text" maxlength="40" id="txtPropCity"
-                                                            class="form-control input-sm" onkeypress="return restrictInput(event, restrictionTypes.AlphaNumericAndExtraChars)"
+                                                        <input name="txtPropCity" type="text" maxlength="40" id="txtPropCity" class="form-control input-sm"
+                                                            onkeypress="return restrictInput(event, restrictionTypes.AlphaNumericAndExtraChars)"
                                                             onpaste="return reformatInput(this, restrictionTypes.AlphaNumericAndExtraChars)">
                                                     </div>
                                                 </div>
@@ -274,9 +264,8 @@
                                                         <label class="control-label" for="txtLookupAccount3" id="lblLookupAccount3">
                                                             <span id="lblAccountNumber3">Zip</span>
                                                         </label>
-                                                        <input name="txtPropZip" type="text" maxlength="40" id="txtPropZip"
-                                                            class="form-control input-sm" onkeypress="return restrictInput(event, restrictionTypes.AlphaNumericAndExtraChars)"
-                                                            onpaste="return reformatInput(this, restrictionTypes.AlphaNumericAndExtraChars)">
+                                                        <input name="txtPropZip" type="text" maxlength="40" id="txtPropZip" class="form-control input-sm"
+                                                            onkeypress="return isNumberKey(event);">
                                                     </div>
                                                 </div>
                                                 <div class="form-group form-group-sm">
@@ -301,22 +290,33 @@
                                     <div class="col-xs-12 col-sm-6">
                                         <br>
                                         <p class="caption">
-                                            <span id="lblClientMessage" title="Client Message">Welcome to the Tax Collector Payment
-                                                Site</span></p>
+                                            <span id="lblClientMessage" title="Client Message"><span style="text-align: left;
+                                                widows: 2; text-transform: none; background-color: rgb(255,255,255); text-indent: 0px;
+                                                letter-spacing: normal; display: inline !important; font: small Arial, Helvetica, sans-serif;
+                                                white-space: normal; orphans: 2; float: none; color: rgb(0,0,0); word-spacing: 0px;
+                                                -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px"><span style="font-family: Times New Roman">
+                                                    <span style="text-align: left; widows: 2; text-transform: none; background-color: rgb(255,255,255);
+                                                        text-indent: 0px; letter-spacing: normal; display: inline !important; font: small Arial, Helvetica, sans-serif;
+                                                        white-space: normal; orphans: 2; float: none; color: rgb(0,0,0); word-spacing: 0px;
+                                                        -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px">Welcome to the Tax
+                                                        Collector Payment Site</span></span></span></p>
                                     </div>
                                 </div>
                                 <div id="divAccountDetails2" style="display: none;">
-                                   
                                     <table class="table" style="width: 100%;">
-                                    <tr>
-                                    	<td width="65%" id="tdDisplayCartMsg" class="table-row-bold" style="border-collapse: !important;" align="right"><span id="cartProduct"></span>&nbsp;Added to Cart</td>
-                                    	<td width="35%" class="submenu-caption" style="border-collapse: !important;" align="right">Cart Subtotal (<span id="cartHeadingCount"></span>items): <span id="cartHeadingAmount"></span></td>
-                                    </tr>
+                                        <tr>
+                                            <td width="65%" id="tdDisplayCartMsg" class="table-row-bold" style="border-collapse: !important;"
+                                                align="right">
+                                                <span id="cartProduct"></span>&nbsp;Added to Cart
+                                            </td>
+                                            <td width="35%" class="submenu-caption" style="border-collapse: !important;" align="right">
+                                                Cart Subtotal (<span id="cartHeadingCount"></span>items): <span id="cartHeadingAmount">
+                                                </span>
+                                            </td>
+                                        </tr>
                                     </table>
-                                       
                                     <br />
-                                    <div id="cartGrid" >
-                                        
+                                    <div id="cartGrid">
                                     </div>
                                     <br />
                                     <div class="pull-right">
@@ -328,35 +328,34 @@
                                     <br />
                                 </div>
                                 <!--Yes/No confirmation-->
-                                    <div id="myModal" class="modal fade" role="dialog">
-                                        <div class="modal-dialog">
-                                            <!-- Modal content-->
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal">
-                                                        &times;</button>
-                                                    <h4 class="modal-title">
-                                                        Confirm Item delete.</h4>
+                                <div id="myModal" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">
+                                                    &times;</button>
+                                                <h4 class="modal-title">
+                                                    Confirm Item delete.</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div id="div1" role="alert" style="margin-top: 10px;" class="alert alert-success">
+                                                    <div class="status-msg-text">
+                                                        <span class="control-label">Are you sure you want to delete this item?</span></div>
                                                 </div>
-                                                <div class="modal-body">
-                                                    <div id="div1" role="alert" style="margin-top: 10px;" class="alert alert-success">
-                                                        <div class="status-msg-text">
-                                                            <span class="control-label">Are you sure you want to delete this item?</span></div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" id="btnYes" name="btnYes" onclick="bill2payAccountDetails.removeItemsFromCart();" class="btn btn-primary" title="Yes"
-                                                        class="btn btn-default" data-dismiss="modal">
-                                                        Yes</button>
-                                                    <button type="button" id="btnNo" name="btnNo" class="btn btn-primary" title="No"
-                                                        class="btn btn-default" data-dismiss="modal">
-                                                        No</button>
-                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" id="btnYes" name="btnYes" onclick="bill2payAccountDetails.removeItemsFromCart();"
+                                                    class="btn btn-primary" title="Yes" class="btn btn-default" data-dismiss="modal">
+                                                    Yes</button>
+                                                <button type="button" id="btnNo" name="btnNo" class="btn btn-primary" title="No"
+                                                    class="btn btn-default" data-dismiss="modal">
+                                                    No</button>
                                             </div>
                                         </div>
                                     </div>
-                                    <!--End-->
-
+                                </div>
+                                <!--End-->
                             </div>
                         </div>
                     </div>
@@ -370,10 +369,10 @@
                <div class="row">
                   <div class="col-xs-12 menu-footer">
                      <div class="col-sm-6">
-                        <a href="http://www.coj.net/departments/tax-collector.aspx" target="_blank">Duval County Tax Collector</a>           
+                        <a href="#" target="_blank">Duval County Tax Collector</a>           
                      </div>
                      <div class="col-sm-6">      
-                        <a href="http://www.bill2pay.com/" target="_blank">www.Bill2Pay.com</a>
+                        <a href="#" target="_blank">www.Bill2Pay.com</a>
                      </div>
                   </div>
                </div>
@@ -384,7 +383,7 @@
                <div class="row">
                   <div class="col-xs-12 footer">
                      <p>
-                        © 2016 <a href="http://www.bill2pay.com/" target="_blank">BILL2PAY</a> LLC, ALL RIGHTS RESERVED. POWERED BY STREAM.
+                        © 2016 <a href="#" target="_blank">BILL2PAY</a> LLC, ALL RIGHTS RESERVED. POWERED BY STREAM.
                      </p>
                   </div>
                </div>
@@ -463,10 +462,10 @@
             <script src="./content/scripts/B2P.FormValidator.js"></script>
             <script src="./content/scripts/B2P.ValidationType.js"></script>
             <!--Custom JS-->
-             <script src="./content/scripts/custom/Objects.js"></script>
-             <script src="./content/scripts/custom/Settings.js"></script>
+            <script src="./content/scripts/custom/Objects.js"></script>
+            <script src="./content/scripts/custom/Settings.js"></script>
             <script src="./content/scripts/custom/Products.js"></script>
-             <script src="./content/scripts/custom/AccountDetails.js"></script>
+            <script src="./content/scripts/custom/AccountDetails.js"></script>
             <script type="text/javascript">
                 function changeAccountLabel() {
                     if ($("#ddlCategories").val().toUpperCase() == "DMV APPLICATION") {
@@ -480,6 +479,7 @@
                         $("#pnlAccount2").show();
                         $("#pnlAccount3").show();
                     }
+                    bill2payAccountDetails.clear();
                 }
                 function validateForm() {
                     var doc = document;
@@ -494,26 +494,35 @@
                     // Add validation items to validator
 
                     // Check to see if account 1 is present
-//                    acct1 = doc.getElementById('hdAccount1').value;
-//                    if (acct1 !== '') {
-//                        // Set the validator
-//                        validator.addValidationItem(new ValidationItem("txtLookupAccount1", fieldTypes.NonEmptyField, true, "Required."));
-//                    }
+                    if ($("#ddlCategories").val().toUpperCase() == "DMV APPLICATION") {
+                        acct1 = doc.getElementById('hdAccount1').value;
+                        if (acct1 !== '') {
+                            // Set the validator
+                            validator.addValidationItem(new ValidationItem("txtLookupAccount1", fieldTypes.NonEmptyField, true, "Required."));
+                        }
+                    }
+                    else {
+                        acct1 = doc.getElementById('hdAccount1').value;
+                        if (acct1 !== '') {
+                            // Set the validator
+                            validator.addValidationItem(new ValidationItem("txtLookupAccount1", fieldTypes.NonEmptyField, true, "Required."));
+                        }
 
-//                    // Check to see if account 2 is required
-//                    acct2 = doc.getElementById('hdAccount2').value;
-//                    if (acct2 !== '') {
-//                        // Set the validator
-//                        validator.addValidationItem(new ValidationItem("txtLookupAccount2", fieldTypes.NonEmptyField, true, "Required."));
-//                    }
+                        // Check to see if account 2 is required
+                        acct2 = doc.getElementById('hdAccount2').value;
+                        if (acct2 !== '') {
+                            // Set the validator
+                            validator.addValidationItem(new ValidationItem("txtLookupAccount2", fieldTypes.NonEmptyField, true, "Required."));
+                        }
 
-//                    // Check to see if account 3 is required
-//                    acct3 = doc.getElementById('hdAccount3').value;
-//                    if (acct3 !== '') {
-//                        // Set the validator
-//                        validator.addValidationItem(new ValidationItem("txtLookupAccount3", fieldTypes.NonEmptyField, true, "Required."));
-//                    }
-                    debugger;
+                        // Check to see if account 3 is required
+                        acct3 = doc.getElementById('hdAccount3').value;
+                        if (acct3 !== '') {
+                            // Set the validator
+                            validator.addValidationItem(new ValidationItem("txtLookupAccount3", fieldTypes.NonEmptyField, true, "Required."));
+                        }
+                    }
+
                     txtPropAmount = doc.getElementById('hdPropAmount').value;
                     if (txtPropAmount !== '') {
                         // Set the validator
@@ -522,40 +531,44 @@
                     var state = validator.validate();
 
                     if (state) {
-                    	bill2payAccountDetails.submit();
-                        var x = document.getElementById("divAccountDetails1");
-                        if (x != null) {
-                            x.style.display = "none";
-                        }
-                        var y = document.getElementById("divAccountDetails2");
-                        if (y != null) {
-                            y.style.display = "block";
-                        }
+                        if (bill2payAccountDetails.validateDuplicateItem()) {
+                            bill2payAccountDetails.submit();
 
+                            var x = document.getElementById("divAccountDetails1");
+                            if (x != null) {
+                                x.style.display = "none";
+                            }
+                            var y = document.getElementById("divAccountDetails2");
+                            if (y != null) {
+                                y.style.display = "block";
+                            }
+                        }
+                        else {
+                            alert('Duplicate item added!');
+                        }
                     }
 
                     return state;
                 }
-				function addMoreItems()
-				{
-					 var x = document.getElementById("divAccountDetails2");
-                        if (x != null) {
-                            x.style.display = "none";
-                        }
-                        var y = document.getElementById("divAccountDetails1");
-                        if (y != null) {
-                            y.style.display = "block";
-                        }
-				}
-                function removeItems(j) {
-                	debugger;
-                	$('#selectedIndex').val(j);
-                   $('#myModal').modal();
+                function addMoreItems() {
+                    var x = document.getElementById("divAccountDetails2");
+                    if (x != null) {
+                        x.style.display = "none";
+                    }
+                    var y = document.getElementById("divAccountDetails1");
+                    if (y != null) {
+                        y.style.display = "block";
+                    }
                 }
-               
-                $( document ).ready(function() {
-  					bill2payAccountDetails.showCart();
-				});    
+                function removeItems(j) {
+
+                    $('#selectedIndex').val(j);
+                    $('#myModal').modal();
+                }
+
+                $(document).ready(function () {
+                    bill2payAccountDetails.showCart();
+                });    
             </script>
         </div>
     </form>

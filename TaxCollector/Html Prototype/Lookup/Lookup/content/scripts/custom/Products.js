@@ -21,6 +21,7 @@ var bill2payProducts = {
                                 "Name": {"NAME":'CHRISTOPHER P. KALIL'},
 								"Address1":  {"ADDRESS1":'1135 RIVERMONT DR'},
 								//Amount
+								"AmountDue":32.33,
 								"Amount":{"AMOUNT":32.33}
 						  };
 			
@@ -40,6 +41,7 @@ var bill2payProducts = {
                                 "Name": {"NAME":'STEPHEN S. HOOPER'},
 								"Address1":  {"ADDRESS1":'1145 PARKROAD DR'},
 								//Amount
+								"AmountDue":29.21,
 								"Amount":{"AMOUNT":29.21}
 						  };
 			
@@ -68,6 +70,8 @@ var bill2payProducts = {
                                 "Name": {"NAME":'CHRISTOPHER P. KALIL'},
 								"Address1":  {"ADDRESS1":'1135 RIVERMONT DR'},
 								//Amount
+								"AmountDue":32.33,
+								"AmountPaid":0,
 								"Amount":{"AMOUNT":32.33}
 						  };
 			
@@ -87,6 +91,8 @@ var bill2payProducts = {
                                 "Name": {"NAME":'STEPHEN S. HOOPER'},
 								"Address1":  {"ADDRESS1":'1145 PARKROAD DR'},
 								//Amount
+								"AmountDue":29.21,
+								"AmountPaid":0,
 								"Amount":{"AMOUNT":29.21}
 						  };
 			
@@ -104,7 +110,7 @@ var bill2payProducts = {
     debugger;
     	var totalAmount=0;
 		for (var i = 0; i < dbObject.Products.length; i++) {
-				totalAmount=(parseFloat(totalAmount)+parseFloat(getValueFromJson(dbObject.Products[i].Amount))).toFixed(2);
+				totalAmount=(parseFloat(totalAmount)+parseFloat(bill2payAccountDetails.getItemAmount(i))).toFixed(2);
 			}	
 			return '$'+totalAmount;
 	},

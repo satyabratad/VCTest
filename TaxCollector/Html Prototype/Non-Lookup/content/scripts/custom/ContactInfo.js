@@ -5,6 +5,7 @@ showCart: function(){
 	$("#clientName").html(dbObject.CustomerName);
 	var param=getParameterByName('dbObject');
 	DeSrializeDbObject(param);
+	populateBreadcrumb();
 	$("#cartCount").html((dbObject.Products.length==0?"":dbObject.Products.length));
 	bill2payContactInfo.populateContactInfo();
 },

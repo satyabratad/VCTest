@@ -1,10 +1,11 @@
-// JavaScript source code
+﻿// JavaScript source code
 var bill2payPaymentConfirm = {
 showCart: function(){
-	debugger;
+	
 	$("#clientName").html(dbObject.CustomerName);
 	var param=getParameterByName('dbObject');
 	DeSrializeDbObject(param);
+	populateBreadcrumb();
 	$("#cartCount").html((dbObject.Products.length==0?"":dbObject.Products.length));
 	bill2payPaymentConfirm.populateSubtotal();
 	bill2payPaymentConfirm.populateGrid();
@@ -13,7 +14,7 @@ showCart: function(){
 },
 redirectToPaymentSuccess: function(){
 	if(validateForm()){
-		debugger;
+		
 		var confirmMail=$('#txtEmailAddress').val();
 	dbObject.ConfirmEmail=confirmMail;
 	var json=SerializeDbObject();		
@@ -25,7 +26,7 @@ redirectToCartGrid: function(){
     redirect('Home.html?ShowCart=Y&dbObject=' + json);	
 },
 addMoreItems: function(){
-	debugger;
+	
 	var json=SerializeDbObject();		
     redirect('Home.html?dbObject=' + json);	
 },
@@ -42,7 +43,7 @@ editPaymentDetails: function(){
 	redirect('Payment.html?dbObject=' + json);		
 },
 populateContactInfo: function(){
-	debugger;
+	
 	var cinfoName='';
 	var cinfoAddress='';
 	if(dbObject.ContactInfo.ContactName.length>0)
@@ -62,16 +63,30 @@ populateContactInfo: function(){
 	 $("#cinfoAddress").html(cinfoAddress);	
 },
 populateBillingDetails: function(){
-	debugger;
+	
 	if(dbObject.BillingDetails!=null){
-		var paymentMethod="Visa ***"+dbObject.BillingDetails.CardNumber.substr(dbObject.BillingDetails.CardNumber.length-4,4);
-		$("#paymentMethod").html(paymentMethod);
-		$("#expDate").html(dbObject.BillingDetails.ExpDate.replace('_','/'));
-	 	$("#billZip").html(dbObject.BillingDetails.Zip);	
-	} 
+		
+	 	
+	 	if(dbObject.BillingDetails.PaymentType=='CC')
+		{
+			var paymentMethod="Visa ***"+dbObject.BillingDetails.CardNumber.substr(dbObject.BillingDetails.CardNumber.length-4,4);
+			$("#paymentMethod").html(paymentMethod);
+			$("#expDate").html(dbObject.BillingDetails.ExpDate.replace('_','/').replace('|','/').replace('undefined','/'));
+		 	$("#billZip").html(dbObject.BillingDetails.Zip);
+		 	$("#expDateCap").show();
+		 	$("#expDate").show();
+		}
+		else{
+			$("#expDateCap").hide();
+			$("#expDate").hide();
+			var item=dbObject.BillingDetails.NameonBank+"***"+dbObject.BillingDetails.BankAccountNumber.substr(dbObject.BillingDetails.BankAccountNumber.length-4,4);
+			$('#paymentMethod').html(item);
+			
+		}
+	}	
 },
 populateGrid: function () {
-		debugger;
+		
 		$("#cartGrid").css("display","block");
 		var html = '';
 		var totalAmount=0;

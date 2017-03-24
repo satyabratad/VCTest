@@ -1,4 +1,4 @@
-// JavaScript source code
+﻿// JavaScript source code
 var bill2payPaymentSuccess = {
 showCart: function(){
 	debugger;
@@ -7,6 +7,18 @@ showCart: function(){
 	DeSrializeDbObject(param);
 	bill2payPaymentSuccess.populateGrid();
 	$('#headerCustName').html(dbObject.CustomerName);
+	if(dbObject.BillingDetails.PaymentType=='CC')
+		{
+			var paymentMethod="Visa ***"+dbObject.BillingDetails.CardNumber.substr(dbObject.BillingDetails.CardNumber.length-4,4);
+			$("#paymentMethod").html(paymentMethod);
+			
+		}
+		else{
+		
+			var item=dbObject.BillingDetails.NameonBank+"***"+dbObject.BillingDetails.BankAccountNumber.substr(dbObject.BillingDetails.BankAccountNumber.length-4,4);
+			$('#paymentMethod').html(item);
+			
+		}
 	$('#paymentDate').html(bill2payPaymentSuccess.getCurrentDate());
 	//$('#paymentMethod').html(dbObject.CustomerName);
 	$('#confirmMail').html(dbObject.ConfirmEmail);
@@ -107,7 +119,8 @@ populateGrid: function () {
 			}
 			
 			//Amount
-			var amount=row.Amount.AMOUNT;
+			var amount=0;
+			amount=bill2payAccountDetails.getItemAmount(i);
 			
 			//prepare rows
 			
@@ -117,7 +130,7 @@ populateGrid: function () {
 			
 			 html += '<td class='+cellClass+'>' + row.ProductName.replace('_','& ') + '</td>';
 			 html += '<td class='+cellClass+'>' + details + '</td>';
-			 html += '<td class='+cellClass+' align="right">$' + amount + '</td>';
+			 html += '<td class='+cellClass+' align="right">$' + parseFloat(amount).toFixed(2) + '</td>';
 						
 	        html += '</tr>';
 	        totalAmount=(parseFloat(totalAmount)+parseFloat(amount)).toFixed(2);

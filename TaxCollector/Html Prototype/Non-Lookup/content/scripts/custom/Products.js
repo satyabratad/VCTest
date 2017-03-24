@@ -3,7 +3,7 @@ var bill2payProducts = {
 
 
     addProducts: function (json=null) {
-       debugger;
+       
        if(json!=null)
        DeSrializeDbObject(json);
        
@@ -58,7 +58,7 @@ var bill2payProducts = {
 		UpdateDbObject();
     },
 	 removeProduct: function (itemIndex) {
-	 	debugger;
+	 	
 		dbObject.Products.splice( itemIndex, 1 );
 		UpdateDbObject();
     },

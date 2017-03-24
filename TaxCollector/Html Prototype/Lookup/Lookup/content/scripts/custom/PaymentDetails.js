@@ -1,4 +1,4 @@
-// JavaScript source code
+﻿// JavaScript source code
 
 var bill2payPaymentDetails = {
 showCart: function(){
@@ -6,6 +6,7 @@ showCart: function(){
 	$("#clientName").html(dbObject.CustomerName);
 	var param=getParameterByName('dbObject');
 	DeSrializeDbObject(param);
+	populateBreadcrumb();
 	$("#cartCount").html((dbObject.Products.length==0?"":dbObject.Products.length));
 	bill2payPaymentDetails.populateSubtotal();
 	bill2payPaymentDetails.populateOrderDetails();
@@ -23,7 +24,7 @@ redirectToPaymentConfirm: function(){
             // Get the last active tab before postback
             tabName = $("[id*=hdfTabName]").val() != "" ? $("[id*=hdfTabName]").val() : firstTab.attr("href").replace("#", "");
             
-            if(tabName=='pnlTabCredit')
+            if(tabName.indexOf('pnlTabCredit')>=0)
             {
             	paymentType='CC';
 				bill2payPaymentDetails.addCreditCardDetails();
@@ -107,8 +108,8 @@ populateOrderDetails: function(){
            for (var i = 0; i < dbObject.Products.length; i++) {
            		var row=dbObject.Products[i];
           		html += '<tr class="bg-primarydark">';
-          		html += '<td class="col-sm-6 text-uppercase"><label id="ItemName">'+row.ProductName.replace(' ',' &').replace('_','')+' </label> </td>';
-           		html += '<td style="text-align:right"><label id="ItemAmount">$' + row.Amount.AMOUNT+'</label> </td>';
+          		html += '<td class="col-sm-6 text-uppercase"><label id="ItemName">'+(row.ProductName.toUpperCase().indexOf('TEST')>=0?row.ProductName.replace(' ',' &').replace('_',''):row.ProductName)+' </label> </td>';
+           		html += '<td style="text-align:right"><label id="ItemAmount">$' + parseFloat(bill2payAccountDetails.getItemAmount(i)).toFixed(2)+'</label> </td>';
           		html +=  '</tr>';
           		html +=  '<tr>';
           		if(row.ACC1!=null){

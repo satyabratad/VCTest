@@ -22,14 +22,14 @@
 <body>
     <form method="post" id="frmDefault" autocomplete="off">
     <div class="container" style="max-width: 970px;">
-       <!--// START LOGO, HEADER AND NAV //-->
+        <!--// START LOGO, HEADER AND NAV //-->
         <header class="container">
         		<!--Logo-->
                <div class="row">
                   <div class="col-xs-12 header" style="padding:0px;">
                    <div class="row">
                    <div class="col-xs-12">
-                     <img id="imgClientLogo" alt="Client Logo" title="The Client Logo" class="img-responsive" onerror="this.src=&#39;/img/B2P-Logo4.png&#39;;" src="./content/images/B2P-Logo4.png">  
+                     <img id="imgClientLogo" alt="Client Logo" title="The Client Logo" class="img-responsive" onerror="this.src=&#39;/img/B2P-Logo4.jpg&#39;;" src="./content/images/B2P-Logo4.jpg">  
                      </div>
                      <div class="col-xs-12">
                      <span id="clientName" class="customer" style="vertical-align:bottom "></span> 
@@ -96,24 +96,15 @@
                             <!--// START BREADCRUMBS //-->
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-md-11">
-                                        <ul class="breadcrumb">
-                                            <li class="active"><a href="https://betapay.bill2pay.com/pay/"><span class="badge badge-inverse">
-                                                1</span> Account <span class="hidden-xs hidden-sm">Details</span></a></li>
-                                            <li><a href="https://betapay.bill2pay.com/pay/#" class="inactiveLink"><span class="badge">
-                                                2</span><span class="hidden-xs hidden-sm"> Contact Info</span></a></li>
-                                            <li><a href="https://betapay.bill2pay.com/pay/#" class="inactiveLink"><span class="badge">
-                                                3</span><span class="hidden-xs hidden-sm"> Payment Details</span></a></li>
-                                            <li><a href="https://betapay.bill2pay.com/pay/#" class="inactiveLink"><span class="badge">
-                                                4</span><span class="hidden-xs hidden-sm"> Confirm Payment</span></a></li>
-                                        </ul>
+                                    <div class="col-md-11" id="brdCrumb">
                                     </div>
                                     <!--Cart-->
                                     <div class="col-md-1">
                                         <a href="#" onclick="bill2payAccountDetails.showgridFromCart();">
                                             <div id="cartDiv" class="caption img-responsive pull-right" style="min-width: 30px;
                                                 max-width: 35px; min-height: 30px; max-height: 35px;">
-                                                <span id="cartCount"></span>
+                                                <span id="cartCount" style="font-size: 14px; line-height: 16px; font-family: arial,sans-serif;
+                                                    color: #000000; font-weight: 700;"></span>
                                             </div>
                                         </a>
                                     </div>
@@ -148,9 +139,9 @@
                                                         <label class="control-label" for="txtLookupAccount1" id="lblLookupAccount1">
                                                             <span id="lblAccountNumber1">Numbers Before Dash</span>
                                                         </label>
-                                                        <input name="txtLookupAccount1" type="text" maxlength="10" id="txtLookupAccount1"
-                                                            class="form-control input-sm" onkeypress="return restrictInput(event, restrictionTypes.AlphaNumericAndExtraChars)"
-                                                            onpaste="return reformatInput(this, restrictionTypes.AlphaNumericAndExtraChars)">
+                                                        <input name="txtLookupAccount1" type="text" maxlength="6" id="txtLookupAccount1"
+                                                            class="form-control input-sm" onkeypress="return restrictInput(event, restrictionTypes.NumbersOnly)"
+                                                            onpaste="return reformatInput(this, restrictionTypes.NumbersOnly)">
                                                     </div>
                                                 </div>
                                                 <div class="form-group form-group-sm">
@@ -158,9 +149,8 @@
                                                         <label class="control-label" for="txtLookupAccount2" id="lblLookupAccount2">
                                                             <span id="lblAccountNumber2">Numbers After Dash</span>
                                                         </label>
-                                                        <input name="txtLookupAccount2" type="text" maxlength="4" id="txtLookupAccount2"
-                                                            class="form-control input-sm" onkeypress="return restrictInput(event, restrictionTypes.NumbersOnly)"
-                                                            onpaste="return reformatInput(this, restrictionTypes.NumbersOnly)">
+                                                        <input name="txtLookupAccount2" maxlength="6" id="txtLookupAccount2" class="form-control input-sm"
+                                                            onkeypress="return restrictInput(event, restrictionTypes.NumbersOnly)" onpaste="return reformatInput(this, restrictionTypes.NumbersOnly)">
                                                     </div>
                                                 </div>
                                                 <div class="form-group form-group-sm" style="display: none;">
@@ -224,10 +214,10 @@
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <input type="button" name="btnClear" value="Cancel" onclick="bill2payAccountDetails.clear(); toggleLookUp(0);"
-                                                                    id="Button1" title="Cancel" class="btn btn-link btn-sm" data-dismiss="modal">
+                                                                    id="Button1" title="Cancel" class="btn btn-link btn-sm" data-dismiss="modal" />
                                                                 <input type="button" name="btnLookupGo" value="Confirm and Continue" onclick="toggleLookUp(2);"
                                                                     id="Button2" title="Confirm and Continue" class="btn btn-sm btn-primary btn-sm"
-                                                                    data-dismiss="modal">
+                                                                    data-dismiss="modal" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -246,19 +236,28 @@
                                     <div class="col-xs-12 col-sm-6">
                                         <br>
                                         <p class="caption">
-                                            <span id="lblClientMessage" title="Client Message">Welcome to the Tax Collector Payment
-                                                Site</span></p>
+                                           <span id="lblClientMessage" title="Client Message"><span style="text-align: left;
+                                                widows: 2; text-transform: none; background-color: rgb(255,255,255); text-indent: 0px;
+                                                letter-spacing: normal; display: inline !important; font: small Arial, Helvetica, sans-serif;
+                                                white-space: normal; orphans: 2; float: none; color: rgb(0,0,0); word-spacing: 0px;
+                                                -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px"><span style="font-family: Times New Roman">
+                                                    <span style="text-align: left; widows: 2; text-transform: none; background-color: rgb(255,255,255);
+                                                        text-indent: 0px; letter-spacing: normal; display: inline !important; font: small Arial, Helvetica, sans-serif;
+                                                        white-space: normal; orphans: 2; float: none; color: rgb(0,0,0); word-spacing: 0px;
+                                                        -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px">Welcome to the Tax
+                                                        Collector Payment Site</span></span></span></p>
                                     </div>
                                 </div>
                                 <div id="divAccountDetails2" style="display: none;">
                                     <table class="table" style="width: 100%;">
                                         <tr>
-                                            <td id="tdDisplayCartMsg" class="table-alternateRow-bold" style="border-collapse: !important;"
+                                            <td width="65%" id="tdDisplayCartMsg" class="table-row-bold" style="border-collapse: !important;"
                                                 align="right">
                                                 <span id="cartProduct"></span>&nbsp;Added to Cart
                                             </td>
-                                            <td class="table-row-bold" style="border-collapse: !important;" align="right">
-                                                Cart Subtotal (<span id="cartHeadingCount"></span>items):<span id="cartHeadingAmount"></span>
+                                            <td width="35%" class="submenu-caption" style="border-collapse: !important;" align="right">
+                                                Cart Subtotal (<span id="cartHeadingCount"></span>items): <span id="cartHeadingAmount">
+                                                </span>
                                             </td>
                                         </tr>
                                     </table>
@@ -316,14 +315,19 @@
                                                         <label class="control-label" for="txtAmountEdit" id="lblAmountEdit">
                                                             <span id="spanAmountCaption">Amount</span>
                                                         </label>
-                                                        <input name="txtAmountEdit" type="text" maxlength="40" id="txtAmountEdit" class="form-control input-sm" />
+                                                        <input name="txtAmountEdit" type="text" maxlength="40" id="txtAmountEdit" class="form-control input-sm"
+                                                            onkeypress="return isNumberKey(event);" />
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <input type="hidden" name="hidUpdateItemAmount" id="hidUpdateItemAmount" value="required">
-                                        <input type="button" name="btnUpdate" value="Update" onclick="return updateCartItem();"
-                                            id="btnUpdate" title="Lookup" class="btn btn-primary btn-sm pull-right" />
+                                        <div class="pull-right">
+                                            <input type="button" name="btnUpdate" value="Update Cart" onclick="return updateCartItem();"
+                                                id="btnUpdate" title="Update Cart" class="btn btn-primary " />
+                                            <input type="button" name="btnContinue" value="Continue" onclick="bill2payAccountDetails.submitToContactDetails();"
+                                                id="btnContinue" title="Continue" class="btn btn-primary " />
+                                        </div>
                                         <br />
                                     </div>
                                     <br />
@@ -529,18 +533,22 @@
                     }
                     else if (j == 2) {
 
-                        if (z != null) {
-                            z.style.display = "block";
+                        if (bill2payAccountDetails.validateDuplicateItem()) {
+                            bill2payAccountDetails.submit();
+                            if (z != null) {
+                                z.style.display = "block";
+                            }
+                            if (x != null) {
+                                x.style.display = "none";
+                            }
+                            if (y != null) {
+                                y.style.display = "none";
+                            }
                         }
-                        if (x != null) {
-                            x.style.display = "none";
+                        else {
+                            alert('Duplicate item added!');
                         }
-                        if (y != null) {
-                            y.style.display = "none";
-                        }
-                        debugger;
 
-                        bill2payAccountDetails.submit();
                     }
                     else if (j == 3) {
                         if (z != null) {
@@ -597,32 +605,41 @@
 
                     document.getElementById("hidUpdateItemAmount").value = j;
 
-                    debugger;
                     for (var i = 0; i < dbObject.Products.length; i++) {
+                        var amount = 0;
 
-                        if (dbObject.Products[i].ProductName.toUpperCase() == "TEST & NAME") {
+                        if (i == j) {
+                            if (dbObject.Products[i].Amount != null) {
+                                if (isNaN(parseFloat(dbObject.Products[i].Amount))) {
+                                    amount = getValueFromJson(dbObject.Products[i].Amount);
+                                }
+                                else
+                                    amount = dbObject.Products[i].Amount;
 
-                            $("#spanSelectedItem").text(dbObject.Products[i].ProductName);
-                            $("#spanLookupAccount1").text(getValueFromJson(dbObject.Products[i].ACC1));
-                            $("#spanLookupAccount2").text(getValueFromJson(dbObject.Products[i].ACC2));
-                            $("#txtAmountEdit").val(getValueFromJson(dbObject.Products[i].Amount));
+                            }
+                            if (dbObject.Products[i].ProductName.toUpperCase() == "TEST & NAME") {
 
-                            $("#spanLookupAccount1Caption").text("Numbers Before Dash");
-                            $("#spanLookupAccount2Caption").text("Numbers After Dash");
+                                $("#spanSelectedItem").text(dbObject.Products[i].ProductName);
+                                $("#spanLookupAccount1").text(getValueFromJson(dbObject.Products[i].ACC1));
+                                $("#spanLookupAccount2").text(getValueFromJson(dbObject.Products[i].ACC2));
+                                $("#txtAmountEdit").val(parseFloat(amount).toFixed(2));
 
+                                $("#spanLookupAccount1Caption").text("Numbers Before Dash");
+                                $("#spanLookupAccount2Caption").text("Numbers After Dash");
+
+                            }
+                            else {
+
+                                $("#spanSelectedItem").text(dbObject.Products[i].ProductName);
+                                $("#spanLookupAccount1").text(getValueFromJson(dbObject.Products[i].ACC1));
+                                $("#spanLookupAccount2").text(getValueFromJson(dbObject.Products[i].ACC2));
+                                $("#txtAmountEdit").val(parseFloat(amount).toFixed(2));
+
+                                $("#spanLookupAccount1Caption").text("Account1");
+                                $("#spanLookupAccount2Caption").text("Account2");
+
+                            }
                         }
-                        else {
-
-                            $("#spanSelectedItem").text(dbObject.Products[i].ProductName);
-                            $("#spanLookupAccount1").text(getValueFromJson(dbObject.Products[i].ACC1));
-                            $("#spanLookupAccount2").text(getValueFromJson(dbObject.Products[i].ACC2));
-                            $("#txtAmountEdit").val(getValueFromJson(dbObject.Products[i].Amount));
-
-                            $("#spanLookupAccount1Caption").text("Account1");
-                            $("#spanLookupAccount2Caption").text("Account2");
-
-                        }
-
                     }
                 }
 
@@ -635,6 +652,7 @@
                         $("#lblAccountNumber1").text('Account1');
                         $("#lblAccountNumber2").text('Account2');
                     }
+                    bill2payAccountDetails.clear();
                 }
 
                 function setLookUpValue(prod) {
@@ -642,23 +660,55 @@
                         if (getValueFromJson(prod.ProductName).toString().toUpperCase() == "TEST & NAME") {
                             $("#spanSelectedItem").text(getValueFromJson(prod.Name));
                             $("#lookupAddress").text(getValueFromJson(prod.Address1));
-                            $("#lookupAmount").text(getValueFromJson(prod.Amount));
+                            $("#lookupAmount").text('$'+getValueFromJson(prod.Amount));
                         }
                         else {
                             $("#lookupName").text(getValueFromJson(prod.Name));
                             $("#lookupAddress").text(getValueFromJson(prod.Address1));
-                            $("#lookupAmount").text(getValueFromJson(prod.Amount));
+                            $("#lookupAmount").text('$' + getValueFromJson(prod.Amount));
                         }
                     }
+                }
+
+                function getAmount(itemIndex) {
+                    var amount = 0;
+                    if (dbObject.Products[itemIndex].Amount != null) {
+                        if (isNaN(parseFloat(dbObject.Products[itemIndex].Amount))) {
+                            amount = getValueFromJson(dbObject.Products[itemIndex].Amount);
+                        }
+                        else
+                            amount = dbObject.Products[itemIndex].Amount;
+
+                    }
+                    return amount;
                 }
 
                 function updateCartItem() {
                     debugger;
                     var index = document.getElementById("hidUpdateItemAmount").value;
 
-                    dbObject.Products[index].Amount.AMOUNT = $("#txtAmountEdit").val();
+                    var doc = document;
+                    var item = new ValidationItem();
+
+                    // Create instance of the form validator
+                    var validator = new FormValidator();
+                    validator.setErrorMessageHeader("Please review the following errors and resubmit the form:\n\n")
+                    validator.setInvalidCssClass("has-error");
+                    validator.setAlertBoxStatus(false);
+                    if (parseFloat($("#txtAmountEdit").val()) > parseFloat(getAmount(index))) {
+                        // Set the validator
+                        validator.addValidationItem(new ValidationItem("txtAmountEdit", fieldTypes.AmountDue, true, "Invalid Amount"));
+                        $("#txtAmountEdit").val(getAmount(index));
+                        return validator.validate();
+                    }
+
+                    //products[index].AmountDue = parseFloat(dbObject.Products[index].Amount.AMOUNT) - parseFloat($("#txtAmountEdit").val());
+                    var amountDue = parseFloat(dbObject.Products[index].Amount.AMOUNT) - parseFloat($("#txtAmountEdit").val());
+                    products[index].AmountPaid = parseFloat(dbObject.Products[index].Amount.AMOUNT) - amountDue;
+                    UpdateDbObject();
                     toggleLookUp(4);
                 }
+
 
                 $(document).ready(function () {
                     bill2payAccountDetails.showCart();

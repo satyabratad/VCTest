@@ -158,7 +158,10 @@ function ValidationItem(field, fieldType, styleParent, errorMsg) {
             // USA zip codes can match zip or zip+4
             this.isValid = validate(this.field, /^\d{5}(?:-\d{4})?$/);
             break;
-
+ 		case fieldTypes.AmountDue:
+            // USA zip codes can match zip or zip+4
+            this.isValid = false;
+            break;
         default:
             this.isValid = false;
     }

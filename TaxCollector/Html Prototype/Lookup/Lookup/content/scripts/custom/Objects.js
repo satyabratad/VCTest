@@ -3,8 +3,8 @@
 	"ContactInfo":null,
 	"BillingDetails":null,
 	"ConfirmEmail":null,
-	"CustomerName":"Duval Country Tax Collector",
-	
+	"CustomerName":"City of Melbourne",
+	"Breadcrumb":null
 }
 //Products contains 
 //1. Product Details
@@ -13,13 +13,13 @@
 var products = [];
 var contactInfo = null;
 var billingDetails=null;
-
 var breadcrumbs=[];
 
 function UpdateDbObject(){
 	dbObject.Products=products;	
 	dbObject.ContactInfo=contactInfo;	
 	dbObject.BillingDetails=billingDetails;	
+	dbObject.Breadcrumb=breadcrumbs;
 }
 
 function SerializeDbObject(){
@@ -28,16 +28,17 @@ function SerializeDbObject(){
 function DeSrializeDbObject(json){
 	debugger;
     try{
-	var obj=jQuery.parseJSON(json)
-	dbObject.Products=obj.Products;
-	dbObject.ContactInfo=obj.ContactInfo;
-	dbObject.BillingDetails=obj.BillingDetails;
-	dbObject.ConfirmEmail=obj.ConfirmEmail;
-	
-	products=obj.Products;
-	contactInfo = obj.ContactInfo;
-	billingDetails=obj.BillingDetails;
-	breadcrumbs=obj.Breadcrumb;
+		var obj=jQuery.parseJSON(json)
+		dbObject.Products=obj.Products;
+		dbObject.ContactInfo=obj.ContactInfo;
+		dbObject.BillingDetails=obj.BillingDetails;
+		dbObject.ConfirmEmail=obj.ConfirmEmail;
+		dbObject.Breadcrumb=obj.Breadcrumb;
+		
+		products=obj.Products;
+		contactInfo = obj.ContactInfo;
+		billingDetails=obj.BillingDetails;
+		breadcrumbs=obj.Breadcrumb;
     }
     catch(err){
     }
@@ -63,8 +64,7 @@ function getParameterByName( name ){
 		   }
 	}
 function getValueFromJson(JsonObj){
-	debugger;
-		for (var key in JsonObj) {
+			for (var key in JsonObj) {
 		    return JsonObj[key];
 		}	
 	}
@@ -91,92 +91,70 @@ function isNumberKey(evt){
     }
     return true;
 }
-/*
 //Menu
-function getMenuItem(Page){
-	var html='';
-	for(i=0;i<dbObject.Breadcrumb.length;i++){
-		if(dbObject.Breadcrumb[i]!=null){
-			
-				if(page==dbObject.Breadcrumb[i].Page)
-				{
-					html+='<li class="'+dbObject.Breadcrumb[i].LiClass+'"><a href="#" class='+dbObject.Breadcrumb[i].anchorClass+'"><span class="'+dbObject.Breadcrumb[i].SpanClass+'">';
-			    	html+=dbObject.Breadcrumb[i].Index+'</span> Account <span class="hidden-xs hidden-sm">Details</span></a></li>';
-				}
-				return html;
-			}
-		else{
-			switch(page)
-			{
-				case 'Home':
-				
-		 			var item={"Page":"Home","Index":"1","LiClass":"active","SpanClass":"badge badge-inverse","anchorClass":"","OnClick":"onclick=breadcrumbRedirect('Home');"};
-		 			
-		 			dbObject.Breadcrumb.push(item);	
-		 			return html;	
-				break;
-				case 'ContactInfo':
-				
-		 			var item={"Page":"Home","Index":"1","LiClass":"active","SpanClass":"badge badge-inverse","anchorClass":"","OnClick":"onclick=breadcrumbRedirect('Home');"};
-		 			
-		 			dbObject.Breadcrumb.push(item);	
-		 			return html;	
-				break;
-				
-		}	
-			
-		}
-}
 
 function getPageIndex(Page){
-	for(i=0;i<dbObject.Breadcrumb.length;i++){
-		if(Page==dbObject.Breadcrumb.Page)
-			return (i+1);
+	for(i=0;i<breadcrumbs.length;i++){
+		if(Page.toUpperCase()==breadcrumbs[i].Page.toUpperCase())
+			return i;
 	}
 }
 function populateBreadcrumb(){
-	  
-    var page=window.location.href.split('/').slice(0,-1).replace('.html','');
-    
-    if(!(dbObject.Breadcrumb.length>0)){
-	    var menuItem={"Page":"Home","Index":"1","Visited":"N"};
-	    dbObject.Breadcrumb.push(menuItem);
-	    menuItem={"Page":"ContactInfo","Index":"2","Visited":"N"};
-	    dbObject.Breadcrumb.push(menuItem);
-	    menuItem={"Page":"Payment","Index":"3","Visited":"N"};
-	    dbObject.Breadcrumb.push(menuItem);
-	    menuItem={"Page":"PaymentConfirm","Index":"4","Visited":"N"};
-	    dbObject.Breadcrumb.push(menuItem);		
+	  debugger;
+    var page=window.location.href.split('/').slice(-1).pop().replace('.html','');
+    if(page.indexOf('?')>=0){
+		page=page.split('?')[0];
 	}
     
-    for(i=0;i<dbObject.Breadcrumb.length;i++){
-			
-				if(page==dbObject.Breadcrumb[i].Page)
-				{
-					dbObject.Breadcrumb[i].Visited='Y';
-				}
-		
+    if(dbObject.Breadcrumb==null){
+	    var menuItem={"Page":"HomeLookUp","MENUNAME":"Account","SPANHIDDEN":"Details","Index":"1","Visited":"N"};
+	    breadcrumbs.push(menuItem);
+	    menuItem={"Page":"ContactInfoLookup","MENUNAME":"Contact","SPANHIDDEN":"Info","Index":"2","Visited":"N"};
+	    breadcrumbs.push(menuItem);
+	    menuItem={"Page":"PaymentLookup","MENUNAME":"Payment","SPANHIDDEN":"Details","Index":"3","Visited":"N"};
+	    breadcrumbs.push(menuItem);
+	    menuItem={"Page":"PaymentConfirmLookup","MENUNAME":"Confirm","SPANHIDDEN":"Payment","Index":"4","Visited":"N"};
+	    breadcrumbs.push(menuItem);	
+	    	
 	}
+	
+	breadcrumbs[getPageIndex(page)].Visited='Y';
+	UpdateDbObject();
     
     var html=' <ul class="breadcrumb">';
+    var itemIndex=0;
     for(i=0;i<dbObject.Breadcrumb.length;i++){
-			if(dbObject.Breadcrumb[i].Visited=='Y')
+    	
+    	if(itemIndex<dbObject.Breadcrumb.length)
+    	{
+			
+				if(dbObject.Breadcrumb[itemIndex].Visited=='Y')
 				{
-						html+='<li class="active"><a href="#" class="" onclick="breadcrumbRedirect('+dbObject.Breadcrumb[i].Page+');"><span class="badge badge-inverse">';
-			    	html+=dbObject.Breadcrumb[i].Index+'</span> Account <span class="hidden-xs hidden-sm">Details</span></a></li>';
+					html+='<li class="active"><a href="#" class="" onclick="breadcrumbRedirect(\''+dbObject.Breadcrumb[itemIndex].Page+'\');"><span class="badge badge-inverse">';
+				    	html+=dbObject.Breadcrumb[itemIndex].Index+'</span> '+dbObject.Breadcrumb[itemIndex].MENUNAME+' <span class="hidden-xs hidden-sm">'+dbObject.Breadcrumb[itemIndex].SPANHIDDEN+'</span></a></li>';
 				}
-			else{
-				if(parseInt(dbObject.Breadcrumb[i].Index)<=getPageIndex(page)){
-					
-				}
-				else{
-					
-				}
-			}
-		
+				else
+				{
+					if(parseInt(dbObject.Breadcrumb[itemIndex].Index)<=getPageIndex(page))
+					{
+							html+='<li class="active"><a href="#" class="" onclick="breadcrumbRedirect('+dbObject.Breadcrumb[itemIndex].Page+');"><span class="badge badge-inverse">';
+						    	html+=dbObject.Breadcrumb[itemIndex].Index+'</span> '+dbObject.Breadcrumb[itemIndex].MENUNAME+' <span class="hidden-xs hidden-sm">'+dbObject.Breadcrumb[itemIndex].SPANHIDDEN+'</span></a></li>';
+					}
+					else
+					{
+							html+='<li class=""><a href="#" class="inactiveLink"><span class="badge">';
+						    	html+=dbObject.Breadcrumb[itemIndex].Index+'</span> '+dbObject.Breadcrumb[itemIndex].MENUNAME+' <span class="hidden-xs hidden-sm">'+dbObject.Breadcrumb[itemIndex].SPANHIDDEN+'</span></a></li>';
+					}
+	    		}
+	    		itemIndex+=1;
+	    }		
+	    	
 	}
+	html+='</ul>';
+		$('#brdCrumb').html('');
+	    $('#brdCrumb').append(html);
 		
-	    
+	  /*  
 	    var html+='<li><a href="https://betapay.bill2pay.com/pay/#" class="inactiveLink"><span class="badge">';
 	    var html+=' 2</span><span class="hidden-xs hidden-sm"> Contact Info</span></a></li>';
 	    var html+='<li><a href="https://betapay.bill2pay.com/pay/#" class="inactiveLink"><span class="badge">';
@@ -184,10 +162,9 @@ function populateBreadcrumb(){
 		var html+='<li><a href="https://betapay.bill2pay.com/pay/#" class="inactiveLink"><span class="badge">';
 		var html+='4</span><span class="hidden-xs hidden-sm"> Confirm Payment</span></a></li>';
 	    var html+='</ul>';
+	   */ 
 	}
 	
-}
-*/
   function breadcrumbRedirect(Page){
   	debugger;
 	var json=SerializeDbObject();	

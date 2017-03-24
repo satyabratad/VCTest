@@ -2,7 +2,7 @@
 var bill2payAccountDetails = {
 
 	submit: function () {
-		debugger;
+		
        
 		bill2payProducts.addProducts();
 		bill2payAccountDetails.updateCartHeader();		
@@ -10,10 +10,17 @@ var bill2payAccountDetails = {
        //window.location.href = 'file:///D:\Tasks\Bill2Pay\Bill2Pay%20Html\HomeLookup.html?products=' + JSON.stringify(products)
     },
     showCart: function(){
-		debugger;
+		
         $("#clientName").html(dbObject.CustomerName);
-		var param=getParameterByName('dbObject');
-		DeSrializeDbObject(param);
+		try{
+			var param=getParameterByName('dbObject');
+			DeSrializeDbObject(param);
+		}
+		catch(err){
+			
+		}
+		
+		populateBreadcrumb();	
 		$("#cartCount").html(dbObject.Products.length);	
 		//show cart grid
 		param=getParameterByName('ShowCart');		
@@ -36,6 +43,7 @@ var bill2payAccountDetails = {
 	},
     updateCartHeader: function(){
 		//Cart header population
+		
 		$("#cartProduct").html($("#ddlCategories").val());
 		$("#cartHeadingCount").html(dbObject.Products.length);
 		$("#cartHeadingAmount").html(bill2payProducts.getCartTotalAmount);	
@@ -43,8 +51,24 @@ var bill2payAccountDetails = {
 		$("#cartCount").html((dbObject.Products.length==0?"":dbObject.Products.length));	
 	},
     
+    getItemAmount: function(itemIndex){
+		if(parseFloat(dbObject.Products[itemIndex].AmountPaid)==0){
+			var amount=0;
+			if(dbObject.Products[itemIndex].Amount!=null){
+                if(isNaN(parseFloat(dbObject.Products[itemIndex].Amount))){
+				amount=getValueFromJson(dbObject.Products[itemIndex].Amount);
+                }
+                else
+                amount=dbObject.Products[itemIndex].Amount;
+                
+			}
+			return amount;
+		}
+		else
+			return dbObject.Products[itemIndex].AmountPaid;
+	},
 	populateGrid: function () {
-		debugger;
+		
 		$("#cartGrid").css("display","block");
 		var html = '';
 		var totalAmount=0;
@@ -54,8 +78,9 @@ var bill2payAccountDetails = {
          html += '<tr>';
           html += '<td class="table-header" width="5%"></td>';
           html += '<td class="table-header" width="5%"></td>';
-         html += '<td class="table-header" width="40%">Item</td>';
+         html += '<td class="table-header" width="30%">Item</td>';
          html += '<td class="table-header" width="40%">Details</td>';
+         html += '<td class="table-header" width="10%">Amount Due</td>';
          html += '<td class="table-header" width="10%">Amount</td>';
          html += '</tr>';
          html += '</thead>';
@@ -107,29 +132,24 @@ var bill2payAccountDetails = {
 			
 			//Amount
 			var amount=0;
-			if(row.Amount!=null){
-                if(isNaN(parseFloat(row.Amount))){
-				amount=getValueFromJson(row.Amount);
-                }
-                else
-                amount=row.Amount;
-			}
+			amount=bill2payAccountDetails.getItemAmount(i);
 			//prepare rows
 			
 			html += '<td class='+cellClass+'>' 
-			html+= '<a onclick="removeItems('+i+');" >';
+			html+= '<a style="cursor:pointer;" onclick="removeItems('+i+');" >';
             html+= '<span class="glyphicon glyphicon-trash"></span>';
             html+='</a>';
 			html+= '</td>';
 
             html += '<td class='+cellClass+'>' 
-			html+= '<a onclick="editItems('+i+');" >';
+			html+= '<a style="cursor:pointer;" onclick="editItems('+i+');" >';
             html+= '<span class="glyphicon glyphicon-edit"></span>';
             html+='</a>';
 			html+= '</td>';
 			
 			 html += '<td class='+cellClass+'>' + row.ProductName.replace('_','& ') + '</td>';
 			 html += '<td class='+cellClass+'>' + details + '</td>';
+			 html += '<td class='+cellClass+' align="right">$' + parseFloat(row.AmountDue).toFixed(2) + '</td>';
 			 html += '<td class='+cellClass+' align="right">$' + parseFloat(amount).toFixed(2) + '</td>';
 						
 	        html += '</tr>';
@@ -138,7 +158,7 @@ var bill2payAccountDetails = {
 	    
 	    //subtotal
 	     html += '<tr>';
-	     html += ' <td class="table-row-bold" colspan="4" align="right">Subtotal (' + products.length + ' items) </td>';
+	     html += ' <td class="table-row-bold" colspan="5" align="right">Subtotal (' + products.length + ' items): </td>';
 		 html += '<td class="table-row-bold" align="right">$' + totalAmount + '</td>';
 		 html += '</tr>';
 		  	
@@ -148,11 +168,43 @@ var bill2payAccountDetails = {
 	   	bill2payAccountDetails.clear();
 	   	$('#cartGrid').html('');
 	    $('#cartGrid').append(html);
-	   
+	   bill2payAccountDetails.updateCartHeader();
     },
+   validateDuplicateItem: function (){
    
+        var status = true;
+
+        var acct1 =  $('#txtLookupAccount1').val();
+        var acct2 =  $('#txtLookupAccount2').val();
+        
+        var flag = 0;
+
+        for (var i = 0; i < dbObject.Products.length; i++) {
+            
+            flag = 0;
+            if ($("#ddlCategories").val().toUpperCase()==dbObject.Products[i].ProductName.toUpperCase()){
+			    if (acct1 == getValueFromJson(dbObject.Products[i].ACC1))
+                {
+                    flag++;
+                }
+                if (acct2 == getValueFromJson(dbObject.Products[i].ACC2))
+                {                
+                    flag++;
+                }                
+           
+                if (flag==2)
+                {
+                    status=false;
+                    break;
+                }    
+               }              
+            }
+		
+
+        return status;
+   },
     removeItemsFromCart: function () {
-    	debugger;
+    	
     	var itemIndex=$('#selectedIndex').val();
 		bill2payProducts.removeProduct(itemIndex);
 		bill2payAccountDetails.updateCartHeader();		
@@ -164,7 +216,7 @@ var bill2payAccountDetails = {
 		}	
     },
      clearItemsFromCart: function (itemIndex) {
-    	debugger;
+    	
     	
 		bill2payProducts.removeProduct(itemIndex);
 		bill2payAccountDetails.updateCartHeader();		
@@ -188,9 +240,11 @@ var bill2payAccountDetails = {
 		 $('#cartGrid').html('');
     },
    submitToContactDetails: function () {
-   debugger;    
+      
 		var json=SerializeDbObject();
-        json=json.replace("&","_");	
+        //json=json.replace("/&/g","_");	
+        json=json.split('&').join('_');
+       
 		redirect('ContactInfoLookup.html?dbObject=' + json);	
       },
 };

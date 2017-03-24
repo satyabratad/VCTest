@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">  
 <head id="docHead">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -97,44 +97,14 @@
                                     <div class="container" style="min-height:50%;">
                                   <!--// START BREADCRUMBS //-->
                                                 <div class="row">
-                                                    <div class="col-md-11">
-                                                        <ul class="breadcrumb">
-                                                            <li class="active">
-                                                                <a href="Home.html">
-                                                                    <span class="badge  badge-inverse">
-                                                                        1
-                                                                    </span> Account <span class="hidden-xs hidden-sm">Details</span>
-                                                                </a>
-                                                            </li>
-                                                            <li class="active">
-                                                                <a href="ContactInfo.html" >
-                                                                    <span class="badge  badge-inverse">
-                                                                        2
-                                                                    </span><span class="hidden-xs hidden-sm"> Contact Info</span>
-                                                                </a>
-                                                            </li>
-                                                            <li class="active">
-                                                                <a href="https://betapay.bill2pay.com/pay/" class="inactiveLink">
-                                                                    <span class="badge badge-inverse">
-                                                                        3
-                                                                    </span><span class="hidden-xs hidden-sm"> Payment Details</span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="https://betapay.bill2pay.com/pay/#" class="inactiveLink">
-                                                                    <span class="badge">
-                                                                        4
-                                                                    </span><span class="hidden-xs hidden-sm"> Confirm Payment</span>
-                                                                </a>
-                                                            </li>
-
-                                                        </ul>
-                                                    </div>
+                                                      <div class="col-md-11" id="brdCrumb">
+                                        
+                                    				</div>
                                                         <!--Cart-->
                                                         <div class="col-md-1">
                                                             <a href="#" onclick="bill2payPaymentDetails.redirectToCartGrid();">
                                      <div id="cartDiv" class="caption img-responsive pull-right" style="min-width:30px; max-width: 35px;min-height:30px; max-height: 35px;">
-                                     	<span id="cartCount"></span>
+                                     	<span id="cartCount" style="font-size: 14px;line-height: 16px;font-family: arial,sans-serif;color:#000000;font-weight: 700;"></span>
                                      </div>     
                                      </a>   
                                                         </div>
@@ -151,7 +121,7 @@
                                                     <div id="pnlOrderDetails">
 
                                                         <br />
-                                                        <p><strong>Order Details</strong></p>
+                                                        <p><strong>My Order Details</strong></p>
                                                         <hr />
                                                         <div id="orderDetails"></div>
                                                     </div>
@@ -252,7 +222,7 @@
                                                                     <div class="col-xs-12 col-sm-4">
                                                                         <div class="form-group form-group-sm">
                                                                             <label class="control-label" for="txtZip">Billing Zip: </label>
-                                                                            <input name="txtBillingZip" id="txtBillingZip" class="form-control input-sm " type="tel" placeholder="Billing Zip" autocomplete="off" />
+                                                                            <input name="txtBillingZip" id="txtBillingZip" class="form-control input-sm " type="tel" placeholder="Billing Zip" autocomplete="off" onkeypress="return restrictInput(event, restrictionTypes.NumbersOnly)" onpaste="return reformatInput(this, restrictionTypes.NumbersOnly)"/>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -594,7 +564,7 @@
             <script type="text/javascript">
 				
 				 $( document ).ready(function() {
-				 	debugger;
+				 	
   					bill2payPaymentDetails.showCart();
   					
 				});   
@@ -746,6 +716,8 @@
 
           // Remove any invalid CSS classes left after changing tabs
           function clearValidationItems(formType) {
+			  if(formType!='CC')
+          		$('#hdfTabName').val("pnlTabCredit");
               switch (formType) {
                   case "CC":
                       // Remove any invalid CSS classes left after changing tabs
