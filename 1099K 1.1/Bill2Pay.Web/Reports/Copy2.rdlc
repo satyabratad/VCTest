@@ -515,7 +515,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!AccountNo.Value, "SubmissionDetails")</Value>
+                <Value>=First(Fields!AccountNumber.Value, "SubmissionDetails")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -1054,8 +1054,8 @@
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="AccountNo">
-          <DataField>AccountNo</DataField>
+        <Field Name="AccountNumber">
+          <DataField>AccountNumber</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="AprilAmount">
