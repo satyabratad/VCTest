@@ -264,11 +264,7 @@
     <Content Include="Database\Data.sql" />
     <Content Include="Database\PostImportDataProcessing.sql" />
     <Content Include="Database\PreImportDataProcessing.sql" />
-    <Content Include="Content\bbpou.css" />
-    <Content Include="Content\BminStyleSheet1.css" />
     <Content Include="Content\bootstrap-table-expandable.css" />
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\colors.css" />
@@ -277,7 +273,6 @@
     <Content Include="Content\css.css" />
     <Content Include="Content\Login.css" />
     <Content Include="Content\sidebar.css" />
-    <Content Include="Content\simple-sidebar.css" />
     <Content Include="Database\UAT_MIgration.sql" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -323,8 +318,6 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="App_Data\Uploads\_dummy.b2p">

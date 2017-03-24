@@ -14,7 +14,7 @@ CREATE FUNCTION [ImportDataSummary]
 )
 RETURNS @K1099SUMMARYCHART TABLE(
 		TransactionYear INT,
-		PayeeAccountNumber VARCHAR(255),
+		PayeeAccountNumber NVARCHAR(20),
 		JANUARY DECIMAL(19,2),
 		FEBRUARY DECIMAL(19,2),
 		MARCH DECIMAL(19,2),
@@ -41,7 +41,7 @@ RETURNS @K1099SUMMARYCHART TABLE(
 AS
 
 BEGIN
-	DECLARE @TEMP_SUMMARY TABLE(
+	DECLARE @TEMPSUMMARY TABLE(
 		TransactionYear INT,
 		TransactionMonth  INT,
 		[PayeeAccountNumber] NVARCHAR(256),
@@ -50,13 +50,13 @@ BEGIN
 		TransactionCount INT
 	)
 
-	INSERT INTO @TEMP_SUMMARY
+	INSERT INTO @TEMPSUMMARY
 	SELECT TransactionYear,TransactionMonth,[PayeeAccountNumber],SUM(TransactionAmount) AS TransactionAmount,TransactionType,COUNT(1) AS TransactionCount
 	
 	FROM 
 		(SELECT [PayeeAccountNumber],YEAR(TransactionDate) AS TransactionYear,
 		MONTH(TransactionDate) AS TransactionMonth,TransactionAmount,TransactionType
-		FROM [RawTransactions] where IsActive = 1
+		FROM [RawTransactions] WHERE IsActive = 1
 	) P
 	
 	GROUP BY 
@@ -84,7 +84,7 @@ BEGIN
 	FROM 
 	(
 	  SELECT TransactionYear,TransactionMonth,PayeeAccountNumber,TransactionAmount
-	  FROM @TEMP_SUMMARY
+	  FROM @TEMPSUMMARY
 	) src
 	pivot
 	(
@@ -101,7 +101,7 @@ BEGIN
 	FROM @K1099SUMMARYCHART CHART
 	LEFT JOIN (
 		SELECT TransactionYear,PayeeAccountNumber,SUM(TransactionAmount) AS TransactionAmount
-			FROM @TEMP_SUMMARY
+			FROM @TEMPSUMMARY
 			GROUP BY TransactionYear,PayeeAccountNumber
 		)GOSS ON GOSS.TransactionYear= CHART.TransactionYear 
 		AND GOSS.PayeeAccountNumber = CHART.PayeeAccountNumber 
@@ -111,7 +111,7 @@ BEGIN
 	FROM @K1099SUMMARYCHART CHART
 	LEFT JOIN (
 			SELECT TransactionYear,PayeeAccountNumber,TransactionType, SUM(TransactionAmount) AS TransactionAmount
-			FROM @TEMP_SUMMARY
+			FROM @TEMPSUMMARY
 			GROUP BY TransactionYear,PayeeAccountNumber,TransactionType
 		)CNP ON CNP.TransactionYear= CHART.TransactionYear 
 		AND CNP.PayeeAccountNumber = CHART.PayeeAccountNumber AND CNP.TransactionType = 'CNP'
@@ -121,7 +121,7 @@ BEGIN
 	FROM @K1099SUMMARYCHART CHART
 	LEFT JOIN (
 		SELECT TransactionYear,PayeeAccountNumber,SUM(TransactionCount) AS TransactionCount
-		FROM @TEMP_SUMMARY
+		FROM @TEMPSUMMARY
 		GROUP BY TransactionYear,PayeeAccountNumber
 	)C ON C.TransactionYear= CHART.TransactionYear 
 		AND C.PayeeAccountNumber = CHART.PayeeAccountNumber

@@ -1,15 +1,21 @@
-﻿using System;
+﻿using Bill2Pay.GenerateIRSFile.Model;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Bill2Pay.GenerateIRSFile.Model;
 
 namespace Bill2Pay.GenerateIRSFile
 {
+    /// <summary>
+    /// Records
+    /// </summary>
     public class Records
     {
+        /// <summary>
+        /// Record Type
+        /// </summary>
         public string RecordType { get; set; }
+
+        /// <summary>
+        /// Fields
+        /// </summary>
         public List<Field> Fields { get; set; }
     }
 }

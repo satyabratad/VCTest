@@ -63,7 +63,7 @@
   <ItemGroup>
     <Compile Include="DateFormats.cs" />
     <Compile Include="FormatConvertHelper.cs" />
-    <Compile Include="GenerateTaxFile.cs" />
+    <Compile Include="IRSFileUtility.cs" />
     <Compile Include="ImportUtility.cs" />
     <Compile Include="Model\Alignment.cs" />
     <Compile Include="Model\CFSFStates.cs" />

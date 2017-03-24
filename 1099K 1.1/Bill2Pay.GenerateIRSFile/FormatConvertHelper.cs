@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bill2Pay.GenerateIRSFile
 {
-
+    /// <summary>
+    /// Format Convert Helper
+    /// </summary>
     public static class FormatConvertHelper
     {
         /// <summary>

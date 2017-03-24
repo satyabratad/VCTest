@@ -212,7 +212,7 @@ namespace Bill2Pay.Web.Controllers
                 return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
             }
 
-            GenerateTaxFile taxFile = new GenerateTaxFile(true, year, User.Identity.GetUserId<long>(), selectedMerchants);
+            IRSFileUtility taxFile = new IRSFileUtility(true, year, User.Identity.GetUserId<long>(), selectedMerchants);
 
             taxFile.ReadFromSchemaFile();
             ViewBag.fileName = "IRSInputFile_Test.txt";
@@ -263,7 +263,7 @@ namespace Bill2Pay.Web.Controllers
                 return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
             }
 
-            GenerateTaxFile taxFile = new GenerateTaxFile(false, year, User.Identity.GetUserId<long>(), selectedMerchants);
+            IRSFileUtility taxFile = new IRSFileUtility(false, year, User.Identity.GetUserId<long>(), selectedMerchants);
 
             taxFile.ReadFromSchemaFile();
             ViewBag.fileName = "IRSInputFile.txt";
@@ -313,7 +313,7 @@ namespace Bill2Pay.Web.Controllers
                 return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
             }
 
-            GenerateTaxFile taxFile = new GenerateTaxFile(false, year, User.Identity.GetUserId<long>(), selectedMerchants, correction:true);
+            IRSFileUtility taxFile = new IRSFileUtility(false, year, User.Identity.GetUserId<long>(), selectedMerchants, correction:true);
 
             taxFile.ReadFromSchemaFile();
             ViewBag.fileName = "IRSCorrectionInputFile.txt";

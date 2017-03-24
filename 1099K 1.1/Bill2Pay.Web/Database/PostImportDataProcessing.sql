@@ -1,25 +1,31 @@
 ﻿IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'PostImportDataProcessing')
 DROP PROCEDURE PostImportDataProcessing
 GO
+
+-- =============================================
+-- Author:		RS Software
+-- Create date: 03/10/2017
+-- Description:	Executing Data processing after transaction imported into Staging
+-- =============================================
 CREATE PROCEDURE [PostImportDataProcessing]
 	@YEAR INT = 2016,
-	@UserId BIGINT=1,
-	@TotalCount INT=0,
-	@FileName VARCHAR(255),
-	@PayerId int
+	@USERID BIGINT=1,
+	@TOTALCOUNT INT=0,
+	@FILENAME VARCHAR(255),
+	@PAYERID INT
 AS
 	DECLARE 
-	@SummaryId INT,
-	@ProcessLog NVARCHAR(1024)='',
-	@RecordCount INT;
+	@SUMMARYID INT,
+	@PROCESSLOG NVARCHAR(1024)='',
+	@RECORDCOUNT INT;
 
 	INSERT INTO ImportSummaries(PaymentYear,ImportDate,UserId,DateAdded,IsActive)
-	values (@YEAR,GETDATE(),@UserId,GETDATE(),1)
-	SET @SummaryId = @@IDENTITY
+	values (@YEAR,GETDATE(),@USERID,GETDATE(),1)
+	SET @SUMMARYID = @@IDENTITY
 
 	DECLARE @K1099SUMMARYCHART TABLE(
 		TransactionYear INT,
-		PayeeAccountNumber VARCHAR(255),
+		PayeeAccountNumber NVARCHAR(20),
 		JANUARY DECIMAL(19,2),
 		FEBRUARY DECIMAL(19,2),
 		MARCH DECIMAL(19,2),
@@ -46,10 +52,10 @@ AS
 	BEGIN TRY  
 	BEGIN TRANSACTION K1099
 
-	SET @ProcessLog = '1099K: Import Process Starts' +CHAR(13)+CHAR(10)
-	SET @ProcessLog = @ProcessLog + 'Import Date: '+CAST(GETDATE() AS VARCHAR) +CHAR(13)+CHAR(10)
-	SET @ProcessLog = @ProcessLog + 'File Name: '+@FileName+CHAR(13)+CHAR(10)
-	SET @ProcessLog = @ProcessLog + 'Transaction Count: '+CAST(@TotalCount AS VARCHAR) +CHAR(13)+CHAR(10)
+	SET @PROCESSLOG = '1099K: Import Process Starts' +CHAR(13)+CHAR(10)
+	SET @PROCESSLOG = @PROCESSLOG + 'Import Date: '+CAST(GETDATE() AS VARCHAR) +CHAR(13)+CHAR(10)
+	SET @PROCESSLOG = @PROCESSLOG + 'File Name: '+@FILENAME+CHAR(13)+CHAR(10)
+	SET @PROCESSLOG = @PROCESSLOG + 'Transaction Count: '+CAST(@TOTALCOUNT AS VARCHAR) +CHAR(13)+CHAR(10)
 	
 	-- ARCHIVE EXISTING DATA
 	UPDATE [RawTransactions] SET Isactive = 0 WHERE IsActive=1
@@ -64,22 +70,22 @@ AS
 		CAST([TransactionAmount] AS DECIMAL(19,2)) AS TransactionAmount, 
 		CAST([TransactionDate] AS DATE) AS TransactionDate,
 		1,
-		@UserId,
+		@USERID,
 		GETDATE()
 		FROM [RawTransactionStagings]
 
-		SET @RecordCount = @@ROWCOUNT
+		SET @RECORDCOUNT = @@ROWCOUNT
 		
 	END TRY
 	BEGIN CATCH
 	PRINT ERROR_MESSAGE();
-	SET @ProcessLog = @ProcessLog + 'INVALID DATA : '+ERROR_MESSAGE()+' ,ERROR CODE : ' +CAST(ERROR_NUMBER() AS VARCHAR)+''+CHAR(13)+CHAR(10)
+	SET @PROCESSLOG = @PROCESSLOG + 'INVALID DATA : '+ERROR_MESSAGE()+' ,ERROR CODE : ' +CAST(ERROR_NUMBER() AS VARCHAR)+''+CHAR(13)+CHAR(10)
 	ROLLBACK TRANSACTION K1099
 	GOTO ENDPROCESS
 	END CATCH;
 	
 	INSERT INTO @K1099SUMMARYCHART
-	SELECT * FROM [ImportDataSummary](@PayerId,@YEAR)
+	SELECT * FROM [ImportDataSummary](@PAYERID,@YEAR)
 
 	-- ARCHIVE EXISTING SUBMISSION STATUS
 	UPDATE S
@@ -94,7 +100,7 @@ AS
 	INNER JOIN @K1099SUMMARYCHART C ON D.Id = C.ImportDetailsId AND ISNULL(C.StatusId,0) IN (0,1,2,3,4)
 
 	DECLARE @PAYERNAME VARCHAR(127)
-	SELECT @PAYERNAME = p.FirstPayerName FROM [PayerDetails] p where Id = @PayerId
+	SELECT @PAYERNAME = p.FirstPayerName FROM [PayerDetails] p where Id = @PAYERID
 
 	INSERT INTO ImportDetails (AccountNumber,ImportSummaryId,TINCheckStatus,TINCheckRemarks,SubmissionSummaryId,TINType,TIN,
 	PayerOfficeCode,GrossAmount,CNPTransactionAmount,FederalWithHoldingAmount,
@@ -104,7 +110,7 @@ AS
 	PaymentIndicatorType,TransactionCount,MerchantId,MerchantCategoryCode,SpecialDataEntry,StateWithHolding,
 	LocalWithHolding,CFSF,IsActive,DateAdded)
 
-	SELECT C.PayeeAccountNumber,@SummaryId,C.TINCheckStatus,C.TINCheckRemarks,C.SubmissionSummaryId,D.TINType,D.PayeeTIN,
+	SELECT C.PayeeAccountNumber,@SUMMARYID,C.TINCheckStatus,C.TINCheckRemarks,C.SubmissionSummaryId,D.TINType,D.PayeeTIN,
 	D.PayeeOfficeCode,C.GrossAmount,C.TotalCPAmount,NULL,
 	C.JANUARY,C.FEBRUARY,C.MARCH,C.APRIL,C.MAY,C.JUNE,C.JULY,C.AUGUST,
 	C.SEPTEMBER,C.OCTOBER,C.NOVEMBER,C.DECEMBER,NULL,SUBSTRING(D.[FirstPayeeName],1,40), 
@@ -114,10 +120,10 @@ AS
 
 	FROM @K1099SUMMARYCHART C
 	INNER JOIN  [MerchantDetails] D ON C.PayeeAccountNumber = D.PayeeAccountNumber 
-		AND D.IsActive = 1 AND D.PayerId = @PayerId
+		AND D.IsActive = 1 AND D.PayerId = @PAYERID
 	WHERE ISNULL(C.StatusId,0) IN (0,1,2,3,4)
 
-	SET @ProcessLog = @ProcessLog + 'Account associated with '+@PAYERNAME+':'+CAST(@@ROWCOUNT AS VARCHAR)+CHAR(13)+CHAR(10)
+	SET @PROCESSLOG = @PROCESSLOG + 'Account associated with '+@PAYERNAME+':'+CAST(@@ROWCOUNT AS VARCHAR)+CHAR(13)+CHAR(10)
 
 	----- Correction ------
 	INSERT INTO SubmissionStatus (PaymentYear,AccountNumber,ProcessingDate,StatusId,IsActive,DateAdded)
@@ -139,26 +145,26 @@ AS
 
 	IF @ORPHANTCOUNT>0
 	BEGIN
-		SET @ProcessLog = @ProcessLog + 'Account not associated with '+@PAYERNAME+':'+CAST(@ORPHANTCOUNT AS VARCHAR)+CHAR(13)+CHAR(10)
+		SET @PROCESSLOG = @PROCESSLOG + 'Account not associated with '+@PAYERNAME+':'+CAST(@ORPHANTCOUNT AS VARCHAR)+CHAR(13)+CHAR(10)
 	END
 
-	SET @ProcessLog = @ProcessLog + 'Import Successful'+CHAR(13)+CHAR(10)
+	SET @PROCESSLOG = @PROCESSLOG + 'Import Successful'+CHAR(13)+CHAR(10)
 
 		COMMIT TRANSACTION K1099
 		END TRY  
 	BEGIN CATCH  
-		SET @ProcessLog = @ProcessLog + 'EXCEPTION : '+ERROR_MESSAGE()
+		SET @PROCESSLOG = @PROCESSLOG + 'EXCEPTION : '+ERROR_MESSAGE()
 		ROLLBACK TRANSACTION K1099
 	END CATCH 
 	
 	ENDPROCESS:
 
 	UPDATE ImportSummaries SET
-		RecordCount = @RecordCount,
-		ProcessLog = @ProcessLog,
-		[FileName] = @FileName,
+		RecordCount = @RECORDCOUNT,
+		ProcessLog = @PROCESSLOG,
+		[FileName] = @FILENAME,
 		ImportDate = GETDATE()
-	WHERE Id = @SummaryId
+	WHERE Id = @SUMMARYID
 	
 	
 

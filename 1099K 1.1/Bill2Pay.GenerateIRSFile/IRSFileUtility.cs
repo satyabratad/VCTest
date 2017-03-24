@@ -1,21 +1,20 @@
-﻿using System;
+﻿using Bill2Pay.GenerateIRSFile.Model;
+using Bill2Pay.Model;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Resources;
-using System.Globalization;
-using System.Collections;
-using System.IO;
-using Newtonsoft.Json;
-using Bill2Pay.GenerateIRSFile.Model;
-using System.Web.Hosting;
-using Bill2Pay.Model;
 using System.Text.RegularExpressions;
+using System.Web.Hosting;
 
 namespace Bill2Pay.GenerateIRSFile
 {
-    public class GenerateTaxFile
+    /// <summary>
+    /// Generate TAX File for IRS
+    /// </summary>
+    public class IRSFileUtility
     {
         #region "Variables"
         List<Records> records;
@@ -39,7 +38,16 @@ namespace Bill2Pay.GenerateIRSFile
         int totalNumberofPayee, totalNumberofARecord, pseMasterId, currentPayer, paymentYear, numberofPayee = 0;
         string cfsf = string.Empty;
         #endregion
-        public GenerateTaxFile(bool testFile, int year, long user, List<string> selectedAccountNo, bool correction = false)
+
+        /// <summary>
+        /// Generate TAX File
+        /// </summary>
+        /// <param name="testFile">true if test file</param>
+        /// <param name="year">Year</param>
+        /// <param name="user">User</param>
+        /// <param name="selectedAccountNo">Llist of selected accounts</param>
+        /// <param name="correction">true if correction</param>
+        public IRSFileUtility(bool testFile, int year, long user, List<string> selectedAccountNo, bool correction = false)
         {
             testFileIndicator = testFile;
             paymentYear = year;
@@ -903,6 +911,10 @@ namespace Bill2Pay.GenerateIRSFile
                 pseDetails.DateAdded = DateTime.Now;
             }
         }
+
+        /// <summary>
+        /// Read  from Schemma file
+        /// </summary>
         public void ReadFromSchemaFile()
         {
             string path = string.Empty;
@@ -1100,6 +1112,9 @@ namespace Bill2Pay.GenerateIRSFile
         }
     }
 
+    /// <summary>
+    /// Enum for Status
+    /// </summary>
     public enum RecordStatus
     {
         NotSubmitted = 1,

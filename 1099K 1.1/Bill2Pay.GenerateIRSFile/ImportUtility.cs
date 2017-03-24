@@ -1,20 +1,18 @@
 ﻿using Bill2Pay.Model;
 using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.IO;
-using System.Data;
 using Bill2Pay.ExceptionLogger;
 using ICSharpCode.SharpZipLib.Zip;
 using ICSharpCode.SharpZipLib.Core;
 using System.Web.Hosting;
-using System.Transactions;
 using System.Data.Entity.Core;
 
 
 namespace Bill2Pay.GenerateIRSFile
 {
+    /// <summary>
+    /// Functionality associated with Transaction  Import
+    /// </summary>
     public class ImportUtility
     {
         int year;
@@ -22,6 +20,13 @@ namespace Bill2Pay.GenerateIRSFile
         long userId;
         int payerId;
 
+        /// <summary>
+        /// Processing Transaction Import
+        /// </summary>
+        /// <param name="year">Year</param>
+        /// <param name="fileName">ZIP file containing formatted CSV</param>
+        /// <param name="UserId">User</param>
+        /// <param name="PayerId">Payer</param>
         public void ProcessInputFileAsync(int year, string fileName, long UserId,int PayerId)
         {
             this.year = year;
@@ -154,7 +159,7 @@ namespace Bill2Pay.GenerateIRSFile
             }
         }
 
-        public static void CreateZip(string rootpath)
+        private static void CreateZip(string rootpath)
         {
             //TODO
         }
