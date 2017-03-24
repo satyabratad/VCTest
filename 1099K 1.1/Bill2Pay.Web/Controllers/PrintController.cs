@@ -9,6 +9,7 @@ using System.IO;
 using Bill2Pay.GenerateIRSFile;
 using System.Web.Hosting;
 using Bill2Pay.ExceptionLogger;
+using System.Configuration;
 
 namespace Bill2Pay.Web.Controllers
 {
@@ -58,10 +59,15 @@ namespace Bill2Pay.Web.Controllers
         }
         public void PrintCopies()
         {
+            var downloadPath = ConfigurationManager.AppSettings["DownloaRootPath"];
+            if(string.IsNullOrEmpty(downloadPath) )
+            {
+                downloadPath = "~/App_Data/Download/k1099/";
+            }
             var errorAccounts = string.Empty;
-            var rootpath = Server.MapPath(string.Format("~/App_Data/Download/k1099/"));
+            var rootpath = Server.MapPath(downloadPath);
             System.IO.Directory.CreateDirectory(rootpath);
-
+            var reportCopyName = string.Empty;
             var list = (List<string>)TempData["PrintableMerchantList"];
             var year = (int)TempData["SelectedYear"];
             string folderName = string.Empty;
@@ -93,8 +99,7 @@ namespace Bill2Pay.Web.Controllers
                     LocalReport localReport;
                     foreach (var reportName in reportNames)
                     {
-                        //var reportName = "CopyA";
-
+                        reportCopyName = accno + "_1099-K_" + reportName + "_" + year.ToString();
                         localReport = new LocalReport();
                         localReport.ReportPath = Server.MapPath("~/Reports/" + reportName + ".rdlc");
                         ReportDataSource reportDataSource = new ReportDataSource("SubmissionDetails", data);
@@ -147,7 +152,7 @@ namespace Bill2Pay.Web.Controllers
                             System.IO.Directory.CreateDirectory(path);
                         }
 
-                        path = string.Format("{0}/{1}/{2}.pdf", rootpath, folderName, reportName);
+                        path = string.Format("{0}/{1}/{2}.pdf", rootpath, folderName, reportCopyName);
                         //File(renderedBytes, mimeType);
                         System.IO.File.WriteAllBytes(path, renderedBytes); // Requires System.IO
                                                                            //Response.AddHeader("content-disposition", "attachment; filename=NorthWindCustomers." + fileNameExtension);
