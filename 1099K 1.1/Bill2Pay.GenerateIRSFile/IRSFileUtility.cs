@@ -792,118 +792,118 @@ namespace Bill2Pay.GenerateIRSFile
                 switch (item.Name.ToUpper())
                 {
                     case "TRANSMITTER’S TIN":
-                        pseDetails.TransmitterTIN = item.Default;
+                        pseDetails.TransmitterTIN = GetFieldValue(item).Trim();
                         break;
                     case "TRANSMITTER CONTROL CODE":
-                        pseDetails.TransmitterControlCode = item.Default;
+                        pseDetails.TransmitterControlCode = GetFieldValue(item).Trim();
                         break;
                     case "TEST FILE INDICATOR":
                         pseDetails.TestFileIndicator = testFileIndicator ? "T" : " ";
                         break;
                     case "FOREIGN ENTITY INDICATOR":
-                        pseDetails.TransmitterForeignEntityIndicator = item.Default;
+                        pseDetails.TransmitterForeignEntityIndicator = GetFieldValue(item).Trim();
                         break;
                     case "TRANSMITTER NAME":
-                        pseDetails.TransmitterName = item.Default;
+                        pseDetails.TransmitterName = GetFieldValue(item).Trim();
                         break;
                     case "TRANSMITTER NAME (CONTINUATION)":
-                        pseDetails.TransmitterNameContinued = item.Default;
+                        pseDetails.TransmitterNameContinued = GetFieldValue(item).Trim();
                         break;
                     case "COMPANY NAME":
-                        pseDetails.CompanyName = item.Default;
+                        pseDetails.CompanyName = GetFieldValue(item).Trim();
                         break;
                     case "COMPANY NAME (CONTINUATION)":
-                        pseDetails.CompanyNameContinued = item.Default;
+                        pseDetails.CompanyNameContinued = GetFieldValue(item).Trim();
                         break;
                     case "COMPANY MAILING ADDRESS":
-                        pseDetails.CompanyMailingAddress = item.Default;
+                        pseDetails.CompanyMailingAddress = GetFieldValue(item).Trim();
                         break;
                     case "COMPANY CITY":
-                        pseDetails.CompanyCity = item.Default;
+                        pseDetails.CompanyCity = GetFieldValue(item).Trim();
                         break;
                     case "COMPANY STATE":
-                        pseDetails.CompanyState = item.Default;
+                        pseDetails.CompanyState = GetFieldValue(item).Trim();
                         break;
                     case "COMPANY ZIP CODE":
-                        pseDetails.CompanyZIP = item.Default;
+                        pseDetails.CompanyZIP = GetFieldValue(item).Trim();
                         break;
                     case "TOTAL NUMBER OF PAYEES":
                         pseDetails.TotalNumberofPayees = numberofPayee;
                         break;
                     case "CONTACT NAME":
-                        pseDetails.ContactName = item.Default;
+                        pseDetails.ContactName = GetFieldValue(item).Trim();
                         break;
                     case "CONTACT TELEPHONE NUMBER & EXTENSION":
-                        pseDetails.ContactTelephoneNumber = item.Default;
+                        pseDetails.ContactTelephoneNumber = GetFieldValue(item).Trim();
                         break;
                     case "CONTACT EMAIL ADDRESS":
-                        pseDetails.ContactEmailAddress = item.Default;
+                        pseDetails.ContactEmailAddress = GetFieldValue(item).Trim();
                         break;
                     case "VENDOR INDICATOR":
-                        pseDetails.VendorIndicator = item.Default;
+                        pseDetails.VendorIndicator = GetFieldValue(item).Trim();
                         break;
                     case "VENDOR NAME":
-                        pseDetails.VendorName = item.Default;
+                        pseDetails.VendorName = GetFieldValue(item).Trim();
                         break;
                     case "VENDOR MAILING ADDRESS":
-                        pseDetails.VendorMailingAddress = item.Default;
+                        pseDetails.VendorMailingAddress = GetFieldValue(item).Trim();
                         break;
                     case "VENDOR CITY":
-                        pseDetails.VendorCity = item.Default;
+                        pseDetails.VendorCity = GetFieldValue(item).Trim();
                         break;
                     case "VENDOR STATE":
-                        pseDetails.VendorState = item.Default;
+                        pseDetails.VendorState = GetFieldValue(item).Trim();
                         break;
                     case "VENDOR ZIP CODE":
-                        pseDetails.VendorZIP = item.Default;
+                        pseDetails.VendorZIP = GetFieldValue(item).Trim();
                         break;
                     case "VENDOR CONTACT NAME":
-                        pseDetails.VendorContactName = item.Default;
+                        pseDetails.VendorContactName = GetFieldValue(item).Trim();
                         break;
                     case "VENDOR CONTACT TELEPHONE NUMBER & EXTENSION":
-                        pseDetails.VendorContactTelephoneNumber = item.Default;
+                        pseDetails.VendorContactTelephoneNumber = GetFieldValue(item).Trim();
                         break;
                     case "VENDOR FOREIGN ENTITY INDICATOR":
-                        pseDetails.VendorForeignEntityIndicator = item.Default;
+                        pseDetails.VendorForeignEntityIndicator = GetFieldValue(item).Trim();
                         break;
                     case "COMBINED FEDERAL/STATE FILING PROGRAM":
-                        pseDetails.CFSF = item.Default;
+                        pseDetails.CFSF = GetFieldValue(item).Trim();
                         break;
                     case "PAYER’S TAXPAYER IDENTIFICATION NUMBER (TIN)":
-                        pseDetails.PayerTIN = item.Default;
+                        pseDetails.PayerTIN = GetFieldValue(item).Trim();
                         break;
                     case "PAYER NAME CONTROL":
-                        pseDetails.PayerNameControl = item.Default;
+                        pseDetails.PayerNameControl = GetFieldValue(item).Trim();
                         break;
                     case "LAST FILING INDICATOR":
-                        pseDetails.LastFilingIndicator = item.Default;
+                        pseDetails.LastFilingIndicator = GetFieldValue(item).Trim();
                         break;
                     case "TYPE OF RETURN":
-                        pseDetails.ReturnType = item.Default;
+                        pseDetails.ReturnType = GetFieldValue(item).Trim();
                         break;
                     case "FIRST PAYER NAME LINE":
-                        pseDetails.FirstPayerName = item.Default;
+                        pseDetails.FirstPayerName = GetFieldValue(item).Trim();
                         break;
                     case "SECOND PAYER NAME LINE":
-                        pseDetails.SecondPayerName = item.Default;
+                        pseDetails.SecondPayerName = GetFieldValue(item).Trim();
                         break;
                     case "TRANSFER AGENT INDICATOR":
-                        pseDetails.TransferAgentIndicator = item.Default;
+                        pseDetails.TransferAgentIndicator = GetFieldValue(item).Trim();
                         break;
                     case "PAYER SHIPPING ADDRESS":
-                        pseDetails.PayerShippingAddress = item.Default;
+                        pseDetails.PayerShippingAddress = GetFieldValue(item).Trim();
                         break;
                     case "PAYER CITY":
-                        pseDetails.PayerCity = item.Default;
+                        pseDetails.PayerCity = GetFieldValue(item).Trim();
                         break;
                     case "PAYER STATE":
-                        pseDetails.PayerState = item.Default;
+                        pseDetails.PayerState = GetFieldValue(item).Trim();
                         break;
                     case "PAYER ZIP CODE":
-                        pseDetails.PayerZIP = item.Default;
+                        pseDetails.PayerZIP = GetFieldValue(item).Trim();
                         break;
                     case "PAYER’S TELEPHONE NUMBER AND EXTENSION":
-                        pseDetails.PayerTelephoneNumber = item.Default;
+                        pseDetails.PayerTelephoneNumber = GetFieldValue(item).Trim();
                         break;
                     default:
                         break;
