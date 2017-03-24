@@ -1,0 +1,16 @@
+﻿.contentHeading {
+    color: blue;
+    font-size: 18px;
+}
+.caption {
+    color: blue;
+     font-size: 16px;
+}
+.font-bold{
+	font-weight:bold;
+}
+.imageContainer {
+       width:30px; 
+       height:30px; 
+       background-image: url("../../content/images/cart.png");
+ }
