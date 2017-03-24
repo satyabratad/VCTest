@@ -192,7 +192,7 @@ namespace Bill2Pay.Web.Controllers
 
             var status = ApplicationDbContext.Instence.SubmissionStatus
                 .OrderByDescending(p => p.Id)
-                .FirstOrDefault(p => p.AccountNumber.Equals(Id, StringComparison.OrdinalIgnoreCase) && p.IsActive == true);
+                .FirstOrDefault(p => p.AccountNumber.Equals(Id, StringComparison.OrdinalIgnoreCase) && p.IsActive == true && p.PaymentYear == year);
 
             item.SubmissionType = 0;
             if (status != null)
