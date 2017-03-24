@@ -16,39 +16,39 @@ namespace Bill2Pay.Web.Controllers
     public class PrintController : Controller
     {
         [HttpPost]
-        public ActionResult CopyA(string Id)
+        public ActionResult CopyA(string Id, int year)
         {
-            return DetailsReport("CopyA", Id);
+            return DetailsReport("CopyA", Id, year);
         }
 
         [HttpPost]
-        public ActionResult Copy1(string Id)
+        public ActionResult Copy1(string Id, int year)
         {
-            return DetailsReport("Copy1", Id);
+            return DetailsReport("Copy1", Id, year);
         }
 
         [HttpPost]
-        public ActionResult CopyB(string Id)
+        public ActionResult CopyB(string Id, int year)
         {
-            return DetailsReport("CopyB", Id);
+            return DetailsReport("CopyB", Id, year);
         }
 
         [HttpPost]
-        public ActionResult Copy2(string Id)
+        public ActionResult Copy2(string Id, int year)
         {
-            return DetailsReport("Copy2", Id);
+            return DetailsReport("Copy2", Id, year);
         }
 
         [HttpPost]
-        public ActionResult CopyC(string Id)
+        public ActionResult CopyC(string Id, int year)
         {
-            return DetailsReport("CopyC", Id);
+            return DetailsReport("CopyC", Id, year);
         }
 
         [HttpPost]
-        public ActionResult IRS1099K(string Id)
+        public ActionResult IRS1099K(string Id, int year)
         {
-            return DetailsReport("1099K", Id);
+            return DetailsReport("1099K", Id, year);
         }
 
         public ActionResult PrintAllCopies()
@@ -60,7 +60,7 @@ namespace Bill2Pay.Web.Controllers
         public void PrintCopies()
         {
             var downloadPath = ConfigurationManager.AppSettings["DownloaRootPath"];
-            if(string.IsNullOrEmpty(downloadPath) )
+            if (string.IsNullOrEmpty(downloadPath))
             {
                 downloadPath = "~/App_Data/Download/k1099/";
             }
@@ -181,13 +181,13 @@ namespace Bill2Pay.Web.Controllers
             //}
         }
 
-        public ActionResult DetailsReport(string reportName, string Id)
+        public ActionResult DetailsReport(string reportName, string Id, int year)
         {
 
             var item = ApplicationDbContext.Instence.SubmissionDetails
                 .Include("PSE")
                 .OrderByDescending(p => p.SubmissionId)
-                .Where(s => s.IsActive == true)
+                .Where(s => s.IsActive == true && s.SubmissionSummary.PaymentYear == year)
                 .FirstOrDefault(p => p.AccountNumber.Equals(Id, StringComparison.OrdinalIgnoreCase));
 
             var status = ApplicationDbContext.Instence.SubmissionStatus
@@ -263,7 +263,7 @@ namespace Bill2Pay.Web.Controllers
                 out streams,
                 out warnings);
             //Response.AddHeader("content-disposition", "attachment; filename=NorthWindCustomers." + fileNameExtension);
-            var fileName = string.Format("{0}_1099-K_{1}_{2}.pdf",Id, reportName, TransactionYear);
+            var fileName = string.Format("{0}_1099-K_{1}_{2}.pdf", Id, reportName, TransactionYear);
             return File(renderedBytes, mimeType, fileName);
         }
     }

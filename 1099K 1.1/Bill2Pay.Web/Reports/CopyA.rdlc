@@ -486,7 +486,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!CompanyName.Value, "PSEMaster") &amp; " " &amp; First(Fields!CompanyNameContinued.Value, "PSEMaster") &amp; System.Environment.NewLine &amp; First(Fields!PayerTelephoneNumber.Value, "PSEMaster")</Value>
+                <Value>=First(Fields!CompanyName.Value, "PSEMaster") &amp; " " &amp; First(Fields!CompanyNameContinued.Value, "PSEMaster") &amp; System.Environment.NewLine &amp; First(Fields!ContactTelephoneNumber.Value, "PSEMaster")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -779,7 +779,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!TransmitterName.Value, "PSEMaster") &amp; " " &amp; First(Fields!TransmitterNameContinued.Value, "PSEMaster") &amp;
+                <Value>=First(Fields!CompanyName.Value, "PSEMaster") &amp; " " &amp; First(Fields!CompanyNameContinued.Value, "PSEMaster") &amp;
                   System.Environment.NewLine &amp; First(Fields!CompanyMailingAddress.Value, "PSEMaster") &amp;
                   System.Environment.NewLine &amp; First(Fields!CompanyCity.Value, "PSEMaster") &amp;
                   System.Environment.NewLine &amp; First(Fields!CompanyState.Value, "PSEMaster") &amp;
