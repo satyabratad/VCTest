@@ -286,10 +286,10 @@ namespace Bill2Pay.Web.Controllers
 
 
 
-                    var iDet = db.ImportDetails.Where(i => i.IsActive && i.AccountNumber.Equals(merchantDetails.PayeeAccountNumber, StringComparison.InvariantCultureIgnoreCase))
-                                .GroupJoin(db.SubmissionStatus.Where(s => s.IsActive),
-                                imp => imp.AccountNumber,
-                                stat => stat.AccountNumber,
+                    var iDet = db.ImportDetails.Where(i => i.IsActive==true && i.AccountNumber.Equals(merchantDetails.PayeeAccountNumber, StringComparison.InvariantCultureIgnoreCase))
+                                .GroupJoin(db.SubmissionStatus.Where(s => s.IsActive == true && s.AccountNumber.Equals(merchantDetails.PayeeAccountNumber, StringComparison.InvariantCultureIgnoreCase)),
+                                imp => new { acc = imp.AccountNumber, year = imp.ImportSummary.PaymentYear },
+                                stat => new { acc= stat.AccountNumber, year=stat.PaymentYear  } ,
                                 (imp, stat) => new MerchantListVM() { ImportDetails = imp, SubmissionStatus = stat.FirstOrDefault() })
                                 .ToList();
 
