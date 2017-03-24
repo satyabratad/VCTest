@@ -97,7 +97,5 @@ namespace Bill2Pay.Model
         public long UserId { get; set; }
 
         public virtual ApplicationUser CreatedUser { get; set; }
-
-        public int PaymentYear { get; set; }
     }
 }

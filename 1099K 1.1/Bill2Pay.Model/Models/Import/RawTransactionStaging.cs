@@ -21,7 +21,7 @@ namespace Bill2Pay.Model
         [MaxLength(20)]
         public string PayeeAccountNumber { get; set; }
 
-        [MaxLength(1)]
+        [MaxLength(3)]
         public string TransactionType { get; set; }
 
         [MaxLength(20)]

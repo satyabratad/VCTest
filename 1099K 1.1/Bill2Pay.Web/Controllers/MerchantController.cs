@@ -388,18 +388,14 @@ namespace Bill2Pay.Web.Controllers
 
 
    
-        public ActionResult Delete(string id,int? year)
+        public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            if (year == null)
-            {
-                year = System.DateTime.Now.Year - 1;
-            }
             MerchantDetails merchantDetails = db.MerchantDetails.Where(m => m.PayeeAccountNumber.Equals(id, StringComparison.InvariantCultureIgnoreCase)
-                                            && m.IsActive == true && m.PaymentYear == year).FirstOrDefault();
+                                            && m.IsActive == true).FirstOrDefault();
             if (merchantDetails == null)
             {
                 return HttpNotFound();
@@ -410,10 +406,10 @@ namespace Bill2Pay.Web.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id, int? year)
+        public ActionResult DeleteConfirmed(string id)
         {
             MerchantDetails merchantDetails = db.MerchantDetails.Where(m => m.PayeeAccountNumber.Equals(id, StringComparison.InvariantCultureIgnoreCase)
-                                           && m.IsActive == true && m.PaymentYear == year).FirstOrDefault();
+                                           && m.IsActive == true).FirstOrDefault();
             if (merchantDetails != null)
             {
                 merchantDetails.IsActive = false;
