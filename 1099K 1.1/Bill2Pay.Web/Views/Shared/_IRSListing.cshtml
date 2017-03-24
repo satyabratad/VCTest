@@ -23,12 +23,12 @@
     function GetSelectedMerchant(accno) {
 
         var strAcnos = $('#checkedAccountNo').val();
-        var acno=JSON.parse(strAcnos);
-
+        var acno = JSON.parse(strAcnos);
         for(var i=0;i<acno.length;i++)
         {
-            if(acno[i].AccountNo==accno)
+            if (acno[i].AccountNumber == accno)
             {
+
                 if(acno[i].IsChecked=='0')
                 {
                     acno[i].IsChecked='1';
@@ -39,7 +39,6 @@
                 }
             }
         }
-
         strAcnos=JSON.stringify(acno);
 
         $('#checkedAccountNo').val(strAcnos);
