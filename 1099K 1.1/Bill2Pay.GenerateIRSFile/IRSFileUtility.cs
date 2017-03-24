@@ -298,7 +298,7 @@ namespace Bill2Pay.GenerateIRSFile
                         case "CORRECTED RETURN INDICATOR":
                             if(reSubmission)
                             {
-                                Int32 status = Convert.ToInt32(dbContext.SubmissionStatus.Where(x => x.AccountNumber.Equals(data.AccountNumber) && x.IsActive == true).Select(x => x.StatusId).Single());
+                                Int32 status = Convert.ToInt32(dbContext.SubmissionStatus.Where(x => x.AccountNumber.Equals(data.AccountNumber) && x.IsActive == true && x.PaymentYear==paymentYear).Select(x => x.StatusId).Single());
 
                                 if (status == (int)RecordStatus.OneTransactionUploaded)
                                     fileData.Append("G");
@@ -967,14 +967,14 @@ namespace Bill2Pay.GenerateIRSFile
                                    .Where(x => selectedAccounts.Contains(x.detail.AccountNumber) && x.detail.ImportSummary.PaymentYear == paymentYear &&
                                    x.detail.IsActive == true && x.detail.ImportSummary.IsActive == true &&
                                    (new[] { (int)RecordStatus.OneTransactionUploaded, (int)RecordStatus.TwoTransactionUploaded }).Contains(x.status.StatusId) &&
-                                   x.status.IsActive == true)
+                                   x.status.IsActive == true && x.status.PaymentYear == paymentYear)
                                    .OrderBy(x => x.status.StatusId)
                                    .Select(x => x.detail)
                                    .ToList();
 
             foreach (var item in importDetaiils)
             {
-                Int32 status = Convert.ToInt32(dbContext.SubmissionStatus.Where(x => x.AccountNumber.Equals(item.AccountNumber) && x.IsActive == true).Select(x => x.StatusId).Single());
+                Int32 status = Convert.ToInt32(dbContext.SubmissionStatus.Where(x => x.AccountNumber.Equals(item.AccountNumber) && x.IsActive == true && x.PaymentYear==paymentYear).Select(x => x.StatusId).Single());
 
                 if (status == (int)RecordStatus.OneTransactionUploaded)
                 {
@@ -1058,7 +1058,7 @@ namespace Bill2Pay.GenerateIRSFile
                                    .Where(x => selectedAccounts.Contains(x.detail.AccountNumber) && x.detail.ImportSummary.PaymentYear == paymentYear &&
                                    x.detail.IsActive == true && x.detail.ImportSummary.IsActive == true && x.detail.Merchant.PayerId.Equals(data.Id) &&
                                    (new[] { (int)RecordStatus.OneTransactionUploaded, (int)RecordStatus.TwoTransactionUploaded }).Contains(x.status.StatusId) &&
-                                   x.status.IsActive == true &&  x.status.StatusId == transaction)
+                                   x.status.IsActive == true &&  x.status.StatusId == transaction && x.status.PaymentYear==paymentYear)
                                    .OrderBy(x => x.status.StatusId )
                                    .Select(x => x.detail)
                                    .ToList();
