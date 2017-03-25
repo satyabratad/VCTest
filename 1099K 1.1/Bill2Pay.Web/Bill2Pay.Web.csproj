@@ -513,7 +513,7 @@
       <Name>Bill2Pay.ExceptionLogger</Name>
     </ProjectReference>
     <ProjectReference Include="..\Bill2Pay.GenerateIRSFile\Bill2Pay.GenerateIRSFile.csproj">
-      <Project>{F85B0A62-95F3-46C3-87F0-A16D881CB0AD}</Project>
+      <Project>{f85b0a62-95f3-46c3-87f0-a16d881cb0ad}</Project>
       <Name>Bill2Pay.GenerateIRSFile</Name>
     </ProjectReference>
     <ProjectReference Include="..\Bill2Pay.Model\Bill2Pay.Model.csproj">
