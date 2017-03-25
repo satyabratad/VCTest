@@ -51,12 +51,19 @@ namespace Bill2Pay.Web.Controllers
             return DetailsReport("1099K", Id, year);
         }
 
+        /// <summary>
+        /// This method is for print all the pdf copy of a merchant
+        /// </summary>
+        /// <returns></returns>
         public ActionResult PrintAllCopies()
         {
             HostingEnvironment.QueueBackgroundWorkItem(clt => PrintCopies());
-            //TempData["successMessage"] = "Generate .pdf file process may take some time. Once completed you can find the files in the '/App_Data/Download/k1099' location. A transaction log is also available. ";
             return RedirectToAction("Index", "IRSProcess");
         }
+
+        /// <summary>
+        /// This method is to run pdf generation in background and download in specified location
+        /// </summary>
         public void PrintCopies()
         {
             var downloadPath = ConfigurationManager.AppSettings["DownloaRootPath"];
@@ -71,18 +78,34 @@ namespace Bill2Pay.Web.Controllers
             var list = (List<string>)TempData["PrintableMerchantList"];
             var year = (int)TempData["SelectedYear"];
             string folderName = string.Empty;
-            //var accno = list[0].ToString();
             foreach (var accno in list)
             {
 
 
-                folderName = accno + "-" + year.ToString();
+                
 
                 var merchantData = ApplicationDbContext.Instence.SubmissionDetails
                   .Include("PSE")
                   .OrderByDescending(p => p.SubmissionId)
+                  .Where(s => s.IsActive == true && s.SubmissionSummary.PaymentYear == year)
                   .FirstOrDefault(p => p.AccountNumber.Equals(accno, StringComparison.OrdinalIgnoreCase));
 
+                var status = ApplicationDbContext.Instence.SubmissionStatus
+                    .OrderByDescending(p => p.Id)
+                    .FirstOrDefault(p => p.AccountNumber.Equals(accno, StringComparison.OrdinalIgnoreCase) && p.IsActive == true && p.PaymentYear == year);
+
+                merchantData.SubmissionType = 0;
+                if (status != null)
+                {
+                    if (status.StatusId == 6)
+                    {
+                        merchantData.SubmissionType = 1;// Void
+                    }
+                    if (status.StatusId == 8 || status.StatusId == 4 || status.StatusId == 5)
+                    {
+                        merchantData.SubmissionType = 2;//Corrected
+                    }
+                }
                 var data = new List<SubmissionDetail>();
                 if (merchantData != null)
                 {
@@ -95,15 +118,16 @@ namespace Bill2Pay.Web.Controllers
                         pseData.Add(merchantData.PSE);
                     }
                     int TransactionYear = merchantData.SubmissionSummary.PaymentYear + 1;
+                    folderName = accno + "-" + TransactionYear.ToString();
+
                     string[] reportNames = { "CopyA", "Copy1", "CopyB", "Copy2", "CopyC" };
                     LocalReport localReport;
                     foreach (var reportName in reportNames)
                     {
-                        reportCopyName = accno + "_1099-K_" + reportName + "_" + year.ToString();
+                        reportCopyName = accno + "_1099-K_" + reportName + "_" + TransactionYear.ToString();
                         localReport = new LocalReport();
                         localReport.ReportPath = Server.MapPath("~/Reports/" + reportName + ".rdlc");
                         ReportDataSource reportDataSource = new ReportDataSource("SubmissionDetails", data);
-
 
                         var yearParam = new ReportParameter("TransactionYear", TransactionYear.ToString());
                         localReport.SetParameters(yearParam);
@@ -153,32 +177,18 @@ namespace Bill2Pay.Web.Controllers
                         }
 
                         path = string.Format("{0}/{1}/{2}.pdf", rootpath, folderName, reportCopyName);
-                        //File(renderedBytes, mimeType);
-                        System.IO.File.WriteAllBytes(path, renderedBytes); // Requires System.IO
-                                                                           //Response.AddHeader("content-disposition", "attachment; filename=NorthWindCustomers." + fileNameExtension);
-
-
+                        System.IO.File.WriteAllBytes(path, renderedBytes);
+                                                                           
                     }
                     Logger.LogInstance.LogInfo("Pdf file(s) generated for :{0} and the same can be found in {1}{2}", accno, rootpath, folderName);
                 }
                 else
                 {
-                    //errorAccounts = errorAccounts + ", " + accno ;
                     Logger.LogInstance.LogInfo("System unable to generate .pdf file(s) for {0} as the record is not qualified for pdf generation", accno);
 
                 }
-
-
-
-                //ImportUtility.CreateZip(rootpath);
-            }
-
-            //TempData["successMessage"] = ".pdf file can be found in " + rootpath + " folder. For details see transaction log ";
-            //if (errorAccounts.Length > 2)
-            //{
-            //    errorAccounts = errorAccounts.Substring( errorAccounts.Length - 2);
-            //    TempData["errorMessage"] = "System unable to generate .pdf file(s) for :" + errorAccounts + ". For details see transaction log ";
-            //}
+               
+            }          
         }
 
         public ActionResult DetailsReport(string reportName, string Id, int year)
