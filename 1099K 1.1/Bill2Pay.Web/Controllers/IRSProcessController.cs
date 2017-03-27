@@ -103,6 +103,7 @@ namespace Bill2Pay.Web.Controllers
             return View(data);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Process(string btnPressed)
         {
@@ -163,6 +164,7 @@ namespace Bill2Pay.Web.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult GenerateBatchpdf()
         {
             string errMsg = string.Empty;
@@ -203,6 +205,7 @@ namespace Bill2Pay.Web.Controllers
            
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult IRSFireTestFile()
         {
             List<string> selectedMerchants = (List<string>)TempData["CheckedMerchantList"];
@@ -229,6 +232,7 @@ namespace Bill2Pay.Web.Controllers
             return File(path, "text", "IRSInputFile_Test.txt");
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult IRSFireFile()
         {
             List<string> selectedMerchants = (List<string>)TempData["CheckedMerchantList"];
@@ -280,6 +284,7 @@ namespace Bill2Pay.Web.Controllers
             return File(path, "text", "IRSInputFile.txt");
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult IRScorrection()
         {
             List<string> selectedMerchants = (List<string>)TempData["CheckedMerchantList"];
@@ -330,6 +335,7 @@ namespace Bill2Pay.Web.Controllers
             return File(path, "text", "IRSCorrectionInputFile.txt");
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult Download(string file)
         {
             string path = string.Format(@"{0}App_Data\Download\Irs\" + file, HostingEnvironment.ApplicationPhysicalPath);
@@ -347,6 +353,7 @@ namespace Bill2Pay.Web.Controllers
             return response;
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult ChangeStatus()
         {
 

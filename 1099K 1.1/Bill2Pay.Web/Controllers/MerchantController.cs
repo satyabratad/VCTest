@@ -15,6 +15,7 @@ using Bill2Pay.GenerateIRSFile;
 
 namespace Bill2Pay.Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class MerchantController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
