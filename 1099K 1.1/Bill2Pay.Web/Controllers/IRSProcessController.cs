@@ -173,7 +173,7 @@ namespace Bill2Pay.Web.Controllers
             int year=(int)TempData.Peek("SelectedYear") ;
             int selectedPayer= (int)TempData.Peek("SelectedPayer") ;
 
-            var substatusList = dbContext.SubmissionStatus.Where(s=>s.IsActive == true && s.StatusId > 2
+            var substatusList = dbContext.SubmissionStatus.Where(s=>s.IsActive == true && s.StatusId ==(int)RecordStatus.Submitted  ||s.StatusId==(int) RecordStatus.ReSubmitted 
                                                               && s.PaymentYear == year).Select(p=>p.AccountNumber).ToList();
             var printableList= list.Where(l => substatusList.Contains(l)).ToList();
             TempData["PrintableMerchantList"]= printableList;
