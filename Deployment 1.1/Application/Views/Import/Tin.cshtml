@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "Import Tin Matching Response";
+}
+
+<div class="row">
+    @using (Html.BeginForm("Tin", "Import", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+    { @Html.AntiForgeryToken()
+
+        @Html.Partial("_SelectYear", new Bill2Pay.Web.YearSelection() { AllowPostback = false, IsVisible = false  })
+
+<div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <span>
+                        <h4>Upload TIN matching response file here.</h4>
+                        <strong><u>Steps</u></strong>
+                        <ul>
+                            <li>  The file extension should be .txt</li>
+                            <li>  Do not include header row.</li>
+                            <li>  Each line of the file should have single record and should be separated by carriage return. </li>
+                            <li>  Order of the fields should be like below</li>
+                            <ul>
+                                <li>   TIN type</li>
+                                <li>   TIN </li>
+                                <li>   Name </li>
+                                <li>   Account number</li>
+                                <li>   TIN matching response code</li>
+                            </ul>
+                            <li> Value of the fields should be separated by ';' (semi colon) </li>
+
+                        </ul>
+                    </span>
+                    <br />
+                    <hr />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-2">
+
+                    </div>
+                    <div class="col-md-8">
+                        @{
+                            if (@ViewBag.isSuccess != null)
+                            {
+                                if (@ViewBag.isSuccess)
+                                {
+                                <span class="alert-success"> @ViewBag.Message </span>
+                                }
+                                else
+                                {
+                                <span class="alert-danger"> @ViewBag.Message </span>
+                                }
+                            }
+
+                         }
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="row">
+                <br />
+                <br />
+            </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <span> <input id="fileBase" name="fileBase" type="file" class="btn btn-block btn-primary " style="font-family:Arial" placeholder="Select Import file" required /> </span>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary " style="font-family:Arial" ><i class="fa fa-cloud-download"  title="Import the input file"></i> Import</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+    }
+    
+</div>
+
+

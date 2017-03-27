@@ -1,0 +1,158 @@
+﻿@model IEnumerable<Bill2Pay.Model.MerchantDetailsVM>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    $(document).ready(function () {
+        $('#dataTable').DataTable({
+            "columnDefs": [
+              { "orderable": false, "targets": [ 6,7] }
+            ],
+            order: [[0, 'asc']],
+        });
+    });
+</script>
+@Html.Partial("_SelectYear", new Bill2Pay.Web.YearSelection() { AllowPostback = true , IsVisible=true,IsYearVisible=false })
+<div class="row">
+    <div class="row col-md-6" ><h2>Merchant List</h2></div>
+    <div >
+        </br>
+        <p class="pull-right" style="padding-right:16px"> 
+            @*@Html.ActionLink("Create New", "Create", new { @class="btn btn-primary"})*@
+            <a class="btn btn-primary "  href="@Url.Action("Create","Merchant")" alt="Add New Merchant">
+                Add New Merchant
+            </a>
+        </p>
+    </div>
+</div>
+
+
+
+<table id="dataTable" class="display" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th style="width:50px">Account Number</th>
+            <th>TIN</th>
+            <th>Name</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zip Code</th>
+            <th>IRS Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Merchant.PayeeAccountNumber)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Merchant.PayeeTIN)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Merchant.FirstPayeeName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Merchant.PayeeCity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Merchant.PayeeState)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Merchant.PayeeZIP)
+                </td>
+                <td align="center">
+                    @{
+
+                        if (@item.Status != null)
+                        {
+
+                            if (@item.Status.StatusId == 2)
+                            {
+                                <img style="width:30px; height:30px" title='@item.Status.Status.Name' src="@Url.Content("~/Images/Generated.png")" />
+                            }
+                            else if (@item.Status.StatusId == 3)
+                            {
+                                <img style="width:25px; height:25px" title='@item.Status.Status.Name' src="@Url.Content("~/Images/oneCorrectionRequired.png")" />
+                            }
+                            else if (@item.Status.StatusId == 4)
+                            {
+                                <img style="width:25px; height:25px" title='@item.Status.Status.Name' src="@Url.Content("~/Images/oneCorrectionUploaded.png")" />
+                            }
+                            else if (@item.Status.StatusId == 5)
+                            {
+                                <img style="width:25px; height:25px" title='@item.Status.Status.Name' src="@Url.Content("~/Images/resubmitted.png")" />
+                            }
+                            else if (@item.Status.StatusId == 6)
+                            {
+                                <img style="width:25px; height:25px" title='@item.Status.Status.Name' src="@Url.Content("~/Images/submitted.png")" />
+                            }
+                            else if (@item.Status.StatusId == 7)
+                            {
+                                <img style="width:25px; height:25px" title='@item.Status.Status.Name' src="@Url.Content("~/Images/TwoCorrectionRequired.png")" />
+                            }
+                            else if (@item.Status.StatusId == 8)
+                            {
+                                <img style="width:25px; height:25px" title='@item.Status.Status.Name' src="@Url.Content("~/Images/TwoCorrectionUploaded.png")" />
+                            }
+                        }
+                    }
+                </td>
+
+                <td>
+                    <a href="@Url.Action("Edit", new { Id = item.Merchant.PayeeAccountNumber,year=ViewBag.SelectedYear })" title="Edit">
+                    <span class="fa fa-edit fa-lg"></span></a>
+                   
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+
+
+<link rel="stylesheet" type="text/css" href="~/Content/DataTables/datatables.min.css" />
+
+<style>
+    input[type="checkbox"] {
+        height: 18px;
+        width: 18px;
+    }
+
+    .dataTable thead .sorting:after, .dataTable thead .sorting_asc:after {
+        content: '';
+    }
+
+    .dataTable thead .sorting:before {
+        content: '';
+        margin-top: -2px;
+        color: #999;
+    }
+
+    .dataTable thead .sorting_desc:after {
+        content: '';
+    }
+
+    .dataTables_filter > label:after {
+        content: "";
+        font-family: icomoon;
+        font-size: 12px;
+        display: inline-block;
+        position: absolute;
+        top: 50%;
+        right: 12px;
+        margin-top: -6px;
+        color: #999;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+    }
+</style>

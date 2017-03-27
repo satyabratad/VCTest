@@ -1,0 +1,175 @@
+﻿@model IEnumerable<Bill2Pay.Model.ImportDetail>
+
+@{
+    ViewBag.Title = "TIN Matching Status Report";
+}
+
+<h2>TIN Matching Status Report</h2>
+
+@Html.Partial("_SelectYear", new Bill2Pay.Web.YearSelection() { AllowPostback = true, IsVisible = true })
+
+<div style="float:right;margin-top:-80px;">
+    <button id="export" type="submit" class="btn btn-primary btn-lg " title="Export to CSV">
+        <span class="fa fa-file-excel-o fa-lg"></span>
+    </button>
+    <button id="exportpdf" type="submit" class="btn btn-primary btn-lg " title="Export to PDF">
+        <span class="fa fa-file-pdf-o fa-lg"></span>
+    </button>
+</div>
+<div class="table-responsive" id="reportarea">
+    <table class="table" id="TTIN_HTML">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.AccountNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TIN)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstPayeeName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TINCheckStatus)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AccountNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TIN)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstPayeeName)
+                        @Html.DisplayFor(modelItem => item.SecondPayeeName)
+                    </td>
+                    <td>
+                        @Bill2Pay.Web.TinStatus.GetName(item.TINCheckStatus)
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div style="visibility:hidden;display:none;">
+    <table class="table" id="TTIN">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.AccountNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TIN)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstPayeeName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TINCheckStatus)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AccountNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TIN)
+                    </td>
+                    <td>
+                        @string.Format("{0} {1}", item.FirstPayeeName.Trim(),item.SecondPayeeName)
+                    </td>
+                    <td>
+                        @Bill2Pay.Web.TinStatus.GetName(item.TINCheckStatus)
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+<script>
+    $("#export").click(function () {
+        $("#TTIN").tableToCSV("TIN_");
+    });
+
+    $("#exportpdf").click(function () {
+        var doc = new jsPDF('l', 'mm', [297, 210]);
+
+        var elem = document.getElementById("TTIN");
+        var res = doc.autoTableHtmlToJson(elem);
+        doc.autoTable(res.columns, res.data, {
+            startY: 10,
+            tableWidth: 'auto',
+            columnWidth: 'auto',
+            styles: {
+                overflow: 'linebreak'
+            }
+        });
+
+        var d = new Date();
+        var curr_date = d.getDate();
+        var curr_month = d.getMonth() + 1; //Months are zero based
+        var curr_year = d.getFullYear();
+
+        var ts = curr_month + '_' + curr_date + "_" + curr_year;
+        var name = 'TIN_' + ts + '.pdf';
+
+        doc.save(name);
+    });
+
+    $(document).ready(function () {
+        $('#TTIN_HTML').DataTable({
+            order: [[0, 'asc']],
+        });
+    });
+</script>
+<link rel="stylesheet" type="text/css" href="~/Content/DataTables/datatables.min.css" />
+
+<style>
+    input[type="checkbox"] {
+        height: 18px;
+        width: 18px;
+    }
+
+    .dataTable thead .sorting:after, .dataTable thead .sorting_asc:after {
+        content: '';
+    }
+
+    .dataTable thead .sorting:before {
+        content: '';
+        margin-top: -2px;
+        color: #999;
+    }
+
+    .dataTable thead .sorting_desc:after {
+        content: '';
+    }
+
+    .dataTables_filter > label:after {
+        content: "";
+        font-family: icomoon;
+        font-size: 12px;
+        display: inline-block;
+        position: absolute;
+        top: 50%;
+        right: 12px;
+        margin-top: -6px;
+        color: #999;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+    }
+</style>
