@@ -7,12 +7,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bill2Pay Web Portal</title>
-  
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
-   
-    
+
+
 </head>
 <body>
 
@@ -43,12 +43,20 @@
                 @foreach (var item in MenuGenerator.Menu.Items)
                 {
                     <li class="@MenuGenerator.IsActive(item.ControllerName, (item.SubMenu != null && item.SubMenu.Count > 0))">
-                        <a title="@item.LinkText" href="@Url.Action( @item.ActionName, @item.ControllerName)" class="dropdown-toggle" data-toggle="dropdown"><i class="@item.FontClass"></i> <span>@item.LinkText</span>
+
                         @if (item.SubMenu != null && item.SubMenu.Count > 0)
                         {
-                        <i class="fa fa-angle-down fa-lg"></i>
+                            <a title="@item.LinkText" href="@Url.Action( @item.ActionName, @item.ControllerName)" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="@item.FontClass"></i> <span>@item.LinkText</span>
+                                <i class="fa fa-angle-down fa-lg"></i>
+
+                            </a> }
+                        else
+                        {
+                            <a title="@item.LinkText" href="@Url.Action( @item.ActionName, @item.ControllerName)">
+                                <i class="@item.FontClass"></i> <span>@item.LinkText</span>
+                            </a>
                         }
-                        </a>
                         @if (item.SubMenu != null && item.SubMenu.Count > 0)
                         {
                             <ul class="dropdown-menu dropdown-menu-right">
@@ -63,7 +71,7 @@
 
                     </li>
 
-                                   
+
                 }
             </ul>
             @Html.Partial("_LoginPartial")
@@ -100,11 +108,12 @@
                                 @foreach (var item in MenuGenerator.Menu.Items)
                                 {
                                     <li class="@MenuGenerator.IsActive(item.ControllerName,(item.SubMenu != null && item.SubMenu.Count > 0))">
-                                        <a title="@item.LinkText" href="@Url.Action( @item.ActionName, @item.ControllerName)"><i class="@item.FontClass"></i> <span>@item.LinkText</span>
-                                        @if (item.SubMenu != null && item.SubMenu.Count > 0)
-                                        {
-                                            <i class="fa fa-angle-down fa-lg" style="float:right;margin-right:-30px;"></i>
-                                        }
+                                        <a title="@item.LinkText" href="@Url.Action( @item.ActionName, @item.ControllerName)">
+                                            <i class="@item.FontClass"></i> <span>@item.LinkText</span>
+                                            @if (item.SubMenu != null && item.SubMenu.Count > 0)
+                                            {
+                                                <i class="fa fa-angle-down fa-lg" style="float:right;margin-right:-30px;"></i>
+                                            }
                                         </a>
                                         @if (item.SubMenu != null && item.SubMenu.Count > 0)
                                         {

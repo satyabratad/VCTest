@@ -272,7 +272,6 @@ namespace Bill2Pay.Web.Controllers
                 out fileNameExtension,
                 out streams,
                 out warnings);
-            //Response.AddHeader("content-disposition", "attachment; filename=NorthWindCustomers." + fileNameExtension);
             var fileName = string.Format("{0}_1099-K_{1}_{2}.pdf", Id, reportName, TransactionYear);
             return File(renderedBytes, mimeType, fileName);
         }
