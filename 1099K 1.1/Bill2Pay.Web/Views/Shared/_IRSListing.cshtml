@@ -1,8 +1,7 @@
 ﻿@model IEnumerable<Bill2Pay.Model.MerchantListVM>
 <script>
 
-    function SetSelecAllMerchant()
-    {
+    function SetSelecAllMerchant() {
         $('.tblchk').prop('checked', $('#chkSelectAll').is(":checked"));
         var strAcnos = $('#checkedAccountNo').val();
         var acno = JSON.parse(strAcnos);
@@ -10,11 +9,11 @@
         for (var i = 0; i < acno.length; i++) {
 
             if ($('#chkSelectAll').is(":checked")) {
-                    acno[i].IsChecked = '1';
-                }
-                else {
-                    acno[i].IsChecked = '0';
-                }
+                acno[i].IsChecked = '1';
+            }
+            else {
+                acno[i].IsChecked = '0';
+            }
         }
         strAcnos = JSON.stringify(acno);
         $('#checkedAccountNo').val(strAcnos);
@@ -24,28 +23,23 @@
 
         var strAcnos = $('#checkedAccountNo').val();
         var acno = JSON.parse(strAcnos);
-        for(var i=0;i<acno.length;i++)
-        {
-            if (acno[i].AccountNumber == accno)
-            {
+        for (var i = 0; i < acno.length; i++) {
+            if (acno[i].AccountNumber == accno) {
 
-                if(acno[i].IsChecked=='0')
-                {
-                    acno[i].IsChecked='1';
+                if (acno[i].IsChecked == '0') {
+                    acno[i].IsChecked = '1';
                 }
-                else
-                {
-                    acno[i].IsChecked='0';
+                else {
+                    acno[i].IsChecked = '0';
                 }
             }
         }
-        strAcnos=JSON.stringify(acno);
+        strAcnos = JSON.stringify(acno);
 
         $('#checkedAccountNo').val(strAcnos);
     }
 
-    function submitForm(statusId)
-    {
+    function submitForm(statusId) {
         var form = $('#IRSListing');
 
         $('#statusId').val(statusId);
@@ -67,7 +61,7 @@
     $(document).ready(function () {
         $('#dataTable').DataTable({
             "columnDefs": [
-              { "orderable": false, "targets": [0,1,7,8]}
+              { "orderable": false, "targets": [0, 1, 7, 8] }
             ],
             order: [[4, 'asc']],
         });
@@ -95,20 +89,20 @@
                     <button class="btn  btn-primary" type="submit" name="irstest" value="IRS FIRE Test Input">IRS FIRE Test Input</button>
                     <button class="btn  btn-primary" type="submit" name="irs" value="IRS FIRE Input">IRS FIRE Input </button>
                     <button class="btn  btn-primary" type="submit" name="irscorrection" value="IRS FIRE Correction Input">IRS FIRE Correction Input</button>
-                                <div class="dropdown" style="float:right">
-                                    <button class="btn btn-success dropdown-toggle" type="submit" data-toggle="dropdown">
-                                        Change Status
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#" onclick="submitForm(1);">Not Submitted</a></li>
-                                        <li><a href="#" onclick="submitForm(6);">Submitted</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="#" onclick="submitForm(3);">One-Transaction Correction</a></li>
-                                        <li><a href="#" onclick="submitForm(7);">Two-Transaction Correction</a></li>
+                    <div class="dropdown" style="float:right">
+                        <button class="btn btn-success dropdown-toggle" type="submit" data-toggle="dropdown">
+                            Change Status
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" onclick="submitForm(1);">Not Submitted</a></li>
+                            <li><a href="#" onclick="submitForm(6);">Submitted</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" onclick="submitForm(3);">One-Transaction Correction</a></li>
+                            <li><a href="#" onclick="submitForm(7);">Two-Transaction Correction</a></li>
 
-                                    </ul>
-                                </div>
-                    <button class="btn  btn-primary" type="submit" name="generatepdf" value="Generate PDF File">Generate PDF File </button>
+                        </ul>
+                    </div>
+                                <button class="btn  btn-primary" type="submit" name="generatepdf" value="Generate PDF File">Generate PDF File </button>
                 }
 
             }
@@ -119,7 +113,10 @@
             <table id="dataTable" class="display" cellspacing="0" width="100%">
                 <thead>
                     <tr>
-                        <th><input id="chkSelectAll" onclick="SetSelecAllMerchant();" title="Select All" type="checkbox" style="margin-left:-8px;" /></th>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <th><input id="chkSelectAll" onclick="SetSelecAllMerchant();" title="Select All" type="checkbox" style="margin-left:-8px;" /></th>
+                        }
                         <th align="center"><span style="margin-left:16px;">1099-K</span></th>
                         <th align="left">Account</th>
                         <th align="left">TIN</th>
@@ -156,9 +153,11 @@
                                 foreach (var item in Model)
                                 {
                                     <tr>
+                                        @if (User.IsInRole("Admin")){
                                         <td>
                                             <input id="chkAccountNo" class="tblchk" onclick="GetSelectedMerchant('@item.ImportDetails.AccountNumber');" type="checkbox" name="@item.ImportDetails.AccountNumber" />&nbsp;
                                         </td>
+                                        }
                                         <td style="width:100px" align="center">
 
                                             <a href="@Url.Action("Details", new { Id = item.ImportDetails.AccountNumber,year=ViewBag.SelectedYear })" alt="1099K">
@@ -172,11 +171,11 @@
                                                 if (@item.SubmissionStatus != null)
                                                 {
 
-                                                    if (@item.SubmissionStatus.StatusId == 7)
+                                                    if (@item.SubmissionStatus.StatusId == 7 && User.IsInRole("Admin"))
                                                     {
-                                                        <a href = "@Url.Action("Edit", "Merchant", new { Id = item.ImportDetails.AccountNumber,year=ViewBag.SelectedYear })" title = "Edit" >
-                                                               @item.ImportDetails.AccountNumber
-                                                           </a>
+                                                        <a href="@Url.Action("Edit", "Merchant", new { Id = item.ImportDetails.AccountNumber,year=ViewBag.SelectedYear })" title="Edit">
+                                                            @item.ImportDetails.AccountNumber
+                                                        </a>
                                                     }
                                                     else
                                                     {
@@ -271,25 +270,25 @@
             @{
                 if (Request.IsAuthenticated && User.IsInRole("Admin"))
                 {
-                <button class="btn  btn-primary" type="submit" name="tinmatching" value="TIN Matching Input">TIN Matching Input</button>
-                <button class="btn  btn-primary" type="submit" name="irstest" value="IRS FIRE Test Input">IRS FIRE Test Input</button>
-                <button class="btn  btn-primary" type="submit" name="irs" value="IRS FIRE Input">IRS FIRE Input </button>
-                <button class="btn  btn-primary" type="submit" name="irscorrection" value="IRS FIRE Correction Input">IRS FIRE Correction Input</button>
-                <button class="btn  btn-primary" type="submit" name="generatepdf" value="Generate PDF File">Generate PDF File </button>
-                <div class="dropup" style="float:right">
-                    <button class="btn btn-success dropdown-toggle" type="submit" data-toggle="dropdown">
-                        Change Status
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a href="#" onclick="submitForm(1);">Not Submitted</a></li>
-                        <li><a href="#" onclick="submitForm(6);">Submitted</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#" onclick="submitForm(3);">One-Transaction Correction</a></li>
-                        <li><a href="#" onclick="submitForm(7);">Two-Transaction Correction</a></li>
+                    <button class="btn  btn-primary" type="submit" name="tinmatching" value="TIN Matching Input">TIN Matching Input</button>
+                    <button class="btn  btn-primary" type="submit" name="irstest" value="IRS FIRE Test Input">IRS FIRE Test Input</button>
+                    <button class="btn  btn-primary" type="submit" name="irs" value="IRS FIRE Input">IRS FIRE Input </button>
+                    <button class="btn  btn-primary" type="submit" name="irscorrection" value="IRS FIRE Correction Input">IRS FIRE Correction Input</button>
+                    <button class="btn  btn-primary" type="submit" name="generatepdf" value="Generate PDF File">Generate PDF File </button>
+                    <div class="dropup" style="float:right">
+                        <button class="btn btn-success dropdown-toggle" type="submit" data-toggle="dropdown">
+                            Change Status
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" onclick="submitForm(1);">Not Submitted</a></li>
+                            <li><a href="#" onclick="submitForm(6);">Submitted</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#" onclick="submitForm(3);">One-Transaction Correction</a></li>
+                            <li><a href="#" onclick="submitForm(7);">Two-Transaction Correction</a></li>
 
-                    </ul>
-                </div>
-                    }
+                        </ul>
+                    </div>
+                }
 
             }
         </div>
@@ -298,14 +297,16 @@
 <link rel="stylesheet" type="text/css" href="~/Content/DataTables/datatables.min.css" />
 
 <style>
-        input[type="checkbox"] {
-            height: 18px;
-            width: 18px;
-        }
-        .dataTable thead .sorting:after, .dataTable thead .sorting_asc:after {
+    input[type="checkbox"] {
+        height: 18px;
+        width: 18px;
+    }
+
+    .dataTable thead .sorting:after, .dataTable thead .sorting_asc:after {
         content: '';
     }
-        .dataTable thead .sorting:before {
+
+    .dataTable thead .sorting:before {
         content: '';
         margin-top: -2px;
         color: #999;
@@ -314,6 +315,7 @@
     .dataTable thead .sorting_desc:after {
         content: '';
     }
+
     .dataTables_filter > label:after {
         content: "";
         font-family: icomoon;
