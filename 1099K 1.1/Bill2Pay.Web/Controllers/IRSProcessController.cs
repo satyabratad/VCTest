@@ -173,7 +173,7 @@ namespace Bill2Pay.Web.Controllers
             int year=(int)TempData.Peek("SelectedYear") ;
             int selectedPayer= (int)TempData.Peek("SelectedPayer") ;
 
-            var substatusList = dbContext.SubmissionStatus.Where(s=>s.IsActive == true && s.StatusId ==(int)RecordStatus.Submitted  ||s.StatusId==(int) RecordStatus.ReSubmitted 
+            var substatusList = dbContext.SubmissionStatus.Where(s=>s.IsActive == true && (s.StatusId ==(int)RecordStatus.Submitted  ||s.StatusId==(int) RecordStatus.ReSubmitted)
                                                               && s.PaymentYear == year).Select(p=>p.AccountNumber).ToList();
             var printableList= list.Where(l => substatusList.Contains(l)).ToList();
             TempData["PrintableMerchantList"]= printableList;
@@ -181,7 +181,7 @@ namespace Bill2Pay.Web.Controllers
             var exceptList = list.Where(l => !substatusList.Contains(l)).ToList();
             if (exceptList != null && exceptList.Count>0)
             {
-                var invalideAccounts = exceptList.Aggregate((i, j) => i + "," + j);
+                var invalideAccounts = exceptList.Aggregate((i, j) => i + ", " + j);
                 errMsg = "Unable to Generate pdf for " + invalideAccounts + ".";
             }
             
