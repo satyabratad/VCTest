@@ -236,7 +236,7 @@ namespace Bill2Pay.Web.Controllers
                 {
                     case 6: case 3: case 4:
                     case 5: case 8: case 9:
-                        ViewBag.StatusMessage = " Data of this merchant is already submitted for this year's 1099K. Updated information will effect on next year's 1099K data.   ";
+                        ViewBag.StatusMessage = " Data of this merchant is already submitted for this year's 1099K. Updated information will be reflected in 1099K submission for next year.   ";
                         break;
                     case 7:
                         ViewBag.StatusMessage = " This merchant data is marked for Two Transaction Correction. Corrected data will be reflected in 1099K submission for last year.   ";
