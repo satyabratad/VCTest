@@ -50,16 +50,19 @@
             <br />
             <div id="copy-a"  class="ng-hide" ng-show="ctrl.tabSelected=='#copy-a'">
 
-                @if (status != null && status.Id > 2)
-                {
-                    using (Html.BeginForm("CopyA", "Print", new { ReturnUrl = ViewBag.ReturnUrl, Id = Model.AccountNumber,year= ViewBag.SelectedYear }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                @{ 
+                    
+                    if (status != null && (status.StatusId == 6 || status.StatusId == 5))
                     {
-                        @Html.AntiForgeryToken()
-                        <button style="float:right;" type="submit" class="btn btn-primary btn-lg " title="Print to PDF">
+                        using (Html.BeginForm("CopyA", "Print", new { ReturnUrl = ViewBag.ReturnUrl, Id = Model.AccountNumber, year = ViewBag.SelectedYear }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                                    @Html.AntiForgeryToken()
+                                    <button style="float:right;" type="submit" class="btn btn-primary btn-lg " title="Print to PDF">
                             <span class="fa fa-print fa-lg"></span>
                         </button>
+                            }
+                        }
                     }
-                }
                 <div class="copy-a">
                     <div>
                         <span style="position:absolute; left:226px; top:20px"><b>@((status != null && status.StatusId == 6) ? "x" : "")</b></span>
@@ -149,12 +152,12 @@
                 </div>
             </div>
             <div id="copy-1" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-1'">
-                @if (status != null && status.Id > 2)
+                @if (status != null && (status.StatusId == 6 || status.StatusId == 5))
                 {
                     using (Html.BeginForm("Copy1", "Print", new { ReturnUrl = ViewBag.ReturnUrl, Id = Model.AccountNumber, year = ViewBag.SelectedYear }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
-                                        @Html.AntiForgeryToken()
-                                        <button style="float:right;" type="submit" class="btn btn-primary btn-lg " title="Print to PDF">
+                        @Html.AntiForgeryToken()
+                        <button style="float:right;" type="submit" class="btn btn-primary btn-lg " title="Print to PDF">
                             <span class="fa fa-print fa-lg"></span>
                         </button>
                     }
@@ -249,12 +252,12 @@
                 </div>
             </div>
             <div id="copy-b" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-b'">
-                @if (status != null && status.Id > 2)
+                @if (status != null && (status.StatusId == 6 || status.StatusId == 5))
                 {
                     using (Html.BeginForm("CopyB", "Print", new { ReturnUrl = ViewBag.ReturnUrl, Id = Model.AccountNumber, year = ViewBag.SelectedYear }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
-                                @Html.AntiForgeryToken()
-                                <button style="float:right;" type="submit" class="btn btn-primary btn-lg " title="Print to PDF">
+                        @Html.AntiForgeryToken()
+                        <button style="float:right;" type="submit" class="btn btn-primary btn-lg " title="Print to PDF">
                             <span class="fa fa-print fa-lg"></span>
                         </button>
                     }
@@ -349,12 +352,12 @@
                 <div class="copy-b-extra"></div>
             </div>
             <div id="copy-2" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-2'">
-                @if (status != null && status.Id > 2)
+                @if (status != null && (status.StatusId == 6 || status.StatusId == 5))
                 {
                     using (Html.BeginForm("Copy2", "Print", new { ReturnUrl = ViewBag.ReturnUrl, Id = Model.AccountNumber, year = ViewBag.SelectedYear }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
-                                @Html.AntiForgeryToken()
-                                <button style="float:right;" type="submit" class="btn btn-primary btn-lg " title="Print to PDF">
+                        @Html.AntiForgeryToken()
+                        <button style="float:right;" type="submit" class="btn btn-primary btn-lg " title="Print to PDF">
                             <span class="fa fa-print fa-lg"></span>
                         </button>
                     }
@@ -451,7 +454,7 @@
                 </div>
             </div>
             <div id="copy-c" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-c'">
-                @if (status != null && status.Id > 2)
+                @if (status != null && (status.StatusId == 6 || status.StatusId == 5))
                 {
                     using (Html.BeginForm("CopyC", "Print", new { ReturnUrl = ViewBag.ReturnUrl, Id = Model.AccountNumber, year = ViewBag.SelectedYear }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
