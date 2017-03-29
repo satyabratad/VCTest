@@ -18,6 +18,7 @@ namespace Bill2Pay.Model
 
         [MaxLength(1)]
         [RegularExpression("^[^<>,<|>]+$", ErrorMessage = "Html tags are not allowed.")]
+        [Display(Name ="TIN Type")]
         public string TINType { get; set; }
 
         [MaxLength(9)]
