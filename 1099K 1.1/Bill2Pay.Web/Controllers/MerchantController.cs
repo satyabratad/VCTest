@@ -191,6 +191,26 @@ namespace Bill2Pay.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                var merdet = db.MerchantDetails.Where(m => m.PayeeAccountNumber.Equals(merchantDetails.PayeeAccountNumber, StringComparison.InvariantCultureIgnoreCase) && m.IsActive == true).FirstOrDefault();
+                if (merdet != null)
+                {
+                    ViewBag.StatusMessage = "Account Number already exisits.";
+
+                    var statelst = GetStateList().Select(s => new SelectListItem() { Text = s.Key, Value = s.Value }).ToList();
+                    ViewBag.StateList = statelst;
+                    var IndicatorLst = GetpaymentIndicator().Select(s => new SelectListItem() { Text = s.Key, Value = s.Value }).ToList();
+                    ViewBag.PaymentIndicatorList = IndicatorLst;
+
+                    var filerLst = GetFilerIndicatore().Select(s => new SelectListItem() { Text = s.Key, Value = s.Value }).ToList();
+                    ViewBag.FilerList = filerLst;
+
+                    var TINTypeLst = GetTINTypes().Select(s => new SelectListItem() { Text = s.Key, Value = s.Value }).ToList();
+                    ViewBag.TINTypeLstList = TINTypeLst;
+
+
+                    ViewBag.PayerId = new SelectList(db.PayerDetails, "Id", "FirstPayerName");
+                    return View(merchantDetails);
+                }
                 merchantDetails.DateAdded = System.DateTime.Now;
                 merchantDetails.UserId =int.Parse(User.Identity.GetUserId());
                 //merchantDetails.PaymentYear = System.DateTime.Now.Year;
