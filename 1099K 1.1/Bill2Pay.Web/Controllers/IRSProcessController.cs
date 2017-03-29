@@ -124,7 +124,7 @@ namespace Bill2Pay.Web.Controllers
 
             if (checkedList.Count == 0)
             {
-                TempData["errorMessage"] = "Please select at least one merchant to perform this action.";
+                TempData["errorMessage"] = "No merchant selected.";
                 return RedirectToAction("Index");
             }
             if (!string.IsNullOrEmpty(Request.Form["tinmatching"]))
@@ -182,12 +182,12 @@ namespace Bill2Pay.Web.Controllers
             if (exceptList != null && exceptList.Count>0)
             {
                 var invalideAccounts = exceptList.Aggregate((i, j) => i + ", " + j);
-                errMsg = "Unable to Generate pdf for " + invalideAccounts + ".";
+                errMsg = "Unable to Generate PDF for " + invalideAccounts + ".";
             }
             
             if (printableList.Count()>0)
             {
-                strMsg = "Generate .pdf file process may take some time. Once completed you can find the files in the '/App_Data/Download/k1099' location. ";
+                strMsg = "This will initiate a background process to 'Generate PDF file', once completed will be stored into server location.";
                 TempData["successMessage"] = strMsg;
                 TempData["errorMessage"] = errMsg;
                 return RedirectToAction("PrintAllCopies", "Print");
@@ -213,7 +213,7 @@ namespace Bill2Pay.Web.Controllers
             Int32 selectedPayer = Convert.ToInt32(TempData["SelectedPayer"]);
             if (selectedMerchants.Count == 0)
             {
-                TempData["errorMessage"] = "Select atleast one record to generate IRS Test File";
+                TempData["errorMessage"] = "No record selected.";
                 return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
             }
 
@@ -251,7 +251,7 @@ namespace Bill2Pay.Web.Controllers
 
             if (incorrectTINresult.Count != 0)
             {
-                TempData["errorMessage"] = "At least one of the selected merchant has negative or void TIN check result. IRS FIRE Input file cannot be generated for this selection.";
+                TempData["errorMessage"] = "Some of the merchant has negative or void TIN check result. IRS FIRE Input file cannot be generated for this selection.";
                 return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
             }
 
@@ -265,7 +265,7 @@ namespace Bill2Pay.Web.Controllers
 
             if (alreadySubmitted.Count != 0)
             {
-                TempData["errorMessage"] = "One or more than one selected merchant's 1009K file already submitted. IRS file can not be generated for this selection";
+                TempData["errorMessage"] = "Some of the merchant file already submitted. IRS file can't be generated for this selection.";
                 return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
             }
 
@@ -302,7 +302,7 @@ namespace Bill2Pay.Web.Controllers
 
             if (incorrectTINresult.Count != 0)
             {
-                TempData["errorMessage"] = "At least one of the selected merchant has negative or void TIN check result. IRS FIRE Correction Input file cannot be generated for this selection.";
+                TempData["errorMessage"] = "Some of the merchant has negative or void TIN check result. IRS FIRE Input file cannot be generated for this selection.";
                 return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
             }
 
@@ -316,7 +316,7 @@ namespace Bill2Pay.Web.Controllers
 
             if (alreadySubmitted.Count != 0)
             {
-                TempData["errorMessage"] = "One or more than one selected merchant's 1009K file already submitted. IRS Correction file can not be generated for this selection";
+                TempData["errorMessage"] = "Some of the merchant file already submitted. IRS file can't be generated for this selection.";
                 return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
             }
 
@@ -364,15 +364,9 @@ namespace Bill2Pay.Web.Controllers
 
             if (statusId < 1)
             {
-                TempData["errorMessage"] = "Requested status is not specified. Please select a list a try again.";
+                TempData["errorMessage"] = "Invalid status specified.";
                 return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
             }
-            //changeble status;
-            //if Not Submitted(1)=> status can not be modified.
-            //if File Generated(2)=> status can be changed to => Submitted(6) Only.
-            //if Correction Required(3) => status can not be changed.
-            //if CorrectionUploaded(4) => status can not be changed.
-            //if ReSubmitted(5)=> 
 
             foreach (var item in selectedMerchants)
             {
@@ -384,7 +378,7 @@ namespace Bill2Pay.Web.Controllers
                     {
                         if (statusId == (int)RecordStatus.Submitted && (data.StatusId != (int)RecordStatus.FileGenerated && data.StatusId != (int)RecordStatus.OneTransactionCorrection && data.StatusId != (int)RecordStatus.TwoTransactionCorrection))
                         {
-                            TempData["errorMessage"] = "Specified status can not be updated for : " + data.AccountNumber;
+                            TempData["errorMessage"] = "Specified status can't be updated for : " + data.AccountNumber;
                             return RedirectToAction("Index", "Home");
                         }
                         else if (statusId == (int)RecordStatus.OneTransactionCorrection && data.StatusId != (int)RecordStatus.Submitted && data.StatusId != (int)RecordStatus.ReSubmitted)
@@ -405,7 +399,7 @@ namespace Bill2Pay.Web.Controllers
                 }
                 else
                 {
-                    TempData["errorMessage"] = "Specified status can not be updated for : " + item;
+                    TempData["errorMessage"] = "Specified status can't be updated for : " + item;
                     return RedirectToAction("Index", "Home");
                 }
 
@@ -429,7 +423,7 @@ namespace Bill2Pay.Web.Controllers
 
         private ActionResult DisplayStatusChangeError(string accountNumber)
         {
-            TempData["errorMessage"] = "Selected status can not be updated for : " + accountNumber;
+            TempData["errorMessage"] = "Specified status can't be updated for : " + accountNumber;
             return RedirectToAction("Index", "Home");
         }
     }

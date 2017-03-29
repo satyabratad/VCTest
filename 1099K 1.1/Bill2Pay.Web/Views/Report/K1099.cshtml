@@ -300,6 +300,18 @@
             columnWidth: 'auto',
             styles: {
                 overflow: 'linebreak'
+            },
+            createdHeaderCell: function (cell, data) {
+                var col = data.column.index;
+                if (col != 0 && col != 16) {
+                    cell.styles.halign = 'right';
+                }
+            },
+            createdCell: function (cell, data) {
+                var col = data.column.index;
+                if (col != 0 && col != 16) {
+                    cell.styles.halign = 'right';
+                }
             }
         });
 

@@ -23,7 +23,7 @@ namespace Bill2Pay.Web.Controllers
         private Dictionary<string, string> GetpaymentIndicator()
         {
             Dictionary<string, string> IndicatorList = new Dictionary<string, string>();
- 
+
             IndicatorList.Add("Payment Card Payment	", "1");
             IndicatorList.Add("Third Party Network Payment	", "2");
             return IndicatorList;
@@ -38,7 +38,7 @@ namespace Bill2Pay.Web.Controllers
             return TINTypeList;
         }
 
-        private Dictionary<string, string>  GetFilerIndicatore()
+        private Dictionary<string, string> GetFilerIndicatore()
         {
             Dictionary<string, string> FilerList = new Dictionary<string, string>();
 
@@ -48,7 +48,7 @@ namespace Bill2Pay.Web.Controllers
             return FilerList;
 
         }
-        private Dictionary<string,string>  GetStateList()
+        private Dictionary<string, string> GetStateList()
         {
             Dictionary<string, string> StateList = new Dictionary<string, string>();
 
@@ -108,7 +108,7 @@ namespace Bill2Pay.Web.Controllers
             StateList.Add("West Virginia	", "WV");
             StateList.Add("Wisconsin	", "WI");
             StateList.Add("Wyoming	", "WY");
-            
+
 
 
 
@@ -116,10 +116,8 @@ namespace Bill2Pay.Web.Controllers
             return StateList;
         }
 
-
-
-        public ActionResult Index(int? Id,int? payer)
-        { 
+        public ActionResult Index(int? Id, int? payer)
+        {
             int year = 0;
             List<MerchantDetailsVM> merchants;
             if (payer == null)
@@ -134,23 +132,22 @@ namespace Bill2Pay.Web.Controllers
             }
             else
             {
-                year =(int) Id;
+                year = (int)Id;
             }
             merchants = db.MerchantDetails.Include(m => m.CreatedUser).Include(m => m.Payer)
-                                   .GroupJoin(db.SubmissionStatus.Where(s=>s.IsActive==true && s.PaymentYear==year),
-                                    mer =>mer.PayeeAccountNumber,
-                                    stat=>stat.AccountNumber,
-                                    (mer,stat)=> new MerchantDetailsVM() { Merchant = mer, Status = stat.FirstOrDefault() }) 
+                                   .GroupJoin(db.SubmissionStatus.Where(s => s.IsActive == true && s.PaymentYear == year),
+                                    mer => mer.PayeeAccountNumber,
+                                    stat => stat.AccountNumber,
+                                    (mer, stat) => new MerchantDetailsVM() { Merchant = mer, Status = stat.FirstOrDefault() })
                                         .Where(m => m.Merchant.IsActive == true && (payer == 0 || m.Merchant.PayerId == payer))
-                                        .OrderBy(m=>m.Merchant.FirstPayeeName).ToList() ;
+                                        .OrderBy(m => m.Merchant.FirstPayeeName).ToList();
 
             var payerlst = db.PayerDetails.Where(p => p.IsActive == true)
-                .Select(p => new SelectListItem() { Text = p.FirstPayerName, Value =p.Id.ToString() }).OrderBy(p => p.Text).ToList();
+                .Select(p => new SelectListItem() { Text = p.FirstPayerName, Value = p.Id.ToString() }).OrderBy(p => p.Text).ToList();
             ViewBag.PayerList = payerlst;
             ViewBag.SelectedYear = year;
             return View(merchants.ToList());
         }
-
 
         public ActionResult Details(int? id)
         {
@@ -166,7 +163,6 @@ namespace Bill2Pay.Web.Controllers
             return View(merchantDetails);
         }
 
-     
         public ActionResult Create()
         {
             var statelst = GetStateList().Select(s => new SelectListItem() { Text = s.Key, Value = s.Value }).ToList();
@@ -174,27 +170,27 @@ namespace Bill2Pay.Web.Controllers
             var IndicatorLst = GetpaymentIndicator().Select(s => new SelectListItem() { Text = s.Key, Value = s.Value }).ToList();
             ViewBag.PaymentIndicatorList = IndicatorLst;
 
-            var filerLst= GetFilerIndicatore().Select(s => new SelectListItem() { Text = s.Key, Value = s.Value }).ToList();
+            var filerLst = GetFilerIndicatore().Select(s => new SelectListItem() { Text = s.Key, Value = s.Value }).ToList();
             ViewBag.FilerList = filerLst;
 
             var TINTypeLst = GetTINTypes().Select(s => new SelectListItem() { Text = s.Key, Value = s.Value }).ToList();
             ViewBag.TINTypeLstList = TINTypeLst;
-            
+
 
             ViewBag.PayerId = new SelectList(db.PayerDetails, "Id", "FirstPayerName");
             return View();
         }
 
-               [HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create( MerchantDetails merchantDetails)
+        public ActionResult Create(MerchantDetails merchantDetails)
         {
             if (ModelState.IsValid)
             {
                 var merdet = db.MerchantDetails.Where(m => m.PayeeAccountNumber.Equals(merchantDetails.PayeeAccountNumber, StringComparison.InvariantCultureIgnoreCase) && m.IsActive == true).FirstOrDefault();
                 if (merdet != null)
                 {
-                    ViewBag.StatusMessage = "Account Number already exisits.";
+                    ViewBag.StatusMessage = "Client Code already exists.";
 
                     var statelst = GetStateList().Select(s => new SelectListItem() { Text = s.Key, Value = s.Value }).ToList();
                     ViewBag.StateList = statelst;
@@ -212,8 +208,7 @@ namespace Bill2Pay.Web.Controllers
                     return View(merchantDetails);
                 }
                 merchantDetails.DateAdded = System.DateTime.Now;
-                merchantDetails.UserId =int.Parse(User.Identity.GetUserId());
-                //merchantDetails.PaymentYear = System.DateTime.Now.Year;
+                merchantDetails.UserId = int.Parse(User.Identity.GetUserId());
                 merchantDetails.IsActive = true;
                 db.MerchantDetails.Add(merchantDetails);
                 db.SaveChanges();
@@ -225,8 +220,7 @@ namespace Bill2Pay.Web.Controllers
             return View(merchantDetails);
         }
 
-
-        public ActionResult Edit(string id,int? year)
+        public ActionResult Edit(string id, int? year)
         {
             ViewBag.StatusMessage = string.Empty;
             var returnUrl = HttpContext.Request.UrlReferrer;
@@ -239,7 +233,7 @@ namespace Bill2Pay.Web.Controllers
             {
                 year = System.DateTime.Now.Year - 1;
             }
-            
+
             MerchantDetails merchantDetails = db.MerchantDetails.Where(m => m.PayeeAccountNumber.Equals(id, StringComparison.InvariantCultureIgnoreCase)
                                            && m.IsActive == true).FirstOrDefault();
 
@@ -250,17 +244,21 @@ namespace Bill2Pay.Web.Controllers
 
             var subStatus = db.SubmissionStatus.Where(s => s.AccountNumber.Equals(id, StringComparison.InvariantCultureIgnoreCase)
                                                   && s.IsActive == true && s.PaymentYear == year).FirstOrDefault();
-            if(subStatus != null)
+            if (subStatus != null)
             {
                 switch (subStatus.StatusId)
                 {
-                    case 6: case 3: case 4:
-                    case 5: case 8: case 9:
-                        ViewBag.StatusMessage = " Data of this merchant is already submitted for this year's 1099K. Updated information will be reflected in 1099K submission for next year.   ";
+                    case 6:
+                    case 3:
+                    case 4:
+                    case 5:
+                    case 8:
+                    case 9:
+                        ViewBag.StatusMessage = "1099K is already submitted for the merchant, Updated information will not reflect in IRS until next submission.";
                         break;
                     case 7:
-                        ViewBag.StatusMessage = " This merchant data is marked for Two Transaction Correction. Corrected data will be reflected in 1099K submission for last year.   ";
-                        break; 
+                        ViewBag.StatusMessage = "This merchant is marked as 'Two-Transaction Correction', Updated information will reflect in re-submission.";
+                        break;
                 }
             }
 
@@ -280,11 +278,33 @@ namespace Bill2Pay.Web.Controllers
             return View(merchantDetails);
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(MerchantDetails merchantDetails)
-         {
+        {
+            var merdet = db.MerchantDetails.Where(m => m.PayeeAccountNumber.Equals(merchantDetails.PayeeAccountNumber, StringComparison.InvariantCultureIgnoreCase) 
+            && m.IsActive == true
+            && m.Id != merchantDetails.Id).FirstOrDefault();
+            if (merdet != null)
+            {
+                ViewBag.StatusMessage = "Client Code already exists.";
+
+                var statelst = GetStateList().Select(s => new SelectListItem() { Text = s.Key, Value = s.Value }).ToList();
+                ViewBag.StateList = statelst;
+                var IndicatorLst = GetpaymentIndicator().Select(s => new SelectListItem() { Text = s.Key, Value = s.Value }).ToList();
+                ViewBag.PaymentIndicatorList = IndicatorLst;
+
+                var filerLst = GetFilerIndicatore().Select(s => new SelectListItem() { Text = s.Key, Value = s.Value }).ToList();
+                ViewBag.FilerList = filerLst;
+
+                var TINTypeLst = GetTINTypes().Select(s => new SelectListItem() { Text = s.Key, Value = s.Value }).ToList();
+                ViewBag.TINTypeLstList = TINTypeLst;
+
+
+                ViewBag.PayerId = new SelectList(db.PayerDetails, "Id", "FirstPayerName");
+                return View(merchantDetails);
+            }
+
             if (ModelState.IsValid)
             {
 
@@ -307,10 +327,10 @@ namespace Bill2Pay.Web.Controllers
 
 
 
-                    var iDet = db.ImportDetails.Where(i => i.IsActive==true && i.AccountNumber.Equals(merchantDetails.PayeeAccountNumber, StringComparison.InvariantCultureIgnoreCase))
+                    var iDet = db.ImportDetails.Where(i => i.IsActive == true && i.AccountNumber.Equals(merchantDetails.PayeeAccountNumber, StringComparison.InvariantCultureIgnoreCase))
                                 .GroupJoin(db.SubmissionStatus.Where(s => s.IsActive == true && s.AccountNumber.Equals(merchantDetails.PayeeAccountNumber, StringComparison.InvariantCultureIgnoreCase)),
                                 imp => new { acc = imp.AccountNumber, year = imp.ImportSummary.PaymentYear },
-                                stat => new { acc= stat.AccountNumber, year=stat.PaymentYear  } ,
+                                stat => new { acc = stat.AccountNumber, year = stat.PaymentYear },
                                 (imp, stat) => new MerchantListVM() { ImportDetails = imp, SubmissionStatus = stat.FirstOrDefault() })
                                 .ToList();
 
@@ -387,7 +407,7 @@ namespace Bill2Pay.Web.Controllers
                                     db.SaveChanges();
 
                                     newStatus.IsActive = true;
-                                    newStatus.StatusId =(int) RecordStatus.TwoTransactionUploaded; 
+                                    newStatus.StatusId = (int)RecordStatus.TwoTransactionUploaded;
                                     newStatus.DateAdded = System.DateTime.Now;
                                     db.SubmissionStatus.Add(newStatus);
                                     db.SaveChanges();
@@ -397,18 +417,16 @@ namespace Bill2Pay.Web.Controllers
 
                         scope.Complete();
                     }
-   
+
                     return Redirect(returnUrl);
                 }
             }
- 
+
             ViewBag.PayerId = new SelectList(db.PayerDetails, "Id", "CFSF", merchantDetails.PayerId);
             return View(merchantDetails);
 
         }
 
-
-   
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -424,7 +442,6 @@ namespace Bill2Pay.Web.Controllers
             return View(merchantDetails);
         }
 
-
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
@@ -435,7 +452,7 @@ namespace Bill2Pay.Web.Controllers
             {
                 merchantDetails.IsActive = false;
                 db.Entry(merchantDetails).State = EntityState.Modified;
-               
+
                 db.SaveChanges();
             }
             return RedirectToAction("Index");

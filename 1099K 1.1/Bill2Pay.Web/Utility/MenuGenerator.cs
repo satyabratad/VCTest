@@ -230,10 +230,10 @@ namespace Bill2Pay.Web
         {
             if (amount == null)
             {
-                return "0.00";
+                return "$0.00";
             }
 
-            return string.Format("{0:0.00}", amount);
+            return string.Format("${0:n}", amount);
         }
     }
 }

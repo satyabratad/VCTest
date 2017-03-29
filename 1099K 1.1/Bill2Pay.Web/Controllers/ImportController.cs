@@ -112,7 +112,6 @@ namespace Bill2Pay.Web.Controllers
 
         public ActionResult Tin(int? Id, int? payer)
         {
-            //sint year = 0;
             if (Id == null)
             {
                 Id = DateTime.Now.Year - 1;
@@ -125,7 +124,6 @@ namespace Bill2Pay.Web.Controllers
 
             ViewBag.Message = "";
             return View();
-            //return RedirectToAction("Tin", new { id = Id, payer = payer });
         }
 
         [HttpPost]
