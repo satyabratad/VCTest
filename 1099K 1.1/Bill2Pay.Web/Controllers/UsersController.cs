@@ -17,15 +17,18 @@ namespace Bill2Pay.Web.Controllers
     {
         private ApplicationUserManager _userManager;
 
+        //Default Constructor
         public UsersController()
         {
         }
 
+        //POST : Set Users
         public UsersController(ApplicationUserManager userManager)
         {
             UserManager = userManager;
         }
 
+        //POST :/Manage/ User
         public ApplicationUserManager UserManager
         {
             get
@@ -38,6 +41,7 @@ namespace Bill2Pay.Web.Controllers
             }
         }
 
+        //POST : User /Index
 		public ActionResult Index()
 		{
             var users = UserManager.GetUsers();
