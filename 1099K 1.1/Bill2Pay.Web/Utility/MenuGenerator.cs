@@ -2,17 +2,22 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Principal;
 using System.Web;
 
 
 
 namespace Bill2Pay.Web
 {
+    /// <summary>
+    /// used for Menu generation
+    /// </summary>
     public class MenuGenerator
     {
         private static Menu menu;
 
+        /// <summary>
+        /// static propery Menu
+        /// </summary>
         public static Menu Menu
         {
             get
@@ -34,6 +39,12 @@ namespace Bill2Pay.Web
             }
         }
 
+        /// <summary>
+        /// Check IsAcive
+        /// </summary>
+        /// <param name="controllerName">string</param>
+        /// <param name="HasSubMenu">bool</param>
+        /// <returns>string</returns>
         public static string IsActive(string controllerName, bool HasSubMenu)
         {
             string value = "";
@@ -51,6 +62,9 @@ namespace Bill2Pay.Web
             return "";
         }
 
+        /// <summary>
+        /// Get the current URL
+        /// </summary>
         public static string CurrentUrl
         {
             get
@@ -63,6 +77,11 @@ namespace Bill2Pay.Web
             }
         }
 
+        /// <summary>
+        /// Check If the menu is selected
+        /// </summary>
+        /// <param name="item">int</param>
+        /// <returns>string</returns>
         public static string IsSelected(int item)
         {
             var value = "";
@@ -79,6 +98,11 @@ namespace Bill2Pay.Web
             return value;
         }
 
+        /// <summary>
+        /// Check if the payer is selected
+        /// </summary>
+        /// <param name="item">int</param>
+        /// <returns>string</returns>
         public static string IsSelectedPayer(int item)
         {
             var value = "";
@@ -96,18 +120,32 @@ namespace Bill2Pay.Web
         }
     }
 
+    /// <summary>
+    /// Represents the Menu object
+    /// </summary>
     public class Menu
     {
 
+        /// <summary>
+        /// Return list of menu item
+        /// </summary>
         public List<MenuItem> Items { get; internal set; }
+
+        /// <summary>
+        /// User Name
+        /// </summary>
         public string UserName { get; internal set; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public Menu()
         {
             this.Items = new List<MenuItem>();
             SiteMapNode rootNode = SiteMap.RootNode;
             ProcessNode(this.Items, rootNode);
         }
+
 
         private void ProcessNode(List<MenuItem> items, SiteMapNode parentNode)
         {
@@ -148,21 +186,51 @@ namespace Bill2Pay.Web
         }
     }
 
+    /// <summary>
+    /// Represents all Menu Items
+    /// </summary>
     public class MenuItem
-    {
+    { 
+        /// <summary>
+        /// PropertyAction Name
+        /// </summary>
         public string ActionName { get; internal set; }
+        /// <summary>
+        /// ControllerName
+        /// </summary>
         public string ControllerName { get; internal set; }
+        /// <summary>
+        /// FontClass
+        /// </summary>
         public string FontClass { get; internal set; }
+        /// <summary>
+        /// LinkText
+        /// </summary>
         public string LinkText { get; internal set; }
+        /// <summary>
+        /// SubMenu
+        /// </summary>
         public List<MenuItem> SubMenu { get; internal set; }
     }
 
+    /// <summary>
+    /// Year Selection
+    /// </summary>
     public class YearSelection
     {
+        /// <summary>
+        /// Allow PostBack
+        /// </summary>
         public bool AllowPostback { get; set; }
+        /// <summary>
+        /// IsVisible
+        /// </summary>
         public bool IsVisible { get; set; }
-
+        
         bool isYearVisible = true;
+        /// <summary>
+        /// IsYearVisible
+        /// </summary>
         public bool IsYearVisible
         {
             get
@@ -177,8 +245,16 @@ namespace Bill2Pay.Web
 
     }
 
+    /// <summary>
+    /// TIN Status
+    /// </summary>
     public static class TinStatus
     {
+        /// <summary>
+        /// Get Name
+        /// </summary>
+        /// <param name="id">string</param>
+        /// <returns>string</returns>
         public static string GetName(string id)
         {
             string value = "";
@@ -202,8 +278,16 @@ namespace Bill2Pay.Web
         }
     }
 
+    /// <summary>
+    /// Submission Type
+    /// </summary>
     public static class SubmissionType
     {
+        /// <summary>
+        /// Get Name
+        /// </summary>
+        /// <param name="id">int?</param>
+        /// <returns></returns>
         public static string GetName(int? id)
         {
             string value = "";
@@ -226,6 +310,11 @@ namespace Bill2Pay.Web
             return value;
         }
 
+        /// <summary>
+        /// Format Amount value
+        /// </summary>
+        /// <param name="amount">decimal?</param>
+        /// <returns>string</returns>
         public static string FormatAmount(decimal? amount)
         {
             if (amount == null)
