@@ -10,8 +10,16 @@ using Microsoft.Owin.Security;
 
 namespace Bill2Pay.Model
 {
+    /// <summary>
+    /// Email Service
+    /// </summary>
     public class EmailService : IIdentityMessageService
     {
+        /// <summary>
+        /// Send
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
@@ -19,8 +27,16 @@ namespace Bill2Pay.Model
         }
     }
 
+    /// <summary>
+    /// Sms Service
+    /// </summary>
     public class SmsService : IIdentityMessageService
     {
+        /// <summary>
+        /// Send
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public Task SendAsync(IdentityMessage message)
         {
             // Plug in your SMS service here to send a text message.
@@ -28,13 +44,26 @@ namespace Bill2Pay.Model
         }
     }
 
-    // Configure the application user manager which is used in this application.
+    /// <summary>
+    /// Configure the application user manager which is used in this application.
+    /// </summary>
     public class ApplicationUserManager : UserManager<ApplicationUser, long>
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="store"></param>
         public ApplicationUserManager(IUserStore<ApplicationUser, long> store)
             : base(store)
         {
         }
+
+        /// <summary>
+        /// Create Application User
+        /// </summary>
+        /// <param name="options">Identity Factory Options</param>
+        /// <param name="context">Owin Context</param>
+        /// <returns></returns>
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options,
             IOwinContext context)
         {
@@ -83,35 +112,70 @@ namespace Bill2Pay.Model
             return manager;
         }
 
+        /// <summary>
+        /// Get Users
+        /// </summary>
+        /// <returns></returns>
         public List<ApplicationUser> GetUsers()
         {
             return this.Users.ToList();
         }
     }
 
-    // Configure the application sign-in manager which is used in this application.  
+    /// <summary>
+    ///  Configure the application sign-in manager which is used in this application.  
+    /// </summary>
     public class ApplicationSignInManager : SignInManager<ApplicationUser, long>
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="userManager">Application User Manager</param>
+        /// <param name="authenticationManager">Authentication Manager</param>
         public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager) :
             base(userManager, authenticationManager)
         { }
 
+        /// <summary>
+        /// Create User Identity
+        /// </summary>
+        /// <param name="user">ApplicationUser</param>
+        /// <returns>Claims</returns>
         public override Task<ClaimsIdentity> CreateUserIdentityAsync(ApplicationUser user)
         {
             return user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager);
         }
 
+        /// <summary>
+        /// Create
+        /// </summary>
+        /// <param name="options">Identity Factory Options</param>
+        /// <param name="context">OWin Context</param>
+        /// <returns></returns>
         public static ApplicationSignInManager Create(IdentityFactoryOptions<ApplicationSignInManager> options, IOwinContext context)
         {
             return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
         }
     }
 
+    /// <summary>
+    /// Application Role Manager
+    /// </summary>
     public class ApplicationRoleManager : RoleManager<ApplicationRole, long>
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="roleStore"></param>
         public ApplicationRoleManager(IRoleStore<ApplicationRole, long> roleStore)
         : base(roleStore) { }
 
+        /// <summary>
+        /// Create Role
+        /// </summary>
+        /// <param name="options">Identity Factory Options</param>
+        /// <param name="context">OWin Context</param>
+        /// <returns></returns>
         public static ApplicationRoleManager Create(
             IdentityFactoryOptions<ApplicationRoleManager> options,
             IOwinContext context)
@@ -121,16 +185,29 @@ namespace Bill2Pay.Model
             return manager;
         }
 
+        /// <summary>
+        /// Add Role
+        /// </summary>
+        /// <param name="role">Application Role</param>
         public void AddRole(ApplicationRole role)
         {
             this.Create(role);
         }
 
+        /// <summary>
+        /// Add Role Async
+        /// </summary>
+        /// <param name="role">Application Role</param>
+        /// <returns>Task</returns>
         public async Task AddRoleAsync(ApplicationRole role)
         {
             await this.CreateAsync(role);
         }
 
+        /// <summary>
+        /// Get Roles
+        /// </summary>
+        /// <returns></returns>
         public List<ApplicationRole> GetRoles()
         {
             return this.Roles.ToList();

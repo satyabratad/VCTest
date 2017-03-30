@@ -804,7 +804,7 @@ function isLeafNode (node) {
 function copy(source, destination){
   if (isWindow(source) || isScope(source)) {
     throw ngMinErr('cpws',
-      "Can't copy! Making copies of Window or Scope instances is not supported.");
+      "Cannot copy! Making copies of Window or Scope instances is not supported.");
   }
 
   if (!destination) {
@@ -822,7 +822,7 @@ function copy(source, destination){
     }
   } else {
     if (source === destination) throw ngMinErr('cpi',
-      "Can't copy! Source and destination are identical.");
+      "Cannot copy! Source and destination are identical.");
     if (isArray(source)) {
       destination.length = 0;
       for ( var i = 0; i < source.length; i++) {
@@ -2399,12 +2399,12 @@ forEach({
   inheritedData: jqLiteInheritedData,
 
   scope: function(element) {
-    // Can't use jqLiteData here directly so we stay compatible with jQuery!
+      // Cannot use jqLiteData here directly so we stay compatible with jQuery!
     return jqLite(element).data('$scope') || jqLiteInheritedData(element.parentNode || element, ['$isolateScope', '$scope']);
   },
 
   isolateScope: function(element) {
-    // Can't use jqLiteData here directly so we stay compatible with jQuery!
+      // Cannot use jqLiteData here directly so we stay compatible with jQuery!
     return jqLite(element).data('$isolateScope') || jqLite(element).data('$isolateScopeNoTemplate');
   },
 
@@ -3795,8 +3795,8 @@ function $AnchorScrollProvider() {
     var document = $window.document;
 
     // helper function to get first anchor from a NodeList
-    // can't use filter.filter, as it accepts only instances of Array
-    // and IE can't convert NodeList to an array using [].slice
+    // cannot use filter.filter, as it accepts only instances of Array
+    // and IE cannot convert NodeList to an array using [].slice
     // TODO(vojta): use filter if we change it to accept lists as well
     function getFirstAnchor(list) {
       var result = null;
@@ -5747,7 +5747,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
           } catch (e) {
             // turns out that under some circumstances IE9 throws errors when one attempts to read
             // comment's node value.
-            // Just ignore it and continue. (Can't seem to reproduce in test case.)
+            // Just ignore it and continue. (Cannot seem to reproduce in test case.)
           }
           break;
       }
@@ -6058,7 +6058,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
 
           if (!value && !optional) {
             throw $compileMinErr('ctreq',
-                "Controller '{0}', required by directive '{1}', can't be found!",
+                "Controller '{0}', required by directive '{1}', cannot be found!",
                 require, directiveName);
           }
           return value;
@@ -7004,7 +7004,7 @@ function $HttpProvider() {
 
       /**
        * Response interceptors go before "around" interceptors (no real reason, just
-       * had to pick one.) But they are already reversed, so we can't use unshift, hence
+       * had to pick one.) But they are already reversed, so we cannot use unshift, hence
        * the splice.
        */
       reversedInterceptors.splice(index, 0, {
@@ -7968,7 +7968,7 @@ function createHttpBackend($browser, createXhr, $browserDefer, callbacks, rawDoc
         // since calling completeRequest sets the `xhr` variable to null, we just check if it's not null before
         // continuing
         //
-        // we can't set xhr.onreadystatechange to undefined or delete it because that breaks IE8 (method=PATCH) and
+        // we cannot set xhr.onreadystatechange to undefined or delete it because that breaks IE8 (method=PATCH) and
         // Safari respectively.
         if (xhr && xhr.readyState == 4) {
           var responseHeaders = null,
@@ -8045,7 +8045,7 @@ function createHttpBackend($browser, createXhr, $browserDefer, callbacks, rawDoc
   };
 
   function jsonpReq(url, done) {
-    // we can't use jQuery/jqLite here because jQuery does crazy shit with script elements, e.g.:
+    // we cannot use jQuery/jqLite here because jQuery does crazy shit with script elements, e.g.:
     // - fetches local scripts via XHR and evals them
     // - adds and immediately removes script elements from the document
     var script = rawDocument.createElement('script'),
@@ -8266,7 +8266,7 @@ function $InterpolateProvider() {
             return concat.join('');
           }
           catch(err) {
-            var newErr = $interpolateMinErr('interr', "Can't interpolate: {0}\n{1}", text,
+            var newErr = $interpolateMinErr('interr', "Cannot interpolate: {0}\n{1}", text,
                 err.toString());
             $exceptionHandler(newErr);
           }
@@ -11122,7 +11122,7 @@ function qFactory(nextTick, exceptionHandler) {
    * @description
    * Wraps an object that might be a value or a (3rd party) then-able promise into a $q promise.
    * This is useful when you are dealing with an object that might or might not be a promise, or if
-   * the promise comes from a source that can't be trusted.
+   * the promise comes from a source that cannot be trusted.
    *
    * @param {*} value Value or a promise
    * @returns {Promise} Returns a promise of the passed value or promise
@@ -11923,7 +11923,7 @@ function $RootScopeProvider(){
        * clean up DOM bindings before an element is removed from the DOM.
        */
       $destroy: function() {
-        // we can't destroy the root scope or a scope that has been already destroyed
+        // we cannot destroy the root scope or a scope that has been already destroyed
         if (this.$$destroyed) return;
         var parent = this.$parent;
 
@@ -13687,7 +13687,7 @@ var originUrl = urlResolve(window.location.href, true);
  * uses the inner HTML approach to assign the URL as part of an HTML snippet -
  * http://stackoverflow.com/a/472729)  However, setting img[src] does normalize the URL.
  * Unfortunately, setting img[src] to something like "javascript:foo" on IE throws an exception.
- * Since the primary usage for normalizing URLs is to sanitize such URLs, we can't use that
+ * Since the primary usage for normalizing URLs is to sanitize such URLs, we cannot use that
  * method and IE < 8 is unsupported.
  *
  * References:
@@ -15617,7 +15617,7 @@ var formDirectiveFactory = function(isNgForm) {
         return {
           pre: function(scope, formElement, attr, controller) {
             if (!attr.action) {
-              // we can't use jq events because if a form is destroyed during submission the default
+              // we cannot use jq events because if a form is destroyed during submission the default
               // action is not prevented. see #1238
               //
               // IE 9 is not affected because it doesn't fire a submit event and try to do a full
@@ -16623,7 +16623,7 @@ var VALID_CLASS = 'ng-valid',
     <file name="protractorTest.js">
       it('should data-bind and become invalid', function() {
         if (browser.params.browser = 'safari') {
-          // SafariDriver can't handle contenteditable.
+          // SafariDriver cannot handle contenteditable.
           return;
         };
         var contentEditable = element(by.css('.doc-example-live [contenteditable]'));
@@ -18629,7 +18629,7 @@ var ngIfDirective = ['$animate', function($animate) {
 
       it('should load template2.html', function() {
         if (browser.params.browser == 'firefox') {
-          // Firefox can't handle using selects
+          // Firefox cannot handle using selects
           // See https://github.com/angular/protractor/issues/480
           return;
         }
@@ -18640,7 +18640,7 @@ var ngIfDirective = ['$animate', function($animate) {
 
       it('should change to blank', function() {
         if (browser.params.browser == 'firefox') {
-          // Firefox can't handle using selects
+          // Firefox cannot handle using selects
           return;
         }
         templateSelect.click();
@@ -18716,7 +18716,7 @@ var ngIncludeDirective = ['$http', '$templateCache', '$anchorScroll', '$animate'
               // Note: This will also link all children of ng-include that were contained in the original
               // html. If that content contains controllers, ... they could pollute/change the scope.
               // However, using ng-include on an element with additional content does not make sense...
-              // Note: We can't remove them in the cloneAttchFn of $transclude as that
+              // Note: We cannot remove them in the cloneAttchFn of $transclude as that
               // function is called before linking the content, which would apply child
               // directives to non existing elements.
               var clone = $transclude(newScope, function(clone) {
@@ -20086,7 +20086,7 @@ var ngTranscludeDirective = ngDirective({
     }
 
     // remember the transclusion fn but call it during linking so that we don't process transclusion before directives on
-    // the parent element even when the transclusion replaces the current element. (we can't use priority here because
+    // the parent element even when the transclusion replaces the current element. (we cannot use priority here because
     // that applies only to compile fns and not controllers
     this.$transclude = $transclude;
   }],
@@ -20361,7 +20361,7 @@ var selectDirective = ['$compile', '$parse', function($compile,   $parse) {
           optionsExp = attr.ngOptions,
           nullOption = false, // if false, user will not be able to select it (used by ngOptions)
           emptyOption,
-          // we can't just jqLite('<option>') since jqLite is not smart enough
+          // we cannot just jqLite('<option>') since jqLite is not smart enough
           // to create it in <select> and IE barfs otherwise.
           optionTemplate = jqLite(document.createElement('option')),
           optGroupTemplate =jqLite(document.createElement('optgroup')),
@@ -20549,7 +20549,7 @@ var selectDirective = ['$compile', '$parse', function($compile,   $parse) {
 
         ctrl.$render = render;
 
-        // TODO(vojta): can't we optimize this ?
+        // TODO(vojta): cannot we optimize this ?
         scope.$watch(render);
 
         function render() {

@@ -363,7 +363,7 @@
             this.container.find('.calendar-time').hide();
         }
 
-        //can't be used together for now
+        //cannot be used together for now
         if (this.timePicker && this.autoApply)
             this.autoApply = false;
 
@@ -1253,7 +1253,7 @@
             //if (this.container.find('input[name=daterangepicker_start]').is(":focus") || this.container.find('input[name=daterangepicker_end]').is(":focus"))
             //    return;
 
-            //ignore dates that can't be selected
+            //ignore dates that cannot be selected
             if (!$(e.target).hasClass('available')) return;
 
             //have the text inputs above calendars reflect the date being hovered over

@@ -36,9 +36,9 @@ $.extend($.fn, {
 		/// A set of key/value pairs that configure the validate. All options are optional.
 		/// </param>
 
-		// if nothing is selected, return nothing; can't chain anyway
+	    // if nothing is selected, return nothing; cannot chain anyway
 		if (!this.length) {
-			options && options.debug && window.console && console.warn( "nothing selected, can't validate, returning nothing" );
+		    options && options.debug && window.console && console.warn("nothing selected, cannot validate, returning nothing");
 			return;
 		}
 

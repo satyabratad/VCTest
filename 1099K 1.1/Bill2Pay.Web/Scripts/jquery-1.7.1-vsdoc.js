@@ -1493,7 +1493,7 @@ jQuery.data = function( elem, name, data, pvt /* Internal Use Only */ ) {
 			getByName = typeof name === "string",
 
 			// We have to handle DOM nodes and JS objects differently because IE6-7
-			// can't GC object references properly across the DOM-JS boundary
+			// cannot GC object references properly across the DOM-JS boundary
 			isNode = elem.nodeType,
 
 			// Only DOM nodes need the global jQuery cache; JS object data is
@@ -2399,7 +2399,7 @@ jQuery.parseJSON = function( data ) {
 			return null;
 		}
 
-		// Make sure leading/trailing whitespace is removed (IE can't handle it)
+    // Make sure leading/trailing whitespace is removed (IE cannot handle it)
 		data = jQuery.trim( data );
 
 		// Attempt to parse using the native JSON parser first
@@ -4075,7 +4075,7 @@ jQuery.prototype.domManip = function( args, table, callback ) {
 			value = args[0],
 			scripts = [];
 
-		// We can't cloneNode fragments that contain checked, in WebKit
+		// We cannot cloneNode fragments that contain checked, in WebKit
 		if ( !jQuery.support.checkClone && arguments.length === 3 && typeof value === "string" && rchecked.test( value ) ) {
 			return this.each(function() {
 				jQuery(this).domManip( args, table, callback, true );

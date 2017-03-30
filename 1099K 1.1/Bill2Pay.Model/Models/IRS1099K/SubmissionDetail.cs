@@ -13,27 +13,51 @@ namespace Bill2Pay.Model
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
+    /// <summary>
+    /// Structure of Submission Details
+    /// </summary>
     public class SubmissionDetail : IRSDetail
     {
+        /// <summary>
+        /// Database identity
+        /// </summary>
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int Id { get; set; }
 
+        /// <summary>
+        /// Client Code
+        /// </summary>
         [MaxLength(20)]
         [Display(Name = "Client Code")]
         public string AccountNumber { get; set; }
 
+        /// <summary>
+        /// Foreign key relation with Submission Summary
+        /// </summary>
         [ForeignKey("SubmissionSummary")]
         public int SubmissionId { get; set; }
 
+        /// <summary>
+        /// Submission Type
+        /// </summary>
         [Display(Name = "Status")]
         public int SubmissionType { get; set; }
 
+        /// <summary>
+        /// Submission Summary
+        /// </summary>
         public virtual SubmissionSummary SubmissionSummary { get; set; }
 
+        /// <summary>
+        /// Foreign key relation with PSE
+        /// </summary>
         [ForeignKey("PSE")]
         public virtual Nullable<int> PseId { get; set; }
 
+        /// <summary>
+        /// PSE
+        /// </summary>
         public PSEDetails PSE { get; set; }
     }
 }

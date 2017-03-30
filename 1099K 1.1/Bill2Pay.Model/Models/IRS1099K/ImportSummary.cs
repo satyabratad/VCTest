@@ -14,35 +14,71 @@ namespace Bill2Pay.Model
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
+    /// <summary>
+    /// Structure  of Import Summary
+    /// </summary>
     public class ImportSummary
     {
+        /// <summary>
+        /// Database identity column
+        /// </summary>
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int Id { get; set; }
 
+        /// <summary>
+        /// Payment Year
+        /// </summary>
         public int PaymentYear { get; set; }
 
+        /// <summary>
+        /// Import Date
+        /// </summary>
         [Column(TypeName = "datetime2")]
         public DateTime ImportDate { get; set; }
 
+        /// <summary>
+        /// Import File Name
+        /// </summary>
         [MaxLength(100)]
         public string FileName { get; set; }
 
+        /// <summary>
+        /// Total record count for an Import process
+        /// </summary>
         public Nullable<int> RecordCount { get; set; }
 
+        /// <summary>
+        /// Import processing log
+        /// </summary>
         [MaxLength(1024)]
         public String ProcessLog { get; set; }
 
+        /// <summary>
+        /// Relation with Import details
+        /// </summary>
         public virtual ICollection<ImportDetail> ImportDetails { get; set; }
 
+        /// <summary>
+        /// Active flag
+        /// </summary>
         public bool IsActive { get; set; }
 
+        /// <summary>
+        /// DAte of addition
+        /// </summary>
         [Column(TypeName = "datetime2")]
         public DateTime DateAdded { get; set; }
 
+        /// <summary>
+        /// Foreign key relation with User
+        /// </summary>
         [ForeignKey("CreatedUser")]
         public long UserId { get; set; }
 
+        /// <summary>
+        /// User
+        /// </summary>
         public virtual ApplicationUser CreatedUser { get; set; }
     }
 }

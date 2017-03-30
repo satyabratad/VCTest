@@ -297,7 +297,7 @@ namespace Bill2Pay.Web.Controllers
 
             if (alreadySubmitted.Count != 0)
             {
-                TempData["errorMessage"] = "Some of the merchant file already submitted. IRS file can't be generated for this selection.";
+                TempData["errorMessage"] = "Some of the merchant file already submitted. IRS file cannot be generated for this selection.";
                 return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
             }
 
@@ -352,7 +352,7 @@ namespace Bill2Pay.Web.Controllers
 
             if (alreadySubmitted.Count != 0)
             {
-                TempData["errorMessage"] = "Some of the merchant file already submitted. IRS file can't be generated for this selection.";
+                TempData["errorMessage"] = "Some of the merchant file already submitted. IRS file cannot be generated for this selection.";
                 return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
             }
 
@@ -423,7 +423,7 @@ namespace Bill2Pay.Web.Controllers
                     {
                         if (statusId == (int)RecordStatus.Submitted && (data.StatusId != (int)RecordStatus.FileGenerated && data.StatusId != (int)RecordStatus.OneTransactionCorrection && data.StatusId != (int)RecordStatus.TwoTransactionCorrection))
                         {
-                            TempData["errorMessage"] = "Specified status can't be updated for : " + data.AccountNumber;
+                            TempData["errorMessage"] = "Specified status cannot be updated for : " + data.AccountNumber;
                             return RedirectToAction("Index", "Home");
                         }
                         else if (statusId == (int)RecordStatus.OneTransactionCorrection && data.StatusId != (int)RecordStatus.Submitted && data.StatusId != (int)RecordStatus.ReSubmitted)
@@ -444,7 +444,7 @@ namespace Bill2Pay.Web.Controllers
                 }
                 else
                 {
-                    TempData["errorMessage"] = "Specified status can't be updated for : " + item;
+                    TempData["errorMessage"] = "Specified status cannot be updated for : " + item;
                     return RedirectToAction("Index", "Home");
                 }
 
@@ -468,7 +468,7 @@ namespace Bill2Pay.Web.Controllers
 
         private ActionResult DisplayStatusChangeError(string accountNumber)
         {
-            TempData["errorMessage"] = "Specified status can't be updated for : " + accountNumber;
+            TempData["errorMessage"] = "Specified status cannot be updated for : " + accountNumber;
             return RedirectToAction("Index", "Home");
         }
     }

@@ -2,36 +2,50 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
 
 namespace Bill2Pay.Model
 {
+    /// <summary>
+    /// Temporary storage of raw transaction, before type custing.
+    /// </summary>
     public class RawTransactionStaging
     {
+        /// <summary>
+        /// Database identity key
+        /// </summary>
         [Key]
         public int Id { get; set; }
 
+        /// <summary>
+        /// Payee Account Number
+        /// </summary>
         [MaxLength(20)]
         public string PayeeAccountNumber { get; set; }
 
+        /// <summary>
+        /// Transaction Type
+        /// </summary>
         [MaxLength(3)]
         public string TransactionType { get; set; }
 
+        /// <summary>
+        /// Transaction amount
+        /// </summary>
         [MaxLength(20)]
         public string TransactionAmount { get; set; }
 
+        /// <summary>
+        /// Transaction date
+        /// </summary>
         [MaxLength(32)]
         public string TransactionDate { get; set; }
 
-        
-
+        /// <summary>
+        /// Clear all record
+        /// </summary>
         public static void Clear()
         {
             using(var dbContext = new ApplicationDbContext())
@@ -41,8 +55,9 @@ namespace Bill2Pay.Model
             }
         }
 
-
-
+        /// <summary>
+        /// Asynchronus Bulk Addition
+        /// </summary>
         public static void AddBulkAsync()
         {
             using (var dbContext = new ApplicationDbContext())
@@ -53,6 +68,10 @@ namespace Bill2Pay.Model
         }
 
         static List<RawTransactionStaging> list = null;
+
+        /// <summary>
+        /// List of entity
+        /// </summary>
         public static List<RawTransactionStaging> StagingList
         {
             get
@@ -67,6 +86,10 @@ namespace Bill2Pay.Model
         }
 
         static DataTable dt;
+
+        /// <summary>
+        /// Tabular form of entity
+        /// </summary>
         public static DataTable StagingTable
         {
             get
@@ -85,6 +108,9 @@ namespace Bill2Pay.Model
             }
         }
 
+        /// <summary>
+        /// Database timeout 
+        /// </summary>
         public static int? ProcessTimeOut
         {
             get
@@ -98,6 +124,9 @@ namespace Bill2Pay.Model
             }
         }
 
+        /// <summary>
+        /// Bulk Addition
+        /// </summary>
         public static void AddBulk()
         {
             using (SqlConnection dbConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
@@ -113,6 +142,14 @@ namespace Bill2Pay.Model
             }
         }
 
+        /// <summary>
+        /// Post Import data processing
+        /// </summary>
+        /// <param name="year">Year</param>
+        /// <param name="userId">User</param>
+        /// <param name="fileName">CSV file name</param>
+        /// <param name="totalCount">total record count</param>
+        /// <param name="payerId">Payer</param>
         public static void ExecutePostImportDataProcessing(int year, long userId, string fileName, int totalCount,int payerId)
         {
             try

@@ -340,7 +340,7 @@
 		 * The exact opposite of 'opening' a row, this function will close any rows which
 		 * are currently 'open'.
 		 *  @param {node} nTr the table row to 'close'
-		 *  @returns {int} 0 on success, or 1 if failed (can't find the row)
+		 *  @returns {int} 0 on success, or 1 if failed (cannot find the row)
 		 *  @dtopt API
 		 *  @deprecated Since v1.10
 		 *
@@ -1997,7 +1997,7 @@
 		var oClasses = oSettings.oClasses;
 		var th = $(oCol.nTh);
 	
-		// Try to get width information from the DOM. We can't get it from CSS
+	    // Try to get width information from the DOM. We cannot get it from CSS
 		// as we'd need to parse the CSS stylesheet. `width` option can override
 		if ( ! oCol.sWidthOrig ) {
 			// Width attribute
@@ -2253,7 +2253,7 @@
 	
 						detectedType = types[j]( cache[k], settings );
 	
-						// If null, then this type can't apply to this column, so
+						// If null, then this type cannot apply to this column, so
 						// rather than testing all cells, break out. There is an
 						// exception for the last type which is `html`. We need to
 						// scan all rows since it is possible to mix string and HTML
@@ -4822,7 +4822,7 @@
 			settings.oLanguage.sLengthMenu.replace( '_MENU_', select[0].outerHTML )
 		);
 	
-		// Can't use `select` variable as user might provide their own and the
+		// Cannot use `select` variable as user might provide their own and the
 		// reference is broken by the use of outerHTML
 		$('select', div)
 			.val( settings._iDisplayLength )
@@ -5562,7 +5562,7 @@
 			tmpTable.find('tbody tr').remove();
 			var tr = $('<tr/>').appendTo( tmpTable.find('tbody') );
 	
-			// Clone the table header and footer - we can't use the header / footer
+		    // Clone the table header and footer - we cannot use the header / footer
 			// from the cloned table, since if scrolling is active, the table's
 			// real header and footer are contained in different table tags
 			tmpTable.find('thead, tfoot').remove();
@@ -5689,7 +5689,7 @@
 	
 		// If there is a width attr, we want to attach an event listener which
 		// allows the table sizing to automatically adjust when the window is
-		// resized. Use the width attr rather than CSS, since we can't know if the
+	    // resized. Use the width attr rather than CSS, since we cannot know if the
 		// CSS is a relative value or absolute - DOM read is always px.
 		if ( tableWidthAttr ) {
 			table.style.width = _fnStringToCss( tableWidthAttr );
@@ -6111,7 +6111,7 @@
 				nextSortIdx = next( sorting[sortIdx], true );
 	
 				if ( nextSortIdx === null && sorting.length === 1 ) {
-					nextSortIdx = 0; // can't remove sorting completely
+				    nextSortIdx = 0; // cannot remove sorting completely
 				}
 	
 				if ( nextSortIdx === null ) {
@@ -7513,7 +7513,7 @@
 	 * @returns {DataTables.Api} this
 	 */
 	_api_register( 'page.len()', function ( len ) {
-		// Note that we can't call this function 'length()' because `length`
+	    // Note that we cannot call this function 'length()' because `length`
 		// is a Javascript property of functions which defines how many arguments
 		// the function expects.
 		if ( len === undefined ) {
@@ -7687,7 +7687,7 @@
 			a, i, ien, j, jen,
 			selectorType = typeof selector;
 	
-		// Can't just check for isArray here, as an API or jQuery instance might be
+	    // cannot just check for isArray here, as an API or jQuery instance might be
 		// given with their array like look
 		if ( ! selector || selectorType === 'string' || selectorType === 'function' || selector.length === undefined ) {
 			selector = [ selector ];
@@ -7890,7 +7890,7 @@
 			}
 	
 			// ID selector. Want to always be able to select rows by id, regardless
-			// of if the tr element has been created or not, so can't rely upon
+		    // of if the tr element has been created or not, so cannot rely upon
 			// jQuery here - hence a custom implementation. This does not match
 			// Sizzle's fast selector or HTML4 - in HTML5 the ID can be anything,
 			// but to select it using a CSS selector engine (like Sizzle or

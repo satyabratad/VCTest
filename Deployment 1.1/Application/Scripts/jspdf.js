@@ -3965,7 +3965,7 @@ Q\n";
                 coordinates.upperRight_Y = this.internal.pageSize.height - y + h || 0;
             }
         } else {
-            // old method, that is fallback, if we can't get the pageheight, the coordinate-system starts from lower left
+            // old method, that is fallback, if we cannot get the pageheight, the coordinate-system starts from lower left
             if (Array.isArray(x)) {
                 coordinates.lowerLeft_X = x[0] || 0;
                 coordinates.lowerLeft_Y = x[1] || 0;
@@ -10227,7 +10227,7 @@ Q\n";
                     blob = slice.call(blob, 0, blob.size, force_saveable_type);
                     blob_changed = true;
                 }
-                // Since I can't be sure that the guessed media type will trigger a download
+                // Since I cannot be sure that the guessed media type will trigger a download
                 // in WebKit, I append .download to the filename.
                 // https://bugs.webkit.org/show_bug.cgi?id=65440
                 if (webkit_req_fs && name !== "download") {
@@ -11276,7 +11276,7 @@ Q\n";
             // a highly compressible string table.) Smaller buffer sizes give
             // fast adaptation but have of course the overhead of transmitting
             // trees more frequently.
-            // - I can't count above 4
+            // - I cannot count above 4
             var lit_bufsize;
 
             var last_lit; // running index in l_buf
@@ -11789,7 +11789,7 @@ Q\n";
                 if ((stored_len + 4 <= opt_lenb) && buf != -1) {
                     // 4: two words for the lengths
                     // The test buf != NULL is only necessary if LIT_BUFSIZE > WSIZE.
-                    // Otherwise we can't have processed more than WSIZE input bytes
+                    // Otherwise we cannot have processed more than WSIZE input bytes
                     // since
                     // the last block flush, because compression would have been
                     // successful. If LIT_BUFSIZE <= WSIZE, it is never too late to

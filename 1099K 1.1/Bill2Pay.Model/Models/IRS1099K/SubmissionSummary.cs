@@ -14,28 +14,59 @@ namespace Bill2Pay.Model
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
+    /// <summary>
+    /// Structure of Submission Summary
+    /// </summary>
     public class SubmissionSummary
     {
+        /// <summary>
+        /// Database identity
+        /// </summary>
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int Id { get; set; }
 
+        /// <summary>
+        /// PAyment Year
+        /// </summary>
         public int PaymentYear { get; set; }
 
+        /// <summary>
+        /// Date of Submission
+        /// </summary>
         [Column(TypeName = "datetime2")]
         public DateTime SubmissionDate { get; set; }
 
+        /// <summary>
+        /// relation with Submission Details
+        /// </summary>
         public virtual ICollection<SubmissionDetail> SubmissionDetails { get; set; }
+
+        /// <summary>
+        /// Relation with Import Details
+        /// </summary>
         public virtual ICollection<ImportDetail> ImportDetails { get; set; }
 
+        /// <summary>
+        /// Active  flag
+        /// </summary>
         public bool IsActive { get; set; }
 
+        /// <summary>
+        /// Date of addition
+        /// </summary>
         [Column(TypeName = "datetime2")]
         public DateTime DateAdded { get; set; }
 
+        /// <summary>
+        /// Foreign key relation with User
+        /// </summary>
         [ForeignKey("CreatedUser")]
         public long UserId { get; set; }
 
+        /// <summary>
+        /// User
+        /// </summary>
         public virtual ApplicationUser CreatedUser { get; set; }
     }
 }

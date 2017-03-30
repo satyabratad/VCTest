@@ -557,7 +557,7 @@ jQuery.extend({
 			return null;
 		}
 
-		// Make sure leading/trailing whitespace is removed (IE can't handle it)
+	    // Make sure leading/trailing whitespace is removed (IE cannot handle it)
 		data = jQuery.trim( data );
 
 		// Attempt to parse using the native JSON parser first
@@ -1353,7 +1353,7 @@ jQuery.support = (function() {
 	all = div.getElementsByTagName( "*" );
 	a = div.getElementsByTagName( "a" )[ 0 ];
 
-	// Can't get basic test support
+    // Cannot get basic test support
 	if ( !all || !all.length || !a ) {
 		return {};
 	}
@@ -1654,7 +1654,7 @@ jQuery.extend({
 			getByName = typeof name === "string",
 
 			// We have to handle DOM nodes and JS objects differently because IE6-7
-			// can't GC object references properly across the DOM-JS boundary
+			// cannot GC object references properly across the DOM-JS boundary
 			isNode = elem.nodeType,
 
 			// Only DOM nodes need the global jQuery cache; JS object data is
@@ -2533,9 +2533,9 @@ jQuery.extend({
 	attrHooks: {
 		type: {
 			set: function( elem, value ) {
-				// We can't allow the type property to be changed (since it causes problems in IE)
+			    // We cannot allow the type property to be changed (since it causes problems in IE)
 				if ( rtype.test( elem.nodeName ) && elem.parentNode ) {
-					jQuery.error( "type property can't be changed" );
+				    jQuery.error("type property cannot be changed");
 				} else if ( !jQuery.support.radioValue && value === "radio" && jQuery.nodeName(elem, "input") ) {
 					// Setting the type on a radio button after the value resets the value in IE6-9
 					// Reset value to it's default in case type is set after value
@@ -3065,7 +3065,7 @@ jQuery.event = {
 		}
 
 		if ( (!elem || jQuery.event.customEvent[ type ]) && !jQuery.event.global[ type ] ) {
-			// No jQuery handlers for this event type, and it can't have inline handlers
+		    // No jQuery handlers for this event type, and it cannot have inline handlers
 			return;
 		}
 
@@ -3158,7 +3158,7 @@ jQuery.event = {
 				!(type === "click" && jQuery.nodeName( elem, "a" )) && jQuery.acceptData( elem ) ) {
 
 				// Call a native DOM method on the target with the same name name as the event.
-				// Can't use an .isFunction() check here because IE6/7 fails that test.
+			    // Cannot use an .isFunction() check here because IE6/7 fails that test.
 				// Don't do default actions on window, that's where global variables be (#6170)
 				// IE<9 dies on focus/blur to hidden element (#1486)
 				if ( ontype && elem[ type ] && ((type !== "focus" && type !== "blur") || event.target.offsetWidth !== 0) && !jQuery.isWindow( elem ) ) {
@@ -4992,7 +4992,7 @@ if ( document.querySelectorAll ) {
 
 		div.innerHTML = "<p class='TEST'></p>";
 
-		// Safari can't handle uppercase or unicode characters when
+	    // Safari cannot handle uppercase or unicode characters when
 		// in quirks mode.
 		if ( div.querySelectorAll && div.querySelectorAll(".TEST").length === 0 ) {
 			return;
@@ -5141,7 +5141,7 @@ if ( document.querySelectorAll ) {
 
 	div.innerHTML = "<div class='test e'></div><div class='test'></div>";
 
-	// Opera can't find a second classname (in 9.6)
+	// Opera cannot find a second classname (in 9.6)
 	// Also, make sure that getElementsByClassName actually exists
 	if ( !div.getElementsByClassName || div.getElementsByClassName("e").length === 0 ) {
 		return;
@@ -5590,7 +5590,7 @@ jQuery.extend({
 // Implement the identical functionality for filter and not
 function winnow( elements, qualifier, keep ) {
 
-	// Can't pass null or undefined to indexOf in Firefox 4
+    // Cannot pass null or undefined to indexOf in Firefox 4
 	// Set to 0 to skip string check
 	qualifier = qualifier || 0;
 
@@ -5670,7 +5670,7 @@ wrapMap.optgroup = wrapMap.option;
 wrapMap.tbody = wrapMap.tfoot = wrapMap.colgroup = wrapMap.caption = wrapMap.thead;
 wrapMap.th = wrapMap.td;
 
-// IE can't serialize <link> and <script> tags normally
+// IE cannot serialize <link> and <script> tags normally
 if ( !jQuery.support.htmlSerialize ) {
 	wrapMap._default = [ 1, "div<div>", "</div>" ];
 }
@@ -5924,7 +5924,7 @@ jQuery.fn.extend({
 			value = args[0],
 			scripts = [];
 
-		// We can't cloneNode fragments that contain checked, in WebKit
+	    // We cannot cloneNode fragments that contain checked, in WebKit
 		if ( !jQuery.support.checkClone && arguments.length === 3 && typeof value === "string" && rchecked.test( value ) ) {
 			return this.each(function() {
 				jQuery(this).domManip( args, table, callback, true );
@@ -7638,7 +7638,7 @@ function buildParams( prefix, obj, traditional, add ) {
 			} else {
 				// If array item is non-scalar (array or object), encode its
 				// numeric index to resolve deserialization ambiguity issues.
-				// Note that rack (as of 1.0.0) can't currently deserialize
+			    // Note that rack (as of 1.0.0) cannot currently deserialize
 				// nested arrays properly, and attempting to do so may cause
 				// a server error. Possible fixes are to modify rack's
 				// deserialization algorithm or to provide an option or flag
@@ -8024,7 +8024,7 @@ function createActiveXHR() {
 // (This is still attached to ajaxSettings for backward compatibility)
 jQuery.ajaxSettings.xhr = window.ActiveXObject ?
 	/* Microsoft failed to properly
-	 * implement the XMLHttpRequest in IE7 (can't request local files),
+	 * implement the XMLHttpRequest in IE7 (cannot request local files),
 	 * so we use the ActiveXObject when it is available
 	 * Additionally XMLHttpRequest can be disabled in IE7/IE8 so
 	 * we need a fallback.

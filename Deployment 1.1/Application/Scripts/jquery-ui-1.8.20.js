@@ -6110,7 +6110,7 @@ $.widget( "ui.autocomplete", {
 			// prevent the close-on-blur in case of a "slow" click on the menu (long mousedown)
 			.mousedown(function( event ) {
 				// clicking on the scrollbar causes focus to shift to the body
-				// but we can't detect a mouseup or a click immediately afterward
+			    // but we cannot detect a mouseup or a click immediately afterward
 				// so we have to track the next mousedown and close the menu if
 				// the user clicks somewhere outside of the autocomplete
 				var menuElement = self.menu.element[ 0 ];
@@ -9197,7 +9197,7 @@ $.widget("ui.dialog", {
 						props.click.apply(self.element[0], arguments);
 					})
 					.appendTo(uiButtonSet);
-				// can't use .attr( props, true ) with jQuery 1.3.2.
+			    // cannot use .attr( props, true ) with jQuery 1.3.2.
 				$.each( props, function( key, value ) {
 					if ( key === "click" ) {
 						return;

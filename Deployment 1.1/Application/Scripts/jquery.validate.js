@@ -21,10 +21,10 @@ $.extend( $.fn, {
 	// http://jqueryvalidation.org/validate/
 	validate: function( options ) {
 
-		// If nothing is selected, return nothing; can't chain anyway
+	    // If nothing is selected, return nothing; cannot chain anyway
 		if ( !this.length ) {
 			if ( options && options.debug && window.console ) {
-				console.warn( "Nothing selected, can't validate, returning nothing." );
+				console.warn( "Nothing selected, cannot validate, returning nothing." );
 			}
 			return;
 		}
@@ -138,7 +138,7 @@ $.extend( $.fn, {
 		var element = this[ 0 ],
 			settings, staticRules, existingRules, data, param, filtered;
 
-		// If nothing is selected, return empty object; can't chain anyway
+		// If nothing is selected, return empty object; cannot chain anyway
 		if ( element == null || element.form == null ) {
 			return;
 		}
@@ -1450,7 +1450,7 @@ $.extend( $.validator, {
 
 			decimals = decimalPlaces( param );
 
-			// Value can't have too many decimals
+		    // Value cannot have too many decimals
 			if ( decimalPlaces( value ) > decimals || toInt( value ) % toInt( param ) !== 0 ) {
 				valid = false;
 			}

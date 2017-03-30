@@ -12,14 +12,26 @@ namespace Bill2Pay.Model
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+    /// <summary>
+    /// Structure of Status
+    /// </summary>
     public class Status
     {
+        /// <summary>
+        /// Database identity
+        /// </summary>
         [Key]
         public int Id { get; set; }
 
+        /// <summary>
+        /// Status name
+        /// </summary>
         [MaxLength(255)]
         public string Name { get; set; }
 
+        /// <summary>
+        /// Relation with Submission summary
+        /// </summary>
         public virtual ICollection<SubmissionSummary> SubmissionProcess { get; set; }
     }
 }

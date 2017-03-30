@@ -309,6 +309,7 @@
     <Content Include="Images\TwoCorrectionRequired.png" />
     <Content Include="Images\TwoCorrectionUploaded.png" />
     <Content Include="Images\user.jpg" />
+    <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\blockui.min.js" />
@@ -382,6 +383,7 @@
     <Content Include="Reports\Copy2.rdlc" />
     <Content Include="Reports\CopyB.rdlc" />
     <Content Include="Reports\CopyC.rdlc" />
+    <Content Include="Scripts\angular.min.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap_multiselect.js" />
     <Content Include="Scripts\dashboard.js" />
