@@ -3,12 +3,10 @@ using Bill2Pay.GenerateIRSFile;
 using Bill2Pay.Model;
 using Microsoft.AspNet.Identity;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Transactions;
 using System.Web;
@@ -16,25 +14,40 @@ using System.Web.Mvc;
 
 namespace Bill2Pay.Web.Controllers
 {
+    /// <summary>
+    /// Import Controler used for File Import utilities
+    /// </summary>
     [Authorize(Roles = "Admin")]
     public class ImportController : Controller
     {
         ImportUtility utility = null;
         ApplicationDbContext dbContext = null;
 
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
         public ImportController()
         {
             utility = new ImportUtility();
             dbContext = new ApplicationDbContext();
         }
 
-        // GET: Import
+        /// <summary>
+        /// GET: Import
+        /// </summary>
+        /// <returns>ActionResult</returns>
         public ActionResult Index()
         {
             var year = DateTime.Now.Year - 1;
             return RedirectToAction("Transaction", new { id = year });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Id">int?</param>
+        /// <param name="Status">bool?</param>
+        /// <returns>ActionResult</returns>
         public ActionResult Transaction(int? Id, bool? Status)
         {
             if (Id == null)
@@ -59,6 +72,13 @@ namespace Bill2Pay.Web.Controllers
             return View(importSummary);
         }
 
+        /// <summary>
+        /// POST: Import/ Transaction
+        /// </summary>
+        /// <param name="ddlYear">int</param>
+        /// <param name="ddlPayer">int</param>
+        /// <param name="fileBase">HttpPostedFileBase</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> Transaction(int ddlYear, int ddlPayer, HttpPostedFileBase fileBase)
         {
@@ -108,8 +128,12 @@ namespace Bill2Pay.Web.Controllers
             return View();
         }
 
-
-
+        /// <summary>
+        /// GET: Import/TIN
+        /// </summary>
+        /// <param name="Id">int?</param>
+        /// <param name="payer">int?</param>
+        /// <returns>ActionResult</returns>
         public ActionResult Tin(int? Id, int? payer)
         {
             if (Id == null)
@@ -126,6 +150,13 @@ namespace Bill2Pay.Web.Controllers
             return View();
         }
 
+        /// <summary>
+        /// POST: Import/TIN
+        /// </summary>
+        /// <param name="ddlYear">int</param>
+        /// <param name="ddlPayer">int</param>
+        /// <param name="fileBase">HttpPostedFileBase</param>
+        /// <returns>ActionResult</returns>
         [HttpPost]
         public ActionResult Tin(int ddlYear, int? ddlPayer, HttpPostedFileBase fileBase)
         {
@@ -165,7 +196,11 @@ namespace Bill2Pay.Web.Controllers
             return View("Tin", new { id = year, payer= ddlPayer });
         }
 
-
+        /// <summary>
+        /// Import/ ReadTinInput File
+        /// </summary>
+        /// <param name="fileName">string</param>
+        /// <returns>DataTable</returns>
         private DataTable ReadTinInput(string fileName)
         {
             DataTable dtTin = new DataTable(); 
@@ -198,6 +233,14 @@ namespace Bill2Pay.Web.Controllers
 
         }
 
+        /// <summary>
+        /// Import/UpdateTinMatchingStatus
+        /// </summary>
+        /// <param name="dtTin">DataTable</param>
+        /// <param name="year">int</param>
+        /// <param name="payer">int?</param>
+        /// <param name="isSuccess">bool</param>
+        /// <returns>string</returns>
         private string UpdateTinMatchingStatus(DataTable dtTin, int year, int? payer, ref bool isSuccess)
         {
             string result = string.Empty;
@@ -285,11 +328,20 @@ namespace Bill2Pay.Web.Controllers
             return result;
 
         }
+
+        /// <summary>
+        /// GET: Import/Irs
+        /// </summary>
+        /// <returns>ActionResult</returns>
         public ActionResult Irs()
         {
             return View();
         }
 
+        /// <summary>
+        /// POST: Import/Irs
+        /// </summary>
+        /// <returns>ActionResult</returns>
         [HttpPost]
         public ActionResult Irs(HttpPostedFileBase fileBase)
         {

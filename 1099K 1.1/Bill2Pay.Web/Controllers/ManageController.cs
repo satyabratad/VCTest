@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -16,16 +15,27 @@ namespace Bill2Pay.Web.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
+        /// <summary>
+        /// ManageController Default Constructor
+        /// </summary>
         public ManageController()
         {
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="userManager">ApplicationUserManager</param>
+        /// <param name="signInManager">ApplicationSignInManager</param>
         public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
         }
 
+        /// <summary>
+        /// Manager/ SignIn
+        /// </summary>
         public ApplicationSignInManager SignInManager
         {
             get
@@ -38,6 +48,9 @@ namespace Bill2Pay.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Manager/ User
+        /// </summary>
         public ApplicationUserManager UserManager
         {
             get
@@ -50,8 +63,11 @@ namespace Bill2Pay.Web.Controllers
             }
         }
 
-        //
-        // GET: /Manage/Index
+        /// <summary>
+        /// Index...
+        /// </summary>
+        /// <param name="message">ManageMessageId</param>
+        /// <returns>Task ActionResult</returns>
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
@@ -75,8 +91,12 @@ namespace Bill2Pay.Web.Controllers
             return View(model);
         }
 
-        //
-        // POST: /Manage/RemoveLogin
+        /// <summary>
+        /// Remove Login
+        /// </summary>
+        /// <param name="loginProvider">string</param>
+        /// <param name="providerKey">string</param>
+        /// <returns>Task ActionResult</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RemoveLogin(string loginProvider, string providerKey)
@@ -99,15 +119,20 @@ namespace Bill2Pay.Web.Controllers
             return RedirectToAction("ManageLogins", new { Message = message });
         }
 
-        //
-        // GET: /Manage/AddPhoneNumber
+        /// <summary>
+        /// GET: /Manage/AddPhoneNumber
+        /// </summary>
+        /// <returns>ActionResult</returns>
         public ActionResult AddPhoneNumber()
         {
             return View();
         }
 
-        //
-        // POST: /Manage/AddPhoneNumber
+        /// <summary>
+        /// POST: /Manage/AddPhoneNumber
+        /// </summary>
+        /// <param name="model">AddPhoneNumberViewModel</param>
+        /// <returns>Task ActionResult</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddPhoneNumber(AddPhoneNumberViewModel model)
@@ -130,8 +155,10 @@ namespace Bill2Pay.Web.Controllers
             return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });
         }
 
-        //
-        // POST: /Manage/EnableTwoFactorAuthentication
+        /// <summary>
+        /// POST: /Manage/EnableTwoFactorAuthentication
+        /// </summary>
+        /// <returns>Task ActionResult</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EnableTwoFactorAuthentication()
@@ -145,8 +172,10 @@ namespace Bill2Pay.Web.Controllers
             return RedirectToAction("Index", "Manage");
         }
 
-        //
-        // POST: /Manage/DisableTwoFactorAuthentication
+        /// <summary>
+        /// POST: /Manage/DisableTwoFactorAuthentication
+        /// </summary>
+        /// <returns>Task ActionResult</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DisableTwoFactorAuthentication()
@@ -160,8 +189,11 @@ namespace Bill2Pay.Web.Controllers
             return RedirectToAction("Index", "Manage");
         }
 
-        //
-        // GET: /Manage/VerifyPhoneNumber
+        /// <summary>
+        /// GET: /Manage/VerifyPhoneNumber
+        /// </summary>
+        /// <param name="phoneNumber">string</param>
+        /// <returns>Task ActionResult</returns>
         public async Task<ActionResult> VerifyPhoneNumber(string phoneNumber)
         {
             var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId<long>(), phoneNumber);
@@ -169,8 +201,11 @@ namespace Bill2Pay.Web.Controllers
             return phoneNumber == null ? View("Error") : View(new VerifyPhoneNumberViewModel { PhoneNumber = phoneNumber });
         }
 
-        //
-        // POST: /Manage/VerifyPhoneNumber
+        /// <summary>
+        /// POST: /Manage/VerifyPhoneNumber
+        /// </summary>
+        /// <param name="model">VerifyPhoneNumberViewModel</param>
+        /// <returns>Task ActionResult</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> VerifyPhoneNumber(VerifyPhoneNumberViewModel model)
@@ -194,8 +229,10 @@ namespace Bill2Pay.Web.Controllers
             return View(model);
         }
 
-        //
-        // POST: /Manage/RemovePhoneNumber
+        /// <summary>
+        /// POST: /Manage/RemovePhoneNumber
+        /// </summary>
+        /// <returns>Task ActionResult</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RemovePhoneNumber()
@@ -213,15 +250,20 @@ namespace Bill2Pay.Web.Controllers
             return RedirectToAction("Index", new { Message = ManageMessageId.RemovePhoneSuccess });
         }
 
-        //
-        // GET: /Manage/ChangePassword
+        /// <summary>
+        /// GET: /Manage/ChangePassword
+        /// </summary>
+        /// <returns>ActionResult</returns>
         public ActionResult ChangePassword()
         {
             return View();
         }
 
-        //
-        // POST: /Manage/ChangePassword
+        /// <summary>
+        /// POST: /Manage/ChangePassword
+        /// </summary>
+        /// <param name="model">ChangePasswordViewModel</param>
+        /// <returns>Task ActionResult</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
@@ -244,15 +286,20 @@ namespace Bill2Pay.Web.Controllers
             return View(model);
         }
 
-        //
-        // GET: /Manage/SetPassword
+        /// <summary>
+        ///  GET: /Manage/SetPassword
+        /// </summary>
+        /// <returns>ActionResult</returns>
         public ActionResult SetPassword()
         {
             return View();
         }
 
-        //
-        // POST: /Manage/SetPassword
+        /// <summary>
+        /// POST: /Manage/SetPassword
+        /// </summary>
+        /// <param name="model">SetPasswordViewModel</param>
+        /// <returns>Task ActionResult</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SetPassword(SetPasswordViewModel model)
@@ -276,8 +323,11 @@ namespace Bill2Pay.Web.Controllers
             return View(model);
         }
 
-        //
-        // GET: /Manage/ManageLogins
+        /// <summary>
+        /// GET: /Manage/ManageLogins
+        /// </summary>
+        /// <param name="message">ManageMessageId</param>
+        /// <returns>Task ActionAction</returns>
         public async Task<ActionResult> ManageLogins(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
@@ -299,8 +349,11 @@ namespace Bill2Pay.Web.Controllers
             });
         }
 
-        //
-        // POST: /Manage/LinkLogin
+        /// <summary>
+        /// POST: /Manage/LinkLogin
+        /// </summary>
+        /// <param name="provider">string</param>
+        /// <returns>ActionResult</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LinkLogin(string provider)
@@ -309,8 +362,10 @@ namespace Bill2Pay.Web.Controllers
             return new AccountController.ChallengeResult(provider, Url.Action("LinkLoginCallback", "Manage"), User.Identity.GetUserId<long>().ToString());
         }
 
-        //
-        // GET: /Manage/LinkLoginCallback
+        /// <summary>
+        /// GET: /Manage/LinkLoginCallback
+        /// </summary>
+        /// <returns>Task ActionResult</returns>
         public async Task<ActionResult> LinkLoginCallback()
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId<long>().ToString());

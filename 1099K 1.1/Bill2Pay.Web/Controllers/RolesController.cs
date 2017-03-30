@@ -1,32 +1,40 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
 using Bill2Pay.Model;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Bill2Pay.Web.Controllers
 {
+    /// <summary>
+    /// Role Controler
+    /// Manage user Roles
+    /// </summary>
     [Authorize]
     public class RolesController : Controller
     {
         private ApplicationRoleManager _roleManager;
 
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
         public RolesController()
         {
         }
 
+        /// <summary>
+        /// Contructor with parameters
+        /// </summary>
+        /// <param name="roleManager">ApplicationRoleManager</param>
         public RolesController(ApplicationRoleManager roleManager)
         {
             RoleManager = roleManager;
         }
 
+        /// <summary>
+        /// Public property
+        /// GET/ SET value of RolesManager
+        /// </summary>
         public ApplicationRoleManager RoleManager
         {
             get

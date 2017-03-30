@@ -1,34 +1,41 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
 using Bill2Pay.Model;
 
 namespace Bill2Pay.Web.Controllers
 {
+    /// <summary>
+    /// User controller manage the user
+    /// Get, Set and Display list of users.
+    /// </summary>
 	[Authorize]
 	public class UsersController : Controller
     {
         private ApplicationUserManager _userManager;
 
-        //Default Constructor
+        /// <summary>
+        /// Default Contructor
+        /// </summary>
         public UsersController()
         {
         }
 
-        //POST : Set Users
+        /// <summary>
+        /// POST method.
+        /// Set user manager value  
+        /// </summary>
+        /// <param name="userManager">Application User Manager</param>
         public UsersController(ApplicationUserManager userManager)
         {
             UserManager = userManager;
         }
 
-        //POST :/Manage/ User
+        /// <summary>
+        /// Public Property
+        /// GET/SET User Manager value
+        /// Returns ApplicationUserManager
+        /// </summary>
         public ApplicationUserManager UserManager
         {
             get
@@ -41,7 +48,10 @@ namespace Bill2Pay.Web.Controllers
             }
         }
 
-        //POST : User /Index
+        /// <summary>
+        /// Action Method
+        /// </summary>
+        /// <returns>ActionResults</returns>
 		public ActionResult Index()
 		{
             var users = UserManager.GetUsers();

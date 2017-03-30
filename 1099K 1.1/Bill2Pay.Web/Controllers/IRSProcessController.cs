@@ -4,7 +4,6 @@ using System.Web.Script.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Bill2Pay.GenerateIRSFile;
 using System.Web.Hosting;
@@ -14,18 +13,28 @@ using Microsoft.AspNet.Identity;
 
 namespace Bill2Pay.Web.Controllers
 {
+    /// <summary>
+    /// IRS Process Controller use for Listing Merchant, Downloading TIN Check Input file, IRS Test File, FIRE File and Correction Input File
+    /// </summary>
     [Authorize]
     public class IRSProcessController : Controller
     {
         ApplicationDbContext dbContext = null;
 
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
         public IRSProcessController()
         {
             dbContext = new ApplicationDbContext();
         }
 
-
-
+        /// <summary>
+        /// IRS Process/ Index
+        /// </summary>
+        /// <param name="Id">int?</param>
+        /// <param name="payer">int?</param>
+        /// <returns>ActionResult</returns>
         public ActionResult Index(int? Id, int? payer)
         {
 
@@ -80,6 +89,12 @@ namespace Bill2Pay.Web.Controllers
             return View(merchantlst);
         }
 
+        /// <summary>
+        /// IRS Process/ Details
+        /// </summary>
+        /// <param name="Id">int?</param>
+        /// <param name="payer">int?</param>
+        /// <returns>ActionResult</returns>
         public ActionResult Details(string Id,int? year)
         {
 
@@ -103,6 +118,11 @@ namespace Bill2Pay.Web.Controllers
             return View(data);
         }
 
+        /// <summary>
+        /// IRS Process/ Details
+        /// </summary>
+        /// <param name="btnPressed">string</param>
+        /// <returns>ActionResult</returns>
         [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Process(string btnPressed)
@@ -164,6 +184,10 @@ namespace Bill2Pay.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// IRS Process/ GenerateBatchpdf
+        /// </summary>
+        /// <returns>ActionResult</returns>
         [Authorize(Roles = "Admin")]
         public ActionResult GenerateBatchpdf()
         {
@@ -205,6 +229,10 @@ namespace Bill2Pay.Web.Controllers
            
         }
 
+        /// <summary>
+        /// Generates IRS TestFile
+        /// </summary>
+        /// <returns>ActionResult</returns>
         [Authorize(Roles = "Admin")]
         public ActionResult IRSFireTestFile()
         {
@@ -232,6 +260,10 @@ namespace Bill2Pay.Web.Controllers
             return File(path, "text", "IRSInputFile_Test.txt");
         }
 
+        /// <summary>
+        /// Generates IRS FIRE File
+        /// </summary>
+        /// <returns>ActionResult</returns>
         [Authorize(Roles = "Admin")]
         public ActionResult IRSFireFile()
         {
@@ -284,6 +316,10 @@ namespace Bill2Pay.Web.Controllers
             return File(path, "text", "IRSInputFile.txt");
         }
 
+        /// <summary>
+        /// Generates IRS Correction File
+        /// </summary>
+        /// <returns>ActionResult</returns>
         [Authorize(Roles = "Admin")]
         public ActionResult IRScorrection()
         {
@@ -335,6 +371,11 @@ namespace Bill2Pay.Web.Controllers
             return File(path, "text", "IRSCorrectionInputFile.txt");
         }
 
+        /// <summary>
+        /// Download IRS Test File, IRS FIRE File,IRS Correction File
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns>ActionResult</returns>
         [Authorize(Roles = "Admin")]
         public ActionResult Download(string file)
         {
@@ -353,6 +394,10 @@ namespace Bill2Pay.Web.Controllers
             return response;
         }
 
+        /// <summary>
+        /// Change Status
+        /// </summary>
+        /// <returns>ActionResult</returns>
         [Authorize(Roles = "Admin")]
         public ActionResult ChangeStatus()
         {

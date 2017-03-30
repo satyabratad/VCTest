@@ -3,10 +3,7 @@ using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.IO;
-using Bill2Pay.GenerateIRSFile;
 using System.Web.Hosting;
 using Bill2Pay.ExceptionLogger;
 using System.Configuration;
@@ -15,36 +12,72 @@ namespace Bill2Pay.Web.Controllers
 {
     public class PrintController : Controller
     {
+        /// <summary>
+        /// Generates CopyA report for printing
+        /// </summary>
+        /// <param name="Id">Client Code/ Account No.</param>
+        /// <param name="year">Year</param>
+        /// <returns>ActionResult</returns>
         [HttpPost]
         public ActionResult CopyA(string Id, int year)
         {
             return DetailsReport("CopyA", Id, year);
         }
 
+        /// <summary>
+        /// Generates Copy1 report for printing
+        /// </summary>
+        /// <param name="Id">Client Code/Account No.</param>
+        /// <param name="year">Year</param>
+        /// <returns>ActionResult</returns>
         [HttpPost]
         public ActionResult Copy1(string Id, int year)
         {
             return DetailsReport("Copy1", Id, year);
         }
 
+        /// <summary>
+        /// Generates CopyB report for printing
+        /// </summary>
+        /// <param name="Id">Client Code/Account No.</param>
+        /// <param name="year">Year</param>
+        /// <returns>ActionResult</returns>
         [HttpPost]
         public ActionResult CopyB(string Id, int year)
         {
             return DetailsReport("CopyB", Id, year);
         }
 
+        /// <summary>
+        /// Generates Copy2 Report for printing
+        /// </summary>
+        /// <param name="Id">Client Code/ Account No.</param>
+        /// <param name="year">Year</param>
+        /// <returns>ActionResult</returns>
         [HttpPost]
         public ActionResult Copy2(string Id, int year)
         {
             return DetailsReport("Copy2", Id, year);
         }
 
+        /// <summary>
+        /// Generates CopyC report for printing
+        /// </summary>
+        /// <param name="Id">Client Code/ Account No.</param>
+        /// <param name="year">Year</param>
+        /// <returns>ActionResult</returns>
         [HttpPost]
         public ActionResult CopyC(string Id, int year)
         {
             return DetailsReport("CopyC", Id, year);
         }
 
+        /// <summary>
+        /// Generates combined 1099K report for printing
+        /// </summary>
+        /// <param name="Id">Client Code/ Account No.</param>
+        /// <param name="year">Year</param>
+        /// <returns>ActionResult</returns>
         [HttpPost]
         public ActionResult IRS1099K(string Id, int year)
         {
@@ -54,7 +87,7 @@ namespace Bill2Pay.Web.Controllers
         /// <summary>
         /// This method is for print all the pdf copy of a merchant
         /// </summary>
-        /// <returns></returns>
+        /// <returns>ActionResult</returns>
         public ActionResult PrintAllCopies()
         {
             HostingEnvironment.QueueBackgroundWorkItem(clt => PrintCopies());
@@ -191,6 +224,13 @@ namespace Bill2Pay.Web.Controllers
             }          
         }
 
+        /// <summary>
+        /// Public Action Method returns generates pdf report for printing
+        /// </summary>
+        /// <param name="reportName">Report Name as string</param>
+        /// <param name="Id">Client Code/ Account No.</param>
+        /// <param name="year">Year</param>
+        /// <returns>ActionResult</returns>
         public ActionResult DetailsReport(string reportName, string Id, int year)
         {
 

@@ -4,26 +4,41 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Bill2Pay.Web.Controllers
 {
+    /// <summary>
+    /// Generate Input file for TIN Check
+    /// </summary>
     [Authorize(Roles = "Admin")]
     public class TINProcessController : Controller
     {
         ApplicationDbContext dbContext = null;
 
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
         public TINProcessController()
         {
             dbContext = new ApplicationDbContext();
         }
-        // GET: TIN
+        
+        /// <summary>
+        /// Action Method Index
+        /// Returns the View as Action Results.
+        /// </summary>
+        /// <returns>ActionResult</returns>
         public ActionResult Index()
         {
             return View();
         }
 
+        /// <summary>
+        /// Generates TIN maching input file
+        /// and downloads to user client machine
+        /// </summary>
+        /// <returns>FileContentResult</returns>
         public FileContentResult  TINMatchingInput()
         {
             string strFileline = string.Empty;
@@ -69,7 +84,5 @@ namespace Bill2Pay.Web.Controllers
             }
             return File(new System.Text.UTF8Encoding().GetBytes(strFileline), "text/csv", "TinMatch.txt");
         }
-
-        
     }
 }

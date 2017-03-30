@@ -4,12 +4,9 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Bill2Pay.Model;
 using Microsoft.AspNet.Identity;
-using System.Data.Entity.Validation;
-using Newtonsoft.Json;
 using System.Transactions;
 using Bill2Pay.GenerateIRSFile;
 
@@ -116,6 +113,12 @@ namespace Bill2Pay.Web.Controllers
             return StateList;
         }
 
+        /// <summary>
+        /// Index/ Merchant View Model
+        /// </summary>
+        /// <param name="Id">Year</param>
+        /// <param name="payer">Payer Id</param>
+        /// <returns>ActionResult</returns>
         public ActionResult Index(int? Id, int? payer)
         {
             int year = 0;
@@ -149,6 +152,11 @@ namespace Bill2Pay.Web.Controllers
             return View(merchants.ToList());
         }
 
+        /// <summary>
+        /// Action method Details
+        /// </summary>
+        /// <param name="id">Merchant Id</param>
+        /// <returns>ActionResult</returns>
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -163,6 +171,10 @@ namespace Bill2Pay.Web.Controllers
             return View(merchantDetails);
         }
 
+        /// <summary>
+        /// GET:/ Action Method Create Merchant
+        /// </summary>
+        /// <returns>ActionResult</returns>
         public ActionResult Create()
         {
             var statelst = GetStateList().Select(s => new SelectListItem() { Text = s.Key, Value = s.Value }).ToList();
@@ -181,6 +193,10 @@ namespace Bill2Pay.Web.Controllers
             return View();
         }
 
+        /// <summary>
+        /// POST:/ Action Method Create Merchant
+        /// </summary>
+        /// <returns>ActionResult</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(MerchantDetails merchantDetails)
@@ -220,6 +236,10 @@ namespace Bill2Pay.Web.Controllers
             return View(merchantDetails);
         }
 
+        /// <summary>
+        /// GET:/ Action Method Edit Merchant
+        /// </summary>
+        /// <returns>ActionResult</returns>
         public ActionResult Edit(string id, int? year)
         {
             ViewBag.StatusMessage = string.Empty;
@@ -278,6 +298,10 @@ namespace Bill2Pay.Web.Controllers
             return View(merchantDetails);
         }
 
+        /// <summary>
+        /// POST:/ Action Method Edit Merchant
+        /// </summary>
+        /// <returns>ActionResult</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(MerchantDetails merchantDetails)
@@ -427,6 +451,10 @@ namespace Bill2Pay.Web.Controllers
 
         }
 
+        /// <summary>
+        /// GET:/ Action Method Delete Merchant
+        /// </summary>
+        /// <returns>ActionResult</returns>
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -442,6 +470,10 @@ namespace Bill2Pay.Web.Controllers
             return View(merchantDetails);
         }
 
+        /// <summary>
+        /// POST:/ Action Method Confirmation Delete Merchant
+        /// </summary>
+        /// <returns>ActionResult</returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)

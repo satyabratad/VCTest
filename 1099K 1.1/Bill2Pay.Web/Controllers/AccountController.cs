@@ -1,7 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -12,22 +9,36 @@ using Bill2Pay.Model;
 
 namespace Bill2Pay.Web.Controllers
 {
+    /// <summary>
+    /// Account controller is used for user account Management 
+    /// </summary>
     [Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
         public AccountController()
         {
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="userManager">ApplicationUserManager</param>
+        /// <param name="signInManager">ApplicationSignInManager</param>
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
         }
 
+        /// <summary>
+        /// SignIn Manager
+        /// </summary>
         public ApplicationSignInManager SignInManager
         {
             get
@@ -40,6 +51,9 @@ namespace Bill2Pay.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// User Manager
+        /// </summary>
         public ApplicationUserManager UserManager
         {
             get
@@ -52,8 +66,11 @@ namespace Bill2Pay.Web.Controllers
             }
         }
 
-        //
-        // GET: /Account/Login
+        /// <summary>
+        /// GET: /Account/Login
+        /// </summary>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -61,8 +78,12 @@ namespace Bill2Pay.Web.Controllers
             return View();
         }
 
-        //
-        // POST: /Account/Login
+        /// <summary>
+        /// POST: /Account/Login
+        /// </summary>
+        /// <param name="model">LoginViewModel</param>
+        /// <param name="returnUrl">string</param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -99,8 +120,13 @@ namespace Bill2Pay.Web.Controllers
             }
         }
 
-        //
-        // GET: /Account/VerifyCode
+        /// <summary>
+        ///  GET: /Account/VerifyCode
+        /// </summary>
+        /// <param name="provider">string</param>
+        /// <param name="returnUrl">string</param>
+        /// <param name="rememberMe">bool</param>
+        /// <returns></returns>
         [AllowAnonymous]
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
         {
@@ -112,8 +138,12 @@ namespace Bill2Pay.Web.Controllers
             return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
 
-        //
-        // POST: /Account/VerifyCode
+        /// <summary>
+        /// POST: /Account/VerifyCode
+        /// </summary>
+        /// <param name="model">VerifyCodeViewModel</param>
+        /// <returns></returns>
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -141,17 +171,21 @@ namespace Bill2Pay.Web.Controllers
                     return View(model);
             }
         }
-
-        //
-        // GET: /Account/Register
+        /// <summary>
+        /// GET: /Account/Register
+        /// </summary>
+        /// <returns></returns>
         [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
         }
 
-        //
-        // POST: /Account/Register
+        /// <summary>
+        /// POST: /Account/Register
+        /// </summary>
+        /// <param name="model">RegisterViewModel</param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -180,8 +214,12 @@ namespace Bill2Pay.Web.Controllers
             return View(model);
         }
 
-        //
-        // GET: /Account/ConfirmEmail
+        /// <summary>
+        ///  GET: /Account/ConfirmEmail
+        /// </summary>
+        /// <param name="userId">long</param>
+        /// <param name="code">string</param>
+        /// <returns></returns>
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(long userId, string code)
         {
@@ -193,16 +231,21 @@ namespace Bill2Pay.Web.Controllers
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
-        //
-        // GET: /Account/ForgotPassword
+        /// <summary>
+        /// GET: /Account/ForgotPassword
+        /// </summary>
+        /// <returns>ActionResult</returns>
         [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
             return View();
         }
 
-        //
-        // POST: /Account/ForgotPassword
+        /// <summary>
+        /// POST: /Account/ForgotPassword
+        /// </summary>
+        /// <param name="model">ForgotPasswordViewModel</param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -229,16 +272,21 @@ namespace Bill2Pay.Web.Controllers
             return View(model);
         }
 
-        //
-        // GET: /Account/ForgotPasswordConfirmation
+        /// <summary>
+        /// GET: /Account/ForgotPasswordConfirmation
+        /// </summary>
+        /// <returns>ActionResult</returns>
         [AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
         {
             return View();
         }
 
-        //
-        // GET: /Account/ResetPassword
+        /// <summary>
+        /// GET: /Account/ResetPassword
+        /// </summary>
+        /// <param name="code">string</param>
+        /// <returns></returns>
         [AllowAnonymous]
         public ActionResult ResetPassword(string code)
         {
@@ -249,8 +297,11 @@ namespace Bill2Pay.Web.Controllers
             return code == null ? View("Error") : View(model);
         }
 
-        //
-        // POST: /Account/ResetPassword
+        /// <summary>
+        /// POST: /Account/ResetPassword
+        /// </summary>
+        /// <param name="model">ResetPasswordViewModel</param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -278,16 +329,22 @@ namespace Bill2Pay.Web.Controllers
             return View();
         }
 
-        //
-        // GET: /Account/ResetPasswordConfirmation
+        /// <summary>
+        /// GET: /Account/ResetPasswordConfirmation
+        /// </summary>
+        /// <returns>ActionResult</returns>
         [AllowAnonymous]
         public ActionResult ResetPasswordConfirmation()
         {
             return View();
         }
 
-        //
-        // POST: /Account/ExternalLogin
+        /// <summary>
+        /// POST: /Account/ExternalLogin
+        /// </summary>
+        /// <param name="provider">string</param>
+        /// <param name="returnUrl">string</param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -297,8 +354,12 @@ namespace Bill2Pay.Web.Controllers
             return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
         }
 
-        //
-        // GET: /Account/SendCode
+        /// <summary>
+        /// GET: /Account/SendCode
+        /// </summary>
+        /// <param name="returnUrl">string</param>
+        /// <param name="rememberMe">bool</param>
+        /// <returns></returns>
         [AllowAnonymous]
         public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
         {
@@ -312,8 +373,11 @@ namespace Bill2Pay.Web.Controllers
             return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
 
-        //
-        // POST: /Account/SendCode
+        /// <summary>
+        ///  POST: /Account/SendCode
+        /// </summary>
+        /// <param name="model">SendCodeViewModel</param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -332,8 +396,11 @@ namespace Bill2Pay.Web.Controllers
             return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
         }
 
-        //
-        // GET: /Account/ExternalLoginCallback
+        /// <summary>
+        /// GET: /Account/ExternalLoginCallback
+        /// </summary>
+        /// <param name="returnUrl">string</param>
+        /// <returns></returns>
         [AllowAnonymous]
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
@@ -362,8 +429,12 @@ namespace Bill2Pay.Web.Controllers
             }
         }
 
-        //
-        // POST: /Account/ExternalLoginConfirmation
+        /// <summary>
+        ///  POST: /Account/ExternalLoginConfirmation
+        /// </summary>
+        /// <param name="model">ExternalLoginConfirmationViewModel</param>
+        /// <param name="returnUrl">string</param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -400,8 +471,10 @@ namespace Bill2Pay.Web.Controllers
             return View(model);
         }
 
-        //
-        // POST: /Account/LogOff
+        /// <summary>
+        /// POST: /Account/LogOff
+        /// </summary>
+        /// <returns>ActionResult</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
@@ -410,8 +483,10 @@ namespace Bill2Pay.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        //
-        // GET: /Account/ExternalLoginFailure
+        /// <summary>
+        ///  GET: /Account/ExternalLoginFailure
+        /// </summary>
+        /// <returns>ActionResult</returns>
         [AllowAnonymous]
         public ActionResult ExternalLoginFailure()
         {
