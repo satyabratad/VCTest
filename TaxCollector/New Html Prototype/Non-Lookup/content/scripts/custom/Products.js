@@ -2,7 +2,7 @@
 var bill2payProducts = {
 
 
-    addProducts: function (json=null) {
+    addProducts: function (json) {
        
        if(json!=null)
        DeSrializeDbObject(json);

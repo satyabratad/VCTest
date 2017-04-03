@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>City of Melbourne </title>
+    <title>Your Department </title>
     <!-- CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
         type="text/css">
@@ -55,7 +55,7 @@
         <div class="container" style="max-width: 970px; background: #B1B1B1;">
             <!--// START LOGO, HEADER AND NAV //-->
             <div class="row">
-                <div class="col-xs-12 header" style="padding: 0px;">
+                <div class="col-xs-12 header headerWhite" style="padding: 0px;">
                     <img id="imgClientLogo" alt="Client Logo" title="The Client Logo" class="img-responsive"
                         onerror="this.src=&#39;./content/images/B2P-Logo4.png&#39;;" src="./content/images/B2P-Logo4.png" />
                 </div>
@@ -142,8 +142,8 @@
                                                             Select Items</label>
                                                         <select name="ddlCategories" onchange="changeAccountLabel();" id="ddlCategories"
                                                             class="form-control input-sm">
-                                                            <option selected="selected" value="Test & Name">Test & Name</option>
-                                                            <option value="Utility Payment">Utility Payment</option>
+                                                            <option selected="selected" value="Tax Bill">Tax Bill</option>
+                                                            <option value="DMV Application">DMV Application</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -154,10 +154,10 @@
                                                 <input type="hidden" name="hdAccount1" id="hdAccount1" value="required" />
                                                 <input type="hidden" name="hdAccount2" id="hdAccount2" value="required" />
                                                 <input type="hidden" name="hdAccount3" id="hdAccount3" value="required" />
-                                                <div class="form-group form-group-sm">
+                                                 <div class="form-group form-group-sm">
                                                     <div id="pnlAccount1">
                                                         <label class="control-label" for="txtLookupAccount1" id="lblLookupAccount1">
-                                                            <span id="lblAccountNumber1">Numbers Before Dash</span>
+                                                            <span id="lblAccountNumber1">Parcel</span>
                                                         </label>
                                                         <input name="txtLookupAccount1" type="text" maxlength="20" id="txtLookupAccount1"
                                                             class="form-control input-sm" onkeypress="return restrictInput(event, restrictionTypes.AlphaNumeric)"
@@ -167,21 +167,21 @@
                                                 <div class="form-group form-group-sm">
                                                     <div id="pnlAccount2">
                                                         <label class="control-label" for="txtLookupAccount2" id="lblLookupAccount2">
-                                                            <span id="lblAccountNumber2">Numbers After Dash</span>
+                                                            <span id="lblAccountNumber2">Tax Year</span>
                                                         </label>
                                                         <input name="txtLookupAccount2" type="text" maxlength="4" id="txtLookupAccount2"
                                                             class="form-control input-sm" onkeypress="return restrictInput(event, restrictionTypes.NumbersOnly)"
                                                             onpaste="return reformatInput(this, restrictionTypes.NumbersOnly)" />
                                                     </div>
                                                 </div>
-                                                <div class="form-group form-group-sm" style="display: none;">
-                                                    <div id="Div2">
+                                                <div class="form-group form-group-sm">
+                                                    <div id="pnlAccount3">
                                                         <label class="control-label" for="txtLookupAccount3" id="Label1">
-                                                            <span id="Span1"></span>
+                                                            <span id="Span1">Owner Name</span>
                                                         </label>
                                                         <input name="txtLookupAccount3" type="text" maxlength="40" id="txtLookupAccount3"
                                                             class="form-control input-sm" onkeypress="return restrictInput(event, restrictionTypes.AlphaNumericAndExtraChars)"
-                                                            onpaste="return reformatInput(this, restrictionTypes.AlphaNumericAndExtraChars)">
+                                                            onpaste="return reformatInput(this, restrictionTypes.AlphaNumericAndExtraChars)" />
                                                     </div>
                                                 </div>
                                                 <!--Confirmation-->
@@ -198,7 +198,7 @@
                                                                     <div class="fa fa-check-circle-o fa-2x status-msg-icon">
                                                                     </div>
                                                                     <div class="status-msg-text">
-                                                                        <span id="Span2" class="control-label">Account found. Please see information below.</span></div>
+                                                                        <span id="Span2" class="control-label">Account found. Please verify the information below.</span></div>
                                                                 </div>
                                                                 <div>
                                                                     <table class="gvhspadding" cellspacing="5" id="grdLookup" style="border-style: None;">
@@ -313,7 +313,7 @@
                                             </div>
                                         </div>
                                         <div class="col-xs-12">
-                                            <div class="form-group form-group-sm">
+                                            <div class="form-group form-group-sm" id="pnlEditAcc1">
                                                 <div id="divLookupAccount1Edit">
                                                     <label class="control-label" for="spanLookupAccount1" id="lblLookupAccount1Edit">
                                                         <span id="spanLookupAccount1Caption">Numbers Before Dash</span>
@@ -323,7 +323,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-xs-12">
+                                        <div class="col-xs-12" id="pnlEditAcc2">
                                             <div class="form-group form-group-sm">
                                                 <div id="divLookupAccount2Edit">
                                                     <label class="control-label" for="spanLookupAccount2" id="lblLookupAccount2Edit">
@@ -331,6 +331,17 @@
                                                     </label>
                                                     <br />
                                                     <span id="spanLookupAccount2" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12" id="pnlEditAcc3">
+                                            <div class="form-group form-group-sm">
+                                                <div id="divLookupAccount2Edit">
+                                                    <label class="control-label" for="spanLookupAccount2" id="lblLookupAccount3Edit">
+                                                        <span id="spanLookupAccount3Caption">Numbers After Dash</span>
+                                                    </label>
+                                                    <br />
+                                                    <span id="spanLookupAccount3" />
                                                 </div>
                                             </div>
                                         </div>
@@ -350,8 +361,8 @@
                                     <div class="pull-right">
                                         <input type="button" name="btnUpdate" value="Update Cart" onclick="return updateCartItem();"
                                             id="btnUpdate" title="Update Cart" class="btn btn-primary " />
-                                        <input type="button" name="btnContinue" value="Continue" onclick="bill2payAccountDetails.submitToContactDetails();"
-                                            id="Button3" title="Continue" class="btn btn-primary " />
+                                        <!--<input type="button" name="btnContinue" value="Continue" onclick="bill2payAccountDetails.submitToContactDetails();"
+                                            id="Button3" title="Continue" class="btn btn-primary " />-->
                                     </div>
                                     <br />
                                 </div>
@@ -401,11 +412,11 @@
                 <div class="row rowheight" style="background-color: #195575;">
                     <div class="col-xs-12 col-sm-12 text-center">
                         <div class="col-sm-6">
-                            <a href="http://www.coj.net/departments/tax-collector.aspx" target="_blank">City of Melbourne</a>
-                        </div>
-                        <div class="col-sm-6">
-                            <a href="http://www.bill2pay.com" target="_blank">www.Bill2Pay.com</a>
-                        </div>
+                           <a href="http://www.bill2pay.com/" target="_blank">Your Department</a>
+                    </div>
+
+                    <div class="col-sm-6">
+                       <a href="http://www.bill2pay.com/" target="_blank">www.Bill2Pay.com</a>
                     </div>
                 </div>
                 <div class="row rowheight" style="background-color: #0e3042;">
@@ -494,6 +505,7 @@
         <script src="./content/scripts/custom/AccountDetails.js"></script>
         <script type="text/javascript">
             function validateForm() {
+            debugger;
                 var doc = document;
                 var item = new ValidationItem();
 
@@ -504,20 +516,36 @@
                 validator.setAlertBoxStatus(false);
 
                 // Add validation items to validator
+				if($("#ddlCategories").val().toUpperCase()=="TAX BILL")
+				{
+					 acct1 = doc.getElementById('hdAccount1').value;
+		                if (acct1 !== '') {
+		                    // Set the validator
+		                    validator.addValidationItem(new ValidationItem("txtLookupAccount1", fieldTypes.NonEmptyField, true, "Required."));
+		                }
 
+		                // Check to see if account 2 is required
+		                acct2 = doc.getElementById('hdAccount2').value;
+		                if (acct2 !== '') {
+		                    // Set the validator
+		                    validator.addValidationItem(new ValidationItem("txtLookupAccount2", fieldTypes.NonEmptyField, true, "Required."));
+		                }
+		                acct3 = doc.getElementById('hdAccount3').value;
+		                if (acct2 !== '') {
+		                    // Set the validator
+		                    validator.addValidationItem(new ValidationItem("txtLookupAccount3", fieldTypes.NonEmptyField, true, "Required."));
+		                }
+				}
+				else
+				{
+					acct1 = doc.getElementById('hdAccount1').value;
+		                if (acct1 !== '') {
+		                    // Set the validator
+		                    validator.addValidationItem(new ValidationItem("txtLookupAccount1", fieldTypes.NonEmptyField, true, "Required."));
+		                }
+				}
                 // Check to see if account 1 is present
-                acct1 = doc.getElementById('hdAccount1').value;
-                if (acct1 !== '') {
-                    // Set the validator
-                    validator.addValidationItem(new ValidationItem("txtLookupAccount1", fieldTypes.NonEmptyField, true, "Required."));
-                }
 
-                // Check to see if account 2 is required
-                acct2 = doc.getElementById('hdAccount2').value;
-                if (acct2 !== '') {
-                    // Set the validator
-                    validator.addValidationItem(new ValidationItem("txtLookupAccount2", fieldTypes.NonEmptyField, true, "Required."));
-                }
 
 
                 var state = validator.validate();
@@ -564,7 +592,7 @@
                         }
                     }
                     else {
-                        alert('Duplicate item added!');
+                        alert('This Combination of item and account numbers already exists in the cart! Please use a different combination.');
                     }
 
                 }
@@ -635,15 +663,21 @@
                                 amount = dbObject.Products[i].Amount;
 
                         }
-                        if (dbObject.Products[i].ProductName.toUpperCase() == "TEST & NAME") {
+                        if (dbObject.Products[i].ProductName.toUpperCase() == "TAX BILL") {
 
                             $("#spanSelectedItem").text(dbObject.Products[i].ProductName);
                             $("#spanLookupAccount1").text(getValueFromJson(dbObject.Products[i].ACC1));
                             $("#spanLookupAccount2").text(getValueFromJson(dbObject.Products[i].ACC2));
+                            $("#spanLookupAccount3").text(getValueFromJson(dbObject.Products[i].ACC3));
                             $("#txtAmountEdit").val(parseFloat(amount).toFixed(2));
 
-                            $("#spanLookupAccount1Caption").text("Numbers Before Dash");
-                            $("#spanLookupAccount2Caption").text("Numbers After Dash");
+                            $("#spanLookupAccount1Caption").text(getKeyFromJson(dbObject.Products[i].ACC1));
+                            $("#spanLookupAccount2Caption").text(getKeyFromJson(dbObject.Products[i].ACC2));
+                            $("#spanLookupAccount3Caption").text(getKeyFromJson(dbObject.Products[i].ACC3));
+
+                              	$("#pnlEditAcc1").show();
+                            	$("#pnlEditAcc2").show();
+                            	$("#pnlEditAcc3").show();
 
                         }
                         else {
@@ -651,24 +685,33 @@
                             $("#spanSelectedItem").text(dbObject.Products[i].ProductName);
                             $("#spanLookupAccount1").text(getValueFromJson(dbObject.Products[i].ACC1));
                             $("#spanLookupAccount2").text(getValueFromJson(dbObject.Products[i].ACC2));
+                             $("#spanLookupAccount3").text(getValueFromJson(dbObject.Products[i].ACC2));
                             $("#txtAmountEdit").val(parseFloat(amount).toFixed(2));
 
-                            $("#spanLookupAccount1Caption").text("Account1");
-                            $("#spanLookupAccount2Caption").text("Account2");
+                             $("#spanLookupAccount1Caption").text(getKeyFromJson(dbObject.Products[i].ACC1));
+
+
+                             $("#pnlEditAcc1").show();
+                            $("#pnlEditAcc2").hide();
+                            $("#pnlEditAcc3").hide();
 
                         }
                     }
                 }
             }
 
-            function changeAccountLabel() {
-                if ($("#ddlCategories").val().toUpperCase() == "TEST & NAME") {
-                    $("#lblAccountNumber1").text('Numbers Before Dash');
-                    $("#lblAccountNumber2").text('Numbers After Dash');
+           function changeAccountLabel() {
+
+                if ($("#ddlCategories").val().toUpperCase() == "DMV APPLICATION") {
+                    $("#lblAccountNumber1").text('License Number');
+                    $("#pnlAccount2").hide();
+                    $("#pnlAccount3").hide();
                 }
                 else {
-                    $("#lblAccountNumber1").text('Account1');
-                    $("#lblAccountNumber2").text('Account2');
+                    $("#lblAccountNumber1").text('Parcel');
+                    $("#pnlAccount1").show();
+                    $("#pnlAccount2").show();
+                    $("#pnlAccount3").show();
                 }
                 bill2payAccountDetails.clear();
             }

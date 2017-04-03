@@ -164,7 +164,7 @@ var bill2payAccountDetails = {
 
                 flag = 0;
                 if (dbObject.Products[i].ProductName.toUpperCase()=="TAX BILL"){
-			        if (acct1 == getValueFromJson(dbObject.Products[i].ACC1))
+			        if (acct1.toUpperCase() == getValueFromJson(dbObject.Products[i].ACC1).toUpperCase())
                     {
                         flag++;
                     }
@@ -172,7 +172,7 @@ var bill2payAccountDetails = {
                     {
                         flag++;
                     }
-                    if (acct3 == getValueFromJson(dbObject.Products[i].ACC3))
+                    if (acct3.toUpperCase() == getValueFromJson(dbObject.Products[i].ACC3).toUpperCase())
                     {
                         flag++;
                     }
@@ -185,7 +185,7 @@ var bill2payAccountDetails = {
                 }
                 else
                 {
-                    if (acct1 == getValueFromJson(dbObject.Products[i].ACC1))
+                    if (acct1.toUpperCase() == getValueFromJson(dbObject.Products[i].ACC1).toUpperCase())
                     {
                         flag++;
                     }

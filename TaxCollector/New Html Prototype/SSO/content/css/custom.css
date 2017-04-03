@@ -1,6 +1,5 @@
 ﻿.contentHeading {
-    color: blue;
-  	font-weight: bold;
+  font-weight: bold;
 }
 .caption {
     color: blue;
@@ -81,6 +80,9 @@
  	border-bottom: 2px solid white;
  	font-weight: bold;
  }
+ .headerWhite{
+background-color:white;
+}
 #cartDiv{
 	top:10%;
 width:100%;

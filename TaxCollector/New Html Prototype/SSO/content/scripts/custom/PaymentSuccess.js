@@ -94,9 +94,9 @@ populateGrid: function () {
 			 if(row.ACC2!=null){
 				details+=getValueFromJson(row.ACC2)+",";
 			}
-//			 if(row.ACC3!=null){
-//				details+=getValueFromJson(row.ACC3)+",";
-//			}
+			 if(row.ACC3!=null){
+				details+=getValueFromJson(row.ACC3)+",";
+			}
 			//Property Address
 			var propAddr='<br/><strong>Property Address:</strong><br/>';
             if(row.Name!=null){

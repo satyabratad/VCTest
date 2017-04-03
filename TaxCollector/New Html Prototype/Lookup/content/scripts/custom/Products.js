@@ -1,20 +1,21 @@
 
 var bill2payProducts = {
 
- getProducts: function (json=null) {
+ getProducts: function (json) {
        debugger;
        if(json!=null)
        DeSrializeDbObject(json);
        
 		var selectedProduct=$("#ddlCategories").val();
 		
-		if(selectedProduct.toUpperCase()=="TEST & NAME")
+		if(selectedProduct.toUpperCase()=="TAX BILL")
 		{
 			var product = {
 								//Product Details
 								"ProductName": selectedProduct,
-								"ACC1":{"ACCOUNT1":$("#txtLookupAccount1").val()},
-								"ACC2":{"ACCOUNT2":$("#txtLookupAccount2").val()},
+								"ACC1":{"PARCEL":$("#txtLookupAccount1").val()},
+								"ACC2":{"TAX YEAR":$("#txtLookupAccount2").val()},
+								"ACC3":{"OWNER NAME":$("#txtLookupAccount3").val()},
 																
 								
 								//Property Details
@@ -28,13 +29,12 @@ var bill2payProducts = {
 			return product;
 			
 		}
-		else if(selectedProduct.toUpperCase()=="UTILITY PAYMENT")
+		else if(selectedProduct.toUpperCase()=="DMV APPLICATION")
 		{
 			var product = {
 								//Product Details
 								"ProductName": selectedProduct,
-								"ACC1":{"ACCOUNT1":$("#txtLookupAccount1").val()},
-								"ACC2":{"ACCOUNT2":$("#txtLookupAccount2").val()},
+								"ACC1":{"LICENSE NUMBER":$("#txtLookupAccount1").val()},
 								
 								
 								//Property Details
@@ -50,21 +50,21 @@ var bill2payProducts = {
 		}
 		
     },
-    addProducts: function (json=null) {
+    addProducts: function (json) {
        debugger;
        if(json!=null)
        DeSrializeDbObject(json);
        
 		var selectedProduct=$("#ddlCategories").val();
 		
-		if(selectedProduct.toUpperCase()=="TEST & NAME")
+		if(selectedProduct.toUpperCase()=="TAX BILL")
 		{
 			var product = {
 								//Product Details
 								"ProductName": selectedProduct,
-								"ACC1":{"ACCOUNT1":$("#txtLookupAccount1").val()},
-								"ACC2":{"ACCOUNT2":$("#txtLookupAccount2").val()},
-																
+								"ACC1":{"PARCEL":$("#txtLookupAccount1").val()},
+								"ACC2":{"TAX YEAR":$("#txtLookupAccount2").val()},
+								"ACC3":{"OWNER NAME":$("#txtLookupAccount3").val()},								
 								
 								//Property Details
                                 "Name": {"NAME":'CHRISTOPHER P. KALIL'},
@@ -78,13 +78,12 @@ var bill2payProducts = {
 			products.push(product);
 			
 		}
-		else if(selectedProduct.toUpperCase()=="UTILITY PAYMENT")
+		else if(selectedProduct.toUpperCase()=="DMV APPLICATION")
 		{
 			var product = {
 								//Product Details
 								"ProductName": selectedProduct,
-								"ACC1":{"ACCOUNT1":$("#txtLookupAccount1").val()},
-								"ACC2":{"ACCOUNT2":$("#txtLookupAccount2").val()},
+								"ACC1":{"LICENSE NUMBER":$("#txtLookupAccount1").val()},
 								
 								
 								//Property Details

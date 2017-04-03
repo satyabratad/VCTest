@@ -7,7 +7,7 @@ showCart: function(){
 	DeSrializeDbObject(param);
 	bill2payPaymentSuccess.populateGrid();
     $('#headerCustName').html('<h3>'+dbObject.CustomerName+'</h3>');
-	$('#headerCustName').html(dbObject.CustomerName);
+	//$('#headerCustName').html(dbObject.CustomerName);
 	if(dbObject.BillingDetails.PaymentType=='CC')
 		{
 			var paymentMethod="Visa ***"+dbObject.BillingDetails.CardNumber.substr(dbObject.BillingDetails.CardNumber.length-4,4);
@@ -49,7 +49,7 @@ redirectToHome: function(){
      redirect('Home.html?ShowCart=Y&dbObject=' + json);
 },
 redirectToNewHome: function(){
-	
+
 	redirect("Home.html");
 },
 redirectToCartGrid: function(){
@@ -98,9 +98,9 @@ populateGrid: function () {
 			 if(row.ACC2!=null){
 				details+=getValueFromJson(row.ACC2)+",";
 			}
-//			 if(row.ACC3!=null){
-//				details+=getValueFromJson(row.ACC3)+",";
-//			}
+			 if(row.ACC3!=null){
+				details+=getValueFromJson(row.ACC3)+",";
+			}
 			//Property Address
 			var propAddr='<br/><strong>Property Address:</strong><br/>';
             if(row.Name!=null){

@@ -1,5 +1,5 @@
 ﻿.contentHeading {
-    color: blue;
+   
   	font-weight: bold;
 }
 .caption {
@@ -97,6 +97,9 @@ font-size: 14px;
 	 background-color:#005d92;
     color:#005d92;
 
+}
+.headerWhite{
+background-color:white;
 }
 @media print {
   #divLeftConfirmationPanel {

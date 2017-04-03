@@ -48,7 +48,7 @@ addMoreItems: function(){
 	redirect('Home.html?dbObject=' + json);		
 },
 
-    addContact: function(json=null)
+    addContact: function(json)
      {
             debugger;
       
@@ -79,7 +79,7 @@ addMoreItems: function(){
             "Address2":"",
             "City":"Bedrock",
             "State":"AZ",
-            "Country":"USA",
+            "Country":"US",
             "Zip":"81411",
             "Phone":"6137255643"
            

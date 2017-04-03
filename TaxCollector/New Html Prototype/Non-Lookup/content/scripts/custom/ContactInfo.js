@@ -39,7 +39,7 @@ addMoreItems: function(){
 	redirect('Home.html?dbObject=' + json);		
 },
 
-    addContact: function(json=null)
+    addContact: function(json)
      {
             debugger;
       

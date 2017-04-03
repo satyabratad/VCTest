@@ -3,10 +3,10 @@ var dbObject={
 	"ContactInfo":null,
 	"BillingDetails":null,
 	"ConfirmEmail":null,
-	"CustomerName":"Clay County, Missouri",
+	"CustomerName":"Your Department",
 	"Breadcrumb":null
 }
-//Products contains 
+//Products contains
 //1. Product Details
 //2. Property Address
 //3. Amount
@@ -16,9 +16,9 @@ var billingDetails=null;
 var breadcrumbs=[];
 
 function UpdateDbObject(){
-	dbObject.Products=products;	
-	dbObject.ContactInfo=contactInfo;	
-	dbObject.BillingDetails=billingDetails;	
+	dbObject.Products=products;
+	dbObject.ContactInfo=contactInfo;
+	dbObject.BillingDetails=billingDetails;
 	dbObject.Breadcrumb=breadcrumbs;
 }
 
@@ -34,7 +34,7 @@ function DeSrializeDbObject(json){
 		dbObject.BillingDetails=obj.BillingDetails;
 		dbObject.ConfirmEmail=obj.ConfirmEmail;
 		dbObject.Breadcrumb=obj.Breadcrumb;
-		
+
 		products=obj.Products;
 		contactInfo = obj.ContactInfo;
 		billingDetails=obj.BillingDetails;
@@ -49,7 +49,7 @@ function clearDbObject(){
 	dbObject.BillingDetails=null;
 }
 function getParameterByName( name ){
-    var regexS = "[\\?&]"+name+"=([^&#]*)", 
+    var regexS = "[\\?&]"+name+"=([^&#]*)",
   regex = new RegExp( regexS ),
   results = regex.exec( window.location.search );
   if( results == null ){
@@ -66,7 +66,7 @@ function getParameterByName( name ){
 function getValueFromJson(JsonObj){
 			for (var key in JsonObj) {
 		    return JsonObj[key];
-		}	
+		}
 	}
 function redirect(url){
 	var baseUrl=window.location.href.split('/').slice(0,-1).join("/");
@@ -105,7 +105,7 @@ function populateBreadcrumb(){
     if(page.indexOf('?')>=0){
 		page=page.split('?')[0];
 	}
-    
+
     if(dbObject.Breadcrumb.length==0){
 	    var menuItem={"Page":"Home","MENUNAME":"Account","SPANHIDDEN":"Details","Index":"1","Visited":"N"};
 	    breadcrumbs.push(menuItem);
@@ -114,20 +114,20 @@ function populateBreadcrumb(){
 	    menuItem={"Page":"Payment","MENUNAME":"Payment","SPANHIDDEN":"Details","Index":"3","Visited":"N"};
 	    breadcrumbs.push(menuItem);
 	    menuItem={"Page":"PaymentConfirm","MENUNAME":"Confirm","SPANHIDDEN":"Payment","Index":"4","Visited":"N"};
-	    breadcrumbs.push(menuItem);	
-	    	
+	    breadcrumbs.push(menuItem);
+
 	}
-	
+
 	breadcrumbs[getPageIndex(page)].Visited='Y';
 	UpdateDbObject();
-    
+
     var html=' <ul class="breadcrumb">';
     var itemIndex=0;
     for(i=0;i<dbObject.Breadcrumb.length;i++){
-    	
+
     	if(itemIndex<dbObject.Breadcrumb.length)
     	{
-			
+
 				if(dbObject.Breadcrumb[itemIndex].Visited=='Y')
 				{
 					html+='<li class="active"><a href="#" class="" onclick="breadcrumbRedirect(\''+dbObject.Breadcrumb[itemIndex].Page+'\');"><span class="badge badge-inverse">';
@@ -147,14 +147,14 @@ function populateBreadcrumb(){
 					}
 	    		}
 	    		itemIndex+=1;
-	    }		
-	    	
+	    }
+
 	}
 	html+='</ul>';
 		$('#brdCrumb').html('');
 	    $('#brdCrumb').append(html);
-		
-	  /*  
+
+	  /*
 	    var html+='<li><a href="https://betapay.bill2pay.com/pay/#" class="inactiveLink"><span class="badge">';
 	    var html+=' 2</span><span class="hidden-xs hidden-sm"> Contact Info</span></a></li>';
 	    var html+='<li><a href="https://betapay.bill2pay.com/pay/#" class="inactiveLink"><span class="badge">';
@@ -162,13 +162,13 @@ function populateBreadcrumb(){
 		var html+='<li><a href="https://betapay.bill2pay.com/pay/#" class="inactiveLink"><span class="badge">';
 		var html+='4</span><span class="hidden-xs hidden-sm"> Confirm Payment</span></a></li>';
 	    var html+='</ul>';
-	   */ 
+	   */
 	}
-	
+
   function breadcrumbRedirect(Page){
   	debugger;
-	var json=SerializeDbObject();	
-	redirect(Page+'.html?dbObject=' + json);		
+	var json=SerializeDbObject();
+	redirect(Page+'.html?dbObject=' + json);
 }
 function addThousandsSeparator(inputText) {
 	debugger;
@@ -177,16 +177,16 @@ function addThousandsSeparator(inputText) {
 		ifDlrExists=true;
 		inputText= inputText.replace('$','');
 	}
-     
-     var output=inputText;	
+
+     var output=inputText;
     var amt;
     try{
     	amt=parseFloat(inputText);
-		
+
 	} catch (err) {
 		amt=inputText;
 	}
-    
+
     if (amt>0) {
         inputText = new String(inputText); // so you can perform string operations
         var parts = inputText.split("."); // remove the decimal part

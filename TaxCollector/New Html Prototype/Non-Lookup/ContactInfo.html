@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Duval County Tax Collector </title>
+    <title>Your Department </title>
     <!-- CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
         type="text/css">
@@ -51,7 +51,7 @@
         <div class="container" style="max-width: 970px; background: #B1B1B1;">
             <!--// START LOGO, HEADER AND NAV //-->
             <div class="row">
-                <div class="col-xs-12 header" style="padding: 0px;">
+                  <div class="col-xs-12 header headerWhite" style="padding: 0px;">
                     <img id="imgClientLogo" alt="Client Logo" title="The Client Logo" class="img-responsive"
                         onerror="this.src=&#39;./content/images/B2P-Logo4.png&#39;;" src="./content/images/B2P-Logo4.png" />
                 </div>
@@ -214,11 +214,7 @@
                                                     <label class="control-label" for="ddlCountry" id="lblCountry">
                                                         <span id="spnCountry">Country</span>
                                                     </label>
-                                                    <select id="ddlCountry" name="ddlCountry" class="form-control input-sm">
-                                                        <option selected="selected" value="">--Select Country--</option>
-                                                        <option value="USA">United States Of America</option>
-                                                        <option value="CA">Canada</option>
-                                                    </select>
+                                                      <select class="input-sm form-control  bfh-countries" data-country="US" id="ddlCountry" name="ddlCountry"><option selected="selected" value="">--Select Country--</option><option value="US">United States</option><option value="CA">Canada</option><option value="OT">Other</option></select>
                                                 </div>
                                             </div>
                                             <div class="form-group form-group-sm">
@@ -248,8 +244,9 @@
                                     <div class="pull-left">
                                         <input type="button" name="btnSubmit" value="Add More Items" onclick="bill2payContactInfo.addMoreItems();"
                                             id="btnSubmit" title="Add More Items" class="btn btn-primary " />
-                                        <input type="button" onclick="bill2payContactInfo.addContact();" name="btnContinue"
-                                            value="Continue" onclick="return validateForm();" id="btnContinue" title="Continue"
+											<!---->
+                                        <input type="button" onclick="return validate();" name="btnContinue"
+                                            value="Continue" title="Continue"
                                             class="btn btn-primary " /></div>
                                     <br />
                                     <br />
@@ -269,8 +266,7 @@
                 <div class="row rowheight" style="background-color: #195575;">
                     <div class="col-xs-12 col-sm-12 text-center">
                         <div class="col-sm-6">
-                            <a href="http://www.coj.net/departments/tax-collector.aspx" target="_blank">Duval County
-                                Tax Collector</a>
+                             <a href="http://www.bill2pay.com/" target="_blank">Your Department</a>
                         </div>
                         <div class="col-sm-6">
                             <a href="http://www.bill2pay.com/" target="_blank">www.Bill2Pay.com</a>
@@ -365,11 +361,80 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 bill2payContactInfo.showCart();
-            });   
-               
+            });
+
         </script>
     </div>
     </form>
-    <script type="text/javascript">        (function () { window.SIG_EXT = {}; })()</script>
+    <script type="text/javascript">        (function () { window.SIG_EXT = {}; })()	</script>
+	<script type="text/javascript">
+	
+		function validate()
+		{
+			if(validateForm())
+			{
+				bill2payContactInfo.addContact();
+			}
+			else
+			{
+				return false;
+			}
+			
+			
+		}
+		function validateForm() {
+                debugger;
+				
+
+                var doc = document;
+                var item = new ValidationItem();
+
+                // Create instance of the form validator
+                var validator = new FormValidator();
+                validator.setErrorMessageHeader("Please review the following errors and resubmit the form:\n\n")
+                validator.setInvalidCssClass("has-error");
+                validator.setAlertBoxStatus(false);
+                // Add validation items to validator
+                // Check to see if account 1 is present
+                    contactName = doc.getElementById('txtContactName').value;
+                    if (contactName == '') {
+                        // Set the validator
+                        validator.addValidationItem(new ValidationItem("txtContactName", fieldTypes.NonEmptyField, true, "Required."));
+                    }			
+                
+                    add1 = doc.getElementById('txtAddress1').value;
+                    if (add1 == '') {
+                        // Set the validator
+                        validator.addValidationItem(new ValidationItem("txtAddress1", fieldTypes.NonEmptyField, true, "Required."));
+                    }
+					city = doc.getElementById('txtCity').value;
+                    if (city == '') {
+                        // Set the validator
+                        validator.addValidationItem(new ValidationItem("txtCity", fieldTypes.NonEmptyField, true, "Required."));
+                    }
+					city = doc.getElementById('txtCity').value;
+                    if (city == '') {
+                        // Set the validator
+                        validator.addValidationItem(new ValidationItem("txtCity", fieldTypes.NonEmptyField, true, "Required."));
+                    }
+					dstate = doc.getElementById('ddlState').value;
+                    if (dstate == '') {
+                        // Set the validator
+                        validator.addValidationItem(new ValidationItem("ddlState", fieldTypes.NonEmptyField, true, "Required."));
+                    }
+					country = doc.getElementById('ddlCountry').value;
+                    if (country == '') {
+                        // Set the validator
+                        validator.addValidationItem(new ValidationItem("ddlCountry", fieldTypes.NonEmptyField, true, "Required."));
+                    }
+					zip = doc.getElementById('txtZip').value;
+                    if (zip == '') {
+                        // Set the validator
+                        validator.addValidationItem(new ValidationItem("txtZip", fieldTypes.NonEmptyField, true, "Required."));
+                    }
+                var state = validator.validate();
+				return state;
+		}
+	</script>
 </body>
 </html>

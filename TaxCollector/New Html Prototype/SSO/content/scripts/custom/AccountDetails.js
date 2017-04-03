@@ -68,7 +68,7 @@ var bill2payAccountDetails = {
 			return dbObject.Products[itemIndex].AmountPaid;
 	},
 	populateGrid: function () {
-
+debugger;
 		$("#cartGrid").css("display","block");
 		var html = '';
 		var totalAmount=0;
@@ -101,9 +101,9 @@ var bill2payAccountDetails = {
 			 if(row.ACC2!=null){
 				details+=getValueFromJson(row.ACC2)+",";
 			}
-//			 if(row.ACC3!=null){
-//				details+=getValueFromJson(row.ACC3)+",";
-//			}
+			 if(row.ACC3!=null){
+				details+=getValueFromJson(row.ACC3)+",";
+			}
 			//Property Address
 			var propAddr='<br/><strong>Property Address:</strong><br/>';
             if(row.Name!=null){

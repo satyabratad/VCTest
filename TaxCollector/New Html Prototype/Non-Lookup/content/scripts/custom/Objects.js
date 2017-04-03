@@ -3,7 +3,7 @@ var dbObject = {
     "ContactInfo": null,
     "BillingDetails": null,
     "ConfirmEmail": null,
-    "CustomerName": "Duval County Tax Collector",
+    "CustomerName": "Your Department",
     "Breadcrumb": null
 }
 //Products contains
@@ -172,16 +172,16 @@ function addThousandsSeparator(inputText) {
 		ifDlrExists=true;
 		inputText= inputText.replace('$','');
 	}
-     
+
      var output=inputText;
     var amt;
     try{
     	amt=parseFloat(inputText);
-		
+
 	} catch (err) {
 		amt=inputText;
 	}
-    
+
     if (amt>0) {
         inputText = new String(inputText); // so you can perform string operations
         var parts = inputText.split("."); // remove the decimal part
