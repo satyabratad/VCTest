@@ -30,7 +30,7 @@ Global
 		VaultRepositoryID = 20
 		VaultRepositoryGUID = 5aac9cfd-3f3c-44d0-b486-065b4416204b
 		ProjectCount = 2
-		ProjectRelativeDiskPath1 = Web\Web.vbproj
-		ProjectRelativeDiskPath2 = BizObjects\BizObjects.vbproj
+		ProjectRelativeDiskPath1 = BizObjects\BizObjects.vbproj
+		ProjectRelativeDiskPath2 = Web\Web.vbproj
 	EndGlobalSection
 EndGlobal

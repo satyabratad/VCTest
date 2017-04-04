@@ -13,5 +13,8 @@ Option Explicit On
 Namespace B2P.PaymentLanding.Express.Web
 
     Partial Public Class Footer
+        Protected WithEvents litLink1 As Global.System.Web.UI.WebControls.Literal
+        Protected WithEvents litBill2Pay As Global.System.Web.UI.WebControls.Literal
+        Protected WithEvents litYear As Global.System.Web.UI.WebControls.Literal
     End Class
 End Namespace

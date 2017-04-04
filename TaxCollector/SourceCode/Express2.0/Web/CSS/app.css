@@ -1,5 +1,15 @@
 ﻿/* --------- START MAIN CONTENT --------- */
 
+body{
+    background-color:#b1b1b1;
+    margin-bottom: 60px;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 a         { color: #285e8e; text-decoration: none; }
 a:hover   { color: #285e8e; text-decoration: underline; }
 
@@ -92,7 +102,7 @@ textarea[readonly] {
     padding-top:6px; 
     padding-bottom:6px;
     /*Client Color*/
-    background-color:#2379a7;
+    background-color:#195575;
     color:black;
 }
 
@@ -108,46 +118,24 @@ textarea[readonly] {
    color:#0e3042;
 }
 
-
-
-
-
 /* ---------- END NEW BREADCRUMBS ----------*/
 
-
-
-
-/* --------- START MENU FOOTER CONTENT --------- */
-
-.menu-footer {
-	padding-top: 10px;
-    padding-bottom:10px;
-    font-size: 12px;
-    margin-bottom: 0px;
-    text-align: center;
-    background-color: #195575;
-    color:white;
-}
-
-.menu-footer a { color: #fff; }
-
-/* --------- END FOOTER CONTENT --------- */
 
 /* --------- START FOOTER CONTENT --------- */
 
 .footer {
-	padding-top: 10px;
-    font-size: 12px;
-    margin-bottom: 20px;
-    text-align: center;
-    background-color: #0e3042;
-    color:white;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  color:white;
 }
 
-.footer a { color: #20a1dd; }
+.footer .rowheight{
+    height:40px;
+}
+.footer a { color: white; }
 
 /* --------- END FOOTER CONTENT --------- */
-
 
 /* --------- START BOOTSTRAP OVERRIDES --------- */
 
@@ -389,14 +377,17 @@ table-responsive {
 /* All Mobile Sizes (devices and browser) */
 @media only screen and (max-width: 767px) {
     /*#imgClientLogo { width: 300px; padding-left: 0px; }*/
-    body { font-size: 12px; }
+     body { font-size: 12px; }
     h3 { font-size: 18px; }
     h4 { font-size: 14px; }
     #imgStatusMsgIcon { font-size: 1.5em; }
     footer { width: 95%; }
     .container-maincontent{background-color:white;}
-    .table-responsive {border: 0px;}
-    
+    .table-responsive {border: 0px; font-size:12px;}
+    .table-responsive td {border: 0px; font-size:12px;}
+    .checkbox label { font-size:12px; font-weight:normal; }
+     label { font-size:12px; font-weight:normal; }
+     .footer .rowheight{height:100%;}
 }
 
 /* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
@@ -433,6 +424,7 @@ table-responsive {
 }
 
 @media only screen and (max-width: 279px) {
+   .checkbox label { font-size:12px; font-weight:normal; }
    .cvv { background-image: none !important; }
    #imgVisa { visibility: hidden; }
    #imgMasterCard { visibility: hidden; }

@@ -37,6 +37,9 @@
       <b2p:PaymentHeader id="phError" runat="server" />
 
       <!--// END LOGO, HEADER AND NAV //-->
+        <%--<div class="row" style="background-color:white; padding-bottom:10px;">
+         <br />
+        <div class="col-sm-12">--%> 
 
       <!--// START MIDDLE CONTENT //-->
       <div class="container">

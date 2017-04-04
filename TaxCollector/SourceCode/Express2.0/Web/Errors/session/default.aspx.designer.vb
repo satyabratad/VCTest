@@ -51,33 +51,6 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected WithEvents phConfirmPaymentInfo As Global.B2P.PaymentLanding.Express.Web.Header
         
         '''<summary>
-        '''litJavascriptHeading control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litJavascriptHeading As Global.System.Web.UI.WebControls.Literal
-        
-        '''<summary>
-        '''pnlJSMessage control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents pnlJSMessage As Global.System.Web.UI.WebControls.Panel
-        
-        '''<summary>
-        '''litJavascriptMessage control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litJavascriptMessage As Global.System.Web.UI.WebControls.Literal
-        
-        '''<summary>
         '''litMissingClientHeader control.
         '''</summary>
         '''<remarks>

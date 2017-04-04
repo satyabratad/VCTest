@@ -27,14 +27,10 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <SccProjectName>
-    </SccProjectName>
-    <SccLocalPath>
-    </SccLocalPath>
-    <SccAuxPath>
-    </SccAuxPath>
-    <SccProvider>
-    </SccProvider>
+    <SccProjectName>Web</SccProjectName>
+    <SccLocalPath>20~5aac9cfd-3f3c-44d0-b486-065b4416204b</SccLocalPath>
+    <SccAuxPath>http://jaxb2pdev01/VaultService</SccAuxPath>
+    <SccProvider>SourceGear Vault Visual Studio 2005 Client:{1EA47954-8515-402d-82D9-B5C332120A8D}</SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -190,6 +186,7 @@
     <Content Include="UserControls\CreditCard.ascx" />
     <Content Include="UserControls\Footer.ascx" />
     <Content Include="UserControls\Header.ascx" />
+    <Content Include="UserControls\JavaScriptCheck.ascx" />
     <Content Include="UserControls\MenuFooter.ascx" />
     <Content Include="UserControls\StatusMessage.ascx" />
     <Content Include="UserControls\TermsConditions.ascx" />
@@ -348,6 +345,10 @@
     </Compile>
     <Compile Include="UserControls\Header.ascx.vb">
       <DependentUpon>Header.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\JavaScriptCheck.ascx.vb">
+      <DependentUpon>JavaScriptCheck.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="UserControls\MenuFooter.ascx.designer.vb">

@@ -12,21 +12,21 @@
 	float: left; 
 }
 .breadcrumb li.active a {
-	background: blue;                   /* fallback color */
-	background: #005d92; 
+	
+	background: #195575; 
     font-weight:bold;
 }
 .breadcrumb li.completed a {
-	background: brown;                   /* fallback color */
-	background: #005d92; 
+	
+	background: #195575; 
     font-weight:bold;
 }
 .breadcrumb li.active a:after {
-	border-left: 30px solid #005d92 ;
+	border-left: 30px solid #195575 ;
 }
 
 .breadcrumb li.danger a {
-	background: red;                   /* fallback color */
+	
 	background: #D9534F; 
     font-weight:bold;
 }
@@ -36,7 +36,7 @@
 
 
 .breadcrumb li.completed a:after {
-	border-left: 30px solid #005d92;
+	border-left: 30px solid #195575;
     font-weight:bold;
 } 
 
@@ -83,8 +83,8 @@
 	padding-left: 15px;
     font-weight:bold;
 }
-.breadcrumb li a:hover { background: #5BC0DE  ; font-weight:bold; }
-.breadcrumb li a:hover:after { border-left-color: #5BC0DE   !important; font-weight:bold; }
+.breadcrumb li a:hover { background: #5E889E  ; font-weight:bold; }
+.breadcrumb li a:hover:after { border-left-color: #5E889E   !important; font-weight:bold; }
 
 .inactiveLink {
    pointer-events: none;

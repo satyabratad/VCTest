@@ -1,8 +1,9 @@
 ﻿<%@ Page Language="vb" AutoEventWireup="false" CodeBehind="Default.aspx.vb" Inherits="B2P.PaymentLanding.Express.Web._paydefault" %>
 <%@ Register TagPrefix="b2p" TagName="PaymentHeader" Src="~/UserControls/Header.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="PaymentStatusMessage" Src="~/UserControls/StatusMessage.ascx" %>
-<%@ Register TagPrefix="b2p" TagName="PaymentMenuFooter" Src="~/UserControls/MenuFooter.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="PaymentFooter" Src="~/UserControls/Footer.ascx" %>
+<%@ Register TagPrefix="b2p" TagName="JavaScriptCheck" Src="~/UserControls/JavaScriptCheck.ascx" %>
+
 
 <!DOCTYPE html>
 
@@ -44,58 +45,21 @@
         <!--// END LOGO, HEADER AND NAV //-->
        
       
-        <div class="container-maincontent" style="padding:0px;">
-        <div class="row" style="padding-top:10px; padding-bottom:20px;">
-             <h1 class="text-hide">Account Details</h1> 
-                    <div class="col-sm-1"></div>    
-                    <div class="col-sm-10">                       
+        <div class="row" style="background-color:white; padding-bottom:10px;">
+            <br />
+                   
+                    <div class="col-sm-12">                       
                     <!--// START MIDDLE CONTENT //-->
-                                    
-                        <div class="row" style="background-color:white; padding:5px;">
-                            <!--// START NO SCRIPT CHECK //-->
-                             <noscript>
-                                    <style type="text/css">
-                                        .content {display:none;}
-                                    </style>
-                                    <div class="container">
-                                          <div class="row" style="background-color:white; padding:5px;">
-                                                <div class="row">
-                                                  <div class="col-xs-12">
-                                                   <h3 class="text-primary"><asp:Literal id="litJavascriptHeading" text="<%$ Resources:WebResources, JavascriptHeading %>" runat="server" /></h3>
-                                                    <hr />
-                                                    <br />
-                                                  </div>
-                                                </div>
-
-                                                <div class="row">
-                                                  <div class="col-xs-12 col-sm-6">
-                                                      <asp:Panel ID="pnlJSMessage" runat="server" class="alert alert-danger alert-sm">
-                                                          <div id="imgStatusMsgIcon" class="fa fa-exclamation-circle fa-2x status-msg-icon"></div>
-                                                              <div id="txtStatusMsg" class="status-msg-text"><asp:Literal id="litJavascriptMessage" text="<%$ Resources:WebResources, JavascriptMessage %>" runat="server" /></div>
-                                                      </asp:Panel>
-                                            
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                  </div>
-                                                </div>
-                                              </div>
-                                      </div>
-                            </noscript>
-                            <!--// END NO SCRIPT CHECK //-->
+                                
+                        <div class="row" style="background-color:white;">
+                             <!--// START NO SCRIPT CHECK //-->
+                                    <b2p:JavaScriptCheck ID="pjsJavascript" runat="server" />
+                                <!--// END NO SCRIPT CHECK //-->
                         
                             <div class="content">
-
+                                <div class="container" style="min-height:50%;">
                                  <!--// START BREADCRUMBS //-->
-                                 <div class="container">
+                                 
 	                                    <div class="row">
 		                                    <ul class="breadcrumb">			                                    
 			                                    <li class="active"><a href="/pay/"><span class="badge badge-inverse">1</span> Account <span class="hidden-xs hidden-sm">Details</span></a></li>
@@ -104,7 +68,7 @@
 			                                    <li><a href="#" class="inactiveLink"><span class="badge">4</span><span class="hidden-xs hidden-sm"> Payment Complete</span></a></li>
 		                                    </ul>
 	                                    </div>
-                                    </div>
+                                    
                                 <!--// END BREADCRUMBS //-->
 
                             <div class="col-xs-12 col-sm-6">  
@@ -163,33 +127,23 @@
                                     <asp:Button id="btnSubmit" cssclass="btn btn-primary btn-sm pull-right" text="<%$ Resources:WebResources, ButtonContinue %>" tooltip="<%$ Resources:WebResources, ButtonContinue %>" runat="server" />                  
                                 <br />
                                 <br />
-
-                                
                             </div> 
                              
                             <div class="col-xs-12 col-sm-6">
                                     <br />
                                     <p><asp:Label ID="lblClientMessage" runat="server" ToolTip="Client Message"></asp:Label></p>
-                               
-                                    
                             </div>
-                    </div>  
+                    </div> 
+                               </div>
+                             
+                            </div>  
                     </div>                        
-                </div>
-                    <!--// END MIDDLE CONTENT //-->               
+                
+                    <!--// END MIDDLE CONTENT //-->              
                
-                    <div class="col-sm-1"></div>
-           
-          </div>
-           
+          </div><br /><br />   
      </div>
     
-      <!--// START MENU FOOTER CONTENT //-->
-
-      <b2p:PaymentMenuFooter id="pfMenu" runat="server" />
-
-      <!--// END MENU FOOTER CONTENT //-->
-
       <!--// START FOOTER CONTENT //-->
 
       <b2p:PaymentFooter id="pfDefault" runat="server" />

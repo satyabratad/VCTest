@@ -38,9 +38,9 @@
 
       <!--// END LOGO, HEADER AND NAV //-->
     
-        <div class="row" style="padding-top:10px; padding-bottom:10px;">
-                    <%--<div class="col-sm-1"></div>  --%>  
-                    <div class="col-sm-10">
+                            <div class="row" style="background-color:white; padding-bottom:10px;">
+                             <br />
+                            <div class="col-sm-12">
                               <!--// START MIDDLE CONTENT //-->
                               <div class="container">
                                   <div class="row" style="background-color:white; padding:5px;">
