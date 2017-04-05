@@ -67,9 +67,6 @@
     <Reference Include="B2P.Payment">
       <HintPath>..\Assemblies\B2P.Payment.dll</HintPath>
     </Reference>
-    <Reference Include="B2P.PaymentLanding.Express.BLL">
-      <HintPath>..\Assemblies\B2P.PaymentLanding.Express.BLL.dll</HintPath>
-    </Reference>
     <Reference Include="B2P.Product">
       <HintPath>..\Assemblies\B2P.Product.dll</HintPath>
     </Reference>
@@ -410,6 +407,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CSS\ClientCSS\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BizObjects\BizObjects.vbproj">
+      <Project>{cc8e4367-bb03-46a4-b88f-1ee28d992b20}</Project>
+      <Name>BizObjects</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
