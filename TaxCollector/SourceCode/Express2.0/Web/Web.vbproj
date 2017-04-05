@@ -178,6 +178,7 @@
     <Content Include="pay\PaymentFailure.aspx" />
     <Content Include="sso\Default.aspx" />
     <Content Include="UserControls\BankAccount.ascx" />
+    <Content Include="UserControls\BreadCrumb.ascx" />
     <Content Include="UserControls\ConvenienceFee.ascx" />
     <Content Include="UserControls\CreditCard.ascx" />
     <Content Include="UserControls\Footer.ascx" />
@@ -315,6 +316,12 @@
       <DependentUpon>BankAccount.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="UserControls\BreadCrumb.ascx.designer.vb">
+      <DependentUpon>BreadCrumb.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\BreadCrumb.ascx.vb">
+      <DependentUpon>BreadCrumb.ascx</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\ConvenienceFee.ascx.designer.vb">
       <DependentUpon>ConvenienceFee.ascx</DependentUpon>
     </Compile>
@@ -437,7 +444,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>43498</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
