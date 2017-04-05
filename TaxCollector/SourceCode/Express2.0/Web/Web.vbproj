@@ -172,6 +172,7 @@
     <Content Include="Js\jquery.payment.js" />
     <Content Include="Js\respond.min.js" />
     <Content Include="pay\Confirm.aspx" />
+    <Content Include="pay\Temp.aspx" />
     <Content Include="pay\Default.aspx" />
     <Content Include="pay\Payment.aspx" />
     <Content Include="pay\PaymentComplete.aspx" />
@@ -274,6 +275,13 @@
     <Compile Include="pay\Confirm.aspx.vb">
       <DependentUpon>Confirm.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="pay\Temp.aspx.designer.vb">
+      <DependentUpon>Temp.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pay\Temp.aspx.vb">
+      <DependentUpon>Temp.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="pay\Default.aspx.designer.vb">
       <DependentUpon>Default.aspx</DependentUpon>
