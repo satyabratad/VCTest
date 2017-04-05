@@ -53,42 +53,42 @@
   <ItemGroup>
     <Reference Include="AntiXSSLibrary, Version=4.2.0.0, Culture=neutral, PublicKeyToken=d127efab8a9c114f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Web Controls\B2PExpressResponsive\AntiXSSLibrary.dll</HintPath>
+      <HintPath>..\Assemblies\AntiXSSLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="B2P.Client, Version=2.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Web Controls\B2PExpressResponsive\B2P.Client.dll</HintPath>
+    <Reference Include="B2P.Client">
+      <HintPath>..\Assemblies\B2P.Client.dll</HintPath>
     </Reference>
-    <Reference Include="B2P.ClientInterface.Manager, Version=2.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\B2P.ClientInterface.Manager.dll</HintPath>
+    <Reference Include="B2P.ClientInterface.Manager">
+      <HintPath>..\Assemblies\B2P.ClientInterface.Manager.dll</HintPath>
     </Reference>
-    <Reference Include="B2P.Common, Version=2.1.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Web Controls\B2PExpressResponsive\B2P.Common.dll</HintPath>
+    <Reference Include="B2P.Common">
+      <HintPath>..\Assemblies\B2P.Common.dll</HintPath>
     </Reference>
     <Reference Include="B2P.Payment">
-      <HintPath>bin\B2P.Payment.dll</HintPath>
+      <HintPath>..\Assemblies\B2P.Payment.dll</HintPath>
     </Reference>
     <Reference Include="B2P.PaymentLanding.Express.BLL">
-      <HintPath>..\..\..\..\..\..\..\Web Controls\B2PExpressResponsive\B2P.PaymentLanding.Express.BLL.dll</HintPath>
+      <HintPath>..\Assemblies\B2P.PaymentLanding.Express.BLL.dll</HintPath>
     </Reference>
-    <Reference Include="B2P.Product, Version=2.1.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\B2P.Product.dll</HintPath>
+    <Reference Include="B2P.Product">
+      <HintPath>..\Assemblies\B2P.Product.dll</HintPath>
     </Reference>
     <Reference Include="B2P.Profile, Version=2.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Web Controls\B2PExpressResponsive\B2P.Profile.dll</HintPath>
+      <HintPath>..\Assemblies\B2P.Profile.dll</HintPath>
     </Reference>
     <Reference Include="B2P.ShoppingCart">
-      <HintPath>bin\B2P.ShoppingCart.dll</HintPath>
+      <HintPath>..\Assemblies\B2P.ShoppingCart.dll</HintPath>
     </Reference>
     <Reference Include="B2P.SSOLookup">
-      <HintPath>bin\B2P.SSOLookup.dll</HintPath>
+      <HintPath>..\Assemblies\B2P.SSOLookup.dll</HintPath>
     </Reference>
     <Reference Include="ChilkatDotNet45">
-      <HintPath>bin\ChilkatDotNet45.dll</HintPath>
+      <HintPath>..\Assemblies\ChilkatDotNet45.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -401,6 +401,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

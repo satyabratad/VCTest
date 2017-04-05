@@ -55,27 +55,27 @@
   <ItemGroup>
     <Reference Include="B2P.Client, Version=2.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Web Controls\B2PExpressResponsive\B2P.Client.dll</HintPath>
+      <HintPath>..\Assemblies\B2P.Client.dll</HintPath>
     </Reference>
     <Reference Include="B2P.ClientInterface.Manager, Version=2.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Web Controls\B2PExpressResponsive\B2P.ClientInterface.Manager.dll</HintPath>
+      <HintPath>..\Assemblies\B2P.ClientInterface.Manager.dll</HintPath>
     </Reference>
     <Reference Include="B2P.Common, Version=2.1.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\B2P.Common.dll</HintPath>
+      <HintPath>..\Assemblies\B2P.Common.dll</HintPath>
     </Reference>
     <Reference Include="B2P.Product, Version=2.1.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Web Controls\B2PExpressResponsive\B2P.Product.dll</HintPath>
+      <HintPath>..\Assemblies\B2P.Product.dll</HintPath>
     </Reference>
     <Reference Include="B2P.ShoppingCart, Version=2.1.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\B2P.ShoppingCart.dll</HintPath>
+      <HintPath>..\Assemblies\B2P.ShoppingCart.dll</HintPath>
     </Reference>
     <Reference Include="B2P.SSOLookup, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\B2P.SSOLookup.dll</HintPath>
+      <HintPath>..\Assemblies\B2P.SSOLookup.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Web" />
