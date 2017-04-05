@@ -121,7 +121,6 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\AntiXSSLibrary.dll" />
     <Content Include="CSS\app.css" />
     <Content Include="CSS\bootstrap-theme.min.css" />
     <Content Include="CSS\bootstrap.css" />
