@@ -74,6 +74,9 @@ Namespace B2P.PaymentLanding.Express.BLL
         Private Const _transactionFee As String = "TransactionFee"
         Private Const _transInfo As String = "TransactionInformation"
         Private Const _vendorReferenceCode As String = "VendorReferenceCode"
+        'Added By RS
+        Private Const _manageCart As String = "ManageCart"
+        Private Const _clientType As String = "ClientType"
 
 #End Region
 
@@ -774,7 +777,33 @@ Namespace B2P.PaymentLanding.Express.BLL
                 HttpContext.Current.Session(_vendorReferenceCode) = value
             End Set
         End Property
-
+        'Added By RS
+        ''' <summary>
+        ''' The ManageCart property will provide a single instance of managecart object
+        ''' </summary>
+        Public Shared Property ManageCart() As Cart.ManageCart
+            Get
+                If HttpContext.Current.Session(_manageCart) Is Nothing Then
+                    HttpContext.Current.Session(_manageCart) = New Cart.ManageCart()
+                End If
+                Return DirectCast(HttpContext.Current.Session(_manageCart), Cart.ManageCart)
+            End Get
+            Set(ByVal value As Cart.ManageCart)
+                HttpContext.Current.Session(_manageCart) = value
+            End Set
+        End Property
+        Public Shared Property ClientType() As String
+            Get
+                If HttpContext.Current.Session(_clientType) Is Nothing Then
+                    Return String.Empty
+                Else
+                    Return DirectCast(HttpContext.Current.Session(_clientType), String)
+                End If
+            End Get
+            Set(ByVal value As String)
+                HttpContext.Current.Session(_clientType) = value
+            End Set
+        End Property
 #End Region
 
 #Region " ::: Methods ::: "
