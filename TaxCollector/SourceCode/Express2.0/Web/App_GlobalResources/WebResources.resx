@@ -435,4 +435,7 @@
   <data name="lblPaymentAmountTitle" xml:space="preserve">
     <value>Payment Amount Information</value>
   </data>
+  <data name="ButtonAddToCartContinue" xml:space="preserve">
+    <value>Continue</value>
+  </data>
 </root>

@@ -179,7 +179,7 @@
     <Content Include="pay\PaymentFailure.aspx" />
     <Content Include="sso\Default.aspx" />
     <Content Include="UserControls\BankAccount.ascx" />
-    <Content Include="UserControls\BreadCrumb.ascx" />
+    <Content Include="UserControls\CartGrid.ascx" />
     <Content Include="UserControls\ConvenienceFee.ascx" />
     <Content Include="UserControls\CreditCard.ascx" />
     <Content Include="UserControls\Footer.ascx" />
@@ -325,11 +325,12 @@
       <DependentUpon>BankAccount.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="UserControls\BreadCrumb.ascx.designer.vb">
-      <DependentUpon>BreadCrumb.ascx</DependentUpon>
+    <Compile Include="UserControls\CartGrid.ascx.designer.vb">
+      <DependentUpon>CartGrid.ascx</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\BreadCrumb.ascx.vb">
-      <DependentUpon>BreadCrumb.ascx</DependentUpon>
+    <Compile Include="UserControls\CartGrid.ascx.vb">
+      <DependentUpon>CartGrid.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="UserControls\ConvenienceFee.ascx.designer.vb">
       <DependentUpon>ConvenienceFee.ascx</DependentUpon>
@@ -432,6 +433,10 @@
     <Folder Include="CSS\ClientCSS\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\B2P.Cart\B2P.Cart.vbproj">
+      <Project>{5EE0B370-F31D-439A-BA10-0969D6493A59}</Project>
+      <Name>B2P.Cart</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BizObjects\BizObjects.vbproj">
       <Project>{cc8e4367-bb03-46a4-b88f-1ee28d992b20}</Project>
       <Name>BizObjects</Name>

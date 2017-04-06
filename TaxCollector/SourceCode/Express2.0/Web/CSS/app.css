@@ -451,4 +451,14 @@ table-responsive {
 }
 /* --------- END PAYMENT TABLE --------- */
 
-.
+/*----------START SHOPPING CART----------------*/
+#cartDiv{
+	top:10%;
+width:100%;
+height:100%;
+background: url("/img/cart.png");
+background-size:cover;
+text-align: center;
+font-size: 18px;
+}
+/*----------END SHOPPING CART----------------*/

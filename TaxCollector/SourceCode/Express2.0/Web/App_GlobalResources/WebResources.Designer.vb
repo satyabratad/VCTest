@@ -101,6 +101,15 @@ Namespace Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Continue.
+        '''</summary>
+        Friend Shared ReadOnly Property ButtonAddToCartContinue() As String
+            Get
+                Return ResourceManager.GetString("ButtonAddToCartContinue", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to I Agree.
         '''</summary>
         Friend Shared ReadOnly Property ButtonAgree() As String

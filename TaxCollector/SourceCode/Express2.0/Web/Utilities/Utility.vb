@@ -444,7 +444,6 @@ Namespace B2P.PaymentLanding.Express.Web
 
             Return retVal
         End Function
-
 #End Region
 
     End Class
