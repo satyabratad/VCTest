@@ -176,6 +176,7 @@
     <Content Include="pay\Payment.aspx" />
     <Content Include="pay\PaymentComplete.aspx" />
     <Content Include="pay\PaymentFailure.aspx" />
+    <Content Include="pay\Temp.aspx" />
     <Content Include="sso\Default.aspx" />
     <Content Include="UserControls\BankAccount.ascx" />
     <Content Include="UserControls\BreadCrumbMenu.ascx" />
@@ -308,6 +309,13 @@
     <Compile Include="pay\PaymentFailure.aspx.vb">
       <DependentUpon>PaymentFailure.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="pay\Temp.aspx.designer.vb">
+      <DependentUpon>Temp.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pay\Temp.aspx.vb">
+      <DependentUpon>Temp.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="sso\Default.aspx.designer.vb">
       <DependentUpon>Default.aspx</DependentUpon>
