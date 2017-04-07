@@ -58,7 +58,7 @@ Namespace B2P.PaymentLanding.Express.Web
                         BLL.SessionManager.ClientFAQ = "/faq/faq.html"
                     End If
 
-                    Response.Redirect("/pay", False)
+                    Response.Redirect("/pay/Temp.aspx", False)
                 Catch ex As Exception
                     ' Build the error message
                     errMsg = Utility.BuildErrorMessage(Request.Url.Host, Request.Url.AbsolutePath,
