@@ -68,6 +68,18 @@
         Lookup
         SSO
     End Enum
+    ''' <summary>
+    ''' Bread Crumb menu page tag names
+    ''' </summary>
+    Public Enum PageTabName
+        Home = 1
+        ContactInfo = 2
+        PaymentDetails = 3
+        PaymentConfirm = 4
+        PaymentSuccess = 5
+        PaymentFaild = 6
+
+    End Enum
 #End Region
 
 End Namespace
