@@ -51,31 +51,22 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected WithEvents phDefault As Global.B2P.PaymentLanding.Express.Web.Header
         
         '''<summary>
-        '''litJavascriptHeading control.
+        '''pjsJavascript control.
         '''</summary>
         '''<remarks>
         '''Auto-generated field.
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
-        Protected WithEvents litJavascriptHeading As Global.System.Web.UI.WebControls.Literal
+        Protected WithEvents pjsJavascript As Global.JavaScriptCheck
         
         '''<summary>
-        '''pnlJSMessage control.
+        '''BreadCrumbMenu control.
         '''</summary>
         '''<remarks>
         '''Auto-generated field.
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
-        Protected WithEvents pnlJSMessage As Global.System.Web.UI.WebControls.Panel
-        
-        '''<summary>
-        '''litJavascriptMessage control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litJavascriptMessage As Global.System.Web.UI.WebControls.Literal
+        Protected WithEvents BreadCrumbMenu As Global.BreadCrumbMenu
         
         '''<summary>
         '''pnlProducts control.
@@ -238,15 +229,6 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents lblClientMessage As Global.System.Web.UI.WebControls.Label
-        
-        '''<summary>
-        '''pfMenu control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents pfMenu As Global.B2P.PaymentLanding.Express.Web.MenuFooter
         
         '''<summary>
         '''pfDefault control.

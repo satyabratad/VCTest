@@ -3,6 +3,10 @@
 <%@ Register TagPrefix="b2p" TagName="PaymentStatusMessage" Src="~/UserControls/StatusMessage.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="PaymentFooter" Src="~/UserControls/Footer.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="JavaScriptCheck" Src="~/UserControls/JavaScriptCheck.ascx" %>
+<%@ Register TagPrefix="b2p" TagName="BreadCrumbMenu" Src="~/UserControls/BreadCrumbMenu.ascx"  %>
+
+
+
 
 
 <!DOCTYPE html>
@@ -60,6 +64,8 @@
                                 <div class="container" style="min-height:50%;">
                                  <!--// START BREADCRUMBS //-->
                                  
+                                    <b2p:BreadCrumbMenu runat="server" PageTagName="Home" ID="BreadCrumbMenu" />
+                                    
 	                                    <div class="row">
 		                                    <ul class="breadcrumb">			                                    
 			                                    <li class="active"><a href="/pay/"><span class="badge badge-inverse">1</span> Account <span class="hidden-xs hidden-sm">Details</span></a></li>

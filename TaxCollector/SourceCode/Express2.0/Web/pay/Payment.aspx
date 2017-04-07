@@ -5,7 +5,7 @@
 <%@ Register TagPrefix="b2p" TagName="PaymentFooter" Src="~/UserControls/Footer.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="PaymentCreditCard" Src="~/UserControls/CreditCard.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="PaymentBankAccount" Src="~/UserControls/BankAccount.ascx" %>
-<%@ Register Src="~/UserControls/JavaScriptCheck.ascx" TagPrefix="b2p" TagName="JavaScriptCheck" %>
+<%@ Register TagPrefix="b2p" TagName="JavaScriptCheck" Src="~/UserControls/JavaScriptCheck.ascx"  %>
 
 
 
