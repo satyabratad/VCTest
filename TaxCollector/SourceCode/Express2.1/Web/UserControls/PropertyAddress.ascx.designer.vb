@@ -12,7 +12,7 @@ Option Explicit On
 
 
 Partial Public Class PropertyAddress
-    
+
     '''<summary>
     '''pnlHeading control.
     '''</summary>
@@ -21,7 +21,7 @@ Partial Public Class PropertyAddress
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents pnlHeading As Global.System.Web.UI.WebControls.Panel
-    
+
     '''<summary>
     '''lblHeading control.
     '''</summary>
@@ -30,7 +30,7 @@ Partial Public Class PropertyAddress
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lblHeading As Global.System.Web.UI.WebControls.Label
-    
+
     '''<summary>
     '''pnlAddress1 control.
     '''</summary>
@@ -39,7 +39,7 @@ Partial Public Class PropertyAddress
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents pnlAddress1 As Global.System.Web.UI.WebControls.Panel
-    
+
     '''<summary>
     '''lblAddress1 control.
     '''</summary>
@@ -48,7 +48,7 @@ Partial Public Class PropertyAddress
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lblAddress1 As Global.System.Web.UI.WebControls.Label
-    
+
     '''<summary>
     '''txtAddress1 control.
     '''</summary>
@@ -57,7 +57,7 @@ Partial Public Class PropertyAddress
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtAddress1 As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''pnlAddress2 control.
     '''</summary>
@@ -66,7 +66,7 @@ Partial Public Class PropertyAddress
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents pnlAddress2 As Global.System.Web.UI.WebControls.Panel
-    
+
     '''<summary>
     '''lblAddress2 control.
     '''</summary>
@@ -75,7 +75,7 @@ Partial Public Class PropertyAddress
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lblAddress2 As Global.System.Web.UI.WebControls.Label
-    
+
     '''<summary>
     '''txtAddress2 control.
     '''</summary>
@@ -84,7 +84,7 @@ Partial Public Class PropertyAddress
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtAddress2 As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''pnlCity control.
     '''</summary>
@@ -93,7 +93,7 @@ Partial Public Class PropertyAddress
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents pnlCity As Global.System.Web.UI.WebControls.Panel
-    
+
     '''<summary>
     '''lblCity control.
     '''</summary>
@@ -102,7 +102,7 @@ Partial Public Class PropertyAddress
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lblCity As Global.System.Web.UI.WebControls.Label
-    
+
     '''<summary>
     '''txtCity control.
     '''</summary>
@@ -111,7 +111,7 @@ Partial Public Class PropertyAddress
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtCity As Global.System.Web.UI.WebControls.TextBox
-    
+
     '''<summary>
     '''pnlState control.
     '''</summary>
@@ -120,7 +120,7 @@ Partial Public Class PropertyAddress
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents pnlState As Global.System.Web.UI.WebControls.Panel
-    
+
     '''<summary>
     '''lblState control.
     '''</summary>
@@ -129,7 +129,7 @@ Partial Public Class PropertyAddress
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lblState As Global.System.Web.UI.WebControls.Label
-    
+
     '''<summary>
     '''ddlState control.
     '''</summary>
@@ -138,7 +138,7 @@ Partial Public Class PropertyAddress
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents ddlState As Global.System.Web.UI.WebControls.DropDownList
-    
+
     '''<summary>
     '''pnlZip control.
     '''</summary>
@@ -147,7 +147,7 @@ Partial Public Class PropertyAddress
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents pnlZip As Global.System.Web.UI.WebControls.Panel
-    
+
     '''<summary>
     '''lblZip control.
     '''</summary>
@@ -156,7 +156,7 @@ Partial Public Class PropertyAddress
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lblZip As Global.System.Web.UI.WebControls.Label
-    
+
     '''<summary>
     '''txtZip control.
     '''</summary>
@@ -165,7 +165,16 @@ Partial Public Class PropertyAddress
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtZip As Global.System.Web.UI.WebControls.TextBox
-    
+
+    '''<summary>
+    '''hdAmount control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hdAmount As Global.System.Web.UI.WebControls.HiddenField
+
     '''<summary>
     '''pnlAmount control.
     '''</summary>
@@ -174,7 +183,7 @@ Partial Public Class PropertyAddress
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents pnlAmount As Global.System.Web.UI.WebControls.Panel
-    
+
     '''<summary>
     '''lblAmount control.
     '''</summary>
@@ -183,7 +192,7 @@ Partial Public Class PropertyAddress
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lblAmount As Global.System.Web.UI.WebControls.Label
-    
+
     '''<summary>
     '''txtAmount control.
     '''</summary>

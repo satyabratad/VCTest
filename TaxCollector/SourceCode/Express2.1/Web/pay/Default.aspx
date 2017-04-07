@@ -4,7 +4,7 @@
 <%@ Register TagPrefix="b2p" TagName="PaymentStatusMessage" Src="~/UserControls/StatusMessage.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="PaymentFooter" Src="~/UserControls/Footer.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="JavaScriptCheck" Src="~/UserControls/JavaScriptCheck.ascx" %>
-<%@ Register TagPrefix="b2p" TagName="PropertyAddress " Src="~/UserControls/PropertyAddress .ascx" %>
+<%@ Register TagPrefix="b2p" TagName="PropertyAddress" Src="~/UserControls/PropertyAddress.ascx" %>
 
 
 <!DOCTYPE html>
@@ -123,7 +123,7 @@
                                                     <asp:TextBox ID="txtLookupAccount3" runat="server" MaxLength="40" CssClass="form-control input-sm" />
                                                 </asp:Panel>
                                             </div>
-                                            <b2p:PropertyAddress runat="server" id="PropertyAddress1"></b2p:PropertyAddress>
+                                            <b2p:PropertyAddress Visible="false" runat="server" ID="ctlPropertyAddress"></b2p:PropertyAddress>
                                             <br />
                                             <div class="pull-right">
                                                 <asp:Button ID="btnLookup" runat="server" Text="Lookup" CssClass="btn btn-primary btn-sm" Width="70px" />
@@ -139,7 +139,8 @@
                                 <div class="col-xs-12 col-sm-6">
                                     <br />
                                     <p>
-                                        <asp:Label ID="lblClientMessage" runat="server" ToolTip="Client Message"></asp:Label></p>
+                                        <asp:Label ID="lblClientMessage" runat="server" ToolTip="Client Message"></asp:Label>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -173,7 +174,8 @@
                         <div role="alert" id="divLookupAlert" runat="server" style="margin-top: 10px;">
                             <div class="fa fa-check-circle-o fa-2x status-msg-icon"></div>
                             <div class="status-msg-text">
-                                <asp:Label ID="lblLookupHeader" runat="server" Text="" class="control-label" /></div>
+                                <asp:Label ID="lblLookupHeader" runat="server" Text="" class="control-label" />
+                            </div>
                         </div>
 
                         <asp:GridView ID="grdLookup" runat="server"
@@ -232,7 +234,8 @@
                         <div role="alert" id="divLookupAlertError" runat="server" style="margin-top: 10px;">
                             <div class="fa fa-exclamation-circle fa-2x status-msg-icon"></div>
                             <div class="status-msg-text">
-                                <asp:Label ID="lblLookupHeaderError" runat="server" Text="" class="control-label" /></div>
+                                <asp:Label ID="lblLookupHeaderError" runat="server" Text="" class="control-label" />
+                            </div>
                         </div>
 
 
@@ -278,33 +281,40 @@
                 // Create instance of the form validator
                 var validator = new FormValidator();
                 validator.setErrorMessageHeader("<%=GetGlobalResourceObject("WebResources", "ErrMsgHeader").ToString()%>\n\n")
-              validator.setInvalidCssClass("has-error");
-              validator.setAlertBoxStatus(false);
+                validator.setInvalidCssClass("has-error");
+                validator.setAlertBoxStatus(false);
 
-              // Add validation items to validator
+                // Add validation items to validator
 
-              // Check to see if account 1 is present
-              acct1 = doc.getElementById('hdAccount1').value;
-              if (acct1 !== '') {
-                  // Set the validator
-                  validator.addValidationItem(new ValidationItem("txtLookupAccount1", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
+                // Check to see if account 1 is present
+                acct1 = doc.getElementById('hdAccount1').value;
+                if (acct1 !== '') {
+                    // Set the validator
+                    validator.addValidationItem(new ValidationItem("txtLookupAccount1", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
               }
 
-              // Check to see if account 2 is required
+                // Check to see if account 2 is required
               acct2 = doc.getElementById('hdAccount2').value;
               if (acct2 !== '') {
                   // Set the validator
                   validator.addValidationItem(new ValidationItem("txtLookupAccount2", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
               }
 
-              // Check to see if account 3 is required
+                // Check to see if account 3 is required
               acct3 = doc.getElementById('hdAccount3').value;
               if (acct3 !== '') {
                   // Set the validator
                   validator.addValidationItem(new ValidationItem("txtLookupAccount3", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
               }
-              return validator.validate();
-          }
+
+
+                <%If ctlPropertyAddress.Visible Then %>
+                // Check to see if amount is required
+                // Set the validator
+                validator.addValidationItem(new ValidationItem("txtAmount", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
+                <% End If %>
+                return validator.validate();
+            }
 
 
 

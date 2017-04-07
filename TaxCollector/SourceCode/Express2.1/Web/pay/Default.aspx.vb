@@ -44,6 +44,11 @@ Namespace B2P.PaymentLanding.Express.Web
                     BLL.SessionManager.LookupAmountMinimum = False
                     BLL.SessionManager.LookupAmountEditable = True
                     getProductLookup()
+                    ctlPropertyAddress.Address1 = y.Address1
+                    ctlPropertyAddress.Address2 = y.Address2
+                    ctlPropertyAddress.City = y.City
+                    ctlPropertyAddress.StateValue = y.State
+
                 Else
                     Response.Redirect("/errors/")
                 End If
@@ -366,6 +371,11 @@ Namespace B2P.PaymentLanding.Express.Web
                     'txtLookupAccount1.Text = ""
                     grdLookup.DataSource = Nothing
                     BuildForm()
+                End If
+                If z.CollectAddress Then
+                    ctlPropertyAddress.Visible = True
+                Else
+                    ctlPropertyAddress.Visible = False
                 End If
             Catch ex As Exception
                 ' Build the error message

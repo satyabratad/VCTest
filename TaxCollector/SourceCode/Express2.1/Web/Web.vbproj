@@ -188,7 +188,7 @@
     <Content Include="UserControls\Header.ascx" />
     <Content Include="UserControls\JavaScriptCheck.ascx" />
     <Content Include="UserControls\MenuFooter.ascx" />
-    <Content Include="UserControls\PropertyAddress .ascx" />
+    <Content Include="UserControls\PropertyAddress.ascx" />
     <Content Include="UserControls\ShoppingCart.ascx" />
     <Content Include="UserControls\StatusMessage.ascx" />
     <Content Include="UserControls\TermsConditions.ascx" />
@@ -386,11 +386,11 @@
       <DependentUpon>MenuFooter.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="UserControls\PropertyAddress .ascx.designer.vb">
-      <DependentUpon>PropertyAddress .ascx</DependentUpon>
+    <Compile Include="UserControls\PropertyAddress.ascx.designer.vb">
+      <DependentUpon>PropertyAddress.ascx</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\PropertyAddress .ascx.vb">
-      <DependentUpon>PropertyAddress .ascx</DependentUpon>
+    <Compile Include="UserControls\PropertyAddress.ascx.vb">
+      <DependentUpon>PropertyAddress.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="UserControls\ShoppingCart.ascx.designer.vb">

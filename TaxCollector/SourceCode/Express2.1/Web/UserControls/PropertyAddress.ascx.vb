@@ -6,6 +6,10 @@ Public Class PropertyAddress
     Inherits System.Web.UI.UserControl
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
+    End Sub
+
+    Protected Sub Page_Init(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Init
         If Not IsPostBack Then
             BindState()
         End If
@@ -111,6 +115,10 @@ Public Class PropertyAddress
 #End Region
 
 #Region " ::: Methods ::: "
+
+    ''' <summary>
+    ''' Bind State from XML
+    ''' </summary>
     Private Sub BindState()
         Dim _States As List(Of KeyValuePair(Of String, String)) =
             New List(Of KeyValuePair(Of String, String))
