@@ -122,6 +122,7 @@
     <Content Include="CSS\bootstrap-theme.min.css" />
     <Content Include="CSS\bootstrap.css" />
     <Content Include="CSS\bootstrap.min.css" />
+    <Content Include="CSS\custom.css" />
     <Content Include="CSS\font-awesome.4.3.0.min.css" />
     <Content Include="CSS\progress.css" />
     <Content Include="default.aspx" />
