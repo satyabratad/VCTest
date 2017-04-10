@@ -61,14 +61,6 @@
         Warning
     End Enum
     ''' <summary>
-    ''' Client Type as Lookup/Non-Lookup/SSO
-    ''' </summary>
-    Public Enum EClientType
-        NonLookup
-        Lookup
-        SSO
-    End Enum
-    ''' <summary>
     ''' Bread Crumb menu page tag names
     ''' </summary>
     Public Enum PageTabName
