@@ -30,4 +30,13 @@ Partial Public Class CartGridascx
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hdMode As Global.System.Web.UI.HtmlControls.HtmlInputHidden
+    
+    '''<summary>
+    '''hdEditAmount control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents hdEditAmount As Global.System.Web.UI.HtmlControls.HtmlInputHidden
 End Class

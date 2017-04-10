@@ -67,7 +67,8 @@
     <Reference Include="B2P.Payment">
       <HintPath>..\Assemblies\B2P.Payment.dll</HintPath>
     </Reference>
-    <Reference Include="B2P.Product">
+    <Reference Include="B2P.Product, Version=2.1.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Assemblies\B2P.Product.dll</HintPath>
     </Reference>
     <Reference Include="B2P.Profile, Version=2.0.0.0, Culture=neutral, processorArchitecture=x86">

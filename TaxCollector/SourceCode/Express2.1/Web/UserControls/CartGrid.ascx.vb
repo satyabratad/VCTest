@@ -40,6 +40,14 @@ Public Class CartGridascx
                 UpdateCartCount()
             End If
         End If
+        'Edit cart
+        If hdMode.Value.ToUpper().Trim() = "EDIT" Then
+            If BLL.SessionManager.ManageCart.Cart.Count > 0 Then
+                Dim index As Integer = CType(hdSelectedIndex.Value, Integer)
+                BLL.SessionManager.ManageCart.Cart(index).Amount = FormatAmount(CType(hdEditAmount.Value, Double))
+                UpdateCartCount()
+            End If
+        End If
 
         clientType = BLL.SessionManager.ClientType
         If Not BLL.SessionManager.ManageCart Is Nothing Then
