@@ -32,10 +32,13 @@ Public Class CartGridascx
         End If
         'End Temporary populate cart
 
+        'Delete from cart
         If hdMode.Value.ToUpper().Trim() = "DELETE" Then
-            Dim index As Integer = CType(hdSelectedIndex.Value, Integer)
-            BLL.SessionManager.ManageCart.Cart.RemoveAt(index)
-            UpdateCartCount()
+            If BLL.SessionManager.ManageCart.Cart.Count > 0 Then
+                Dim index As Integer = CType(hdSelectedIndex.Value, Integer)
+                BLL.SessionManager.ManageCart.Cart.RemoveAt(index)
+                UpdateCartCount()
+            End If
         End If
 
         clientType = BLL.SessionManager.ClientType
@@ -79,8 +82,8 @@ Public Class CartGridascx
             accountInfo += CartItem.AccountIdFields(1).Value + ","
         End If
 
-        If String.IsNullOrEmpty(accountInfo.Trim()) Then
-            accountInfo = accountInfo.Substring(accountInfo.Length - 1, 1)
+        If Not String.IsNullOrEmpty(accountInfo.Trim()) Then
+            accountInfo = accountInfo.Substring(0, accountInfo.Length - 1)
         End If
 
         Return accountInfo
