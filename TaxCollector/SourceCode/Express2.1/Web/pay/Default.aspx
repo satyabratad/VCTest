@@ -5,6 +5,7 @@
 <%@ Register TagPrefix="b2p" TagName="PaymentFooter" Src="~/UserControls/Footer.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="JavaScriptCheck" Src="~/UserControls/JavaScriptCheck.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="PropertyAddress" Src="~/UserControls/PropertyAddress.ascx" %>
+<%@ Register TagPrefix="b2p" TagName="CartGrid" Src="~/UserControls/CartGrid.ascx" %>
 
 
 <!DOCTYPE html>
@@ -124,14 +125,16 @@
                                                 </asp:Panel>
                                             </div>
                                             <b2p:PropertyAddress Visible="false" runat="server" ID="ctlPropertyAddress"></b2p:PropertyAddress>
+
                                             <br />
                                             <div class="pull-right">
                                                 <asp:Button ID="btnLookup" runat="server" Text="Lookup" CssClass="btn btn-primary btn-sm" Width="70px" />
                                             </div>
                                         </div>
                                     </div>
-
-                                    <asp:Button ID="btnSubmit" CssClass="btn btn-primary btn-sm pull-right" Text="<%$ Resources:WebResources, ButtonContinue %>" ToolTip="<%$ Resources:WebResources, ButtonContinue %>" runat="server" />
+                                    <asp:Button ID="btnAddtoCart" CssClass="btn btn-primary btn-sm pull-right" Text="<%$ Resources:WebResources, AddToCartButton %>" ToolTip="<%$ Resources:WebResources, AddToCartButton %>" runat="server" Visible="true" />
+                                    <asp:Button ID="btnAddMoreItem" CssClass="btn btn-primary btn-sm pull-right" Text="<%$ Resources:WebResources, AddMoreItemsButton %>" ToolTip="<%$ Resources:WebResources, AddMoreItemsButton %>" runat="server" Visible="false" />
+                                    <asp:Button ID="btnSubmit" CssClass="btn btn-primary btn-sm pull-right" Text="<%$ Resources:WebResources, ButtonContinue %>" ToolTip="<%$ Resources:WebResources, ButtonContinue %>" runat="server" Visible="false" />
                                     <br />
                                     <br />
                                 </div>
@@ -142,9 +145,12 @@
                                         <asp:Label ID="lblClientMessage" runat="server" ToolTip="Client Message"></asp:Label>
                                     </p>
                                 </div>
+
                             </div>
                         </div>
-
+                        <div class="col-xs-12 col-sm-12">
+                            <b2p:CartGrid runat="server" ID="CartGrid1" Visible="false" />
+                        </div>
                     </div>
                 </div>
 
@@ -291,20 +297,20 @@
                 if (acct1 !== '') {
                     // Set the validator
                     validator.addValidationItem(new ValidationItem("txtLookupAccount1", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
-              }
+                }
 
                 // Check to see if account 2 is required
-              acct2 = doc.getElementById('hdAccount2').value;
-              if (acct2 !== '') {
-                  // Set the validator
-                  validator.addValidationItem(new ValidationItem("txtLookupAccount2", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
-              }
+                acct2 = doc.getElementById('hdAccount2').value;
+                if (acct2 !== '') {
+                    // Set the validator
+                    validator.addValidationItem(new ValidationItem("txtLookupAccount2", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
+                }
 
                 // Check to see if account 3 is required
-              acct3 = doc.getElementById('hdAccount3').value;
-              if (acct3 !== '') {
-                  // Set the validator
-                  validator.addValidationItem(new ValidationItem("txtLookupAccount3", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
+                acct3 = doc.getElementById('hdAccount3').value;
+                if (acct3 !== '') {
+                    // Set the validator
+                    validator.addValidationItem(new ValidationItem("txtLookupAccount3", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
               }
 
 

@@ -456,5 +456,44 @@ Namespace B2P.PaymentLanding.Express.Web
             BLL.SessionManager.AccountNumber3 = Utility.SafeEncode(txtLookupAccount3.Text)
             Response.Redirect("/pay/payment.aspx", False)
         End Sub
+
+        Protected Sub btnAddtoCart_Click(sender As Object, e As EventArgs) Handles btnAddtoCart.Click
+
+            Dim cart As New B2P.Cart.Cart
+            cart.Item = "Tax Bill"
+            cart.Index = 0
+            Dim acc1 As New B2P.Cart.AccountIdField("parcel", "parcel1")
+            Dim acc2 As New B2P.Cart.AccountIdField("tax year", "2016")
+            Dim acc3 As New B2P.Cart.AccountIdField("owner", "S Dutta")
+            cart.AccountIdFields = New List(Of B2P.Cart.AccountIdField)
+            cart.AccountIdFields.Add(acc1)
+            cart.AccountIdFields.Add(acc2)
+            cart.AccountIdFields.Add(acc3)
+            cart.Amount = 100.5
+
+            Dim propAddr As New B2P.Cart.PropertyAddress
+            propAddr.Address1 = "123, S V Lane"
+            propAddr.City = "Test City"
+            propAddr.Zip = "123456"
+            cart.PropertyAddress = propAddr
+            BLL.SessionManager.ManageCart.Cart = New List(Of B2P.Cart.Cart)()
+            BLL.SessionManager.ManageCart.Cart.Add(cart)
+
+            CartGrid1.Visible = True
+            btnAddtoCart.Visible = False
+            btnAddMoreItem.Visible = True
+            btnSubmit.Visible = True
+
+
+        End Sub
+
+        Protected Sub btnAddMoreItem_Click(sender As Object, e As EventArgs) Handles btnAddMoreItem.Click
+            CartGrid1.Visible = False
+            btnAddtoCart.Visible = True
+            btnAddMoreItem.Visible = False
+            btnSubmit.Visible = False
+        End Sub
+
+
     End Class
 End Namespace

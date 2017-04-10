@@ -11,9 +11,9 @@ Option Strict On
 Option Explicit On
 
 Namespace B2P.PaymentLanding.Express.Web
-
+    
     Partial Public Class _paydefault
-
+        
         '''<summary>
         '''docHead control.
         '''</summary>
@@ -22,7 +22,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents docHead As Global.System.Web.UI.HtmlControls.HtmlHead
-
+        
         '''<summary>
         '''lnkCSS control.
         '''</summary>
@@ -31,7 +31,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents lnkCSS As Global.System.Web.UI.HtmlControls.HtmlLink
-
+        
         '''<summary>
         '''frmDefault control.
         '''</summary>
@@ -40,7 +40,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents frmDefault As Global.System.Web.UI.HtmlControls.HtmlForm
-
+        
         '''<summary>
         '''phDefault control.
         '''</summary>
@@ -49,7 +49,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents phDefault As Global.B2P.PaymentLanding.Express.Web.Header
-
+        
         '''<summary>
         '''pjsJavascript control.
         '''</summary>
@@ -58,7 +58,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pjsJavascript As Global.JavaScriptCheck
-
+        
         '''<summary>
         '''pnlProducts control.
         '''</summary>
@@ -67,7 +67,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pnlProducts As Global.System.Web.UI.WebControls.Panel
-
+        
         '''<summary>
         '''litSelectProdct control.
         '''</summary>
@@ -76,7 +76,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litSelectProdct As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''ddlCategories control.
         '''</summary>
@@ -85,7 +85,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents ddlCategories As Global.System.Web.UI.WebControls.DropDownList
-
+        
         '''<summary>
         '''hdAccount1 control.
         '''</summary>
@@ -94,7 +94,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents hdAccount1 As Global.System.Web.UI.WebControls.HiddenField
-
+        
         '''<summary>
         '''hdAccount2 control.
         '''</summary>
@@ -103,7 +103,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents hdAccount2 As Global.System.Web.UI.WebControls.HiddenField
-
+        
         '''<summary>
         '''hdAccount3 control.
         '''</summary>
@@ -112,7 +112,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents hdAccount3 As Global.System.Web.UI.WebControls.HiddenField
-
+        
         '''<summary>
         '''pnlAccount1 control.
         '''</summary>
@@ -121,7 +121,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pnlAccount1 As Global.System.Web.UI.WebControls.Panel
-
+        
         '''<summary>
         '''lblAccountNumber1 control.
         '''</summary>
@@ -130,7 +130,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents lblAccountNumber1 As Global.System.Web.UI.WebControls.Label
-
+        
         '''<summary>
         '''txtLookupAccount1 control.
         '''</summary>
@@ -139,7 +139,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents txtLookupAccount1 As Global.System.Web.UI.WebControls.TextBox
-
+        
         '''<summary>
         '''pnlAccount2 control.
         '''</summary>
@@ -148,7 +148,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pnlAccount2 As Global.System.Web.UI.WebControls.Panel
-
+        
         '''<summary>
         '''lblAccountNumber2 control.
         '''</summary>
@@ -157,7 +157,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents lblAccountNumber2 As Global.System.Web.UI.WebControls.Label
-
+        
         '''<summary>
         '''txtLookupAccount2 control.
         '''</summary>
@@ -166,7 +166,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents txtLookupAccount2 As Global.System.Web.UI.WebControls.TextBox
-
+        
         '''<summary>
         '''pnlAccount3 control.
         '''</summary>
@@ -175,7 +175,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pnlAccount3 As Global.System.Web.UI.WebControls.Panel
-
+        
         '''<summary>
         '''lblAccountNumber3 control.
         '''</summary>
@@ -184,7 +184,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents lblAccountNumber3 As Global.System.Web.UI.WebControls.Label
-
+        
         '''<summary>
         '''txtLookupAccount3 control.
         '''</summary>
@@ -193,7 +193,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents txtLookupAccount3 As Global.System.Web.UI.WebControls.TextBox
-
+        
         '''<summary>
         '''ctlPropertyAddress control.
         '''</summary>
@@ -202,7 +202,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents ctlPropertyAddress As Global.PropertyAddress
-
+        
         '''<summary>
         '''btnLookup control.
         '''</summary>
@@ -211,7 +211,25 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents btnLookup As Global.System.Web.UI.WebControls.Button
-
+        
+        '''<summary>
+        '''btnAddtoCart control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents btnAddtoCart As Global.System.Web.UI.WebControls.Button
+        
+        '''<summary>
+        '''btnAddMoreItem control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents btnAddMoreItem As Global.System.Web.UI.WebControls.Button
+        
         '''<summary>
         '''btnSubmit control.
         '''</summary>
@@ -220,7 +238,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents btnSubmit As Global.System.Web.UI.WebControls.Button
-
+        
         '''<summary>
         '''lblClientMessage control.
         '''</summary>
@@ -229,7 +247,16 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents lblClientMessage As Global.System.Web.UI.WebControls.Label
-
+        
+        '''<summary>
+        '''CartGrid1 control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents CartGrid1 As Global.CartGridascx
+        
         '''<summary>
         '''pfDefault control.
         '''</summary>
@@ -238,7 +265,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pfDefault As Global.B2P.PaymentLanding.Express.Web.Footer
-
+        
         '''<summary>
         '''pnlLookupResults control.
         '''</summary>
@@ -247,7 +274,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pnlLookupResults As Global.System.Web.UI.WebControls.Panel
-
+        
         '''<summary>
         '''divLookupAlert control.
         '''</summary>
@@ -256,7 +283,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents divLookupAlert As Global.System.Web.UI.HtmlControls.HtmlGenericControl
-
+        
         '''<summary>
         '''lblLookupHeader control.
         '''</summary>
@@ -265,7 +292,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents lblLookupHeader As Global.System.Web.UI.WebControls.Label
-
+        
         '''<summary>
         '''grdLookup control.
         '''</summary>
@@ -274,7 +301,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents grdLookup As Global.System.Web.UI.WebControls.GridView
-
+        
         '''<summary>
         '''btnClear control.
         '''</summary>
@@ -283,7 +310,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents btnClear As Global.System.Web.UI.WebControls.Button
-
+        
         '''<summary>
         '''btnLookupGo control.
         '''</summary>
@@ -292,7 +319,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents btnLookupGo As Global.System.Web.UI.WebControls.Button
-
+        
         '''<summary>
         '''btnLookupOK control.
         '''</summary>
@@ -301,7 +328,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents btnLookupOK As Global.System.Web.UI.WebControls.Button
-
+        
         '''<summary>
         '''pnlLookupError control.
         '''</summary>
@@ -310,7 +337,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pnlLookupError As Global.System.Web.UI.WebControls.Panel
-
+        
         '''<summary>
         '''divLookupAlertError control.
         '''</summary>
@@ -319,7 +346,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents divLookupAlertError As Global.System.Web.UI.HtmlControls.HtmlGenericControl
-
+        
         '''<summary>
         '''lblLookupHeaderError control.
         '''</summary>
@@ -328,7 +355,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents lblLookupHeaderError As Global.System.Web.UI.WebControls.Label
-
+        
         '''<summary>
         '''btnCloseLookupErrorDialog control.
         '''</summary>

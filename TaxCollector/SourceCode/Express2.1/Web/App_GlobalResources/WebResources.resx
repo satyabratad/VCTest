@@ -438,4 +438,31 @@
   <data name="ButtonAddToCartContinue" xml:space="preserve">
     <value>Continue</value>
   </data>
+  <data name="AddMoreItemsButton" xml:space="preserve">
+    <value>Add More Items</value>
+  </data>
+  <data name="Address1Label" xml:space="preserve">
+    <value>Address1</value>
+  </data>
+  <data name="Address2Label" xml:space="preserve">
+    <value>Address2</value>
+  </data>
+  <data name="AddToCartButton" xml:space="preserve">
+    <value>Add To Cart</value>
+  </data>
+  <data name="AmountLabel" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="CityLabel" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="PropertyAddressTitle" xml:space="preserve">
+    <value>Property Address</value>
+  </data>
+  <data name="StateLabel" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="ZipLabel" xml:space="preserve">
+    <value>Zip</value>
+  </data>
 </root>

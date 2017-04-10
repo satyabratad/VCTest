@@ -74,6 +74,51 @@ Namespace Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Add More Items.
+        '''</summary>
+        Friend Shared ReadOnly Property AddMoreItemsButton() As String
+            Get
+                Return ResourceManager.GetString("AddMoreItemsButton", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Address1.
+        '''</summary>
+        Friend Shared ReadOnly Property Address1Label() As String
+            Get
+                Return ResourceManager.GetString("Address1Label", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Address2.
+        '''</summary>
+        Friend Shared ReadOnly Property Address2Label() As String
+            Get
+                Return ResourceManager.GetString("Address2Label", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Add To Cart.
+        '''</summary>
+        Friend Shared ReadOnly Property AddToCartButton() As String
+            Get
+                Return ResourceManager.GetString("AddToCartButton", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Amount.
+        '''</summary>
+        Friend Shared ReadOnly Property AmountLabel() As String
+            Get
+                Return ResourceManager.GetString("AmountLabel", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to For payments made from commercial bank accounts, please confirm with your bank that electronic payment debits are allowed from company ID:.
         '''</summary>
         Friend Shared ReadOnly Property BankAccountCommercialMsg() As String
@@ -241,6 +286,15 @@ Namespace Resources
         Friend Shared ReadOnly Property CheckHelpModalTitle() As String
             Get
                 Return ResourceManager.GetString("CheckHelpModalTitle", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to City.
+        '''</summary>
+        Friend Shared ReadOnly Property CityLabel() As String
+            Get
+                Return ResourceManager.GetString("CityLabel", resourceCulture)
             End Get
         End Property
         
@@ -1001,6 +1055,24 @@ Namespace Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Property Address.
+        '''</summary>
+        Friend Shared ReadOnly Property PropertyAddressTitle() As String
+            Get
+                Return ResourceManager.GetString("PropertyAddressTitle", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to State.
+        '''</summary>
+        Friend Shared ReadOnly Property StateLabel() As String
+            Get
+                Return ResourceManager.GetString("StateLabel", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Your payment was successful. Your confirmation is: &lt;span class=&quot;bold&quot;&gt;#&lt;/span&gt;.
         '''</summary>
         Friend Shared ReadOnly Property SuccessConfirmationMsg() As String
@@ -1024,6 +1096,15 @@ Namespace Resources
         Friend Shared ReadOnly Property ThankYouforYourPayment() As String
             Get
                 Return ResourceManager.GetString("ThankYouforYourPayment", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Zip.
+        '''</summary>
+        Friend Shared ReadOnly Property ZipLabel() As String
+            Get
+                Return ResourceManager.GetString("ZipLabel", resourceCulture)
             End Get
         End Property
     End Class
