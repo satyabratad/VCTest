@@ -72,6 +72,7 @@
     <Compile Include="AccountIdField.vb" />
     <Compile Include="Cart.vb" />
     <Compile Include="ContactInfo.vb" />
+    <Compile Include="Enums.vb" />
     <Compile Include="ManageCart.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

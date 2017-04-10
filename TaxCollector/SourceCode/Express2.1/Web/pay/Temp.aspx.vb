@@ -369,9 +369,9 @@ Namespace B2P.PaymentLanding.Express.Web
                 End If
                 'Added By RS
                 If (z.AmountDueSource = B2P.Common.Enumerations.AmountDueSources.Lookup Or z.AmountDueSource = B2P.Common.Enumerations.AmountDueSources.Table) Then
-                    BLL.SessionManager.ClientCode = EClientType.Lookup
+                    BLL.SessionManager.ClientType = B2P.Cart.EClientType.Lookup
                 Else
-                    BLL.SessionManager.ClientCode = EClientType.NonLookup
+                    BLL.SessionManager.ClientCode = B2P.Cart.EClientType.NonLookup
                 End If
 
                 ConfigureSections()
@@ -391,7 +391,7 @@ Namespace B2P.PaymentLanding.Express.Web
         ''' Enable/disable sections depend on lookup/Non-lookup
         ''' </summary>
         Private Sub ConfigureSections()
-            If BLL.SessionManager.ClientCode Then
+            If BLL.SessionManager.ClientCode = B2P.Cart.EClientType.NonLookup Then
                 PanelAmount.Visible = True
                 'Amount will be required for Non-lookup
                 Dim custField As New B2P.Objects.WebConfiguration.CustomField()

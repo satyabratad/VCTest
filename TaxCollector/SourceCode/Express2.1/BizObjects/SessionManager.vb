@@ -792,15 +792,15 @@ Namespace B2P.PaymentLanding.Express.BLL
                 HttpContext.Current.Session(_manageCart) = value
             End Set
         End Property
-        Public Shared Property ClientType() As String
+        Public Shared Property ClientType() As B2P.Cart.EClientType
             Get
                 If HttpContext.Current.Session(_clientType) Is Nothing Then
-                    Return String.Empty
+                    Return Nothing
                 Else
-                    Return DirectCast(HttpContext.Current.Session(_clientType), String)
+                    Return DirectCast(HttpContext.Current.Session(_clientType), B2P.Cart.EClientType)
                 End If
             End Get
-            Set(ByVal value As String)
+            Set(ByVal value As B2P.Cart.EClientType)
                 HttpContext.Current.Session(_clientType) = value
             End Set
         End Property

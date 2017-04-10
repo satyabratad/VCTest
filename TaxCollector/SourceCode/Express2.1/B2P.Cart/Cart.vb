@@ -15,5 +15,6 @@ Public Class Cart
     Public Property Item As String
     Public Property AccountIdFields As List(Of AccountIdField)
     Public Property Amount As Double
+    Public Property PropertyAddress As PropertyAddress
 End Class
 

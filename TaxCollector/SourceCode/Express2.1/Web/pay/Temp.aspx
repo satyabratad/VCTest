@@ -29,7 +29,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="/Css/app.css" type="text/css" id="lnkCSS" runat="server" />
     <link rel="stylesheet" href="/Css/progress.css" type="text/css" runat="server" />
-   
+   <link rel="stylesheet" href="/Css/custom.css" type="text/css" runat="server" />
+    
 
     <!-- JavaScript -->
     <!--[if lt IE 9]>
@@ -332,7 +333,7 @@
             return true;
         }
 
-       
+        
          
       </script>
         
