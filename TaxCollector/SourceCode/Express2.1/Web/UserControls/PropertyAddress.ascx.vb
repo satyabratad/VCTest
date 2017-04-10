@@ -1,4 +1,7 @@
 ﻿Imports System
+Imports System.Globalization
+Imports System.IO
+Imports System.Xml
 ''' <summary>
 ''' User Controller for Property Address
 ''' </summary>
@@ -120,67 +123,71 @@ Public Class PropertyAddress
     ''' Bind State from XML
     ''' </summary>
     Private Sub BindState()
-        Dim _States As List(Of KeyValuePair(Of String, String)) =
-            New List(Of KeyValuePair(Of String, String))
+        ddlState.Items.Clear()
+        ddlState.Items.Add(New ListItem("--Select--", ""))
 
-        _States.Add(New KeyValuePair(Of String, String)("", "--Select--"))
-        _States.Add(New KeyValuePair(Of String, String)("AL", "Alabama"))
-        _States.Add(New KeyValuePair(Of String, String)("AK", "Alaska"))
-        _States.Add(New KeyValuePair(Of String, String)("AZ", "Arizona"))
-        _States.Add(New KeyValuePair(Of String, String)("AR", "Arkansas"))
-        _States.Add(New KeyValuePair(Of String, String)("CA", "California"))
-        _States.Add(New KeyValuePair(Of String, String)("CO", "Colorado"))
-        _States.Add(New KeyValuePair(Of String, String)("CT", "Connecticut"))
-        _States.Add(New KeyValuePair(Of String, String)("DE", "Delaware"))
-        _States.Add(New KeyValuePair(Of String, String)("DC", "District Of Columbia"))
-        _States.Add(New KeyValuePair(Of String, String)("FL", "Florida"))
-        _States.Add(New KeyValuePair(Of String, String)("GA", "Georgia"))
-        _States.Add(New KeyValuePair(Of String, String)("HI", "Hawaii"))
-        _States.Add(New KeyValuePair(Of String, String)("ID", "Idaho"))
-        _States.Add(New KeyValuePair(Of String, String)("IL", "Illinois"))
-        _States.Add(New KeyValuePair(Of String, String)("IN", "Indiana"))
-        _States.Add(New KeyValuePair(Of String, String)("IA", "Iowa"))
-        _States.Add(New KeyValuePair(Of String, String)("KS", "Kansas"))
-        _States.Add(New KeyValuePair(Of String, String)("KY", "Kentucky"))
-        _States.Add(New KeyValuePair(Of String, String)("LA", "Louisiana"))
-        _States.Add(New KeyValuePair(Of String, String)("ME", "Maine"))
-        _States.Add(New KeyValuePair(Of String, String)("MD", "Maryland"))
-        _States.Add(New KeyValuePair(Of String, String)("MA", "Massachusetts"))
-        _States.Add(New KeyValuePair(Of String, String)("MI", "Michigan"))
-        _States.Add(New KeyValuePair(Of String, String)("MN", "Minnesota"))
-        _States.Add(New KeyValuePair(Of String, String)("MS", "Mississippi"))
-        _States.Add(New KeyValuePair(Of String, String)("MO", "Missouri"))
-        _States.Add(New KeyValuePair(Of String, String)("MT", "Montana"))
-        _States.Add(New KeyValuePair(Of String, String)("NE", "Nebraska"))
-        _States.Add(New KeyValuePair(Of String, String)("NV", "Nevada"))
-        _States.Add(New KeyValuePair(Of String, String)("NH", "New Hampshire"))
-        _States.Add(New KeyValuePair(Of String, String)("NJ", "New Jersey"))
-        _States.Add(New KeyValuePair(Of String, String)("NM", "New Mexico"))
-        _States.Add(New KeyValuePair(Of String, String)("NY", "New York"))
-        _States.Add(New KeyValuePair(Of String, String)("NC", "North Carolina"))
-        _States.Add(New KeyValuePair(Of String, String)("ND", "North Dakota"))
-        _States.Add(New KeyValuePair(Of String, String)("OH", "Ohio"))
-        _States.Add(New KeyValuePair(Of String, String)("OK", "Oklahoma"))
-        _States.Add(New KeyValuePair(Of String, String)("OR", "Oregon"))
-        _States.Add(New KeyValuePair(Of String, String)("PA", "Pennsylvania"))
-        _States.Add(New KeyValuePair(Of String, String)("RI", "Rhode Island"))
-        _States.Add(New KeyValuePair(Of String, String)("SC", "South Carolina"))
-        _States.Add(New KeyValuePair(Of String, String)("SD", "South Dakota"))
-        _States.Add(New KeyValuePair(Of String, String)("TN", "Tennessee"))
-        _States.Add(New KeyValuePair(Of String, String)("TX", "Texas"))
-        _States.Add(New KeyValuePair(Of String, String)("UT", "Utah"))
-        _States.Add(New KeyValuePair(Of String, String)("VT", "Vermont"))
-        _States.Add(New KeyValuePair(Of String, String)("VA", "Virginia"))
-        _States.Add(New KeyValuePair(Of String, String)("WA", "Washington"))
-        _States.Add(New KeyValuePair(Of String, String)("WV", "West Virginia"))
-        _States.Add(New KeyValuePair(Of String, String)("WI", "Wisconsin"))
-        _States.Add(New KeyValuePair(Of String, String)("WY", "Wyoming"))
+        If ConfigurationManager.AppSettings("UnitedStates") IsNot Nothing Then
+            Dim UnitedStatesPath = ConfigurationManager.AppSettings("UnitedStates")
 
-        ddlState.DataSource = _States
-        ddlState.DataTextField = "Value"
-        ddlState.DataValueField = "Key"
-        ddlState.DataBind()
+            If Not UnitedStatesPath.StartsWith("~/") Then
+                UnitedStatesPath = String.Format("~/{0}", UnitedStatesPath)
+            End If
+            UnitedStatesPath = Server.MapPath(UnitedStatesPath)
+
+
+            Dim _USStates = ReadStateXML(UnitedStatesPath)
+            For Each item As KeyValuePair(Of String, String) In _USStates
+                Dim element = New ListItem(item.Value, item.Key)
+                element.Attributes("OptionGroup") = "USA"
+                ddlState.Items.Add(element)
+            Next
+
+        End If
+
+
+
+        If ConfigurationManager.AppSettings("CanadianProvinces") IsNot Nothing Then
+            Dim CanadianProvincessPath = ConfigurationManager.AppSettings("CanadianProvinces")
+
+            If Not CanadianProvincessPath.StartsWith("~/") Then
+                CanadianProvincessPath = String.Format("~/{0}", CanadianProvincessPath)
+            End If
+            CanadianProvincessPath = Server.MapPath(CanadianProvincessPath)
+
+            Dim _USStates = ReadStateXML(CanadianProvincessPath)
+            For Each item As KeyValuePair(Of String, String) In _USStates
+                Dim element = New ListItem(item.Value, item.Key)
+                element.Attributes("OptionGroup") = "Canada"
+                ddlState.Items.Add(element)
+            Next
+        End If
 
     End Sub
+
+    Private Function ReadStateXML(path As String) As IEnumerable(Of KeyValuePair(Of String, String))
+
+        Dim _Values As List(Of KeyValuePair(Of String, String)) =
+            New List(Of KeyValuePair(Of String, String))
+
+        If (IO.File.Exists(path)) Then
+            Dim document As XmlReader = New XmlTextReader(path)
+            While (document.Read())
+                Dim type = document.NodeType
+                If (type = XmlNodeType.Element) Then
+                    If (document.Name = "state") Then
+                        Dim key = document.GetAttribute("abbreviation")
+                        Dim value = document.GetAttribute("name")
+                        Dim element = New KeyValuePair(Of String, String)(key, value)
+
+                        _Values.Add(element)
+                    End If
+                End If
+            End While
+        Else
+            Throw New FileNotFoundException(String.Format(CultureInfo.InvariantCulture, "{0} Not Found", path))
+        End If
+
+        Return _Values
+    End Function
 #End Region
 End Class
