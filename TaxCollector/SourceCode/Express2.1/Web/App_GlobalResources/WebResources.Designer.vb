@@ -65,6 +65,15 @@ Namespace Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Account Details.
+        '''</summary>
+        Friend Shared ReadOnly Property AccountDetails() As String
+            Get
+                Return ResourceManager.GetString("AccountDetails", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Invalid bank account number.
         '''</summary>
         Friend Shared ReadOnly Property ACHInvalidModalTitle() As String
@@ -358,6 +367,15 @@ Namespace Resources
         Friend Shared ReadOnly Property ConfirmTermsConditions() As String
             Get
                 Return ResourceManager.GetString("ConfirmTermsConditions", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Contact Information.
+        '''</summary>
+        Friend Shared ReadOnly Property ContactInfo() As String
+            Get
+                Return ResourceManager.GetString("ContactInfo", resourceCulture)
             End Get
         End Property
         
@@ -1051,6 +1069,42 @@ Namespace Resources
         Friend Shared ReadOnly Property PasswordRequirementBullet4() As String
             Get
                 Return ResourceManager.GetString("PasswordRequirementBullet4", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Payment Complete.
+        '''</summary>
+        Friend Shared ReadOnly Property PaymentCompleate() As String
+            Get
+                Return ResourceManager.GetString("PaymentCompleate", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Confirm Payment .
+        '''</summary>
+        Friend Shared ReadOnly Property PaymentConfirm() As String
+            Get
+                Return ResourceManager.GetString("PaymentConfirm", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Payment Details.
+        '''</summary>
+        Friend Shared ReadOnly Property PaymentDetails() As String
+            Get
+                Return ResourceManager.GetString("PaymentDetails", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Payment Failed.
+        '''</summary>
+        Friend Shared ReadOnly Property PaymentFailure() As String
+            Get
+                Return ResourceManager.GetString("PaymentFailure", resourceCulture)
             End Get
         End Property
         

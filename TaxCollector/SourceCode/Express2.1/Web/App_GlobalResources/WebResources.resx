@@ -465,4 +465,28 @@
   <data name="ZipLabel" xml:space="preserve">
     <value>Zip</value>
   </data>
+  <data name="AccountDetails" xml:space="preserve">
+    <value>Account Details</value>
+    <comment>Bread Crumb Menu Text</comment>
+  </data>
+  <data name="ContactInfo" xml:space="preserve">
+    <value>Contact Information</value>
+    <comment>Bread Crumb Menu Text</comment>
+  </data>
+  <data name="PaymentCompleate" xml:space="preserve">
+    <value>Payment Complete</value>
+    <comment>Bread Crumb Menu Text</comment>
+  </data>
+  <data name="PaymentConfirm" xml:space="preserve">
+    <value>Confirm Payment </value>
+    <comment>Bread Crumb Menu Text</comment>
+  </data>
+  <data name="PaymentDetails" xml:space="preserve">
+    <value>Payment Details</value>
+    <comment>Bread Crumb Menu Text</comment>
+  </data>
+  <data name="PaymentFailure" xml:space="preserve">
+    <value>Payment Failed</value>
+    <comment>Bread Crumb Menu Text</comment>
+  </data>
 </root>
