@@ -15,17 +15,6 @@ Namespace B2P.PaymentLanding.Express.Web
             RegisterClientJs()
 
             If Not IsPostBack Then
-                If BLL.SessionManager.ManageCart.ShowCart = True Then
-                    pnlCart.Visible = True
-                    pnlContent.Visible = False
-                Else
-                    pnlCart.Visible = False
-                    pnlContent.Visible = True
-                End If
-
-
-
-
                 If BLL.SessionManager.IsSSOProduct = False Then
 
                     Dim y As B2P.Objects.Client = B2P.Objects.Client.GetClient(BLL.SessionManager.ClientCode.ToString)
@@ -386,6 +375,23 @@ Namespace B2P.PaymentLanding.Express.Web
                 Else
                     ctlPropertyAddress.Visible = False
                 End If
+
+                If BLL.SessionManager.ManageCart.ShowCart = True Then
+                    pnlCart.Visible = True
+                    pnlContent.Visible = False
+
+                    If z.AmountDueSource = B2P.Common.Enumerations.AmountDueSources.Lookup Or z.AmountDueSource = B2P.Common.Enumerations.AmountDueSources.Table Then
+                        BLL.SessionManager.ClientType = B2P.Cart.EClientType.Lookup
+                    Else
+                        BLL.SessionManager.ClientType = B2P.Cart.EClientType.NonLookup
+                    End If
+
+                    ctlCartGrid.PopulateGrid("ctlCartGrid")
+                Else
+                    pnlCart.Visible = False
+                    pnlContent.Visible = True
+                End If
+
             Catch ex As Exception
                 ' Build the error message
                 errMsg = Utility.BuildErrorMessage(Request.Url.Host, Request.Url.AbsolutePath,
@@ -396,6 +402,8 @@ Namespace B2P.PaymentLanding.Express.Web
                 Response.Redirect("/Errors/Error.aspx", False)
                 HttpContext.Current.ApplicationInstance.CompleteRequest()
             End Try
+
+
         End Sub
 
         ''' <summary>

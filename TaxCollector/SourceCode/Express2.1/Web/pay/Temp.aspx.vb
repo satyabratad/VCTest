@@ -510,9 +510,9 @@ Namespace B2P.PaymentLanding.Express.Web
             propAddr.City = "Test City"
             propAddr.Zip = "123456"
             cart.PropertyAddress = propAddr
-            BLL.SessionManager.ManageCart.Cart = New List(Of B2P.Cart.Cart)()
-            BLL.SessionManager.ManageCart.Cart.Add(cart)
-            CartGrid.PopulateGrid()
+            'BLL.SessionManager.ManageCart.Cart = New List(Of B2P.Cart.Cart)()
+            'BLL.SessionManager.ManageCart.Cart.Add(cart)
+            'CartGrid.PopulateGrid()
 
             BLL.SessionManager.ClientType = B2P.Cart.EClientType.Lookup
 

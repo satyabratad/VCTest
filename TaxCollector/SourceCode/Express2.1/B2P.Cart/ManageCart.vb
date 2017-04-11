@@ -118,7 +118,7 @@ Public Class ManageCart
         End If
 
         If Not IsExists Then
-            cartItem.Index = Cart.Count + 1
+            cartItem.Index = Cart.Count
             Cart.Add(cartItem)
         End If
 

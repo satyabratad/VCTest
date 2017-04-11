@@ -4,6 +4,8 @@
 <%@ Register TagPrefix="b2p" TagName="PaymentStatusMessage" Src="~/UserControls/StatusMessage.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="PaymentFooter" Src="~/UserControls/Footer.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="JavaScriptCheck" Src="~/UserControls/JavaScriptCheck.ascx" %>
+<%@ Register TagPrefix="b2p" TagName="PropertyAddress" Src="~/UserControls/PropertyAddress.ascx" %>
+<%@ Register TagPrefix="b2p" TagName="CartGrid" Src="~/UserControls/CartGrid.ascx" %>
 
 
 <!DOCTYPE html>
@@ -61,19 +63,19 @@
                         <!--// END NO SCRIPT CHECK //-->
                         <asp:Panel ID="pnlContent" runat="server" Visible="true">
                             <div class="content">
-                                <div class="container" style="min-height:50%;">
-                                 <!--// START BREADCRUMBS //-->
-                                 
-	                                    <div class="row">
-		                                    <ul class="breadcrumb">			                                    
-			                                    <li class="active"><a href="/pay/"><span class="badge badge-inverse">1</span> Account <span class="hidden-xs hidden-sm">Details</span></a></li>
-                                                <li><a href="#" class="inactiveLink"><span class="badge">2</span><span class="hidden-xs hidden-sm"> Payment Details</span></a></li>
-			                                    <li><a href="#" class="inactiveLink"><span class="badge">3</span><span class="hidden-xs hidden-sm"> Confirm Payment</span></a></li>
-			                                    <li><a href="#" class="inactiveLink"><span class="badge">4</span><span class="hidden-xs hidden-sm"> Payment Complete</span></a></li>
-		                                    </ul>
-	                                    </div>
-                                    
-                                <!--// END BREADCRUMBS //-->
+                                <div class="container" style="min-height: 50%;">
+                                    <!--// START BREADCRUMBS //-->
+
+                                    <div class="row">
+                                        <ul class="breadcrumb">
+                                            <li class="active"><a href="/pay/"><span class="badge badge-inverse">1</span> Account <span class="hidden-xs hidden-sm">Details</span></a></li>
+                                            <li><a href="#" class="inactiveLink"><span class="badge">2</span><span class="hidden-xs hidden-sm"> Payment Details</span></a></li>
+                                            <li><a href="#" class="inactiveLink"><span class="badge">3</span><span class="hidden-xs hidden-sm"> Confirm Payment</span></a></li>
+                                            <li><a href="#" class="inactiveLink"><span class="badge">4</span><span class="hidden-xs hidden-sm"> Payment Complete</span></a></li>
+                                        </ul>
+                                    </div>
+
+                                    <!--// END BREADCRUMBS //-->
 
                                     <div class="col-xs-12 col-sm-6">
                                         <br />

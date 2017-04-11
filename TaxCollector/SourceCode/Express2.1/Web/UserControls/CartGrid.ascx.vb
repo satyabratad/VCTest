@@ -3,7 +3,7 @@ Imports B2P.PaymentLanding.Express.Web
 Imports System.Web.UI
 Imports System
 
-Public Class CartGridascx
+Public Class CartGrid
     Inherits System.Web.UI.UserControl
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
@@ -28,13 +28,13 @@ Public Class CartGridascx
 
 
     End Sub
-    Public Sub PopulateGrid()
+    Public Sub PopulateGrid(ctrlName As String)
         Dim page As Page = HttpContext.Current.Handler
-        If BLL.SessionManager.ClientCode = B2P.Cart.EClientType.NonLookup Then
-            CType(page.FindControl("CartGrid"), CartGridascx).populateNonLookupGrid()
+        If BLL.SessionManager.ClientType = B2P.Cart.EClientType.NonLookup Then
+            CType(page.FindControl(ctrlName), CartGrid).populateNonLookupGrid()
         End If
-        If BLL.SessionManager.ClientCode = B2P.Cart.EClientType.Lookup Then
-            CType(page.FindControl("CartGrid"), CartGridascx).populateNonLookupGrid()
+        If BLL.SessionManager.ClientType = B2P.Cart.EClientType.Lookup Then
+            CType(page.FindControl(ctrlName), CartGrid).populateNonLookupGrid()
         End If
         'If BLL.SessionManager.ClientCode = B2P.Cart.EClientType.SSO Then
         '    CType(page.FindControl("CartGrid"), CartGridascx).populateSSOGrid()
@@ -42,8 +42,8 @@ Public Class CartGridascx
 
     End Sub
     Private Sub SetVisibilityOfGrid()
-        rptNonLookup.Visible = BLL.SessionManager.ClientCode = B2P.Cart.EClientType.NonLookup
-        rptLookup.Visible = BLL.SessionManager.ClientCode = B2P.Cart.EClientType.Lookup
+        rptNonLookup.Visible = BLL.SessionManager.ClientType = B2P.Cart.EClientType.NonLookup
+        rptLookup.Visible = BLL.SessionManager.ClientType = B2P.Cart.EClientType.Lookup
         'rptSSO.Visible = BLL.SessionManager.ClientCode = B2P.Cart.EClientType.SSO
     End Sub
     Protected Sub populateNonLookupGrid()
@@ -88,8 +88,8 @@ Public Class CartGridascx
         If Not String.IsNullOrEmpty(CartItem.AccountIdFields(1).Value) Then
             accountInfo += CartItem.AccountIdFields(1).Value + ","
         End If
-        If Not String.IsNullOrEmpty(CartItem.AccountIdFields(0).Value) Then
-            accountInfo += CartItem.AccountIdFields(1).Value + ","
+        If Not String.IsNullOrEmpty(CartItem.AccountIdFields(2).Value) Then
+            accountInfo += CartItem.AccountIdFields(2).Value + ","
         End If
 
         If Not String.IsNullOrEmpty(accountInfo.Trim()) Then

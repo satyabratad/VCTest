@@ -1,4 +1,4 @@
-﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="CartGrid.ascx.vb" Inherits=".CartGridascx" %>
+﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="CartGrid.ascx.vb" Inherits=".CartGrid" %>
 <%@ Import Namespace="B2P.PaymentLanding.Express" %>
 <%@ Import Namespace="B2P.PaymentLanding.Express.Web" %>
 <div id="cartGrid" style="display: block;">

@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class CartGridascx
+Partial Public Class CartGrid
     
     '''<summary>
     '''rptNonLookup control.
