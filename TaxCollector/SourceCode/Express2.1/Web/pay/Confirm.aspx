@@ -7,6 +7,7 @@
 <%@ Register TagPrefix="b2p" TagName="PaymentBankAccount" Src="~/UserControls/BankAccount.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="ConfirmPaymentTerms" Src="~/UserControls/TermsConditions.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="ConfirmFeeTerms" Src="~/UserControls/ConvenienceFee.ascx" %>
+<%@ Register TagPrefix="b2p" TagName="BreadCrumbMenu" Src="~/UserControls/BreadCrumbMenu.ascx" %>
 
 
 
@@ -70,8 +71,9 @@
                                   <div class="container" style="min-height:50%;"> 
                                   <!--// START BREADCRUMBS //-->
                                   <asp:Panel ID="pnlNonSSOBreadcrumb" runat="server" aria-hidden="true" aria-label="Breadcrumb Menu" >
-                                   
-	                                    <div class="row">
+                                   <b2p:BreadCrumbMenu runat="server" PageTagName="PaymentConfirm" ID="BreadCrumbMenu" />
+
+	                                    <%--<div class="row">
 		                                    <ul class="breadcrumb">
 			                                    
 			                                    <li class="completed"><a href="/pay/"><span class="badge badge-inverse">1</span> <span class="hidden-xs hidden-sm">Account Details</span></a></li>
@@ -79,20 +81,20 @@
 			                                    <li class="active"><a href="/pay/confirm.aspx" class="inactiveLink"><span class="badge badge-inverse">3</span> Confirm <span class="hidden-xs hidden-sm">Payment</span></a></li>
 			                                    <li><a href="#" class="inactiveLink"><span class="badge">4</span><span class="hidden-xs hidden-sm"> Payment Complete</span></a></li>
 		                                    </ul>
-	                                    </div>
+	                                    </div>--%>
                                    
                                       
                                 </asp:Panel>
                                 <asp:Panel ID="pnlSSOBreadcrumb" runat="server" aria-hidden="true" aria-label="Breadcrumb Menu" >
-                                    
-	                                    <div class="row">
+                                    <b2p:BreadCrumbMenu runat="server" PageTagName="PaymentConfirm" ID="BreadCrumbMenuSSO" />
+	                                    <%--<div class="row">
 		                                    <ul class="breadcrumb">
 			                                    
 			                                    <li class="completed"><a href="/pay/payment.aspx"><span class="badge badge-inverse">1</span> <span class="hidden-xs hidden-sm">Payment Details</span></a></li>
 			                                    <li class="active"><a href="/pay/confirm.aspx" class="inactiveLink"><span class="badge badge-inverse">2</span> Confirm <span class="hidden-xs hidden-sm">Payment</span></a></li>
 			                                    <li><a href="#" class="inactiveLink"><span class="badge">3</span><span class="hidden-xs hidden-sm"> Payment Complete</span></a></li>
 		                                    </ul>
-	                                    </div>
+	                                    </div>--%>
                                     
                                 </asp:Panel> 
                                 <!--// END BREADCRUMBS //--> 

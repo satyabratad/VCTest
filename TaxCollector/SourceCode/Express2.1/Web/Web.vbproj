@@ -178,7 +178,6 @@
     <Content Include="pay\Payment.aspx" />
     <Content Include="pay\PaymentComplete.aspx" />
     <Content Include="pay\PaymentFailure.aspx" />
-    <Content Include="pay\Temp.aspx" />
     <Content Include="sso\Default.aspx" />
     <Content Include="UserControls\BankAccount.ascx" />
     <Content Include="UserControls\BreadCrumbMenu.ascx" />
@@ -189,7 +188,6 @@
     <Content Include="UserControls\Header.ascx" />
     <Content Include="UserControls\JavaScriptCheck.ascx" />
     <Content Include="UserControls\MenuFooter.ascx" />
-    <Content Include="UserControls\PropertyAddress.ascx" />
     <Content Include="UserControls\ShoppingCart.ascx" />
     <Content Include="UserControls\StatusMessage.ascx" />
     <Content Include="UserControls\TermsConditions.ascx" />
@@ -199,11 +197,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\FormRewriter.vb" />
-    <Compile Include="App_GlobalResources\ControlResource.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ControlResource.resx</DependentUpon>
-    </Compile>
     <Compile Include="App_GlobalResources\WebResources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -313,13 +306,6 @@
       <DependentUpon>PaymentFailure.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="pay\Temp.aspx.designer.vb">
-      <DependentUpon>Temp.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="pay\Temp.aspx.vb">
-      <DependentUpon>Temp.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="sso\Default.aspx.designer.vb">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
@@ -387,13 +373,6 @@
       <DependentUpon>MenuFooter.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="UserControls\PropertyAddress.ascx.designer.vb">
-      <DependentUpon>PropertyAddress.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\PropertyAddress.ascx.vb">
-      <DependentUpon>PropertyAddress.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="UserControls\ShoppingCart.ascx.designer.vb">
       <DependentUpon>ShoppingCart.ascx</DependentUpon>
     </Compile>
@@ -415,6 +394,7 @@
       <DependentUpon>TermsConditions.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Utilities\BreadCrumbTab.vb" />
     <Compile Include="Utilities\Utility.vb" />
   </ItemGroup>
   <ItemGroup>
@@ -423,10 +403,6 @@
       <LastGenOutput>WebResources.Designer.vb</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
-    <EmbeddedResource Include="App_GlobalResources\ControlResource.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ControlResource.Designer.vb</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>

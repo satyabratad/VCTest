@@ -5,6 +5,7 @@ Namespace B2P.PaymentLanding.Express.Web
     Public Class _ssodefault : Inherits System.Web.UI.Page
 
         Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
             If Not IsPostBack Then
                 Dim errMsg As String = String.Empty
                 If Not IsNothing(BLL.SessionManager.LookupData) Then
