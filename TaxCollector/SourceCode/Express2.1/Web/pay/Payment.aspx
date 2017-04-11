@@ -5,7 +5,7 @@
 <%@ Register TagPrefix="b2p" TagName="PaymentFooter" Src="~/UserControls/Footer.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="PaymentCreditCard" Src="~/UserControls/CreditCard.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="PaymentBankAccount" Src="~/UserControls/BankAccount.ascx" %>
-<%@ Register Src="~/UserControls/BreadCrumbMenu.ascx" TagPrefix="b2p" TagName="BreadCrumbMenu" %>
+<%@ Register TagPrefix="b2p" TagName="BreadCrumbMenu" Src="~/UserControls/BreadCrumbMenu.ascx"  %>
 
 
 
@@ -89,7 +89,7 @@
 	                                    </div>--%>
                                     
                                 </asp:Panel> 
-                                <!--// END BREADCRUMBS   
+                                <!--// END BREADCRUMBS -->  
                                   
                                   
                                   <div class="row">

@@ -6,6 +6,8 @@
 <%@ Register TagPrefix="b2p" TagName="JavaScriptCheck" Src="~/UserControls/JavaScriptCheck.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="PropertyAddress" Src="~/UserControls/PropertyAddress.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="CartGrid" Src="~/UserControls/CartGrid.ascx" %>
+<%@ Register TagPrefix="b2p" TagName="BreadCrumbMenu" Src="~/UserControls/BreadCrumbMenu.ascx" %>
+
 
 
 <!DOCTYPE html>
@@ -65,15 +67,15 @@
                             <div class="content">
                                 <div class="container" style="min-height: 50%;">
                                     <!--// START BREADCRUMBS //-->
-
-                                    <div class="row">
+                                    <b2p:BreadCrumbMenu runat="server" ID="BreadCrumbMenu" PageTagName="Home" />
+                                   <%-- <div class="row">
                                         <ul class="breadcrumb">
                                             <li class="active"><a href="/pay/"><span class="badge badge-inverse">1</span> Account <span class="hidden-xs hidden-sm">Details</span></a></li>
                                             <li><a href="#" class="inactiveLink"><span class="badge">2</span><span class="hidden-xs hidden-sm"> Payment Details</span></a></li>
                                             <li><a href="#" class="inactiveLink"><span class="badge">3</span><span class="hidden-xs hidden-sm"> Confirm Payment</span></a></li>
                                             <li><a href="#" class="inactiveLink"><span class="badge">4</span><span class="hidden-xs hidden-sm"> Payment Complete</span></a></li>
                                         </ul>
-                                    </div>
+                                    </div>--%>
 
                                     <!--// END BREADCRUMBS //-->
 
