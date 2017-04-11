@@ -1,6 +1,8 @@
 ﻿Imports B2P.PaymentLanding.Express
 Imports B2P.PaymentLanding.Express.Web
 Imports System.Web.UI
+Imports System
+
 Public Class CartGridascx
     Inherits System.Web.UI.UserControl
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -28,12 +30,30 @@ Public Class CartGridascx
     End Sub
     Public Sub PopulateGrid()
         Dim page As Page = HttpContext.Current.Handler
-        CType(page.FindControl("CartGrid"), CartGridascx).populateNonLookupGrid()
+        If BLL.SessionManager.ClientCode = B2P.Cart.EClientType.NonLookup Then
+            CType(page.FindControl("CartGrid"), CartGridascx).populateNonLookupGrid()
+        End If
+        If BLL.SessionManager.ClientCode = B2P.Cart.EClientType.Lookup Then
+            CType(page.FindControl("CartGrid"), CartGridascx).populateNonLookupGrid()
+        End If
+        'If BLL.SessionManager.ClientCode = B2P.Cart.EClientType.SSO Then
+        '    CType(page.FindControl("CartGrid"), CartGridascx).populateSSOGrid()
+        'End If
+
+    End Sub
+    Private Sub SetVisibilityOfGrid()
+        rptNonLookup.Visible = BLL.SessionManager.ClientCode = B2P.Cart.EClientType.NonLookup
+        rptLookup.Visible = BLL.SessionManager.ClientCode = B2P.Cart.EClientType.Lookup
+        'rptSSO.Visible = BLL.SessionManager.ClientCode = B2P.Cart.EClientType.SSO
     End Sub
     Protected Sub populateNonLookupGrid()
         rptNonLookup.DataSource = BLL.SessionManager.ManageCart.Cart
         rptNonLookup.DataBind()
     End Sub
+    'Protected Sub populateLookupGrid()
+    '    rptLookup.DataSource = BLL.SessionManager.ManageCart.Cart
+    '    rptLookup.DataBind()
+    'End Sub
     Protected Function GetPropertyAddress(Index As Integer) As String
         Dim CartItem As B2P.Cart.Cart = BLL.SessionManager.ManageCart.Cart(Index)
         Dim propertyAddress As String = String.Empty
@@ -79,7 +99,7 @@ Public Class CartGridascx
         Return accountInfo
     End Function
     Protected Function FormatAmount(Amount As Double) As Double
-        Return Format(Amount, "N2")
+        Return Math.Round(Amount, 2)
     End Function
     Protected Function GetCartItemCount() As Integer
         Return BLL.SessionManager.ManageCart.Cart.Count
@@ -89,7 +109,7 @@ Public Class CartGridascx
         For Each cart As B2P.Cart.Cart In BLL.SessionManager.ManageCart.Cart
             amount += cart.Amount
         Next
-        Return Format(amount, "N2")
+        Return Math.Round(amount, 2)
     End Function
     Private Sub UpdateCartCount()
         Dim cs As ClientScriptManager = Page.ClientScript

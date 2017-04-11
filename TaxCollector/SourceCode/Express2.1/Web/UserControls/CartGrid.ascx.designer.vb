@@ -23,6 +23,15 @@ Partial Public Class CartGridascx
     Protected WithEvents rptNonLookup As Global.System.Web.UI.WebControls.Repeater
     
     '''<summary>
+    '''rptLookup control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rptLookup As Global.System.Web.UI.WebControls.Repeater
+    
+    '''<summary>
     '''hdSelectedIndex control.
     '''</summary>
     '''<remarks>

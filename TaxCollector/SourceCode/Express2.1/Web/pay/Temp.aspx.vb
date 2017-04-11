@@ -468,6 +468,30 @@ Namespace B2P.PaymentLanding.Express.Web
             'BLL.SessionManager.AccountNumber2 = Utility.SafeEncode(txtLookupAccount2.Text)
             'BLL.SessionManager.AccountNumber3 = Utility.SafeEncode(txtLookupAccount3.Text)
             'Response.Redirect("/pay/payment.aspx", False)
+
+            ''Non Lookup
+            'Dim cart As New B2P.Cart.Cart
+            'cart.Item = "Tax Bill"
+            'cart.Index = 0
+            'Dim acc1 As New B2P.Cart.AccountIdField("parcel", "parcel1")
+            'Dim acc2 As New B2P.Cart.AccountIdField("tax year", "2016")
+            'Dim acc3 As New B2P.Cart.AccountIdField("owner", "S Dutta")
+            'cart.AccountIdFields = New List(Of B2P.Cart.AccountIdField)
+            'cart.AccountIdFields.Add(acc1)
+            'cart.AccountIdFields.Add(acc2)
+            'cart.AccountIdFields.Add(acc3)
+            'cart.Amount = 100.5
+
+            'Dim propAddr As New B2P.Cart.PropertyAddress
+            'propAddr.Address1 = "123, S V Lane"
+            'propAddr.City = "Test City"
+            'propAddr.Zip = "123456"
+            'cart.PropertyAddress = propAddr
+            'BLL.SessionManager.ManageCart.Cart = New List(Of B2P.Cart.Cart)()
+            'BLL.SessionManager.ManageCart.Cart.Add(cart)
+            'CartGrid.PopulateGrid()
+
+            'Lookup
             Dim cart As New B2P.Cart.Cart
             cart.Item = "Tax Bill"
             cart.Index = 0
@@ -479,6 +503,7 @@ Namespace B2P.PaymentLanding.Express.Web
             cart.AccountIdFields.Add(acc2)
             cart.AccountIdFields.Add(acc3)
             cart.Amount = 100.5
+            cart.AmountDue = 100.5
 
             Dim propAddr As New B2P.Cart.PropertyAddress
             propAddr.Address1 = "123, S V Lane"
@@ -488,6 +513,9 @@ Namespace B2P.PaymentLanding.Express.Web
             BLL.SessionManager.ManageCart.Cart = New List(Of B2P.Cart.Cart)()
             BLL.SessionManager.ManageCart.Cart.Add(cart)
             CartGrid.PopulateGrid()
+
+            BLL.SessionManager.ClientType = B2P.Cart.EClientType.Lookup
+
         End Sub
     End Class
 End Namespace
