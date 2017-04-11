@@ -69,6 +69,15 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected WithEvents pnlNonSSOBreadcrumb As Global.System.Web.UI.WebControls.Panel
         
         '''<summary>
+        '''BreadCrumbMenu control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents BreadCrumbMenu As Global.BreadCrumbMenu
+        
+        '''<summary>
         '''pnlSSOBreadcrumb control.
         '''</summary>
         '''<remarks>
@@ -76,6 +85,15 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pnlSSOBreadcrumb As Global.System.Web.UI.WebControls.Panel
+        
+        '''<summary>
+        '''BreadCrumbMenuSSO control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents BreadCrumbMenuSSO As Global.BreadCrumbMenu
         
         '''<summary>
         '''psmFailureMessage control.
