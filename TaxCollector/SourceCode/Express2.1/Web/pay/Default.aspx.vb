@@ -46,6 +46,7 @@ Namespace B2P.PaymentLanding.Express.Web
                     ctlPropertyAddress.Address2 = y.Address2
                     ctlPropertyAddress.City = y.City
                     ctlPropertyAddress.StateValue = y.State
+                    ctlPropertyAddress.Zip = y.ZipCode
 
                 Else
                     Response.Redirect("/errors/")
@@ -142,6 +143,7 @@ Namespace B2P.PaymentLanding.Express.Web
                                 lblLookupHeader.Text = "Account found. Please see information below."
                                 divLookupAlert.Attributes.Add("class", "alert alert-success")
                                 BLL.SessionManager.LookupAmount = y.AmountDue
+                                ctlPropertyAddress.Amount = y.AmountDue
                                 BLL.SessionManager.LookupProduct = ddlCategories.SelectedValue
                                 BLL.SessionManager.AccountNumber1 = Utility.SafeEncode(txtLookupAccount1.Text)
                                 BLL.SessionManager.AccountNumber2 = Utility.SafeEncode(txtLookupAccount2.Text)
@@ -455,8 +457,7 @@ Namespace B2P.PaymentLanding.Express.Web
 
             BLL.SessionManager.CurrentCategory = CurrentCategory
             BLL.SessionManager.ProductName = ddlCategories.SelectedValue
-            Response.Redirect("/pay/payment.aspx", False)
-            Response.Redirect("/pay/payment.aspx", False)
+            AddtoCart()
         End Sub
 
         Private Sub btnSubmit_Click(sender As Object, e As EventArgs) Handles btnSubmit.Click
@@ -475,7 +476,10 @@ Namespace B2P.PaymentLanding.Express.Web
         End Sub
 
         Protected Sub btnAddtoCart_Click(sender As Object, e As EventArgs) Handles btnAddtoCart.Click
+            AddtoCart()
+        End Sub
 
+        Private Sub AddtoCart()
             Dim cart As New B2P.Cart.Cart
             cart.Item = ddlCategories.SelectedValue
 
@@ -504,7 +508,6 @@ Namespace B2P.PaymentLanding.Express.Web
                 Page.ClientScript.RegisterClientScriptBlock(Me.GetType, "_validation", String.Format("alert('{0}');", Resources.WebResources.CombineValidationAddToCart), True)
 
             End If
-
         End Sub
 
         Protected Sub btnAddMoreItem_Click(sender As Object, e As EventArgs) Handles btnAddMoreItem.Click

@@ -98,24 +98,21 @@ Public Class ManageCart
     Public Function AddToCart(cartItem As Cart) As Boolean
         Dim IsExists As Boolean = True
 
-        Dim existing = Me.Cart.FirstOrDefault(Function(p) p.Item.Equals(cartItem.Item, StringComparison.OrdinalIgnoreCase))
 
-        If Not existing Is Nothing Then
-            For Each entity As AccountIdField In existing.AccountIdFields
+        For Each c As Cart In Cart
+            For Each entity As AccountIdField In c.AccountIdFields
                 IsExists = cartItem.AccountIdFields _
-                .Exists(Function(p)
-                            Return (p.Label.Equals(entity.Label, StringComparison.OrdinalIgnoreCase) _
-                                                                   And p.Value.Equals(entity.Value, StringComparison.OrdinalIgnoreCase))
-                        End Function)
+                    .Exists(Function(p)
+                                Return (p.Label.Equals(entity.Label, StringComparison.OrdinalIgnoreCase) _
+                                                                       And p.Value.Equals(entity.Value, StringComparison.OrdinalIgnoreCase))
+                            End Function)
 
                 If Not IsExists Then
                     Exit For
                 End If
 
             Next
-        Else
-            IsExists = False
-        End If
+        Next
 
         If Not IsExists Then
             cartItem.Index = Cart.Count
