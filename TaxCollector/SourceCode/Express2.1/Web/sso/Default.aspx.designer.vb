@@ -60,6 +60,24 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected WithEvents pjsJavascript As Global.JavaScriptCheck
         
         '''<summary>
+        '''BreadCrumbMenu control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents BreadCrumbMenu As Global.BreadCrumbMenu
+        
+        '''<summary>
+        '''BreadCrumbMenu1 control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents BreadCrumbMenu1 As Global.BreadCrumbMenu
+        
+        '''<summary>
         '''litMissingClientHeader control.
         '''</summary>
         '''<remarks>

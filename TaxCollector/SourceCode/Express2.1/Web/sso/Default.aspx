@@ -4,6 +4,8 @@
 <%@ Register TagPrefix="b2p" TagName="PaymentStatusMessage" Src="~/UserControls/StatusMessage.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="PaymentFooter" Src="~/UserControls/Footer.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="JavaScriptCheck" Src="~/UserControls/JavaScriptCheck.ascx" %>
+<%@ Register Src="~/UserControls/BreadCrumbMenu.ascx" TagPrefix="b2p" TagName="BreadCrumbMenu" %>
+
 
 <!DOCTYPE html>
 
@@ -52,13 +54,18 @@
 
 
 
-
+                    <b2p:BreadCrumbMenu runat="server" ID="BreadCrumbMenu" />
 
                     <!--// START MIDDLE CONTENT //-->
                     <div class="container">
                         <div class="container" style="min-height: 50%;">
                             <div class="row" style="background-color: white; padding: 5px;">
                                 <div class="content">
+                                    <div class="container" style="min-height: 50%;">
+                                    <!--// START BREADCRUMBS //-->
+                                    <b2p:BreadCrumbMenu runat="server" ID="BreadCrumbMenu1" PageTagName="Home" />
+                                    </div>
+                                    <!--// END BREADCRUMBS //-->
                                     <div class="row">
                                         <div class="col-xs-12">
                                             <h3 class="text-primary">
