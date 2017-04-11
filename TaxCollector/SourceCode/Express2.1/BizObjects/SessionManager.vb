@@ -77,6 +77,7 @@ Namespace B2P.PaymentLanding.Express.BLL
         'Added By RS
         Private Const _manageCart As String = "ManageCart"
         Private Const _clientType As String = "ClientType"
+        Private Const _breadCrumbMenuTab As Object = "BreadCrumbMenuTab"
 
 #End Region
 
@@ -259,6 +260,7 @@ Namespace B2P.PaymentLanding.Express.BLL
             End Set
         End Property
 
+        'Public Shared Property BreadCrumbMenuList() As(Of )
 
 
         ''' <summary>
@@ -802,6 +804,22 @@ Namespace B2P.PaymentLanding.Express.BLL
             End Get
             Set(ByVal value As B2P.Cart.EClientType)
                 HttpContext.Current.Session(_clientType) = value
+            End Set
+        End Property
+        ''' <summary>
+        ''' This BreadCrumbMenuTab property will provide the BreadCrumbMenutab details
+        ''' </summary>
+        ''' <returns></returns>
+        Public Shared Property BreadCrumbMenuTab() As Object
+            Get
+                If HttpContext.Current.Session(_breadCrumbMenuTab) Is Nothing Then
+                    Return Nothing
+                Else
+                    Return DirectCast(HttpContext.Current.Session(_breadCrumbMenuTab), Object)
+                End If
+            End Get
+            Set(value As Object)
+                HttpContext.Current.Session(_breadCrumbMenuTab) = value
             End Set
         End Property
 #End Region
