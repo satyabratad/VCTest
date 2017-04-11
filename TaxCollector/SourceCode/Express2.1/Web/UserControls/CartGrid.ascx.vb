@@ -3,11 +3,7 @@ Imports B2P.PaymentLanding.Express.Web
 Imports System.Web.UI
 Public Class CartGridascx
     Inherits System.Web.UI.UserControl
-    Public clientType As B2P.Cart.EClientType
-    Public cartItems As List(Of B2P.Cart.Cart)
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-
-
 
         'Delete from cart
         If hdMode.Value.ToUpper().Trim() = "DELETE" Then
@@ -15,6 +11,7 @@ Public Class CartGridascx
                 Dim index As Integer = CType(hdSelectedIndex.Value, Integer)
                 BLL.SessionManager.ManageCart.Cart.RemoveAt(index)
                 UpdateCartCount()
+                populateNonLookupGrid()
             End If
         End If
         'Edit cart
@@ -23,15 +20,22 @@ Public Class CartGridascx
                 Dim index As Integer = CType(hdSelectedIndex.Value, Integer)
                 BLL.SessionManager.ManageCart.Cart(index).Amount = FormatAmount(CType(hdEditAmount.Value, Double))
                 UpdateCartCount()
+                populateNonLookupGrid()
             End If
         End If
 
-        clientType = BLL.SessionManager.ClientType
-        If Not BLL.SessionManager.ManageCart Is Nothing Then
-            cartItems = BLL.SessionManager.ManageCart.Cart
-        End If
+
     End Sub
-    Public Function GetPropertyAddress(CartItem As B2P.Cart.Cart) As String
+    Public Sub PopulateGrid()
+        Dim page As Page = HttpContext.Current.Handler
+        CType(page.FindControl("CartGrid"), CartGridascx).populateNonLookupGrid()
+    End Sub
+    Protected Sub populateNonLookupGrid()
+        rptNonLookup.DataSource = BLL.SessionManager.ManageCart.Cart
+        rptNonLookup.DataBind()
+    End Sub
+    Protected Function GetPropertyAddress(Index As Integer) As String
+        Dim CartItem As B2P.Cart.Cart = BLL.SessionManager.ManageCart.Cart(Index)
         Dim propertyAddress As String = String.Empty
         If Not CartItem.PropertyAddress Is Nothing Then
             If Not String.IsNullOrEmpty(CartItem.PropertyAddress.Address1) Then
@@ -55,7 +59,8 @@ Public Class CartGridascx
         End If
         Return propertyAddress
     End Function
-    Public Function GetAccountInformation(CartItem As B2P.Cart.Cart) As String
+    Protected Function GetAccountInformation(Index As Integer) As String
+        Dim CartItem As B2P.Cart.Cart = BLL.SessionManager.ManageCart.Cart(Index)
         Dim accountInfo As String = String.Empty
         If Not String.IsNullOrEmpty(CartItem.AccountIdFields(0).Value) Then
             accountInfo += CartItem.AccountIdFields(0).Value + ","
@@ -73,20 +78,20 @@ Public Class CartGridascx
 
         Return accountInfo
     End Function
-    Public Function FormatAmount(Amount As Double) As Double
+    Protected Function FormatAmount(Amount As Double) As Double
         Return Format(Amount, "N2")
     End Function
-    Public Function GetCartItemCount() As Integer
-        Return cartItems.Count
+    Protected Function GetCartItemCount() As Integer
+        Return BLL.SessionManager.ManageCart.Cart.Count
     End Function
-    Public Function SubTotal() As Double
+    Protected Function SubTotal() As Double
         Dim amount As Double = 0
-        For Each cart As B2P.Cart.Cart In cartItems
+        For Each cart As B2P.Cart.Cart In BLL.SessionManager.ManageCart.Cart
             amount += cart.Amount
         Next
         Return Format(amount, "N2")
     End Function
-    Sub UpdateCartCount()
+    Private Sub UpdateCartCount()
         Dim cs As ClientScriptManager = Page.ClientScript
         cs.RegisterStartupScript(Me.GetType(), "tmp", "<script type='text/javascript'>updateCartCount(" + BLL.SessionManager.ManageCart.Cart.Count.ToString() + ");</script>", False)
     End Sub
