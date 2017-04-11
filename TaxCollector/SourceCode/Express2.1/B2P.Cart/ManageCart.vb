@@ -96,10 +96,10 @@ Public Class ManageCart
     End Property
 
     Public Function AddToCart(cartItem As Cart) As Boolean
-        Dim IsExists As Boolean = True
-
+        Dim IsExists As Boolean = False
 
         For Each c As Cart In Cart
+            IsExists = True
             For Each entity As AccountIdField In c.AccountIdFields
                 IsExists = cartItem.AccountIdFields _
                     .Exists(Function(p)
@@ -112,6 +112,9 @@ Public Class ManageCart
                 End If
 
             Next
+            If IsExists Then
+                Exit For
+            End If
         Next
 
         If Not IsExists Then
