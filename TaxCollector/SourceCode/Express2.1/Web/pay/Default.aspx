@@ -61,96 +61,102 @@
                         <!--// START NO SCRIPT CHECK //-->
                         <b2p:JavaScriptCheck ID="pjsJavascript" runat="server" />
                         <!--// END NO SCRIPT CHECK //-->
+                        <asp:Panel ID="pnlContent" runat="server" Visible="true">
+                            <div class="content">
+                                <div class="container" style="min-height: 50%;">
+                                    <!--// START BREADCRUMBS //-->
 
-                        <div class="content">
-                            <div class="container" style="min-height: 50%;">
-                                <!--// START BREADCRUMBS //-->
+                                    <div class="row">
+                                        <ul class="breadcrumb">
+                                            <li class="active"><a href="/pay/"><span class="badge badge-inverse">1</span> Account <span class="hidden-xs hidden-sm">Details</span></a></li>
+                                            <li><a href="#" class="inactiveLink"><span class="badge">2</span><span class="hidden-xs hidden-sm"> Payment Details</span></a></li>
+                                            <li><a href="#" class="inactiveLink"><span class="badge">3</span><span class="hidden-xs hidden-sm"> Confirm Payment</span></a></li>
+                                            <li><a href="#" class="inactiveLink"><span class="badge">4</span><span class="hidden-xs hidden-sm"> Payment Complete</span></a></li>
+                                        </ul>
+                                    </div>
 
-                                <div class="row">
-                                    <ul class="breadcrumb">
-                                        <li class="active"><a href="/pay/"><span class="badge badge-inverse">1</span> Account <span class="hidden-xs hidden-sm">Details</span></a></li>
-                                        <li><a href="#" class="inactiveLink"><span class="badge">2</span><span class="hidden-xs hidden-sm"> Payment Details</span></a></li>
-                                        <li><a href="#" class="inactiveLink"><span class="badge">3</span><span class="hidden-xs hidden-sm"> Confirm Payment</span></a></li>
-                                        <li><a href="#" class="inactiveLink"><span class="badge">4</span><span class="hidden-xs hidden-sm"> Payment Complete</span></a></li>
-                                    </ul>
-                                </div>
+                                    <!--// END BREADCRUMBS //-->
 
-                                <!--// END BREADCRUMBS //-->
-
-                                <div class="col-xs-12 col-sm-6">
-                                    <br />
-                                    <asp:Panel ID="pnlProducts" runat="server">
+                                    <div class="col-xs-12 col-sm-6">
+                                        <br />
+                                        <asp:Panel ID="pnlProducts" runat="server">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <div class="form-group form-group-sm">
+                                                        <label class="control-label" for="ddlBankAccountType">
+                                                            <asp:Literal ID="litSelectProdct" runat="server" Text="<%$ Resources:WebResources, lblSelectProductService %>" /></label>
+                                                        <asp:DropDownList ID="ddlCategories"
+                                                            CssClass="form-control input-sm"
+                                                            AutoPostBack="True"
+                                                            runat="server" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </asp:Panel>
                                         <div class="row">
                                             <div class="col-xs-12">
+                                                <asp:HiddenField ID="hdAccount1" runat="server" Value="" />
+                                                <asp:HiddenField ID="hdAccount2" runat="server" Value="" />
+                                                <asp:HiddenField ID="hdAccount3" runat="server" Value="" />
+
                                                 <div class="form-group form-group-sm">
-                                                    <label class="control-label" for="ddlBankAccountType">
-                                                        <asp:Literal ID="litSelectProdct" runat="server" Text="<%$ Resources:WebResources, lblSelectProductService %>" /></label>
-                                                    <asp:DropDownList ID="ddlCategories"
-                                                        CssClass="form-control input-sm"
-                                                        AutoPostBack="True"
-                                                        runat="server" />
+                                                    <asp:Panel ID="pnlAccount1" runat="server" Visible="false">
+                                                        <label class="control-label" for="txtLookupAccount1" id="lblLookupAccount1">
+                                                            <asp:Label ID="lblAccountNumber1" runat="server" />
+                                                        </label>
+                                                        <asp:TextBox ID="txtLookupAccount1" runat="server" MaxLength="40" CssClass="form-control input-sm" />
+                                                    </asp:Panel>
+                                                </div>
+                                                <div class="form-group form-group-sm">
+                                                    <asp:Panel ID="pnlAccount2" runat="server" Visible="false">
+
+                                                        <label class="control-label" for="txtLookupAccount2" id="lblLookupAccount2">
+                                                            <asp:Label ID="lblAccountNumber2" runat="server" />
+                                                        </label>
+                                                        <asp:TextBox ID="txtLookupAccount2" runat="server" MaxLength="40" CssClass="form-control input-sm" />
+                                                    </asp:Panel>
+                                                </div>
+                                                <div class="form-group form-group-sm">
+                                                    <asp:Panel ID="pnlAccount3" runat="server" Visible="false">
+                                                        <label class="control-label" for="txtLookupAccount3" id="lblLookupAccount3">
+                                                            <asp:Label ID="lblAccountNumber3" runat="server" />
+                                                        </label>
+                                                        <asp:TextBox ID="txtLookupAccount3" runat="server" MaxLength="40" CssClass="form-control input-sm" />
+                                                    </asp:Panel>
+                                                </div>
+                                                <b2p:PropertyAddress Visible="false" runat="server" ID="ctlPropertyAddress"></b2p:PropertyAddress>
+
+                                                <br />
+                                                <div class="pull-right">
+                                                    <asp:Button ID="btnLookup" runat="server" Text="Lookup" CssClass="btn btn-primary btn-sm" Width="70px" />
                                                 </div>
                                             </div>
                                         </div>
-                                    </asp:Panel>
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <asp:HiddenField ID="hdAccount1" runat="server" Value="" />
-                                            <asp:HiddenField ID="hdAccount2" runat="server" Value="" />
-                                            <asp:HiddenField ID="hdAccount3" runat="server" Value="" />
-
-                                            <div class="form-group form-group-sm">
-                                                <asp:Panel ID="pnlAccount1" runat="server" Visible="false">
-                                                    <label class="control-label" for="txtLookupAccount1" id="lblLookupAccount1">
-                                                        <asp:Label ID="lblAccountNumber1" runat="server" />
-                                                    </label>
-                                                    <asp:TextBox ID="txtLookupAccount1" runat="server" MaxLength="40" CssClass="form-control input-sm" />
-                                                </asp:Panel>
-                                            </div>
-                                            <div class="form-group form-group-sm">
-                                                <asp:Panel ID="pnlAccount2" runat="server" Visible="false">
-
-                                                    <label class="control-label" for="txtLookupAccount2" id="lblLookupAccount2">
-                                                        <asp:Label ID="lblAccountNumber2" runat="server" />
-                                                    </label>
-                                                    <asp:TextBox ID="txtLookupAccount2" runat="server" MaxLength="40" CssClass="form-control input-sm" />
-                                                </asp:Panel>
-                                            </div>
-                                            <div class="form-group form-group-sm">
-                                                <asp:Panel ID="pnlAccount3" runat="server" Visible="false">
-                                                    <label class="control-label" for="txtLookupAccount3" id="lblLookupAccount3">
-                                                        <asp:Label ID="lblAccountNumber3" runat="server" />
-                                                    </label>
-                                                    <asp:TextBox ID="txtLookupAccount3" runat="server" MaxLength="40" CssClass="form-control input-sm" />
-                                                </asp:Panel>
-                                            </div>
-                                            <b2p:PropertyAddress Visible="false" runat="server" ID="ctlPropertyAddress"></b2p:PropertyAddress>
-
-                                            <br />
-                                            <div class="pull-right">
-                                                <asp:Button ID="btnLookup" runat="server" Text="Lookup" CssClass="btn btn-primary btn-sm" Width="70px" />
-                                            </div>
-                                        </div>
+                                        <asp:Button ID="btnAddtoCart" CssClass="btn btn-primary btn-sm pull-right" Text="<%$ Resources:WebResources, AddToCartButton %>" ToolTip="<%$ Resources:WebResources, AddToCartButton %>" runat="server" Visible="true" />
+                                        <br />
+                                        <br />
                                     </div>
-                                    <asp:Button ID="btnAddtoCart" CssClass="btn btn-primary btn-sm pull-right" Text="<%$ Resources:WebResources, AddToCartButton %>" ToolTip="<%$ Resources:WebResources, AddToCartButton %>" runat="server" Visible="true" />
-                                    <asp:Button ID="btnAddMoreItem" CssClass="btn btn-primary btn-sm pull-right" Text="<%$ Resources:WebResources, AddMoreItemsButton %>" ToolTip="<%$ Resources:WebResources, AddMoreItemsButton %>" runat="server" Visible="false" />
-                                    <asp:Button ID="btnSubmit" CssClass="btn btn-primary btn-sm pull-right" Text="<%$ Resources:WebResources, ButtonContinue %>" ToolTip="<%$ Resources:WebResources, ButtonContinue %>" runat="server" Visible="false" />
-                                    <br />
-                                    <br />
-                                </div>
 
-                                <div class="col-xs-12 col-sm-6">
-                                    <br />
-                                    <p>
-                                        <asp:Label ID="lblClientMessage" runat="server" ToolTip="Client Message"></asp:Label>
-                                    </p>
-                                </div>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <br />
+                                        <p>
+                                            <asp:Label ID="lblClientMessage" runat="server" ToolTip="Client Message"></asp:Label>
+                                        </p>
+                                    </div>
 
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-12">
-                            <b2p:CartGrid runat="server" ID="CartGrid1" Visible="false" />
-                        </div>
+                        </asp:Panel>
+                        <asp:Panel ID="pnlCart" runat="server" Visible="false">
+                            <div class="col-xs-12 col-sm-12">
+                                <b2p:CartGrid runat="server" ID="ctlCartGrid" />
+                                <br />
+                                <div class="pull-right">
+                                    <asp:Button ID="btnAddMoreItem" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, AddMoreItemsButton %>" ToolTip="<%$ Resources:WebResources, AddMoreItemsButton %>" runat="server" />
+                                    <asp:Button ID="btnSubmit" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, ButtonContinue %>" ToolTip="<%$ Resources:WebResources, ButtonContinue %>" runat="server"/>
+                                </div>
+                            </div>
+                        </asp:Panel>
                     </div>
                 </div>
 
@@ -311,7 +317,7 @@
                 if (acct3 !== '') {
                     // Set the validator
                     validator.addValidationItem(new ValidationItem("txtLookupAccount3", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
-              }
+                }
 
 
                 <%If ctlPropertyAddress.Visible Then %>

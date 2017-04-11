@@ -308,6 +308,15 @@ Namespace Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to This Combination of item and account numbers already exists in the cart! Please use a different combination..
+        '''</summary>
+        Friend Shared ReadOnly Property CombineValidationAddToCart() As String
+            Get
+                Return ResourceManager.GetString("CombineValidationAddToCart", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to I agree to the Terms and Conditions.
         '''</summary>
         Friend Shared ReadOnly Property ConfirmAgreementTerms() As String

@@ -60,6 +60,15 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected WithEvents pjsJavascript As Global.JavaScriptCheck
         
         '''<summary>
+        '''pnlContent control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents pnlContent As Global.System.Web.UI.WebControls.Panel
+        
+        '''<summary>
         '''pnlProducts control.
         '''</summary>
         '''<remarks>
@@ -222,6 +231,33 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected WithEvents btnAddtoCart As Global.System.Web.UI.WebControls.Button
         
         '''<summary>
+        '''lblClientMessage control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents lblClientMessage As Global.System.Web.UI.WebControls.Label
+        
+        '''<summary>
+        '''pnlCart control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents pnlCart As Global.System.Web.UI.WebControls.Panel
+        
+        '''<summary>
+        '''ctlCartGrid control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents ctlCartGrid As Global.CartGridascx
+        
+        '''<summary>
         '''btnAddMoreItem control.
         '''</summary>
         '''<remarks>
@@ -238,24 +274,6 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents btnSubmit As Global.System.Web.UI.WebControls.Button
-        
-        '''<summary>
-        '''lblClientMessage control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents lblClientMessage As Global.System.Web.UI.WebControls.Label
-        
-        '''<summary>
-        '''CartGrid1 control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents CartGrid1 As Global.CartGridascx
         
         '''<summary>
         '''pfDefault control.

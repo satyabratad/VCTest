@@ -18,15 +18,14 @@ Public Class ManageCart
     ''' <summary>
     ''' The ShoppingCart ptroperty will provide instance of Cart object
     ''' </summary>
-    Public Property Cart() As List(Of Cart)
+    Public ReadOnly Property Cart() As List(Of Cart)
         Get
+            If HttpContext.Current.Session(_cart) Is Nothing Then
+                HttpContext.Current.Session(_cart) = New List(Of B2P.Cart.Cart)()
+            End If
+
             Return HttpContext.Current.Session(_cart)
         End Get
-        Set(ByVal value As List(Of Cart))
-            If HttpContext.Current.Session(_cart) Is Nothing Then
-                HttpContext.Current.Session(_cart) = value
-            End If
-        End Set
     End Property
     ''' <summary>
     ''' Cart items can be added through AddToCart method
@@ -85,6 +84,47 @@ Public Class ManageCart
             End If
         End Get
     End Property
+
+    Private _ShowCart As Boolean = False
+    Public Property ShowCart() As Boolean
+        Get
+            Return _ShowCart
+        End Get
+        Set(ByVal value As Boolean)
+            _ShowCart = value
+        End Set
+    End Property
+
+    Public Function AddToCart(cartItem As Cart) As Boolean
+        Dim IsExists As Boolean = True
+
+        Dim existing = Me.Cart.FirstOrDefault(Function(p) p.Item.Equals(cartItem.Item, StringComparison.OrdinalIgnoreCase))
+
+        If Not existing Is Nothing Then
+            For Each entity As AccountIdField In existing.AccountIdFields
+                IsExists = cartItem.AccountIdFields _
+                .Exists(Function(p)
+                            Return (p.Label.Equals(entity.Label, StringComparison.OrdinalIgnoreCase) _
+                                                                   And p.Value.Equals(entity.Value, StringComparison.OrdinalIgnoreCase))
+                        End Function)
+
+                If Not IsExists Then
+                    Exit For
+                End If
+
+            Next
+        Else
+            IsExists = False
+        End If
+
+        If Not IsExists Then
+            cartItem.Index = Cart.Count + 1
+            Cart.Add(cartItem)
+        End If
+
+        Return Not IsExists
+
+    End Function
 End Class
 
 

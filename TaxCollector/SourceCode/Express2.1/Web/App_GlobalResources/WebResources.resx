@@ -489,4 +489,8 @@
     <value>Payment Failed</value>
     <comment>Bread Crumb Menu Text</comment>
   </data>
+  <data name="CombineValidationAddToCart" xml:space="preserve">
+    <value>This Combination of item and account numbers already exists in the cart! Please use a different combination.</value>
+    <comment>Add to Cart</comment>
+  </data>
 </root>

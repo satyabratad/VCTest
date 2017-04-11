@@ -15,6 +15,15 @@ Namespace B2P.PaymentLanding.Express.Web
             RegisterClientJs()
 
             If Not IsPostBack Then
+                If BLL.SessionManager.ManageCart.ShowCart = True Then
+                    pnlCart.Visible = True
+                    pnlContent.Visible = False
+                Else
+                    pnlCart.Visible = False
+                    pnlContent.Visible = True
+                End If
+
+
 
 
                 If BLL.SessionManager.IsSSOProduct = False Then
@@ -358,10 +367,10 @@ Namespace B2P.PaymentLanding.Express.Web
                     BuildForm()
                     btnLookup.Enabled = True
                     btnLookup.Visible = True
-                    btnSubmit.Visible = False
+                    btnAddtoCart.Visible = False
                     txtLookupAccount1.Focus()
                 Else
-                    btnSubmit.Visible = True
+                    btnAddtoCart.Visible = True
                     btnLookup.Visible = False
                     BLL.SessionManager.LookupData = Nothing
                     BLL.SessionManager.LookupAmount = Nothing
@@ -460,38 +469,39 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected Sub btnAddtoCart_Click(sender As Object, e As EventArgs) Handles btnAddtoCart.Click
 
             Dim cart As New B2P.Cart.Cart
-            cart.Item = "Tax Bill"
-            cart.Index = 0
-            Dim acc1 As New B2P.Cart.AccountIdField("parcel", "parcel1")
-            Dim acc2 As New B2P.Cart.AccountIdField("tax year", "2016")
-            Dim acc3 As New B2P.Cart.AccountIdField("owner", "S Dutta")
+            cart.Item = ddlCategories.SelectedValue
+
+            Dim acc1 As New B2P.Cart.AccountIdField(lblAccountNumber1.Text, Utility.SafeEncode(txtLookupAccount1.Text))
+            Dim acc2 As New B2P.Cart.AccountIdField(lblAccountNumber2.Text, Utility.SafeEncode(txtLookupAccount2.Text))
+            Dim acc3 As New B2P.Cart.AccountIdField(lblAccountNumber3.Text, Utility.SafeEncode(txtLookupAccount3.Text))
             cart.AccountIdFields = New List(Of B2P.Cart.AccountIdField)
             cart.AccountIdFields.Add(acc1)
             cart.AccountIdFields.Add(acc2)
             cart.AccountIdFields.Add(acc3)
-            cart.Amount = 100.5
+            cart.Amount = ctlPropertyAddress.Amount
 
             Dim propAddr As New B2P.Cart.PropertyAddress
-            propAddr.Address1 = "123, S V Lane"
-            propAddr.City = "Test City"
-            propAddr.Zip = "123456"
+            propAddr.Address1 = Utility.SafeEncode(ctlPropertyAddress.Address1)
+            propAddr.Address2 = Utility.SafeEncode(ctlPropertyAddress.Address2)
+            propAddr.City = Utility.SafeEncode(ctlPropertyAddress.City)
+            propAddr.State = Utility.SafeEncode(ctlPropertyAddress.StateText)
+            propAddr.Zip = Utility.SafeEncode(ctlPropertyAddress.Zip)
+
             cart.PropertyAddress = propAddr
-            BLL.SessionManager.ManageCart.Cart = New List(Of B2P.Cart.Cart)()
-            BLL.SessionManager.ManageCart.Cart.Add(cart)
 
-            CartGrid1.Visible = True
-            btnAddtoCart.Visible = False
-            btnAddMoreItem.Visible = True
-            btnSubmit.Visible = True
+            If BLL.SessionManager.ManageCart.AddToCart(cart) Then
+                BLL.SessionManager.ManageCart.ShowCart = True
+                Response.Redirect("~/pay/")
+            Else
+                Page.ClientScript.RegisterClientScriptBlock(Me.GetType, "_validation", String.Format("alert('{0}');", Resources.WebResources.CombineValidationAddToCart), True)
 
+            End If
 
         End Sub
 
         Protected Sub btnAddMoreItem_Click(sender As Object, e As EventArgs) Handles btnAddMoreItem.Click
-            CartGrid1.Visible = False
-            btnAddtoCart.Visible = True
-            btnAddMoreItem.Visible = False
-            btnSubmit.Visible = False
+            BLL.SessionManager.ManageCart.ShowCart = False
+            Response.Redirect("~/pay/")
         End Sub
 
 
