@@ -14,6 +14,8 @@ Public Class CartGrid
                 BLL.SessionManager.ManageCart.Cart.RemoveAt(index)
                 UpdateCartCount()
                 populateNonLookupGrid()
+                hdMode.Value = ""
+                hdSelectedIndex.Value = ""
             End If
         End If
         'Edit cart
@@ -23,6 +25,8 @@ Public Class CartGrid
                 BLL.SessionManager.ManageCart.Cart(index).Amount = FormatAmount(CType(hdEditAmount.Value, Double))
                 UpdateCartCount()
                 populateNonLookupGrid()
+                hdMode.Value = ""
+                hdSelectedIndex.Value = ""
             End If
         End If
 
@@ -36,24 +40,27 @@ Public Class CartGrid
         If BLL.SessionManager.ClientType = B2P.Cart.EClientType.Lookup Then
             CType(page.FindControl(ctrlName), CartGrid).populateNonLookupGrid()
         End If
-        'If BLL.SessionManager.ClientCode = B2P.Cart.EClientType.SSO Then
-        '    CType(page.FindControl("CartGrid"), CartGridascx).populateSSOGrid()
-        'End If
-
+        If BLL.SessionManager.ClientCode = B2P.Cart.EClientType.SSO Then
+            CType(page.FindControl("CartGrid"), CartGrid).populateSSOGrid()
+        End If
     End Sub
     Private Sub SetVisibilityOfGrid()
         rptNonLookup.Visible = BLL.SessionManager.ClientType = B2P.Cart.EClientType.NonLookup
         rptLookup.Visible = BLL.SessionManager.ClientType = B2P.Cart.EClientType.Lookup
-        'rptSSO.Visible = BLL.SessionManager.ClientCode = B2P.Cart.EClientType.SSO
+        rptSSO.Visible = BLL.SessionManager.ClientCode = B2P.Cart.EClientType.SSO
     End Sub
-    Protected Sub populateNonLookupGrid()
+    Private Sub populateNonLookupGrid()
         rptNonLookup.DataSource = BLL.SessionManager.ManageCart.Cart
         rptNonLookup.DataBind()
     End Sub
-    'Protected Sub populateLookupGrid()
-    '    rptLookup.DataSource = BLL.SessionManager.ManageCart.Cart
-    '    rptLookup.DataBind()
-    'End Sub
+    Private Sub populateLookupGrid()
+        rptLookup.DataSource = BLL.SessionManager.ManageCart.Cart
+        rptLookup.DataBind()
+    End Sub
+    Private Sub populateSSOGrid()
+        rptSSO.DataSource = BLL.SessionManager.ManageCart.Cart
+        rptSSO.DataBind()
+    End Sub
     Protected Function GetPropertyAddress(Index As Integer) As String
         Dim CartItem As B2P.Cart.Cart = BLL.SessionManager.ManageCart.Cart(Index)
         Dim propertyAddress As String = String.Empty

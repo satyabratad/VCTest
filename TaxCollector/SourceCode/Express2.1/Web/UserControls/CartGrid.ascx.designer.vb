@@ -32,6 +32,15 @@ Partial Public Class CartGrid
     Protected WithEvents rptLookup As Global.System.Web.UI.WebControls.Repeater
     
     '''<summary>
+    '''rptSSO control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents rptSSO As Global.System.Web.UI.WebControls.Repeater
+    
+    '''<summary>
     '''hdSelectedIndex control.
     '''</summary>
     '''<remarks>

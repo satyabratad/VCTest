@@ -80,6 +80,45 @@
     </asp:Repeater>
    
     <!--End Lookup------------------------------------------------------------------------------------->
+     <!--SSO----------------------------------------------------------------------------------------->
+    
+    <asp:Repeater ID="rptSSO" runat="server">
+        <HeaderTemplate>
+    <table class="table" style="width: 100%;" id="tblSSO">
+        <thead>
+            <tr>
+                <td class="table-header" width="5%"></td>
+                <td class="table-header" width="20%">Item</td>
+                <td class="table-header" width="55%">Details</td>
+                <td class="table-header" width="10%" align="right">Amount Due</td>
+                <td class="table-header" width="10%" align="right">Amount</td>
+            </tr>
+        </thead>
+        </HeaderTemplate>
+        <ItemTemplate>
+        <tbody>
+            <tr id="trIndex"<%# Eval("Index") %>>
+                <td class="table-row" style="align-content:center;cursor:pointer;"><a onclick="removeItems(<%# Eval("Index") %>);" title="Delete Item"><i class="fa fa-trash-o fa-lg" aria-hidden="true"></i></a></td>
+                <td class="table-row"><%# Eval("Item") %></td>
+                <td class="table-row"><%# GetAccountInformation(Eval("Index")) %><br>
+                <td class="table-row"><%# GetAccountInformation(Eval("Index")) %><br>
+                    <strong>Property Address:</strong><br>
+                    <%# GetPropertyAddress(Eval("Index")) %>
+                </td>
+                <td class="table-row" align="right">$<%# FormatAmount(Eval("Amount")) %></td>
+            </tr>
+        </ItemTemplate>
+        <FooterTemplate>
+            <tr>
+                <td class="table-row-bold" colspan="3" align="right">Subtotal (<%# GetCartItemCount() %> item(s)): </td>
+                <td class="table-row-bold" align="right">$<%# SubTotal() %></td>
+            </tr>
+        </tbody>
+    </table>
+        </FooterTemplate>
+    </asp:Repeater>
+   
+    <!--End SSO------------------------------------------------------------------------------------->
    
 </div>
 <!-- START DELETE CONFIRM MODAL DIALOG -->
