@@ -505,8 +505,8 @@ Namespace B2P.PaymentLanding.Express.Web
                 BLL.SessionManager.ManageCart.ShowCart = True
                 Response.Redirect("~/pay/")
             Else
-                Page.ClientScript.RegisterClientScriptBlock(Me.GetType, "_validation", String.Format("alert('{0}');", Resources.WebResources.CombineValidationAddToCart), True)
-
+                'Page.ClientScript.RegisterClientScriptBlock(Me.GetType, "_validation", String.Format("alert('{0}');", Resources.WebResources.CombineValidationAddToCart), True)
+                Page.ClientScript.RegisterStartupScript(Me.GetType, "Show", "$(document).ready(function() { $('#pnlValidationDuplicate').modal({show: 'true', backdrop: 'static', keyboard: false}); });", True)
             End If
         End Sub
 

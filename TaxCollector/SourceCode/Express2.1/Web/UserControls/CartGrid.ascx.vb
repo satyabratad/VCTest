@@ -38,10 +38,10 @@ Public Class CartGrid
             CType(page.FindControl(ctrlName), CartGrid).populateNonLookupGrid()
         End If
         If BLL.SessionManager.ClientType = B2P.Cart.EClientType.Lookup Then
-            CType(page.FindControl(ctrlName), CartGrid).populateNonLookupGrid()
+            CType(page.FindControl(ctrlName), CartGrid).populateLookupGrid()
         End If
         If BLL.SessionManager.ClientType = B2P.Cart.EClientType.SSO Then
-            CType(page.FindControl("CartGrid"), CartGrid).populateSSOGrid()
+            CType(page.FindControl(ctrlName), CartGrid).populateSSOGrid()
         End If
     End Sub
     Private Sub SetVisibilityOfGrid()

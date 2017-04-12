@@ -146,7 +146,7 @@
                                 <br />
                                 <div class="pull-right">
                                     <asp:Button ID="btnAddMoreItem" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, AddMoreItemsButton %>" ToolTip="<%$ Resources:WebResources, AddMoreItemsButton %>" runat="server" />
-                                    <asp:Button ID="btnSubmit" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, ButtonContinue %>" ToolTip="<%$ Resources:WebResources, ButtonContinue %>" runat="server"/>
+                                    <asp:Button ID="btnSubmit" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, ButtonContinue %>" ToolTip="<%$ Resources:WebResources, ButtonContinue %>" runat="server" />
                                 </div>
                             </div>
                         </asp:Panel>
@@ -259,8 +259,32 @@
         </asp:Panel>
         <!-- END LOOKUP ERROR MODAL DIALOG -->
 
-
-
+        <!-- START DUPLICATE ITEM CHECK VALIDATION MODAL DIALOG-->
+        <asp:Panel ID="pnlValidationDuplicate" CssClass="modal fade" TabIndex="-1" role="dialog" aria-label="Validation" aria-hidden="true" runat="server">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            &times;</button>
+                        <h4 class="modal-title">Validation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="div1" role="alert" style="margin-top: 10px;" class="alert alert-success">
+                            <div class="status-msg-text">
+                                <asp:Label runat="server" ID="lblDuplicateValidation" Text="<%$ Resources:WebResources, CombineValidationAddToCart %>" class="control-label"></asp:Label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnYes" name="btnYes" onclick="bill2payAccountDetails.removeItemsFromCart();"
+                            class="btn btn-primary" title="OK" data-dismiss="modal">
+                            OK</button>
+                    </div>
+                </div>
+            </div>
+        </asp:Panel>
+        <!-- END DUPLICATE ITEM CHECK VALIDATION MODAL DIALOG-->
 
         <!-- JavaScript -->
         <script src="/Js/jquery-1.11.1.min.js"></script>

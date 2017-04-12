@@ -391,5 +391,23 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents btnCloseLookupErrorDialog As Global.System.Web.UI.WebControls.Button
+        
+        '''<summary>
+        '''pnlValidationDuplicate control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents pnlValidationDuplicate As Global.System.Web.UI.WebControls.Panel
+        
+        '''<summary>
+        '''lblDuplicateValidation control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents lblDuplicateValidation As Global.System.Web.UI.WebControls.Label
     End Class
 End Namespace
