@@ -28,6 +28,7 @@ Namespace B2P.PaymentLanding.Express.Web
 
                     If y.DefaultProductName <> "" Then
                         ddlCategories.SelectedValue = y.DefaultProductName.Trim
+
                     End If
 
                     ' Check for session values; populate fields if not blank
@@ -36,7 +37,10 @@ Namespace B2P.PaymentLanding.Express.Web
                         txtLookupAccount1.Text = BLL.SessionManager.AccountNumber1
                         txtLookupAccount2.Text = BLL.SessionManager.AccountNumber2
                         txtLookupAccount3.Text = BLL.SessionManager.AccountNumber3
+
+
                     End If
+
 
                     BLL.SessionManager.LookupAmount = Nothing
                     BLL.SessionManager.LookupAmountMinimum = False
@@ -352,6 +356,7 @@ Namespace B2P.PaymentLanding.Express.Web
             Dim errMsg As String = String.Empty
             Try
                 Dim z As New B2P.Objects.Product(BLL.SessionManager.ClientCode, ddlCategories.SelectedValue, B2P.Common.Enumerations.TransactionSources.Web)
+                SetBreadCrumbContactInfo(z)
 
                 If z.AmountDueSource = B2P.Common.Enumerations.AmountDueSources.Lookup Or z.AmountDueSource = B2P.Common.Enumerations.AmountDueSources.Table Then
                     'pnlLookupAccount.Visible = True
@@ -405,6 +410,16 @@ Namespace B2P.PaymentLanding.Express.Web
                 HttpContext.Current.ApplicationInstance.CompleteRequest()
             End Try
 
+
+        End Sub
+
+        Private Sub SetBreadCrumbContactInfo(z As Objects.Product)
+            ' setting Contact Info flag from bread crumb menu
+            If z.WebOptions.Demographics = Objects.WebConfiguration.OptionalFields.NotUsed Then
+                BLL.SessionManager.IsContactInfoRequired = False
+            Else
+                BLL.SessionManager.IsContactInfoRequired = True
+            End If
 
         End Sub
 
