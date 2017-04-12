@@ -79,7 +79,7 @@ Namespace B2P.PaymentLanding.Express.BLL
         Private Const _clientType As String = "ClientType"
         Private Const _breadCrumbMenuTab As Object = "BreadCrumbMenuTab"
         Private Const _contactInfo As Object = "ContactInfo"
-
+	Private Const _isContactInfoRequired As String = "IsContactInfoRequired"
 #End Region
 
 #Region " ::: Contructors ::: "
@@ -810,7 +810,7 @@ Namespace B2P.PaymentLanding.Express.BLL
         ''' <summary>
         ''' This BreadCrumbMenuTab property will provide the BreadCrumbMenutab details
         ''' </summary>
-        ''' <returns></returns>
+
         Public Shared Property BreadCrumbMenuTab() As Object
             Get
                 If HttpContext.Current.Session(_breadCrumbMenuTab) Is Nothing Then
@@ -823,7 +823,7 @@ Namespace B2P.PaymentLanding.Express.BLL
                 HttpContext.Current.Session(_breadCrumbMenuTab) = value
             End Set
         End Property
-        ''' <summary>
+''' <summary>
         ''' Contact info
         ''' </summary>
         ''' <returns></returns>
@@ -837,6 +837,23 @@ Namespace B2P.PaymentLanding.Express.BLL
             End Get
             Set(value As B2P.Cart.ContactInfo)
                 HttpContext.Current.Session(_contactInfo) = value
+            End Set
+        End Property
+''' <summary>
+        ''' This will provide information weather Contact Info is Required
+        ''' </summary>
+
+        Public Shared Property IsContactInfoRequired() As Boolean
+            Get
+                If HttpContext.Current.Session(_isContactInfoRequired) Is Nothing Then
+                    Return Nothing
+                Else
+                    Return DirectCast(HttpContext.Current.Session(_isContactInfoRequired), Boolean)
+                End If
+
+            End Get
+            Set(ByVal value As Boolean)
+                HttpContext.Current.Session(_isContactInfoRequired) = value
             End Set
         End Property
 #End Region
