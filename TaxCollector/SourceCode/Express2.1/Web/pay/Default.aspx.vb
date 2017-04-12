@@ -386,7 +386,7 @@ Namespace B2P.PaymentLanding.Express.Web
                 If BLL.SessionManager.ManageCart.ShowCart = True Then
                     pnlCart.Visible = True
                     pnlContent.Visible = False
-
+                    pnlEditLookupItem.Visible = False
                     If z.AmountDueSource = B2P.Common.Enumerations.AmountDueSources.Lookup Or z.AmountDueSource = B2P.Common.Enumerations.AmountDueSources.Table Then
                         BLL.SessionManager.ClientType = B2P.Cart.EClientType.Lookup
                     Else
@@ -395,10 +395,20 @@ Namespace B2P.PaymentLanding.Express.Web
 
                     ctlCartGrid.PopulateGrid("ctlCartGrid")
                 Else
-                    pnlCart.Visible = False
-                    pnlContent.Visible = True
+                    If BLL.SessionManager.ManageCart.EditItemIndex > 0 Then
+                        pnlCart.Visible = False
+                        pnlContent.Visible = False
+                        pnlEditLookupItem.Visible = True
+                        Dim _SelectedItem = BLL.SessionManager.ManageCart.Cart.FirstOrDefault(Function(p) p.Index = BLL.SessionManager.ManageCart.EditItemIndex)
+                        If Not _SelectedItem Is Nothing Then
+                            ctlEditLookupItem.SelectedItem = _SelectedItem
+                        End If
+                    Else
+                        pnlCart.Visible = False
+                        pnlContent.Visible = True
+                        pnlEditLookupItem.Visible = False
+                    End If
                 End If
-
             Catch ex As Exception
                 ' Build the error message
                 errMsg = Utility.BuildErrorMessage(Request.Url.Host, Request.Url.AbsolutePath,
@@ -520,7 +530,6 @@ Namespace B2P.PaymentLanding.Express.Web
                 BLL.SessionManager.ManageCart.ShowCart = True
                 Response.Redirect("~/pay/")
             Else
-                'Page.ClientScript.RegisterClientScriptBlock(Me.GetType, "_validation", String.Format("alert('{0}');", Resources.WebResources.CombineValidationAddToCart), True)
                 Page.ClientScript.RegisterStartupScript(Me.GetType, "Show", "$(document).ready(function() { $('#pnlValidationDuplicate').modal({show: 'true', backdrop: 'static', keyboard: false}); });", True)
             End If
         End Sub

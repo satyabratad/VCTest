@@ -86,12 +86,26 @@ Public Class ManageCart
     End Property
 
     Private _ShowCart As Boolean = False
+    ''' <summary>
+    ''' True when Cart Grid visible
+    ''' </summary>
+    ''' <returns></returns>
     Public Property ShowCart() As Boolean
         Get
             Return _ShowCart
         End Get
         Set(ByVal value As Boolean)
             _ShowCart = value
+        End Set
+    End Property
+
+    Private _EditItemIndex As Integer = -1
+    Public Property EditItemIndex() As Integer
+        Get
+            Return _EditItemIndex
+        End Get
+        Set(ByVal value As Integer)
+            _EditItemIndex = value
         End Set
     End Property
 

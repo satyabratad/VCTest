@@ -7,7 +7,7 @@
 <%@ Register TagPrefix="b2p" TagName="PropertyAddress" Src="~/UserControls/PropertyAddress.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="CartGrid" Src="~/UserControls/CartGrid.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="BreadCrumbMenu" Src="~/UserControls/BreadCrumbMenu.ascx" %>
-
+<%@ Register TagPrefix="b2p" TagName="EditLookupItem" Src="~/UserControls/EditLookupItem.ascx" %>
 
 
 <!DOCTYPE html>
@@ -149,6 +149,9 @@
                                     <asp:Button ID="btnSubmit" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, ButtonContinue %>" ToolTip="<%$ Resources:WebResources, ButtonContinue %>" runat="server" />
                                 </div>
                             </div>
+                        </asp:Panel>
+                        <asp:Panel runat="server" ID="pnlEditLookupItem">
+                            <b2p:EditLookupItem runat="server" ID="ctlEditLookupItem" />
                         </asp:Panel>
                     </div>
                 </div>
@@ -351,8 +354,6 @@
 
         </script>
 
-        </div>
     </form>
-
 </body>
 </html>
