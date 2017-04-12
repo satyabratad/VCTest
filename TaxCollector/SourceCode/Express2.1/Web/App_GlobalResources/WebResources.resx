@@ -474,7 +474,7 @@
     <comment>Bread Crumb Menu Text</comment>
   </data>
   <data name="PaymentCompleate" xml:space="preserve">
-    <value>Payment Complete</value>
+    <value>Payment Success</value>
     <comment>Bread Crumb Menu Text</comment>
   </data>
   <data name="PaymentConfirm" xml:space="preserve">

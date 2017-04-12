@@ -63,13 +63,13 @@
                         <!--// START NO SCRIPT CHECK //-->
                         <b2p:JavaScriptCheck ID="pjsJavascript" runat="server" />
                         <!--// END NO SCRIPT CHECK //-->
-                        <asp:Panel ID="pnlContent" runat="server" Visible="true">
-                            <div class="content">
-                                <div class="container" style="min-height: 50%;">
-                                    <!--// START BREADCRUMBS //-->
-                                    <b2p:BreadCrumbMenu runat="server" ID="BreadCrumbMenu" PageTagName="Home" />
-                                    <!--// END BREADCRUMBS //-->
 
+                        <div class="content">
+                            <div class="container" style="min-height: 50%;">
+                                <!--// START BREADCRUMBS //-->
+                                <b2p:BreadCrumbMenu runat="server" ID="BreadCrumbMenu" PageTagName="Home" />
+                                <!--// END BREADCRUMBS //-->
+                                <asp:Panel ID="pnlContent" runat="server" Visible="true">
                                     <div class="col-xs-12 col-sm-6">
                                         <br />
                                         <asp:Panel ID="pnlProducts" runat="server">
@@ -136,23 +136,24 @@
                                             <asp:Label ID="lblClientMessage" runat="server" ToolTip="Client Message"></asp:Label>
                                         </p>
                                     </div>
+                                </asp:Panel>
+                                <asp:Panel ID="pnlCart" runat="server" Visible="false">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <b2p:CartGrid runat="server" ID="ctlCartGrid" />
+                                        <br />
+                                        <div class="pull-right">
+                                            <asp:Button ID="btnAddMoreItem" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, AddMoreItemsButton %>" ToolTip="<%$ Resources:WebResources, AddMoreItemsButton %>" runat="server" />
+                                            <asp:Button ID="btnSubmit" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, ButtonContinue %>" ToolTip="<%$ Resources:WebResources, ButtonContinue %>" runat="server" />
+                                        </div>
+                                    </div>
+                                </asp:Panel>
+                                <asp:Panel runat="server" ID="pnlEditLookupItem">
+                                    <b2p:EditLookupItem runat="server" ID="ctlEditLookupItem" />
+                                </asp:Panel>
+                            </div>
+                        </div>
 
-                                </div>
-                            </div>
-                        </asp:Panel>
-                        <asp:Panel ID="pnlCart" runat="server" Visible="false">
-                            <div class="col-xs-12 col-sm-12">
-                                <b2p:CartGrid runat="server" ID="ctlCartGrid" />
-                                <br />
-                                <div class="pull-right">
-                                    <asp:Button ID="btnAddMoreItem" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, AddMoreItemsButton %>" ToolTip="<%$ Resources:WebResources, AddMoreItemsButton %>" runat="server" />
-                                    <asp:Button ID="btnSubmit" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, ButtonContinue %>" ToolTip="<%$ Resources:WebResources, ButtonContinue %>" runat="server" />
-                                </div>
-                            </div>
-                        </asp:Panel>
-                        <asp:Panel runat="server" ID="pnlEditLookupItem">
-                            <b2p:EditLookupItem runat="server" ID="ctlEditLookupItem" />
-                        </asp:Panel>
+
                     </div>
                 </div>
 

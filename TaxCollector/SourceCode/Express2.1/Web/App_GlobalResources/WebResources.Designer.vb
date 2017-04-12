@@ -1109,7 +1109,7 @@ Namespace Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Payment Complete.
+        '''  Looks up a localized string similar to Payment Success.
         '''</summary>
         Friend Shared ReadOnly Property PaymentCompleate() As String
             Get

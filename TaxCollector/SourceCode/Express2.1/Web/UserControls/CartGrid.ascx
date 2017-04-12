@@ -71,7 +71,7 @@
         </ItemTemplate>
         <FooterTemplate>
             <tr>
-                <td class="table-row-bold" colspan="3" align="right">Subtotal (<%# GetCartItemCount() %> item(s)): </td>
+                <td class="table-row-bold" colspan="5" align="right">Subtotal (<%# GetCartItemCount() %> item(s)): </td>
                 <td class="table-row-bold" align="right">$<%# SubTotal() %></td>
             </tr>
         </tbody>

@@ -395,7 +395,7 @@ Namespace B2P.PaymentLanding.Express.Web
 
                     ctlCartGrid.PopulateGrid("ctlCartGrid")
                 Else
-                    If BLL.SessionManager.ManageCart.EditItemIndex > 0 Then
+                    If BLL.SessionManager.ManageCart.EditItemIndex > -1 Then
                         pnlCart.Visible = False
                         pnlContent.Visible = False
                         pnlEditLookupItem.Visible = True
@@ -497,7 +497,13 @@ Namespace B2P.PaymentLanding.Express.Web
             BLL.SessionManager.AccountNumber1 = Utility.SafeEncode(txtLookupAccount1.Text)
             BLL.SessionManager.AccountNumber2 = Utility.SafeEncode(txtLookupAccount2.Text)
             BLL.SessionManager.AccountNumber3 = Utility.SafeEncode(txtLookupAccount3.Text)
-            Response.Redirect("/pay/payment.aspx", False)
+
+            If BLL.SessionManager.IsContactInfoRequired Then
+                Response.Redirect("/pay/ContactInfo.aspx", False)
+            Else
+                Response.Redirect("/pay/payment.aspx", False)
+            End If
+
         End Sub
 
         Protected Sub btnAddtoCart_Click(sender As Object, e As EventArgs) Handles btnAddtoCart.Click
