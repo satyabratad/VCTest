@@ -493,4 +493,16 @@
     <value>This Combination of item and account numbers already exists in the cart! Please use a different combination.</value>
     <comment>Add to Cart</comment>
   </data>
+  <data name="ContactInfoTitle" xml:space="preserve">
+    <value>Enter Contact Information</value>
+  </data>
+  <data name="ContactName" xml:space="preserve">
+    <value>Contact Name</value>
+  </data>
+  <data name="InvalidZipMsg" xml:space="preserve">
+    <value>Invalid Zip</value>
+  </data>
+  <data name="PhoneLabel" xml:space="preserve">
+    <value>Phone</value>
+  </data>
 </root>

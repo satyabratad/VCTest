@@ -6,5 +6,6 @@
     Public Property State As String
     Public Property Country As String
     Public Property Zip As String
+    Public Property Phone As String
 End Class
 

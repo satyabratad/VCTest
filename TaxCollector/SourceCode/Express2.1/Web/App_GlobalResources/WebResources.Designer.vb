@@ -389,6 +389,24 @@ Namespace Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Enter Contact Information.
+        '''</summary>
+        Friend Shared ReadOnly Property ContactInfoTitle() As String
+            Get
+                Return ResourceManager.GetString("ContactInfoTitle", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Contact Name.
+        '''</summary>
+        Friend Shared ReadOnly Property ContactName() As String
+            Get
+                Return ResourceManager.GetString("ContactName", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Create Profile.
         '''</summary>
         Friend Shared ReadOnly Property CreateProfileTitle() As String
@@ -700,6 +718,15 @@ Namespace Resources
         Friend Shared ReadOnly Property FeeInfoModalTitle() As String
             Get
                 Return ResourceManager.GetString("FeeInfoModalTitle", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Invalid Zip.
+        '''</summary>
+        Friend Shared ReadOnly Property InvalidZipMsg() As String
+            Get
+                Return ResourceManager.GetString("InvalidZipMsg", resourceCulture)
             End Get
         End Property
         
@@ -1114,6 +1141,15 @@ Namespace Resources
         Friend Shared ReadOnly Property PaymentFailure() As String
             Get
                 Return ResourceManager.GetString("PaymentFailure", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Phone.
+        '''</summary>
+        Friend Shared ReadOnly Property PhoneLabel() As String
+            Get
+                Return ResourceManager.GetString("PhoneLabel", resourceCulture)
             End Get
         End Property
         

@@ -78,6 +78,7 @@ Namespace B2P.PaymentLanding.Express.BLL
         Private Const _manageCart As String = "ManageCart"
         Private Const _clientType As String = "ClientType"
         Private Const _breadCrumbMenuTab As Object = "BreadCrumbMenuTab"
+        Private Const _contactInfo As Object = "ContactInfo"
 
 #End Region
 
@@ -820,6 +821,22 @@ Namespace B2P.PaymentLanding.Express.BLL
             End Get
             Set(value As Object)
                 HttpContext.Current.Session(_breadCrumbMenuTab) = value
+            End Set
+        End Property
+        ''' <summary>
+        ''' Contact info
+        ''' </summary>
+        ''' <returns></returns>
+        Public Shared Property ContactInfo() As B2P.Cart.ContactInfo
+            Get
+                If HttpContext.Current.Session(_contactInfo) Is Nothing Then
+                    Return Nothing
+                Else
+                    Return DirectCast(HttpContext.Current.Session(_contactInfo), B2P.Cart.ContactInfo)
+                End If
+            End Get
+            Set(value As B2P.Cart.ContactInfo)
+                HttpContext.Current.Session(_contactInfo) = value
             End Set
         End Property
 #End Region
