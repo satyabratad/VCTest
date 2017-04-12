@@ -69,6 +69,9 @@ Namespace B2P.PaymentLanding.Express.Web
         ''' </summary>
         Private Sub BindState()
             Dim StateAbbr As String = ddlContactCountry.SelectedValue
+            If Not BLL.SessionManager.ContactInfo Is Nothing Then
+                StateAbbr = BLL.SessionManager.ContactInfo.Country
+            End If
             If String.IsNullOrEmpty(StateAbbr) Then Exit Sub
             ddlContactState.Items.Clear()
             ddlContactState.Items.Add(New ListItem("--Select--", ""))
