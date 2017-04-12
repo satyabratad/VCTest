@@ -66,4 +66,13 @@ Partial Public Class CartGrid
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents hdEditAmount As Global.System.Web.UI.HtmlControls.HtmlInputHidden
+    
+    '''<summary>
+    '''btnEditItem control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnEditItem As Global.System.Web.UI.WebControls.Button
 End Class

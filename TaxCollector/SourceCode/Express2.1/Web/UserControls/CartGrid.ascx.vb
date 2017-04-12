@@ -122,4 +122,10 @@ Public Class CartGrid
         Dim cs As ClientScriptManager = Page.ClientScript
         cs.RegisterStartupScript(Me.GetType(), "tmp", "<script type='text/javascript'>updateCartCount(" + BLL.SessionManager.ManageCart.Cart.Count.ToString() + ");</script>", False)
     End Sub
+
+    Protected Sub btnEditItem_Click(sender As Object, e As EventArgs) Handles btnEditItem.Click
+        BLL.SessionManager.ManageCart.EditItemIndex = hdSelectedIndex.Value
+        BLL.SessionManager.ManageCart.ShowCart = False
+        Response.Redirect("~/pay/")
+    End Sub
 End Class

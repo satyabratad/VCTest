@@ -185,6 +185,7 @@
     <Content Include="UserControls\CartGrid.ascx" />
     <Content Include="UserControls\ConvenienceFee.ascx" />
     <Content Include="UserControls\CreditCard.ascx" />
+    <Content Include="UserControls\EditLookupItem.ascx" />
     <Content Include="UserControls\Footer.ascx" />
     <Content Include="UserControls\Header.ascx" />
     <Content Include="UserControls\JavaScriptCheck.ascx" />
@@ -285,7 +286,6 @@
     </Compile>
     <Compile Include="pay\ContactInfo.aspx.vb">
       <DependentUpon>ContactInfo.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="pay\Default.aspx.designer.vb">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -355,6 +355,13 @@
     </Compile>
     <Compile Include="UserControls\CreditCard.ascx.vb">
       <DependentUpon>CreditCard.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\EditLookupItem.ascx.designer.vb">
+      <DependentUpon>EditLookupItem.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\EditLookupItem.ascx.vb">
+      <DependentUpon>EditLookupItem.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="UserControls\Footer.ascx.designer.vb">

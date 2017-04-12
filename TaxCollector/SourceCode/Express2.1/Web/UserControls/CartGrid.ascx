@@ -144,7 +144,7 @@
                                                 Yes</button>
                                             <button type="button" id="btnNo" name="btnNo" class="btn btn-primary" title="No"
                                                 class="btn btn-default" data-dismiss="modal">
-                                                No</button>
+                                             No</button>
                                         </div>
                                     </div>
                                 </div>
@@ -153,6 +153,7 @@
 <input id="hdSelectedIndex" runat="server" type="hidden" value="" />
 <input id="hdMode" type="hidden" value=""  runat="server" />
 <input id="hdEditAmount" type="hidden" value=""  runat="server" />
+<asp:Button ID="btnEditItem" runat="server" style="display:none;visibility:hidden"  text="Edit"/>
 <script>
     function removeItems(Index) {
         $('#hdSelectedIndex').val(Index);
@@ -164,13 +165,9 @@
     }
     function editItems(Index) {
         $('#hdSelectedIndex').val(Index);
-        editItemsInCart(50);//Temporary,will be replaced by edit section
+        $('#<%=btnEditItem.ClientID%>').click()
     }
-    function editItemsInCart(Amount) {
-        $('#hdMode').val("EDIT");
-        $('#hdEditAmount').val(Amount);
-        $("#frmDefault").submit();
-    }
+    
     function updateCartCount(count) {
         $("#cartCount").html(count);
     }
