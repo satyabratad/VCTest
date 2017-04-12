@@ -14,7 +14,7 @@ Imports Resources
 Public Class BreadCrumbMenu
     Inherits System.Web.UI.UserControl
 #Region "Properties"
-    Public IsContactInfoVisible As Boolean = False
+    Public IsContactInfoVisible As Boolean = True
     Private _pageTagName As String
     Public Property PageTagName() As String
         Get
@@ -109,24 +109,27 @@ Public Class BreadCrumbMenu
     ''' This method will generate the bread crumb menu
     ''' </summary>
     Private Sub GenerateBreadCrumb()
-        Dim CurrentTab As BreadCrumbTab
+        Dim currentTab As BreadCrumbTab
+        Dim finalTab As BreadCrumbTab
+        Dim pageIndex As Integer
+        Dim htmlString As New StringBuilder
+
         If String.IsNullOrEmpty(PageTagName) = False And Not IsDBNull(tabList) Then
-            CurrentTab = tabList.Where(Function(t As BreadCrumbTab) t.PageTag.Equals(PageTagName, System.StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault()
+            currentTab = tabList.Where(Function(t As BreadCrumbTab) t.PageTag.Equals(PageTagName, System.StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault()
             If String.IsNullOrEmpty(RedirectAddress) = False Then
 
-                CurrentTab.PageName = RedirectAddress
+                currentTab.PageName = RedirectAddress
             End If
-            CurrentTab.IsVisited = True
+            currentTab.IsVisited = True
             divBreadCrumb.InnerHtml = ""
-            Dim htmlString As New StringBuilder
+
 
             htmlString.Append("<ul class='breadcrumb'>")
-
-            Dim pageIndex As Integer
+            finalTab = tabList.Where(Function(t As BreadCrumbTab) t.PageTag.Equals(PageTabName.PaymentFaild.ToString(), System.StringComparison.InvariantCultureIgnoreCase) And t.IsVisited = True).FirstOrDefault()
 
             pageIndex = 1
             For Each tab As BreadCrumbTab In tabList
-                Dim x = PageTabName.PaymentSuccess.ToString()
+
                 If tab.IsVisited = True Then
                     If Not PageTagName.Equals(PageTabName.PaymentSuccess.ToString(), System.StringComparison.InvariantCultureIgnoreCase) And Not PageTagName.Equals(PageTabName.PaymentFaild.ToString(), System.StringComparison.InvariantCultureIgnoreCase) Then
 
@@ -134,56 +137,47 @@ Public Class BreadCrumbMenu
                             If IsContactInfoVisible = True Then
 
                                 htmlString.AppendFormat("<li class='active'><a href='#' class='' onclick=""RedirectBreadCrumbTab('{0}');"" ><span Class='badge badge-inverse'>", tab.PageName)
-                                htmlString.AppendFormat("{0}</span> {1} <span class='hidden-xs hidden-sm'></span></a></li>", pageIndex.ToString(), tab.MenuName)
+                                htmlString.AppendFormat("{0}</span> {1} </a></li>", pageIndex.ToString(), tab.MenuName)
                                 pageIndex = pageIndex + 1
                             End If
                         Else
 
                             htmlString.AppendFormat("<li class='active'><a href='#' class='' onclick=""RedirectBreadCrumbTab('{0}');"" ><span Class='badge badge-inverse'>", tab.PageName)
-                            htmlString.AppendFormat("{0}</span> {1} <span class='hidden-xs hidden-sm'></span></a></li>", pageIndex.ToString(), tab.MenuName)
+                            htmlString.AppendFormat("{0}</span> {1} </a></li>", pageIndex.ToString(), tab.MenuName)
                             pageIndex = pageIndex + 1
                         End If
                     Else
 
-
                         If tab.PageTag.Equals(PageTabName.PaymentFaild.ToString(), System.StringComparison.InvariantCultureIgnoreCase) Then
-
-
                             htmlString.AppendFormat("<li class='danger'><a href='#' class=''><span Class='badge badge-inverse'>")
-                            htmlString.AppendFormat("{0}</span> {1} <span class='hidden-xs hidden-sm'></span></a></li>", pageIndex.ToString(), tab.MenuName)
+                            htmlString.AppendFormat("{0}</span> {1} </a></li>", pageIndex.ToString(), tab.MenuName)
                         Else
-
                             htmlString.AppendFormat("<li class='active'><a href='#' class=''  ><span Class='badge badge-inverse'>")
-                            htmlString.AppendFormat("{0}</span> {1} <span class='hidden-xs hidden-sm'></span></a></li>", pageIndex.ToString(), tab.MenuName)
+                            htmlString.AppendFormat("{0}</span> {1} </a></li>", pageIndex.ToString(), tab.MenuName)
 
                         End If
                         pageIndex = pageIndex + 1
                     End If
 
                 Else
+                    If finalTab Is Nothing Then
 
+                        If Not PageTagName.Equals(PageTabName.PaymentFaild.ToString(), System.StringComparison.InvariantCultureIgnoreCase) Then
+                            If tab.PageTag.Equals(PageTabName.ContactInfo.ToString(), System.StringComparison.InvariantCultureIgnoreCase) Then
+                                If IsContactInfoVisible = True Then
 
+                                    htmlString.AppendFormat("<li class=''><a href='#' class='inactiveLink'><span class='badge'>")
+                                    htmlString.AppendFormat("{0}</span> {1} </a></li>", pageIndex.ToString(), tab.MenuName)
+                                    pageIndex = pageIndex + 1
+                                End If
+                            Else
+                                If Not tab.PageTag.Equals(PageTabName.PaymentFaild.ToString(), System.StringComparison.InvariantCultureIgnoreCase) Then
+                                    htmlString.AppendFormat("<li class=''><a href='#' class='inactiveLink'><span class='badge'>")
+                                    htmlString.AppendFormat("{0}</span> {1} </a></li>", pageIndex.ToString(), tab.MenuName)
+                                    pageIndex = pageIndex + 1
+                                End If
 
-                    If Not PageTagName.Equals(PageTabName.PaymentFaild.ToString(), System.StringComparison.InvariantCultureIgnoreCase) Then
-                        If tab.PageTag.Equals(PageTabName.ContactInfo.ToString(), System.StringComparison.InvariantCultureIgnoreCase) Then
-                            If IsContactInfoVisible = True Then
-
-                                htmlString.AppendFormat("<li class=''><a href='#' class='inactiveLink'><span class='badge'>")
-                                htmlString.AppendFormat("{0}</span> {1} <span class='hidden-xs hidden-sm'></span></a></li>", pageIndex.ToString(), tab.MenuName)
-                                pageIndex = pageIndex + 1
                             End If
-                        Else
-
-
-                            If Not tab.PageTag.Equals(PageTabName.PaymentFaild.ToString(), System.StringComparison.InvariantCultureIgnoreCase) Then
-
-
-                                htmlString.AppendFormat("<li class=''><a href='#' class='inactiveLink'><span class='badge'>")
-                                htmlString.AppendFormat("{0}</span> {1} <span class='hidden-xs hidden-sm'></span></a></li>", pageIndex.ToString(), tab.MenuName)
-                                pageIndex = pageIndex + 1
-                            End If
-
-
                         End If
                     End If
                 End If
