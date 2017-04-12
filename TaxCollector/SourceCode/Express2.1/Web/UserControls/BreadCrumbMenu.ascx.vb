@@ -14,7 +14,18 @@ Imports Resources
 Public Class BreadCrumbMenu
     Inherits System.Web.UI.UserControl
 #Region "Properties"
-    Public IsContactInfoVisible As Boolean = False
+    ' Public IsContactInfoVisible As Boolean = False
+
+    Private _isContactInfoVisible As String
+    Public Property IsContactInfoVisible() As String
+        Get
+            Return _isContactInfoVisible
+        End Get
+        Set(ByVal value As String)
+            _isContactInfoVisible = value
+        End Set
+    End Property
+
     Private _pageTagName As String
     Public Property PageTagName() As String
         Get
@@ -113,6 +124,8 @@ Public Class BreadCrumbMenu
         Dim finalTab As BreadCrumbTab
         Dim pageIndex As Integer
         Dim htmlString As New StringBuilder
+
+        IsContactInfoVisible = SessionManager.IsContactInfoRequired
 
         If String.IsNullOrEmpty(PageTagName) = False And Not IsDBNull(tabList) Then
             currentTab = tabList.Where(Function(t As BreadCrumbTab) t.PageTag.Equals(PageTagName, System.StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault()
