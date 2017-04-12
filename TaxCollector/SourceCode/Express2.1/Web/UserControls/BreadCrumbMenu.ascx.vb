@@ -14,7 +14,7 @@ Imports Resources
 Public Class BreadCrumbMenu
     Inherits System.Web.UI.UserControl
 #Region "Properties"
-    Public IsContactInfoVisible As Boolean = True
+    Public IsContactInfoVisible As Boolean = False
     Private _pageTagName As String
     Public Property PageTagName() As String
         Get
