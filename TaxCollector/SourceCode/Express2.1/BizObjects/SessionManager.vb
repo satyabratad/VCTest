@@ -79,7 +79,7 @@ Namespace B2P.PaymentLanding.Express.BLL
         Private Const _clientType As String = "ClientType"
         Private Const _breadCrumbMenuTab As Object = "BreadCrumbMenuTab"
         Private Const _contactInfo As Object = "ContactInfo"
-	Private Const _isContactInfoRequired As String = "IsContactInfoRequired"
+        Private Const _isContactInfoRequired As String = "IsContactInfoRequired"
 #End Region
 
 #Region " ::: Contructors ::: "
@@ -823,7 +823,7 @@ Namespace B2P.PaymentLanding.Express.BLL
                 HttpContext.Current.Session(_breadCrumbMenuTab) = value
             End Set
         End Property
-''' <summary>
+        ''' <summary>
         ''' Contact info
         ''' </summary>
         ''' <returns></returns>
@@ -839,7 +839,7 @@ Namespace B2P.PaymentLanding.Express.BLL
                 HttpContext.Current.Session(_contactInfo) = value
             End Set
         End Property
-''' <summary>
+        ''' <summary>
         ''' This will provide information weather Contact Info is Required
         ''' </summary>
 
