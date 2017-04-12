@@ -174,6 +174,7 @@
     <Content Include="Js\jquery.payment.js" />
     <Content Include="Js\respond.min.js" />
     <Content Include="pay\Confirm.aspx" />
+    <Content Include="pay\ContactInfo.aspx" />
     <Content Include="pay\Default.aspx" />
     <Content Include="pay\Payment.aspx" />
     <Content Include="pay\PaymentComplete.aspx" />
@@ -277,6 +278,13 @@
     </Compile>
     <Compile Include="pay\Confirm.aspx.vb">
       <DependentUpon>Confirm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pay\ContactInfo.aspx.designer.vb">
+      <DependentUpon>ContactInfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pay\ContactInfo.aspx.vb">
+      <DependentUpon>ContactInfo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="pay\Default.aspx.designer.vb">
@@ -422,6 +430,7 @@
     <Content Include="Docs\CanadianProvinces.config" />
     <Content Include="Docs\USStates.config" />
     <Content Include="App_Browsers\Form.browser" />
+    <Content Include="Docs\Countries.config" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
