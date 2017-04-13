@@ -14,6 +14,7 @@ Namespace B2P.PaymentLanding.Express.Web
                 RegisterClientJs()
                 PopulateContactInfo()
             End If
+            disableControls()
         End Sub
         Protected Sub ddlContactCountry_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlContactCountry.SelectedIndexChanged
             BindState()
@@ -22,7 +23,22 @@ Namespace B2P.PaymentLanding.Express.Web
             SetContactInfo()
             Response.Redirect("/pay/payment.aspx", False)
         End Sub
+        Protected Sub btnAddMoreItems_Click(sender As Object, e As EventArgs) Handles btnAddMoreItems.Click
+            BLL.SessionManager.ManageCart.ShowCart = False
+            BLL.SessionManager.ManageCart.EditItemIndex = -1
+            Response.Redirect("~/pay/")
+        End Sub
 #Region " ::: Methods ::: "
+        Sub disableControls()
+            Dim enableFlag As Boolean = Not ddlContactCountry.SelectedValue = "OT"
+            pnlState.Visible = enableFlag
+            pnlCity.Visible = enableFlag
+            pnlZip.Visible = enableFlag
+        End Sub
+        Sub DisableOrEnableControl(ControlId As String, Flag As Boolean)
+            Dim cs As ClientScriptManager = Page.ClientScript
+            cs.RegisterStartupScript(Me.GetType(), "tmp", "<script type='text/javascript'>disableOrEnableControl(" + ControlId + "," + IIf(Flag, "0", "1") + ");</script>", False)
+        End Sub
         ''' <summary>
         ''' Validate if this page need to be rendered
         ''' </summary>
@@ -72,9 +88,10 @@ Namespace B2P.PaymentLanding.Express.Web
             If Not BLL.SessionManager.ContactInfo Is Nothing Then
                 StateAbbr = BLL.SessionManager.ContactInfo.Country
             End If
-            If String.IsNullOrEmpty(StateAbbr) Then Exit Sub
+
             ddlContactState.Items.Clear()
             ddlContactState.Items.Add(New ListItem("--Select--", ""))
+            If String.IsNullOrEmpty(StateAbbr) Then Exit Sub
             If StateAbbr.Equals("US") Then
                 If ConfigurationManager.AppSettings("UnitedStates") IsNot Nothing Then
                     Dim UnitedStatesPath = ConfigurationManager.AppSettings("UnitedStates")

@@ -5,6 +5,8 @@
 <%@ Register TagPrefix="b2p" TagName="PaymentFooter" Src="~/UserControls/Footer.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="JavaScriptCheck" Src="~/UserControls/JavaScriptCheck.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="BreadCrumbMenu" Src="~/UserControls/BreadCrumbMenu.ascx"  %>
+<%@ Register Src="~/UserControls/ShoppingCart.ascx" TagPrefix="b2p" TagName="ShoppingCart" %>
+
 
 
 <!DOCTYPE html>
@@ -68,7 +70,9 @@
                                     
 
                                     <!--// END BREADCRUMBS //-->
-
+                                    <div class="col-xs-12 col-sm-12">
+                                        <b2p:ShoppingCart runat="server" ID="ShoppingCart" />
+                                </div>
                                     <div class="col-xs-12 col-sm-6">
                                         <br />
 
@@ -247,44 +251,46 @@
                     // Set the validator
                     validator.addValidationItem(new ValidationItem("txtContactAddress1", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
                 }
-
-                // Check to see if city is required
-                city = doc.getElementById('hdContactCity').value;
-                if (city !== '') {
-                    // Set the validator
-                    validator.addValidationItem(new ValidationItem("txtContactCity", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
-                }
-                 // Check to see if state is required
-                state = doc.getElementById('hdContactState').value;
-                if (state !== '') {
-                    // Set the validator
-                    validator.addValidationItem(new ValidationItem("ddlContactState", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
-                }
-                 // Check to see if country is required
+                  // Check to see if country is required
                 country = doc.getElementById('hdContactCountry').value;
                 if (country !== '') {
                     // Set the validator
                     validator.addValidationItem(new ValidationItem("ddlContactCountry", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
                 }
-                 // Check to see if zip is required
-                zip = doc.getElementById('hdContactZip').value;
-                if (zip !== '') {
-                    // Set the validator
-                    validator.addValidationItem(new ValidationItem("txtContactZip", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
-                    if ($("#ddlContactCountry").val()=="US")
-                        validator.addValidationItem(new ValidationItem("txtContactZip", fieldTypes.ZipCodeUnitedStates, true, "<%=GetGlobalResourceObject("WebResources", "InvalidZipMsg").ToString()%>"));
-                    if ($("#ddlContactCountry").val()=="CA")
-                        validator.addValidationItem(new ValidationItem("txtContactZip", fieldTypes.ZipCodeCanada, true, "<%=GetGlobalResourceObject("WebResources", "InvalidZipMsg").ToString()%>"));
-                    if ($("#ddlContactCountry").val()=="OT")
-                        validator.addValidationItem(new ValidationItem("txtContactZip", fieldTypes.ZipCodeInternational, true, "<%=GetGlobalResourceObject("WebResources", "InvalidZipMsg").ToString()%>"));
+
+                if ($("#ddlContactCountry").val() != "OT") {
+                    // Check to see if city is required
+                    city = doc.getElementById('hdContactCity').value;
+                    if (city !== '') {
+                        // Set the validator
+                        validator.addValidationItem(new ValidationItem("txtContactCity", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
+                    }
+                    // Check to see if state is required
+                    state = doc.getElementById('hdContactState').value;
+                    if (state !== '') {
+                        // Set the validator
+                        validator.addValidationItem(new ValidationItem("ddlContactState", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
+                    }
+
+                    // Check to see if zip is required
+                    zip = doc.getElementById('hdContactZip').value;
+                    if (zip !== '') {
+                        // Set the validator
+                        validator.addValidationItem(new ValidationItem("txtContactZip", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
+                        if ($("#ddlContactCountry").val() == "US")
+                            validator.addValidationItem(new ValidationItem("txtContactZip", fieldTypes.ZipCodeUnitedStates, true, "<%=GetGlobalResourceObject("WebResources", "InvalidZipMsg").ToString()%>"));
+                        if ($("#ddlContactCountry").val() == "CA")
+                            validator.addValidationItem(new ValidationItem("txtContactZip", fieldTypes.ZipCodeCanada, true, "<%=GetGlobalResourceObject("WebResources", "InvalidZipMsg").ToString()%>"));
+                        if ($("#ddlContactCountry").val() == "OT")
+                            validator.addValidationItem(new ValidationItem("txtContactZip", fieldTypes.ZipCodeInternational, true, "<%=GetGlobalResourceObject("WebResources", "InvalidZipMsg").ToString()%>"));
+                    }
                 }
-
-
-
                 return validator.validate();
             }
 
-
+            function disableOrEnableControl(ctrlId,state) {
+                $("#"+ctrlId).prop('disabled', (state==0));
+            }
 
 
 
