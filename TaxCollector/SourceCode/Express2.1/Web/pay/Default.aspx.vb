@@ -367,6 +367,7 @@ Namespace B2P.PaymentLanding.Express.Web
                     btnLookup.Visible = True
                     btnAddtoCart.Visible = False
                     txtLookupAccount1.Focus()
+                    ctlPropertyAddress.Visible = False
                 Else
                     btnAddtoCart.Visible = True
                     btnLookup.Visible = False
@@ -376,10 +377,14 @@ Namespace B2P.PaymentLanding.Express.Web
                     BLL.SessionManager.LookupAmountEditable = True
                     BLL.SessionManager.LookupProduct = Nothing
                     'txtLookupAccount1.Text = ""
+                    If z.CollectAddress Then
+                        ctlPropertyAddress.AddressVisible = True
+                    Else
+                        ctlPropertyAddress.AddressVisible = False
+                    End If
                     grdLookup.DataSource = Nothing
                     BuildForm()
                 End If
-
 
 
                 If BLL.SessionManager.ManageCart.ShowCart = True Then
@@ -409,15 +414,7 @@ Namespace B2P.PaymentLanding.Express.Web
                     End If
                 End If
 
-                If BLL.SessionManager.ClientType = B2P.Cart.EClientType.NonLookup Then
-                    If z.CollectAddress Then
-                        ctlPropertyAddress.AddressVisible = True
-                    Else
-                        ctlPropertyAddress.AddressVisible = False
-                    End If
-                ElseIf BLL.SessionManager.ClientType = B2P.Cart.EClientType.Lookup Then
-                    ctlPropertyAddress.Visible = False
-                End If
+
             Catch ex As Exception
                 ' Build the error message
                 errMsg = Utility.BuildErrorMessage(Request.Url.Host, Request.Url.AbsolutePath,
