@@ -115,6 +115,14 @@ Public Class PropertyAddress
     End Property
 
 
+    Public Property AddressVisible() As Boolean
+        Get
+            Return pnlAddress.Visible
+        End Get
+        Set(ByVal value As Boolean)
+            pnlAddress.Visible = value
+        End Set
+    End Property
 #End Region
 
 #Region " ::: Methods ::: "

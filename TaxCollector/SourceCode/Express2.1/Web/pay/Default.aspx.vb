@@ -372,9 +372,9 @@ Namespace B2P.PaymentLanding.Express.Web
                     BuildForm()
                 End If
                 If z.CollectAddress Then
-                    ctlPropertyAddress.Visible = True
+                    ctlPropertyAddress.AddressVisible = True
                 Else
-                    ctlPropertyAddress.Visible = False
+                    ctlPropertyAddress.AddressVisible = False
                 End If
 
                 If BLL.SessionManager.ManageCart.ShowCart = True Then

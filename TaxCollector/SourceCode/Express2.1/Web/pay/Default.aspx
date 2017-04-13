@@ -125,7 +125,7 @@
                                                         <asp:TextBox ID="txtLookupAccount3" runat="server" MaxLength="40" CssClass="form-control input-sm" />
                                                     </asp:Panel>
                                                 </div>
-                                                <b2p:PropertyAddress Visible="false" runat="server" ID="ctlPropertyAddress"></b2p:PropertyAddress>
+                                                <b2p:PropertyAddress runat="server" ID="ctlPropertyAddress"></b2p:PropertyAddress>
 
                                                 <br />
                                                 <div class="pull-right">
