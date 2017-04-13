@@ -473,7 +473,7 @@
     <value>Contact Information</value>
     <comment>Bread Crumb Menu Text</comment>
   </data>
-  <data name="PaymentCompleate" xml:space="preserve">
+  <data name="PaymentSuccess" xml:space="preserve">
     <value>Payment Success</value>
     <comment>Bread Crumb Menu Text</comment>
   </data>
@@ -485,7 +485,7 @@
     <value>Payment Details</value>
     <comment>Bread Crumb Menu Text</comment>
   </data>
-  <data name="PaymentFailure" xml:space="preserve">
+  <data name="PaymentFailed" xml:space="preserve">
     <value>Payment Failed</value>
     <comment>Bread Crumb Menu Text</comment>
   </data>

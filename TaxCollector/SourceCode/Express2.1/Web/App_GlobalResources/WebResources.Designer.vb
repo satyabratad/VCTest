@@ -1109,15 +1109,6 @@ Namespace Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Payment Success.
-        '''</summary>
-        Friend Shared ReadOnly Property PaymentCompleate() As String
-            Get
-                Return ResourceManager.GetString("PaymentCompleate", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
         '''  Looks up a localized string similar to Confirm Payment .
         '''</summary>
         Friend Shared ReadOnly Property PaymentConfirm() As String
@@ -1138,9 +1129,18 @@ Namespace Resources
         '''<summary>
         '''  Looks up a localized string similar to Payment Failed.
         '''</summary>
-        Friend Shared ReadOnly Property PaymentFailure() As String
+        Friend Shared ReadOnly Property PaymentFailed() As String
             Get
-                Return ResourceManager.GetString("PaymentFailure", resourceCulture)
+                Return ResourceManager.GetString("PaymentFailed", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Payment Success.
+        '''</summary>
+        Friend Shared ReadOnly Property PaymentSuccess() As String
+            Get
+                Return ResourceManager.GetString("PaymentSuccess", resourceCulture)
             End Get
         End Property
         
