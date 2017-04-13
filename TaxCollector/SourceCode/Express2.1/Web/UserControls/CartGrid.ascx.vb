@@ -72,47 +72,36 @@ Public Class CartGrid
     End Sub
     Protected Function GetPropertyAddress(Index As Integer) As String
         Dim CartItem As B2P.Cart.Cart = BLL.SessionManager.ManageCart.Cart(Index)
-        Dim propertyAddress As String = String.Empty
+        Dim propertyAddress As StringBuilder = New StringBuilder()
         If Not CartItem.PropertyAddress Is Nothing Then
             If Not String.IsNullOrEmpty(CartItem.PropertyAddress.Address1) Then
-                propertyAddress += CartItem.PropertyAddress.Address1 + ","
+                propertyAddress.AppendFormat("{0},", CartItem.PropertyAddress.Address1)
             End If
             If Not String.IsNullOrEmpty(CartItem.PropertyAddress.Address2) Then
-                propertyAddress += CartItem.PropertyAddress.Address2 + ","
+                propertyAddress.AppendFormat("{0},", CartItem.PropertyAddress.Address2)
             End If
             If Not String.IsNullOrEmpty(CartItem.PropertyAddress.City) Then
-                propertyAddress += CartItem.PropertyAddress.City + ","
+                propertyAddress.AppendFormat("{0},", CartItem.PropertyAddress.City)
             End If
             If Not String.IsNullOrEmpty(CartItem.PropertyAddress.State) Then
-                propertyAddress += CartItem.PropertyAddress.State + ","
+                propertyAddress.AppendFormat("{0},", CartItem.PropertyAddress.State)
             End If
             If Not String.IsNullOrEmpty(CartItem.PropertyAddress.Zip) Then
-                propertyAddress += CartItem.PropertyAddress.Zip + ","
-            End If
-            If Not String.IsNullOrEmpty(propertyAddress.Trim()) Then
-                propertyAddress = propertyAddress.Substring(0, propertyAddress.Length - 1)
+                propertyAddress.AppendFormat("{0},", CartItem.PropertyAddress.Zip)
             End If
         End If
-        Return propertyAddress
+        Return propertyAddress.ToString().TrimEnd(",")
     End Function
     Protected Function GetAccountInformation(Index As Integer) As String
         Dim CartItem As B2P.Cart.Cart = BLL.SessionManager.ManageCart.Cart(Index)
-        Dim accountInfo As String = String.Empty
-        If Not String.IsNullOrEmpty(CartItem.AccountIdFields(0).Value) Then
-            accountInfo += CartItem.AccountIdFields(0).Value + ","
-        End If
-        If Not String.IsNullOrEmpty(CartItem.AccountIdFields(1).Value) Then
-            accountInfo += CartItem.AccountIdFields(1).Value + ","
-        End If
-        If Not String.IsNullOrEmpty(CartItem.AccountIdFields(2).Value) Then
-            accountInfo += CartItem.AccountIdFields(2).Value + ","
-        End If
+        Dim accountInfo As StringBuilder = New StringBuilder()
 
-        If Not String.IsNullOrEmpty(accountInfo.Trim()) Then
-            accountInfo = accountInfo.Substring(0, accountInfo.Length - 1)
-        End If
+        For Each fields In CartItem.AccountIdFields
+            accountInfo.AppendFormat("{0},", fields.Value)
+        Next
 
-        Return accountInfo
+        Return accountInfo.ToString().TrimEnd(",")
+
     End Function
     Protected Function FormatAmount(Amount As Double) As Double
         Return Math.Round(Amount, 2)

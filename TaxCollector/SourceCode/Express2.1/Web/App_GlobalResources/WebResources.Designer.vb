@@ -281,6 +281,15 @@ Namespace Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Update Cart.
+        '''</summary>
+        Friend Shared ReadOnly Property ButtonUpdateCart() As String
+            Get
+                Return ResourceManager.GetString("ButtonUpdateCart", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to The routing and account numbers can be located by looking on your check, as illustrated below:.
         '''</summary>
         Friend Shared ReadOnly Property CheckHelpModalDescription() As String

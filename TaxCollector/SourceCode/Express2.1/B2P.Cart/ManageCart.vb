@@ -11,6 +11,7 @@
 '==========================================================================
 Imports System.Collections.Generic
 Imports System.Web
+Imports B2P.Cart
 
 Public Class ManageCart
     Dim minAmount As Double = 1
@@ -139,6 +140,14 @@ Public Class ManageCart
         Return Not IsExists
 
     End Function
+
+    Public Sub UpdateCartItem(selectedItem As Cart)
+        Dim _SelectedItem = Cart.FirstOrDefault(Function(p) p.Index = selectedItem.Index)
+        If Not _SelectedItem Is Nothing Then
+            _SelectedItem.Amount = selectedItem.Amount
+        End If
+
+    End Sub
 End Class
 
 

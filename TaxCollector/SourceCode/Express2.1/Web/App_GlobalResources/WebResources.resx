@@ -508,4 +508,7 @@
   <data name="SelectedItemEdit" xml:space="preserve">
     <value>Selected Item</value>
   </data>
+  <data name="ButtonUpdateCart" xml:space="preserve">
+    <value>Update Cart</value>
+  </data>
 </root>

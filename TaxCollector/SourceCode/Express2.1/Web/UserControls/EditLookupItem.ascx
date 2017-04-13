@@ -5,9 +5,10 @@
             <asp:Panel runat="server" ID="divSelectedItem">
                 <div class="col-xs-12">
                     <div class="form-group form-group-sm">
-
-                        <asp:Label runat="server" class="control-label" for="lblSelectedItemValue" ID="lblSelectedItem" Text="Selected Item">
-                        </asp:Label>
+                        <label class="control-label" for="lblSelectedItemValue">
+                            <asp:Label runat="server" class="control-label" ID="lblSelectedItem" Text="<%$ Resources:WebResources, SelectedItemEdit %>">
+                            </asp:Label>
+                        </label>
                         <br>
                         <asp:Label runat="server" ID="lblSelectedItemValue"></asp:Label>
 
@@ -19,8 +20,11 @@
                     <ItemTemplate>
                         <div class="col-xs-12">
                             <div class="form-group form-group-sm" id="pnlEditAcc1">
-                                <asp:Label runat="server" class="control-label" for="lblLookupAccount1Value" ID="lblLookupAccount1" Text='<%#Eval("Label") %>'>
-                                </asp:Label>
+                                <label class="control-label" for="lblLookupAccount1Value">
+                                    <asp:Label runat="server" class="control-label" ID="lblLookupAccount1" Text='<%#Eval("Label") %>'>
+                                    </asp:Label>
+                                </label>
+
                                 <br>
                                 <asp:Label runat="server" ID="lblLookupAccount1Value" Text='<%#Eval("Value") %>'></asp:Label>
                             </div>
@@ -35,7 +39,7 @@
                         <label class="control-label" for="txtAmount" id="lblPropAmount">
                             <asp:Label ID="lblAmount" runat="server" Text="<%$ Resources:WebResources, AmountLabel %>"></asp:Label>
                         </label>
-                        <asp:TextBox runat="server" required="true" MaxLength="40" ID="txtAmount"
+                        <asp:TextBox runat="server" required="true" MaxLength="40" ID="txtAmountEdit"
                             class="form-control input-sm" onkeypress="return isNumberKey(event);"></asp:TextBox>
 
                     </div>
@@ -44,8 +48,36 @@
         </div>
 
         <div class="pull-right">
-            <input type="button" name="btnUpdate" value="Update Cart" onclick="return updateCartItem();" id="btnUpdate" title="Update Cart" class="btn btn-primary ">
+            <asp:Button ID="btnUpdateItem" OnClientClick="return ValidateUpdateCartItem()" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, ButtonUpdateCart %>" ToolTip="<%$ Resources:WebResources, ButtonUpdateCart %>" runat="server" />
         </div>
-        <br>
+        <br />
     </div>
 </div>
+
+<script type="text/javascript">
+    function ValidateUpdateCartItem() {
+
+         <% If Not SelectedItem Is Nothing Then%>
+        var newValue = parseFloat($("#txtAmountEdit").val());
+        var oldValue = parseFloat(<%= SelectedItem.AmountDue%>);
+
+
+         var item = new ValidationItem();
+
+        // Create instance of the form validator
+         var validator = new FormValidator();
+         validator.setErrorMessageHeader("Please review the following errors and resubmit the form:\n\n")
+         validator.setInvalidCssClass("has-error");
+         validator.setAlertBoxStatus(false);
+         if (newValue > oldValue) {
+             // Set the validator
+             validator.addValidationItem(new ValidationItem("txtAmountEdit", fieldTypes.AmountDue, true, "Invalid Amount"));
+             $("#txtAmountEdit").val(oldValue);
+             return validator.validate();
+         }
+        <% Else  %>
+        return false;
+        <% End If %>
+    }
+
+</script>

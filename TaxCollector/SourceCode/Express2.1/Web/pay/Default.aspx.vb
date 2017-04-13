@@ -524,8 +524,7 @@ Namespace B2P.PaymentLanding.Express.Web
             cart.AccountIdFields.Add(acc2)
             cart.AccountIdFields.Add(acc3)
             cart.Amount = ctlPropertyAddress.Amount
-            cart.AmountDue = BLL.SessionManager.LookupAmount
-
+            cart.AmountDue = ctlPropertyAddress.Amount
             Dim propAddr As New B2P.Cart.PropertyAddress
             propAddr.Address1 = Utility.SafeEncode(ctlPropertyAddress.Address1)
             propAddr.Address2 = Utility.SafeEncode(ctlPropertyAddress.Address2)
@@ -547,7 +546,6 @@ Namespace B2P.PaymentLanding.Express.Web
             BLL.SessionManager.ManageCart.ShowCart = False
             Response.Redirect("~/pay/")
         End Sub
-
 
     End Class
 End Namespace
