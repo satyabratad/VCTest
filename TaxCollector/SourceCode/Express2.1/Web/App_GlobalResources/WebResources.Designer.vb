@@ -1163,6 +1163,15 @@ Namespace Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Selected Item.
+        '''</summary>
+        Friend Shared ReadOnly Property SelectedItemEdit() As String
+            Get
+                Return ResourceManager.GetString("SelectedItemEdit", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to State.
         '''</summary>
         Friend Shared ReadOnly Property StateLabel() As String

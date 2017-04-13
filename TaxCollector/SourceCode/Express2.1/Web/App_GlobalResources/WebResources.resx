@@ -505,4 +505,7 @@
   <data name="PhoneLabel" xml:space="preserve">
     <value>Phone</value>
   </data>
+  <data name="SelectedItemEdit" xml:space="preserve">
+    <value>Selected Item</value>
+  </data>
 </root>
