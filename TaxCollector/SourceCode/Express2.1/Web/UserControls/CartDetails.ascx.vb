@@ -12,16 +12,16 @@ Public Class CartDetails
         SetVisibility()
         cartProduct.Text = BLL.SessionManager.ManageCart.Cart(BLL.SessionManager.ManageCart.Cart.Count - 1).Item
         cartHeadingCount.Text = BLL.SessionManager.ManageCart.Cart.Count.ToString()
-        cartHeadingAmount.Text = "$" + SubTotal().ToString()
+        cartHeadingAmount.Text = SubTotal()
     End Sub
     Private Sub SetVisibility()
         tblCartDetails.Visible = Me.Parent.FindControl("ctlCartGrid").Visible
     End Sub
-    Private Function SubTotal() As Double
+    Private Function SubTotal() As String
         Dim amount As Double = 0
         For Each cart As B2P.Cart.Cart In BLL.SessionManager.ManageCart.Cart
             amount += cart.Amount
         Next
-        Return Math.Round(amount, 2)
+        Return String.Format("{0:C}", amount)
     End Function
 End Class

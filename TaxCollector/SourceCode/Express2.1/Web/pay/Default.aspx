@@ -156,9 +156,7 @@
                                     </div>
                                 </asp:Panel>
                                 <asp:Panel runat="server" ID="pnlEditLookupItem">
-                                    <div class="col-xs-12 col-sm-12">
-                                        <b2p:EditLookupItem runat="server" ID="ctlEditLookupItem" />
-                                    </div>
+                                    <b2p:EditLookupItem runat="server" ID="ctlEditLookupItem" />
                                 </asp:Panel>
                             </div>
                         </div>
@@ -356,11 +354,13 @@
                 // Set the validator
                 validator.addValidationItem(new ValidationItem("txtAmount", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
                 <% End If %>
-                debugger;
                 return validator.validate();
             }
 
-           
+
+
+
+
         </script>
 
     </form>

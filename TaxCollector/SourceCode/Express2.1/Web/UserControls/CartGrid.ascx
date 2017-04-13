@@ -25,13 +25,13 @@
                     <strong>Property Address:</strong><br>
                     <%# GetPropertyAddress(Eval("Index")) %>
                 </td>
-                <td class="table-row" align="right">$<%# FormatAmount(Eval("Amount")) %></td>
+                <td class="table-row" align="right"><%# FormatAmount(Eval("Amount")) %></td>
             </tr>
         </ItemTemplate>
         <FooterTemplate>
             <tr>
                 <td class="table-row-bold" colspan="3" align="right">Subtotal (<%# GetCartItemCount() %> item(s)): </td>
-                <td class="table-row-bold" align="right">$<%# SubTotal() %></td>
+                <td class="table-row-bold" align="right"><%# SubTotal() %></td>
             </tr>
         </tbody>
     </table>
@@ -65,14 +65,14 @@
                     <strong>Property Address:</strong><br>
                     <%# GetPropertyAddress(Eval("Index")) %>
                 </td>
-                 <td class="table-row" align="right">$<%# FormatAmount(Eval("AmountDue")) %></td>
-                <td class="table-row" align="right">$<%# FormatAmount(Eval("Amount")) %></td>
+                 <td class="table-row" align="right"><%# FormatAmount(Eval("AmountDue")) %></td>
+                <td class="table-row" align="right"><%# FormatAmount(Eval("Amount")) %></td>
             </tr>
         </ItemTemplate>
         <FooterTemplate>
             <tr>
                 <td class="table-row-bold" colspan="5" align="right">Subtotal (<%# GetCartItemCount() %> item(s)): </td>
-                <td class="table-row-bold" align="right">$<%# SubTotal() %></td>
+                <td class="table-row-bold" align="right"><%# SubTotal() %></td>
             </tr>
         </tbody>
     </table>
@@ -104,14 +104,14 @@
                     <strong>Property Address:</strong><br>
                     <%# GetPropertyAddress(Eval("Index")) %>
                 </td>
-                 <td class="table-row" align="right">$<%# FormatAmount(Eval("AmountDue")) %></td>
-                <td class="table-row" align="right">$<%# FormatAmount(Eval("Amount")) %></td>
+                 <td class="table-row" align="right"><%# FormatAmount(Eval("AmountDue")) %></td>
+                <td class="table-row" align="right"><%# FormatAmount(Eval("Amount")) %></td>
             </tr>
         </ItemTemplate>
         <FooterTemplate>
             <tr>
                 <td class="table-row-bold" colspan="5" align="right">Subtotal (<%# GetCartItemCount() %> item(s)): </td>
-                <td class="table-row-bold" align="right">$<%# SubTotal() %></td>
+                <td class="table-row-bold" align="right"><%# SubTotal() %></td>
             </tr>
         </tbody>
     </table>

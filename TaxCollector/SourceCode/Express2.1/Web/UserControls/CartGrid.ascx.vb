@@ -103,18 +103,18 @@ Public Class CartGrid
         Return accountInfo.ToString().TrimEnd(",")
 
     End Function
-    Protected Function FormatAmount(Amount As Double) As Double
-        Return Math.Round(Amount, 2)
+    Protected Function FormatAmount(Amount As Double) As String
+        Return String.Format("{0:C}", Amount)
     End Function
     Protected Function GetCartItemCount() As Integer
         Return BLL.SessionManager.ManageCart.Cart.Count
     End Function
-    Protected Function SubTotal() As Double
+    Protected Function SubTotal() As String
         Dim amount As Double = 0
         For Each cart As B2P.Cart.Cart In BLL.SessionManager.ManageCart.Cart
             amount += cart.Amount
         Next
-        Return Math.Round(amount, 2)
+        Return String.Format("{0:C}", amount)
     End Function
     Private Sub UpdateCartCount()
         Dim cs As ClientScriptManager = Page.ClientScript
