@@ -523,7 +523,10 @@ Namespace B2P.PaymentLanding.Express.Web
             propAddr.Address1 = Utility.SafeEncode(ctlPropertyAddress.Address1)
             propAddr.Address2 = Utility.SafeEncode(ctlPropertyAddress.Address2)
             propAddr.City = Utility.SafeEncode(ctlPropertyAddress.City)
-            propAddr.State = Utility.SafeEncode(ctlPropertyAddress.StateText)
+            If Not String.IsNullOrEmpty(ctlPropertyAddress.StateValue) Then
+                propAddr.State = Utility.SafeEncode(ctlPropertyAddress.StateText)
+            End If
+
             propAddr.Zip = Utility.SafeEncode(ctlPropertyAddress.Zip)
 
             cart.PropertyAddress = propAddr
