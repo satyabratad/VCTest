@@ -166,6 +166,7 @@ Public Class BreadCrumbMenu
                             htmlString.AppendFormat("<li class='danger'><a href='#' class=''><span Class='badge badge-inverse'>")
                             htmlString.AppendFormat("{0}</span> {1} </a></li>", pageIndex.ToString(), tab.MenuName)
                         Else
+                            'If Not PageTagName.Equals(PageTabName.PaymentSuccess.ToString(), System.StringComparison.InvariantCultureIgnoreCase) And Not PageTagName.Equals(PageTabName.PaymentFaild.ToString(), System.StringComparison.InvariantCultureIgnoreCase) Then
                             htmlString.AppendFormat("<li class='active'><a href='#' class=''  ><span Class='badge badge-inverse'>")
                             htmlString.AppendFormat("{0}</span> {1} </a></li>", pageIndex.ToString(), tab.MenuName)
 
@@ -176,7 +177,8 @@ Public Class BreadCrumbMenu
                 Else
                     If finalTab Is Nothing Then
 
-                        If Not PageTagName.Equals(PageTabName.PaymentFaild.ToString(), System.StringComparison.InvariantCultureIgnoreCase) Then
+                        If Not PageTagName.Equals(PageTabName.PaymentSuccess.ToString(), System.StringComparison.InvariantCultureIgnoreCase) And Not PageTagName.Equals(PageTabName.PaymentFaild.ToString(), System.StringComparison.InvariantCultureIgnoreCase) Then
+
                             If tab.PageTag.Equals(PageTabName.ContactInfo.ToString(), System.StringComparison.InvariantCultureIgnoreCase) Then
                                 If IsContactInfoVisible = True Then
 
@@ -185,7 +187,7 @@ Public Class BreadCrumbMenu
                                     pageIndex = pageIndex + 1
                                 End If
                             Else
-                                If Not tab.PageTag.Equals(PageTabName.PaymentFaild.ToString(), System.StringComparison.InvariantCultureIgnoreCase) Then
+                                If Not tab.PageTag.Equals(PageTabName.PaymentSuccess.ToString(), System.StringComparison.InvariantCultureIgnoreCase) And Not tab.PageTag.Equals(PageTabName.PaymentFaild.ToString(), System.StringComparison.InvariantCultureIgnoreCase) Then
                                     htmlString.AppendFormat("<li class=''><a href='#' class='inactiveLink'><span class='badge'>")
                                     htmlString.AppendFormat("{0}</span> {1} </a></li>", pageIndex.ToString(), tab.MenuName)
                                     pageIndex = pageIndex + 1
