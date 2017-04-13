@@ -69,13 +69,13 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected WithEvents BreadCrumbMenu As Global.BreadCrumbMenu
         
         '''<summary>
-        '''BreadCrumbMenu1 control.
+        '''pnlError control.
         '''</summary>
         '''<remarks>
         '''Auto-generated field.
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
-        Protected WithEvents BreadCrumbMenu1 As Global.BreadCrumbMenu
+        Protected WithEvents pnlError As Global.System.Web.UI.WebControls.Panel
         
         '''<summary>
         '''litMissingClientHeader control.
@@ -85,6 +85,33 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litMissingClientHeader As Global.System.Web.UI.WebControls.Literal
+        
+        '''<summary>
+        '''pnlCart control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents pnlCart As Global.System.Web.UI.WebControls.Panel
+        
+        '''<summary>
+        '''ctlCartGrid control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents ctlCartGrid As Global.CartGrid
+        
+        '''<summary>
+        '''btnSubmit control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents btnSubmit As Global.System.Web.UI.WebControls.Button
         
         '''<summary>
         '''psmErrorMessage control.

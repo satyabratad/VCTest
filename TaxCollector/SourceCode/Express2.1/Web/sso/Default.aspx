@@ -4,7 +4,9 @@
 <%@ Register TagPrefix="b2p" TagName="PaymentStatusMessage" Src="~/UserControls/StatusMessage.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="PaymentFooter" Src="~/UserControls/Footer.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="JavaScriptCheck" Src="~/UserControls/JavaScriptCheck.ascx" %>
-<%@ Register Src="~/UserControls/BreadCrumbMenu.ascx" TagPrefix="b2p" TagName="BreadCrumbMenu" %>
+<%@ Register TagPrefix="b2p" TagName="BreadCrumbMenu" Src="~/UserControls/BreadCrumbMenu.ascx" %>
+<%@ Register TagPrefix="b2p" TagName="CartGrid" Src="~/UserControls/CartGrid.ascx" %>
+
 
 
 <!DOCTYPE html>
@@ -27,6 +29,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/Css/app.css" type="text/css" id="lnkCSS" runat="server" />
 
+    <link rel="stylesheet" href="/Css/progress.css" type="text/css" runat="server" />
+    <link rel="stylesheet" href="/Css/custom.css" type="text/css" runat="server" />
+
     <!-- JavaScript -->
     <!--[if lt IE 9]>
         <script src="/Js/html5shiv.min.js"></script>
@@ -43,10 +48,10 @@
             <b2p:PaymentHeader ID="phConfirmPaymentInfo" runat="server" />
 
             <!--// END LOGO, HEADER AND NAV //-->
-            <h1 class="text-hide">Landing Page</h1>
-            <div class="row" style="padding-top: 10px; padding-bottom: 10px;">
-                <%-- <div class="col-sm-1"></div>   --%>
-                <div class="col-sm-10">
+            <div class="row" style="background-color: white; padding-bottom: 10px;">
+                <br />
+            
+                <div class="col-sm-12">
                     <!--// START NO SCRIPT CHECK //-->
                     <b2p:JavaScriptCheck ID="pjsJavascript" runat="server" />
                     <!--// END NO SCRIPT CHECK //-->
@@ -54,7 +59,7 @@
 
 
 
-                    <b2p:BreadCrumbMenu runat="server" ID="BreadCrumbMenu" />
+                    
 
                     <!--// START MIDDLE CONTENT //-->
                     <div class="container">
@@ -63,9 +68,10 @@
                                 <div class="content">
                                     <div class="container" style="min-height: 50%;">
                                     <!--// START BREADCRUMBS //-->
-                                    <b2p:BreadCrumbMenu runat="server" ID="BreadCrumbMenu1" PageTagName="Home" />
+                                    <b2p:BreadCrumbMenu runat="server" ID="BreadCrumbMenu"  PageTagName="Home" />
                                     </div>
                                     <!--// END BREADCRUMBS //-->
+                                    <asp:Panel ID="pnlError" runat="server" Visible="true">
                                     <div class="row">
                                         <div class="col-xs-12">
                                             <h3 class="text-primary">
@@ -74,7 +80,17 @@
                                             <br />
                                         </div>
                                     </div>
-
+                                    </asp:Panel>
+                                    <asp:Panel ID="pnlCart" runat="server" Visible="false">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <b2p:CartGrid runat="server" ID="ctlCartGrid" />
+                                        <br />
+                                        <div class="pull-right">
+                                            
+                                            <asp:Button ID="btnSubmit" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, ButtonContinue %>" ToolTip="<%$ Resources:WebResources, ButtonContinue %>" runat="server" />
+                                        </div>
+                                    </div>
+                                </asp:Panel>
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-6">
                                             <b2p:PaymentStatusMessage ID="psmErrorMessage" runat="server" />
@@ -98,7 +114,7 @@
                     <%-- <div class="col-sm-1"></div>--%>
                 </div>
             </div>
-
+           
             <!--// END MIDDLE CONTENT //-->
 
             <!--// START FOOTER CONTENT //-->

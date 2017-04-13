@@ -5,72 +5,89 @@ Namespace B2P.PaymentLanding.Express.Web
     Public Class _ssodefault : Inherits System.Web.UI.Page
 
         Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-
-            If Not IsPostBack Then
-                Dim errMsg As String = String.Empty
-                If Not IsNothing(BLL.SessionManager.LookupData) Then
-                    Response.Redirect("/errors/session", False)
-                Else
+            Dim redirectAddress As String = String.Empty
 
 
-                    Session.Clear()
-                    BLL.SessionManager.PaymentMade = False
-                    BLL.SessionManager.CreditCard = Nothing
-                    BLL.SessionManager.BankAccount = Nothing
-                    BLL.SessionManager.IsSSOProduct = True
-                    Try
-                        'Dim Token As String = "17762b6e22bc4ed9b4c60571b79ada36" 'f491d9e6ed2242088bf66c073b917cb5
+            If BLL.SessionManager.ManageCart.ShowCart = False Then
+                If Not IsPostBack Then
+                    Dim errMsg As String = String.Empty
+                    If Not IsNothing(BLL.SessionManager.LookupData) Then
+                        Response.Redirect("/errors/session", False)
+                    Else
 
-                        If Not IsNothing(Page.RouteData.Values("token")) Then
-                            Dim Token As String = Page.RouteData.Values("token")
-                            Dim TokenPattern As Regex = New Regex("^[A-Fa-f0-9]{32}$")
-                            Dim matches As MatchCollection = TokenPattern.Matches(Token)
 
-                            If matches.Count > 0 Then
+                        Session.Clear()
+                        BLL.SessionManager.PaymentMade = False
+                        BLL.SessionManager.CreditCard = Nothing
+                        BLL.SessionManager.BankAccount = Nothing
+                        BLL.SessionManager.IsSSOProduct = True
+                        Try
+                            'Dim Token As String = "17762b6e22bc4ed9b4c60571b79ada36" 'f491d9e6ed2242088bf66c073b917cb5
 
-                                Dim x As New B2P.SSOLookup.PaymentInformation(Token)
+                            If Not IsNothing(Page.RouteData.Values("token")) Then
+                                Dim Token As String = Page.RouteData.Values("token")
+                                Dim TokenPattern As Regex = New Regex("^[A-Fa-f0-9]{32}$")
+                                Dim matches As MatchCollection = TokenPattern.Matches(Token)
 
-                                Session("ClickedButton") = False
-                                If x.Found = True Then
-                                    BLL.SessionManager.Token = Token
-                                    BLL.SessionManager.ClientCode = x.ClientCode
-                                    BLL.SessionManager.ClientFAQ = "/faq/faq.html"
 
-                                    ' Check to see if custom CSS file exists for client
-                                    If File.Exists(Server.MapPath("/Css/ClientCSS/" & BLL.SessionManager.ClientCode & ".css")) Then
-                                        BLL.SessionManager.ClientCSS = "/Css/ClientCSS/" & BLL.SessionManager.ClientCode & ".css"
-                                    Else
-                                        BLL.SessionManager.ClientCSS = "/Css/app.css"
-                                    End If
+                                redirectAddress = ResolveUrl("~/sso/")
+                                BreadCrumbMenu.RedirectAddress = redirectAddress
 
-                                    ' Set the CSS link to the appropriate file name
-                                    lnkCSS.Attributes("href") = BLL.SessionManager.ClientCSS
+                                If matches.Count > 0 Then
 
-                                    ' Check for custom FAQ page
-                                    If File.Exists(Server.MapPath("/faq/ClientFAQ/" & BLL.SessionManager.ClientCode & ".html")) Then
-                                        BLL.SessionManager.ClientFAQ = "/faq/ClientFAQ/" & BLL.SessionManager.ClientCode & ".html"
-                                    Else
+                                    Dim x As New B2P.SSOLookup.PaymentInformation(Token)
+
+                                    Session("ClickedButton") = False
+                                    If x.Found = True Then
+                                        BLL.SessionManager.Token = Token
+                                        BLL.SessionManager.ClientCode = x.ClientCode
                                         BLL.SessionManager.ClientFAQ = "/faq/faq.html"
+
+                                        ' Check to see if custom CSS file exists for client
+                                        If File.Exists(Server.MapPath("/Css/ClientCSS/" & BLL.SessionManager.ClientCode & ".css")) Then
+                                            BLL.SessionManager.ClientCSS = "/Css/ClientCSS/" & BLL.SessionManager.ClientCode & ".css"
+                                        Else
+                                            BLL.SessionManager.ClientCSS = "/Css/app.css"
+                                        End If
+
+                                        ' Set the CSS link to the appropriate file name
+                                        lnkCSS.Attributes("href") = BLL.SessionManager.ClientCSS
+
+                                        ' Check for custom FAQ page
+                                        If File.Exists(Server.MapPath("/faq/ClientFAQ/" & BLL.SessionManager.ClientCode & ".html")) Then
+                                            BLL.SessionManager.ClientFAQ = "/faq/ClientFAQ/" & BLL.SessionManager.ClientCode & ".html"
+                                        Else
+                                            BLL.SessionManager.ClientFAQ = "/faq/faq.html"
+                                        End If
+
+
+                                        Dim z As B2P.Objects.Client = B2P.Objects.Client.GetClient(BLL.SessionManager.ClientCode.ToString)
+
+                                        ''TODO: For test purpose only need to delete after development
+                                        z.SSODisplayType = Objects.Client.SSODisplayTypes.ShoppingCart
+
+                                        'Determine SSO type
+                                        Select Case z.SSODisplayType
+                                            Case B2P.Objects.Client.SSODisplayTypes.ReadOnlyGrid
+                                                BLL.SessionManager.SSODisplayType = B2P.Objects.Client.SSODisplayTypes.ReadOnlyGrid
+                                                loadDataGrid(x, Token)
+                                            Case B2P.Objects.Client.SSODisplayTypes.ShoppingCart
+
+                                                BLL.SessionManager.SSODisplayType = B2P.Objects.Client.SSODisplayTypes.ShoppingCart
+                                                BLL.SessionManager.ClientType = Cart.EClientType.SSO
+                                                loadShopingCartDataGrid(x, Token)
+                                            Case B2P.Objects.Client.SSODisplayTypes.SingleItem
+                                                BLL.SessionManager.SSODisplayType = B2P.Objects.Client.SSODisplayTypes.SingleItem
+                                                loadData(x, Token)
+                                        End Select
+
+                                    Else
+                                        Session.Clear()
+                                        B2P.Common.Logging.LogError("B2P", Token & " - Token not found", B2P.Common.Logging.NotifySupport.No)
+                                        psmErrorMessage.ToggleStatusMessage("Missing or invalid token.", StatusMessageType.Danger, True, True)
+                                        Exit Sub
                                     End If
-
-
-                                    Dim z As B2P.Objects.Client = B2P.Objects.Client.GetClient(BLL.SessionManager.ClientCode.ToString)
-
-                                    'Determine SSO type
-                                    Select Case z.SSODisplayType
-                                        Case B2P.Objects.Client.SSODisplayTypes.ReadOnlyGrid
-                                            BLL.SessionManager.SSODisplayType = B2P.Objects.Client.SSODisplayTypes.ReadOnlyGrid
-                                            loadDataGrid(x, Token)
-                                        Case B2P.Objects.Client.SSODisplayTypes.ShoppingCart
-                                            'Not used yet
-                                        Case B2P.Objects.Client.SSODisplayTypes.SingleItem
-                                            BLL.SessionManager.SSODisplayType = B2P.Objects.Client.SSODisplayTypes.SingleItem
-                                            loadData(x, Token)
-                                    End Select
-
                                 Else
-                                    Session.Clear()
-                                    B2P.Common.Logging.LogError("B2P", Token & " - Token not found", B2P.Common.Logging.NotifySupport.No)
                                     psmErrorMessage.ToggleStatusMessage("Missing or invalid token.", StatusMessageType.Danger, True, True)
                                     Exit Sub
                                 End If
@@ -78,25 +95,53 @@ Namespace B2P.PaymentLanding.Express.Web
                                 psmErrorMessage.ToggleStatusMessage("Missing or invalid token.", StatusMessageType.Danger, True, True)
                                 Exit Sub
                             End If
-                        Else
-                            psmErrorMessage.ToggleStatusMessage("Missing or invalid token.", StatusMessageType.Danger, True, True)
-                            Exit Sub
-                        End If
 
-                    Catch ex As Exception
-                        ' Build the error message
-                        errMsg = Utility.BuildErrorMessage(Request.Url.Host, Request.Url.AbsolutePath,
-                                                   ex.Source, ex.TargetSite.DeclaringType.Name,
-                                                   ex.TargetSite.Name, ex.Message)
+                        Catch ex As Exception
+                            ' Build the error message
+                            errMsg = Utility.BuildErrorMessage(Request.Url.Host, Request.Url.AbsolutePath,
+                                                       ex.Source, ex.TargetSite.DeclaringType.Name,
+                                                       ex.TargetSite.Name, ex.Message)
 
-                        B2P.Common.Logging.LogError("Express Payment --> " & Request.Url.AbsoluteUri & ".", errMsg, B2P.Common.Logging.NotifySupport.No)
-                        Response.Redirect("/Errors/Error.aspx", False)
-                        HttpContext.Current.ApplicationInstance.CompleteRequest()
-                    End Try
+                            B2P.Common.Logging.LogError("Express Payment --> " & Request.Url.AbsoluteUri & ".", errMsg, B2P.Common.Logging.NotifySupport.No)
+                            Response.Redirect("/Errors/Error.aspx", False)
+                            HttpContext.Current.ApplicationInstance.CompleteRequest()
+                        End Try
+                    End If
                 End If
+            Else
+                pnlCart.Visible = True
+                pnlError.Visible = False
+                'pnlEditLookupItem.Visible = False
+                'If z.AmountDueSource = B2P.Common.Enumerations.AmountDueSources.Lookup Or z.AmountDueSource = B2P.Common.Enumerations.AmountDueSources.Table Then
+                '    BLL.SessionManager.ClientType = B2P.Cart.EClientType.Lookup
+                'Else
+                '    BLL.SessionManager.ClientType = B2P.Cart.EClientType.NonLookup
+                'End If
+
+                ctlCartGrid.PopulateGrid("ctlCartGrid")
             End If
         End Sub
+        Private Sub btnSubmit_Click(sender As Object, e As EventArgs) Handles btnSubmit.Click
+            'BLL.SessionManager.LookupData.DueDate = ""
+            'Dim CurrentCategory As New B2P.Objects.Product(BLL.SessionManager.ClientCode.ToString, ddlCategories.SelectedValue, B2P.Common.Enumerations.TransactionSources.Web)
+            'Dim z As New B2P.Payment.FeeDesciptions(BLL.SessionManager.ClientCode.ToString, ddlCategories.SelectedValue, B2P.Common.Enumerations.TransactionSources.Web)
 
+            'BLL.SessionManager.CreditFeeDescription = z.CreditCardFeeDescription
+            'BLL.SessionManager.AchFeeDescription = z.BankAccountFeeDescription
+
+            'BLL.SessionManager.CurrentCategory = CurrentCategory
+            'BLL.SessionManager.ProductName = ddlCategories.SelectedValue
+            'BLL.SessionManager.AccountNumber1 = Utility.SafeEncode(txtLookupAccount1.Text)
+            'BLL.SessionManager.AccountNumber2 = Utility.SafeEncode(txtLookupAccount2.Text)
+            'BLL.SessionManager.AccountNumber3 = Utility.SafeEncode(txtLookupAccount3.Text)
+
+            If BLL.SessionManager.IsContactInfoRequired Then
+                Response.Redirect("/pay/ContactInfo.aspx", False)
+            Else
+                Response.Redirect("/pay/payment.aspx", False)
+            End If
+
+        End Sub
         Private Sub loadData(ByVal TokenInfo As B2P.SSOLookup.PaymentInformation, ByVal Token As String)
             Dim errMsg As String = String.Empty
 
@@ -310,6 +355,115 @@ Namespace B2P.PaymentLanding.Express.Web
 
                         BLL.SessionManager.IsInitialized = True
                         Response.Redirect("/pay/payment.aspx", False)
+                    End If
+                End If
+
+            Catch ex As Exception
+                ' Build the error message
+                errMsg = Utility.BuildErrorMessage(Request.Url.Host, Request.Url.AbsolutePath,
+                                               ex.Source, ex.TargetSite.DeclaringType.Name,
+                                               ex.TargetSite.Name, ex.Message)
+
+                B2P.Common.Logging.LogError("Express Payment --> " & Request.Url.AbsoluteUri & ".", errMsg, B2P.Common.Logging.NotifySupport.No)
+                Response.Redirect("/Errors/Error.aspx", False)
+                HttpContext.Current.ApplicationInstance.CompleteRequest()
+            End Try
+
+        End Sub
+
+
+
+        Private Sub loadShopingCartDataGrid(ByVal TokenInfo As B2P.SSOLookup.PaymentInformation, ByVal Token As String)
+            Dim errMsg As String = String.Empty
+            Dim cart As New B2P.Cart.Cart
+
+            Try
+
+                Dim z As B2P.Objects.Client = B2P.Objects.Client.GetClient(BLL.SessionManager.ClientCode.ToString)
+                BLL.SessionManager.Client = z
+                BLL.SessionManager.LookupAmount = Nothing
+                BLL.SessionManager.LookupAmountMinimum = False
+                BLL.SessionManager.LookupAmountEditable = False
+                BLL.SessionManager.OfficeID = TokenInfo.Office_ID
+                BLL.SessionManager.VendorReferenceCode = TokenInfo.VendorReferenceCode
+                BLL.SessionManager.LookupProduct = TokenInfo.CartItems(0).ProductName
+                BLL.SessionManager.ProductName = TokenInfo.CartItems(0).ProductName
+                BLL.SessionManager.LookupAmount = TokenInfo.CartTotal
+                BLL.SessionManager.TokenInfo = TokenInfo
+
+
+                Dim y As New B2P.ClientInterface.Manager.ClientInterfaceWS.SearchResults
+
+                y = B2P.ClientInterface.Manager.ClientInterface.GetClientData(Token)
+                ' BLL.SessionManager.LookupProduct = y.ProductName
+                BLL.SessionManager.LookupData = y
+
+                Dim p As New B2P.Objects.Product(BLL.SessionManager.ClientCode, TokenInfo.CartItems(0).ProductName, B2P.Common.Enumerations.TransactionSources.Web)
+                Utility.SetBreadCrumbContactInfo(p)
+
+                Dim CurrentCategory As New B2P.Objects.Product(BLL.SessionManager.ClientCode.ToString, BLL.SessionManager.LookupProduct, B2P.Common.Enumerations.TransactionSources.Web)
+                Dim a As New B2P.Payment.FeeDesciptions(BLL.SessionManager.ClientCode.ToString, BLL.SessionManager.LookupProduct, B2P.Common.Enumerations.TransactionSources.Web)
+
+                BLL.SessionManager.CreditFeeDescription = a.CreditCardFeeDescription
+                BLL.SessionManager.AchFeeDescription = a.BankAccountFeeDescription
+                BLL.SessionManager.CurrentCategory = CurrentCategory
+
+                If (BLL.SessionManager.TokenInfo.AllowCreditCard = False And BLL.SessionManager.TokenInfo.AllowECheck = False) Or TokenInfo.IsCartValid = False Then
+                    psmErrorMessage.ToggleStatusMessage("We are not able to accept any online payments for this account. Please call Customer Service at " & BLL.SessionManager.Client.ContactPhone & ".", StatusMessageType.Danger, True, True)
+                    Exit Sub
+                Else
+                    Dim bk As New B2P.Common.BlockedAccounts.BlockedAccountResults
+                    BLL.SessionManager.BlockedACH = False
+                    BLL.SessionManager.BlockedCC = False
+
+                    For Each ci As B2P.SSOLookup.PaymentInformation.CartItem In TokenInfo.CartItems
+                        bk = B2P.Common.BlockedAccounts.CheckForBlockedAccount(BLL.SessionManager.ClientCode, ci.ProductName, Utility.SafeEncode(ci.AccountNumber1),
+                                                        Utility.SafeEncode(ci.AccountNumber2), Utility.SafeEncode(ci.AccountNumber3))
+                        If bk.IsAccountBlocked Then
+                            If bk.ACHBlocked = True AndAlso bk.CreditCardBlocked = True Then
+                                psmErrorMessage.ToggleStatusMessage("We are not able to accept any online payments for this account. Please call Customer Service at " & BLL.SessionManager.Client.ContactPhone & ".", StatusMessageType.Danger, True, True)
+                                Exit Sub
+                            End If
+                            If bk.ACHBlocked = True Then
+                                BLL.SessionManager.BlockedACH = True
+                            End If
+                            If bk.CreditCardBlocked = True Then
+                                BLL.SessionManager.BlockedCC = True
+                            End If
+                        Else
+                            ' Adding to cart 
+
+
+                            cart.Item = ci.ProductName
+
+                            Dim acc1 As New B2P.Cart.AccountIdField(ci.AccountNumber1, Utility.SafeEncode(ci.AccountNumber1))
+                            Dim acc2 As New B2P.Cart.AccountIdField(ci.AccountNumber2, Utility.SafeEncode(ci.AccountNumber2))
+                            Dim acc3 As New B2P.Cart.AccountIdField(ci.AccountNumber3, Utility.SafeEncode(ci.AccountNumber3))
+                            cart.AccountIdFields = New List(Of B2P.Cart.AccountIdField)
+                            cart.AccountIdFields.Add(acc1)
+                            cart.AccountIdFields.Add(acc2)
+                            cart.AccountIdFields.Add(acc3)
+                            cart.Amount = ci.Amount
+
+                            If BLL.SessionManager.ManageCart.AddToCart(cart) Then
+                                BLL.SessionManager.ManageCart.ShowCart = True
+                            End If
+
+
+                        End If
+                    Next
+
+                    If BLL.SessionManager.BlockedCC And BLL.SessionManager.BlockedACH Then
+                        psmErrorMessage.ToggleStatusMessage("We are not able to accept any online payments for this account. Please call Customer Service at " & BLL.SessionManager.Client.ContactPhone & ".", StatusMessageType.Danger, True, True)
+                        Exit Sub
+                    Else
+                        BLL.SessionManager.IsInitialized = True
+                        If BLL.SessionManager.ManageCart.ShowCart = True Then
+                            Response.Redirect(BreadCrumbMenu.RedirectAddress, False)
+                            'Response.Redirect("~/sso/", False)
+                        End If
+
+                        'Response.Redirect("/pay/payment.aspx", False)
                     End If
                 End If
 
