@@ -69,6 +69,15 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected WithEvents pnlContent As Global.System.Web.UI.WebControls.Panel
         
         '''<summary>
+        '''BreadCrumbMenu control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents BreadCrumbMenu As Global.BreadCrumbMenu
+        
+        '''<summary>
         '''hdContactName control.
         '''</summary>
         '''<remarks>
