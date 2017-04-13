@@ -376,6 +376,7 @@ Namespace B2P.PaymentLanding.Express.Web
         Private Sub loadShopingCartDataGrid(ByVal TokenInfo As B2P.SSOLookup.PaymentInformation, ByVal Token As String)
             Dim errMsg As String = String.Empty
             Dim cart As New B2P.Cart.Cart
+            Dim paddress As PropertyAddress
 
             Try
 
@@ -446,11 +447,17 @@ Namespace B2P.PaymentLanding.Express.Web
                             cart.Amount = ci.Amount
                             cart.AmountDue = ci.Amount
 
+                            cart.PropertyAddress = New Cart.PropertyAddress
+
+
+
                             cart.PropertyAddress.Address1 = z.Address1
                             cart.PropertyAddress.Address2 = z.Address2
                             cart.PropertyAddress.City = z.City
                             cart.PropertyAddress.State = z.State
                             cart.PropertyAddress.Zip = z.ZipCode
+
+
 
 
 
