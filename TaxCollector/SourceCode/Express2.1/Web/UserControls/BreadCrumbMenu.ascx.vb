@@ -64,7 +64,7 @@ Public Class BreadCrumbMenu
 
             tab = New BreadCrumbTab()
             tab.Index = 1
-            tab.PageName = "Default.aspx"
+            tab.PageName = ResolveUrl("~/pay/")
             tab.PageTag = PageTabName.Home.ToString()
             tab.MenuName = WebResources.AccountDetails
             tab.IsVisited = False
@@ -72,7 +72,7 @@ Public Class BreadCrumbMenu
 
             tab = New BreadCrumbTab()
             tab.Index = 2
-            tab.PageName = "ContactInfo.aspx"
+            tab.PageName = ResolveUrl("~/pay/ContactInfo.aspx")
             tab.PageTag = PageTabName.ContactInfo.ToString()
             tab.MenuName = WebResources.ContactInfo
             tab.IsVisited = False
@@ -80,7 +80,7 @@ Public Class BreadCrumbMenu
 
             tab = New BreadCrumbTab()
             tab.Index = 3
-            tab.PageName = "Payment.aspx"
+            tab.PageName = ResolveUrl("~/pay/Payment.aspx")
             tab.PageTag = PageTabName.PaymentDetails.ToString()
             tab.MenuName = WebResources.PaymentDetails
             tab.IsVisited = False
@@ -88,7 +88,7 @@ Public Class BreadCrumbMenu
 
             tab = New BreadCrumbTab()
             tab.Index = 4
-            tab.PageName = "Payment.aspx"
+            tab.PageName = ResolveUrl("~/pay/Confirm.aspx")
             tab.PageTag = PageTabName.PaymentConfirm.ToString()
             tab.MenuName = WebResources.PaymentConfirm
             tab.IsVisited = False
@@ -96,7 +96,7 @@ Public Class BreadCrumbMenu
 
             tab = New BreadCrumbTab()
             tab.Index = 5
-            tab.PageName = "PaymentComplete.aspx"
+            tab.PageName = ResolveUrl("~/pay/PaymentComplete.aspx")
             tab.PageTag = PageTabName.PaymentSuccess.ToString()
             tab.MenuName = WebResources.PaymentSuccess
             tab.IsVisited = False
@@ -104,7 +104,7 @@ Public Class BreadCrumbMenu
 
             tab = New BreadCrumbTab()
             tab.Index = 6
-            tab.PageName = "PaymentFailure.aspx"
+            tab.PageName = ResolveUrl("~/pay/PaymentFailure.aspx")
             tab.PageTag = PageTabName.PaymentFaild.ToString()
             tab.MenuName = WebResources.PaymentFailed
             tab.IsVisited = False
@@ -129,6 +129,7 @@ Public Class BreadCrumbMenu
 
         If String.IsNullOrEmpty(PageTagName) = False And Not IsDBNull(tabList) Then
             currentTab = tabList.Where(Function(t As BreadCrumbTab) t.PageTag.Equals(PageTagName, System.StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault()
+
             If String.IsNullOrEmpty(RedirectAddress) = False Then
 
                 currentTab.PageName = RedirectAddress
@@ -149,13 +150,13 @@ Public Class BreadCrumbMenu
                         If tab.PageTag.Equals(PageTabName.ContactInfo.ToString(), System.StringComparison.InvariantCultureIgnoreCase) Then
                             If IsContactInfoVisible = True Then
 
-                                htmlString.AppendFormat("<li class='active'><a href='#' class='' onclick=""RedirectBreadCrumbTab('{0}');"" ><span Class='badge badge-inverse'>", tab.PageName)
+                                htmlString.AppendFormat("<li class='active'><a href='{0}' class=''  ><span Class='badge badge-inverse'>", tab.PageName)
                                 htmlString.AppendFormat("{0}</span> {1} </a></li>", pageIndex.ToString(), tab.MenuName)
                                 pageIndex = pageIndex + 1
                             End If
                         Else
 
-                            htmlString.AppendFormat("<li class='active'><a href='#' class='' onclick=""RedirectBreadCrumbTab('{0}');"" ><span Class='badge badge-inverse'>", tab.PageName)
+                            htmlString.AppendFormat("<li class='active'><a href='{0}' class=''  ><span Class='badge badge-inverse'>", tab.PageName)
                             htmlString.AppendFormat("{0}</span> {1} </a></li>", pageIndex.ToString(), tab.MenuName)
                             pageIndex = pageIndex + 1
                         End If
