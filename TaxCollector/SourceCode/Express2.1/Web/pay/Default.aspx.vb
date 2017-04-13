@@ -356,7 +356,7 @@ Namespace B2P.PaymentLanding.Express.Web
             Dim errMsg As String = String.Empty
             Try
                 Dim z As New B2P.Objects.Product(BLL.SessionManager.ClientCode, ddlCategories.SelectedValue, B2P.Common.Enumerations.TransactionSources.Web)
-                SetBreadCrumbContactInfo(z)
+                Utility.SetBreadCrumbContactInfo(z)
 
                 If z.AmountDueSource = B2P.Common.Enumerations.AmountDueSources.Lookup Or z.AmountDueSource = B2P.Common.Enumerations.AmountDueSources.Table Then
                     'pnlLookupAccount.Visible = True
@@ -422,16 +422,18 @@ Namespace B2P.PaymentLanding.Express.Web
 
 
         End Sub
+        '' setting Contact Info flag from bread crumb menu
+        '' If Demographics or HomePhone either are enabled, then customer will see this Contact Info page
+        '' If neither are enabled Contact Info page will not display
+        'Private Sub SetBreadCrumbContactInfo(z As Objects.Product)
 
-        Private Sub SetBreadCrumbContactInfo(z As Objects.Product)
-            ' setting Contact Info flag from bread crumb menu
-            If z.WebOptions.Demographics = Objects.WebConfiguration.OptionalFields.NotUsed Then
-                BLL.SessionManager.IsContactInfoRequired = False
-            Else
-                BLL.SessionManager.IsContactInfoRequired = True
-            End If
+        '    If z.WebOptions.Demographics = Objects.WebConfiguration.OptionalFields.NotUsed And z.WebOptions.HomePhone = Objects.WebConfiguration.OptionalFields.NotUsed Then
+        '        BLL.SessionManager.IsContactInfoRequired = False
+        '    Else
+        '        BLL.SessionManager.IsContactInfoRequired = True
+        '    End If
 
-        End Sub
+        'End Sub
 
         ''' <summary>
         ''' Adds client side javascript to the various server controls.
