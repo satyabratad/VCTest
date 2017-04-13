@@ -444,6 +444,15 @@ Namespace B2P.PaymentLanding.Express.Web
                             cart.AccountIdFields.Add(acc2)
                             cart.AccountIdFields.Add(acc3)
                             cart.Amount = ci.Amount
+                            cart.AmountDue = ci.Amount
+
+                            cart.PropertyAddress.Address1 = z.Address1
+                            cart.PropertyAddress.Address2 = z.Address2
+                            cart.PropertyAddress.City = z.City
+                            cart.PropertyAddress.State = z.State
+                            cart.PropertyAddress.Zip = z.ZipCode
+
+
 
                             If BLL.SessionManager.ManageCart.AddToCart(cart) Then
                                 BLL.SessionManager.ManageCart.ShowCart = True
