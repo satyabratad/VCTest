@@ -18,6 +18,11 @@ Public Class CartGrid
                 hdSelectedIndex.Value = ""
 
             End If
+            If BLL.SessionManager.ManageCart.Cart.Count = 0 Then
+                BLL.SessionManager.ManageCart.ShowCart = False
+                BLL.SessionManager.ManageCart.EditItemIndex = -1
+                Response.Redirect("~/pay/")
+            End If
         End If
         'Edit cart
         If hdMode.Value.ToUpper().Trim() = "EDIT" Then

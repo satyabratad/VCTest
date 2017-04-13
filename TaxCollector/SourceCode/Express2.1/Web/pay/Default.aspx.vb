@@ -536,6 +536,7 @@ Namespace B2P.PaymentLanding.Express.Web
 
             If BLL.SessionManager.ManageCart.AddToCart(cart) Then
                 BLL.SessionManager.ManageCart.ShowCart = True
+                BLL.SessionManager.ManageCart.EditItemIndex = -1
                 Response.Redirect("~/pay/")
             Else
                 Page.ClientScript.RegisterStartupScript(Me.GetType, "Show", "$(document).ready(function() { $('#pnlValidationDuplicate').modal({show: 'true', backdrop: 'static', keyboard: false}); });", True)
@@ -544,6 +545,7 @@ Namespace B2P.PaymentLanding.Express.Web
 
         Protected Sub btnAddMoreItem_Click(sender As Object, e As EventArgs) Handles btnAddMoreItem.Click
             BLL.SessionManager.ManageCart.ShowCart = False
+            BLL.SessionManager.ManageCart.EditItemIndex = -1
             Response.Redirect("~/pay/")
         End Sub
 

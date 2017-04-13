@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class ShoppingCart
     
     '''<summary>
+    '''btnCart control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnCart As Global.System.Web.UI.WebControls.LinkButton
+    
+    '''<summary>
     '''cartCount control.
     '''</summary>
     '''<remarks>
