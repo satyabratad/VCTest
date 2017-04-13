@@ -3,6 +3,7 @@
 <%@ Register TagPrefix="b2p" TagName="PaymentHeader" Src="~/UserControls/Header.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="PaymentStatusMessage" Src="~/UserControls/StatusMessage.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="PaymentFooter" Src="~/UserControls/Footer.ascx" %>
+<%@ Register TagPrefix="b2p" TagName="JavaScriptCheck" Src="~/UserControls/JavaScriptCheck.ascx" %>
 
 <!DOCTYPE html>
 
@@ -95,19 +96,16 @@
             <!--// END MIDDLE CONTENT //-->
 
             <!--// START FOOTER CONTENT //-->
-
-            <b2p:PaymentFooter ID="pfSessionExpired" runat="server" />
-
-            <!--// END FOOTER CONTENT //-->
-
-            <!-- JavaScript -->
-            <script src="/Js/jquery-1.11.1.min.js"></script>
-            <script src="/Js/bootstrap.min.js"></script>
-
-
-
-
         </div>
+        <b2p:PaymentFooter ID="pfSessionExpired" runat="server" />
+
+        <!--// END FOOTER CONTENT //-->
+
+        <!-- JavaScript -->
+        <script src="/Js/jquery-1.11.1.min.js"></script>
+        <script src="/Js/bootstrap.min.js"></script>
+
+
     </form>
 
 </body>

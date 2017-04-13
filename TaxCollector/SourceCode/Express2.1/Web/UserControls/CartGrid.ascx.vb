@@ -21,7 +21,11 @@ Public Class CartGrid
             If BLL.SessionManager.ManageCart.Cart.Count = 0 Then
                 BLL.SessionManager.ManageCart.ShowCart = False
                 BLL.SessionManager.ManageCart.EditItemIndex = -1
-                Response.Redirect("~/pay/")
+                If BLL.SessionManager.ClientType = B2P.Cart.EClientType.SSO Then
+                    Response.Redirect("~/sso/")
+                Else
+                    Response.Redirect("~/pay/")
+                End If
             End If
         End If
         'Edit cart

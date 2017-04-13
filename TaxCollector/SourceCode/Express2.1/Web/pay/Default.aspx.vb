@@ -46,12 +46,6 @@ Namespace B2P.PaymentLanding.Express.Web
                     BLL.SessionManager.LookupAmountMinimum = False
                     BLL.SessionManager.LookupAmountEditable = True
                     getProductLookup()
-                    ctlPropertyAddress.Address1 = y.Address1
-                    ctlPropertyAddress.Address2 = y.Address2
-                    ctlPropertyAddress.City = y.City
-                    ctlPropertyAddress.StateValue = y.State
-                    ctlPropertyAddress.Zip = y.ZipCode
-
                 Else
                     Response.Redirect("/errors/")
                 End If

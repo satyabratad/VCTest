@@ -51,6 +51,15 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected WithEvents phConfirmPaymentInfo As Global.B2P.PaymentLanding.Express.Web.Header
         
         '''<summary>
+        '''pjsJavascript control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents pjsJavascript As Global.JavaScriptCheck
+        
+        '''<summary>
         '''litMissingClientHeader control.
         '''</summary>
         '''<remarks>
