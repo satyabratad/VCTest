@@ -69,22 +69,22 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected WithEvents BreadCrumbMenu As Global.BreadCrumbMenu
         
         '''<summary>
-        '''pnlError control.
+        '''ShoppingCart control.
         '''</summary>
         '''<remarks>
         '''Auto-generated field.
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
-        Protected WithEvents pnlError As Global.System.Web.UI.WebControls.Panel
+        Protected WithEvents ShoppingCart As Global.ShoppingCart
         
         '''<summary>
-        '''litMissingClientHeader control.
+        '''CartDetails control.
         '''</summary>
         '''<remarks>
         '''Auto-generated field.
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
-        Protected WithEvents litMissingClientHeader As Global.System.Web.UI.WebControls.Literal
+        Protected WithEvents CartDetails As Global.CartDetails
         
         '''<summary>
         '''pnlCart control.
@@ -112,6 +112,24 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents btnSubmit As Global.System.Web.UI.WebControls.Button
+        
+        '''<summary>
+        '''pnlError control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents pnlError As Global.System.Web.UI.WebControls.Panel
+        
+        '''<summary>
+        '''litMissingClientHeader control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents litMissingClientHeader As Global.System.Web.UI.WebControls.Literal
         
         '''<summary>
         '''psmErrorMessage control.

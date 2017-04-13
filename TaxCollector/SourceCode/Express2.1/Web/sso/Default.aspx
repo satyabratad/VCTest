@@ -6,7 +6,8 @@
 <%@ Register TagPrefix="b2p" TagName="JavaScriptCheck" Src="~/UserControls/JavaScriptCheck.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="BreadCrumbMenu" Src="~/UserControls/BreadCrumbMenu.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="CartGrid" Src="~/UserControls/CartGrid.ascx" %>
-
+<%@ Register Src="~/UserControls/ShoppingCart.ascx" TagPrefix="b2p" TagName="ShoppingCart" %>
+<%@ Register Src="~/UserControls/CartDetails.ascx" TagPrefix="b2p" TagName="CartDetails" %>
 
 
 <!DOCTYPE html>
@@ -50,87 +51,75 @@
             <!--// END LOGO, HEADER AND NAV //-->
             <div class="row" style="background-color: white; padding-bottom: 10px;">
                 <br />
-            
+
                 <div class="col-sm-12">
                     <!--// START NO SCRIPT CHECK //-->
                     <b2p:JavaScriptCheck ID="pjsJavascript" runat="server" />
                     <!--// END NO SCRIPT CHECK //-->
 
-
-
-
-                    
-
                     <!--// START MIDDLE CONTENT //-->
-                    <div class="container">
+                    <div class="content">
                         <div class="container" style="min-height: 50%;">
-                            <div class="row" style="background-color: white; padding: 5px;">
-                                <div class="content">
-                                    <div class="container" style="min-height: 50%;">
-                                    <!--// START BREADCRUMBS //-->
-                                    <b2p:BreadCrumbMenu runat="server" ID="BreadCrumbMenu"  PageTagName="Home" />
-                                    </div>
-                                    <!--// END BREADCRUMBS //-->
-                                    <asp:Panel ID="pnlError" runat="server" Visible="true">
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <h3 class="text-primary">
-                                                <asp:Literal ID="litMissingClientHeader" Text="<%$ Resources:WebResources, MissingClientHeading %>" runat="server" /></h3>
-                                            <hr />
-                                            <br />
-                                        </div>
-                                    </div>
-                                    </asp:Panel>
-                                    <asp:Panel ID="pnlCart" runat="server" Visible="false">
+                            <div class="row">
+                                <!--// START BREADCRUMBS //-->
+                                <b2p:BreadCrumbMenu runat="server" ID="BreadCrumbMenu" PageTagName="Home" />
+                                <!--// END BREADCRUMBS //-->
+                                <div class="col-xs-12 col-sm-12">
+                                    <b2p:ShoppingCart runat="server" ID="ShoppingCart" />
+                                    <b2p:CartDetails runat="server" ID="CartDetails" />
+                                </div>
+                                <asp:Panel ID="pnlCart" runat="server" Visible="false">
                                     <div class="col-xs-12 col-sm-12">
                                         <b2p:CartGrid runat="server" ID="ctlCartGrid" />
                                         <br />
                                         <div class="pull-right">
-                                            
+
                                             <asp:Button ID="btnSubmit" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, ButtonContinue %>" ToolTip="<%$ Resources:WebResources, ButtonContinue %>" runat="server" />
                                         </div>
                                     </div>
                                 </asp:Panel>
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-6">
-                                            <b2p:PaymentStatusMessage ID="psmErrorMessage" runat="server" />
-                                            <br />
-                                            <br />
-                                            <br />
-                                            <br />
-                                            <br />
-                                            <br />
-                                            <br />
-                                            <br />
-                                            <br />
-                                            <br />
-                                            <br />
-                                        </div>
+                            </div>
+
+                            <asp:Panel ID="pnlError" runat="server" Visible="true">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <h3 class="text-primary">
+                                            <asp:Literal ID="litMissingClientHeader" Text="<%$ Resources:WebResources, MissingClientHeading %>" runat="server" /></h3>
+                                        <hr />
+                                        <br />
                                     </div>
                                 </div>
-                            </div>
+
+
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6">
+                                        <b2p:PaymentStatusMessage ID="psmErrorMessage" runat="server" />
+                                    </div>
+                                </div>
+
+                            </asp:Panel>
                         </div>
                     </div>
                     <%-- <div class="col-sm-1"></div>--%>
                 </div>
             </div>
-           
-            <!--// END MIDDLE CONTENT //-->
-
-            <!--// START FOOTER CONTENT //-->
-
-            <b2p:PaymentFooter ID="pfSessionExpired" runat="server" />
-
-            <!--// END FOOTER CONTENT //-->
-
-            <!-- JavaScript -->
-            <script src="/Js/jquery-1.11.1.min.js"></script>
-            <script src="/Js/bootstrap.min.js"></script>
-
-
-
-
         </div>
+        <!--// END MIDDLE CONTENT //-->
+
+        <!--// START FOOTER CONTENT //-->
+
+        <b2p:PaymentFooter ID="pfSessionExpired" runat="server" />
+
+        <!--// END FOOTER CONTENT //-->
+
+        <!-- JavaScript -->
+        <script src="/Js/jquery-1.11.1.min.js"></script>
+        <script src="/Js/bootstrap.min.js"></script>
+
+
+
+
+
     </form>
 
 </body>

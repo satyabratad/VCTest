@@ -73,13 +73,13 @@
                                 <!--// START BREADCRUMBS //-->
                                 <b2p:BreadCrumbMenu runat="server" ID="BreadCrumbMenu" PageTagName="Home" />
                                 <!--// END BREADCRUMBS //-->
-                                 <div class="col-xs-12 col-sm-12">
-                                <b2p:ShoppingCart runat="server" ID="ShoppingCart" />
-                                <b2p:CartDetails runat="server" id="CartDetails" />
-                                     </div>
+                                <div class="col-xs-12 col-sm-12">
+                                    <b2p:ShoppingCart runat="server" ID="ShoppingCart" />
+                                    <b2p:CartDetails runat="server" ID="CartDetails" />
+                                </div>
                                 <asp:Panel ID="pnlContent" runat="server" Visible="true">
                                     <div class="col-xs-12 col-sm-6">
-                                        
+
                                         <asp:Panel ID="pnlProducts" runat="server">
                                             <div class="row">
                                                 <div class="col-xs-12">
