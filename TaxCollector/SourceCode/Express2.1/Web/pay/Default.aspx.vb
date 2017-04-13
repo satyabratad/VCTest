@@ -379,15 +379,7 @@ Namespace B2P.PaymentLanding.Express.Web
                     grdLookup.DataSource = Nothing
                     BuildForm()
                 End If
-                If BLL.SessionManager.ClientType = B2P.Cart.EClientType.NonLookup Then
-                    If z.CollectAddress Then
-                        ctlPropertyAddress.AddressVisible = True
-                    Else
-                        ctlPropertyAddress.AddressVisible = False
-                    End If
-                ElseIf BLL.SessionManager.ClientType = B2P.Cart.EClientType.Lookup Then
-                    ctlPropertyAddress.Visible = False
-                End If
+
 
 
                 If BLL.SessionManager.ManageCart.ShowCart = True Then
@@ -415,6 +407,16 @@ Namespace B2P.PaymentLanding.Express.Web
                         pnlContent.Visible = True
                         pnlEditLookupItem.Visible = False
                     End If
+                End If
+
+                If BLL.SessionManager.ClientType = B2P.Cart.EClientType.NonLookup Then
+                    If z.CollectAddress Then
+                        ctlPropertyAddress.AddressVisible = True
+                    Else
+                        ctlPropertyAddress.AddressVisible = False
+                    End If
+                ElseIf BLL.SessionManager.ClientType = B2P.Cart.EClientType.Lookup Then
+                    ctlPropertyAddress.Visible = False
                 End If
             Catch ex As Exception
                 ' Build the error message
