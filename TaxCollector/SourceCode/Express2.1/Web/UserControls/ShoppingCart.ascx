@@ -1,5 +1,6 @@
 ﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="ShoppingCart.ascx.vb" Inherits=".ShoppingCart" %>
-  <div class="row col-md-1 pull-right">
+<div class="row">
+  <div class="col-md-1 pull-right">
                                     <a href="#" onclick="bill2payAccountDetails.showgridFromCart();">
                                         <div id="cartDiv" class="caption img-responsive pull-right" style="min-width: 30px;
                                             max-width: 35px; min-height: 30px; max-height: 35px;">
@@ -8,3 +9,5 @@
                                         </div>
                                     </a>
                                 </div>
+    </div>
+<br />

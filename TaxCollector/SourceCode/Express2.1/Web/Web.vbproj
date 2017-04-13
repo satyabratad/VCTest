@@ -141,6 +141,7 @@
     <Content Include="Img\cards.png" />
     <Content Include="Img\cards_small.png" />
     <Content Include="Img\card_in_use-26.png" />
+    <Content Include="Img\cart.png" />
     <Content Include="Img\check.jpg" />
     <Content Include="Img\checkimage.jpg" />
     <Content Include="Img\check_book-26.png" />
@@ -182,6 +183,7 @@
     <Content Include="sso\Default.aspx" />
     <Content Include="UserControls\BankAccount.ascx" />
     <Content Include="UserControls\BreadCrumbMenu.ascx" />
+    <Content Include="UserControls\CartDetails.ascx" />
     <Content Include="UserControls\CartGrid.ascx" />
     <Content Include="UserControls\ConvenienceFee.ascx" />
     <Content Include="UserControls\CreditCard.ascx" />
@@ -286,6 +288,7 @@
     </Compile>
     <Compile Include="pay\ContactInfo.aspx.vb">
       <DependentUpon>ContactInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="pay\Default.aspx.designer.vb">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -334,6 +337,13 @@
     </Compile>
     <Compile Include="UserControls\BreadCrumbMenu.ascx.vb">
       <DependentUpon>BreadCrumbMenu.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\CartDetails.ascx.designer.vb">
+      <DependentUpon>CartDetails.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\CartDetails.ascx.vb">
+      <DependentUpon>CartDetails.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="UserControls\CartGrid.ascx.designer.vb">

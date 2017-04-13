@@ -8,6 +8,10 @@
 <%@ Register TagPrefix="b2p" TagName="CartGrid" Src="~/UserControls/CartGrid.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="BreadCrumbMenu" Src="~/UserControls/BreadCrumbMenu.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="EditLookupItem" Src="~/UserControls/EditLookupItem.ascx" %>
+<%@ Register Src="~/UserControls/ShoppingCart.ascx" TagPrefix="b2p" TagName="ShoppingCart" %>
+<%@ Register Src="~/UserControls/CartDetails.ascx" TagPrefix="b2p" TagName="CartDetails" %>
+
+
 
 
 <!DOCTYPE html>
@@ -69,9 +73,13 @@
                                 <!--// START BREADCRUMBS //-->
                                 <b2p:BreadCrumbMenu runat="server" ID="BreadCrumbMenu" PageTagName="Home" />
                                 <!--// END BREADCRUMBS //-->
+                                 <div class="col-xs-12 col-sm-12">
+                                <b2p:ShoppingCart runat="server" ID="ShoppingCart" />
+                                <b2p:CartDetails runat="server" id="CartDetails" />
+                                     </div>
                                 <asp:Panel ID="pnlContent" runat="server" Visible="true">
                                     <div class="col-xs-12 col-sm-6">
-                                        <br />
+                                        
                                         <asp:Panel ID="pnlProducts" runat="server">
                                             <div class="row">
                                                 <div class="col-xs-12">

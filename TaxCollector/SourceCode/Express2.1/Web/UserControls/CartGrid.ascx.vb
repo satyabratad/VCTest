@@ -13,9 +13,10 @@ Public Class CartGrid
                 Dim index As Integer = CType(hdSelectedIndex.Value, Integer)
                 BLL.SessionManager.ManageCart.Cart.RemoveAt(index)
                 UpdateCartCount()
-                populateNonLookupGrid()
+                PopulateGrid(Me.ID)
                 hdMode.Value = ""
                 hdSelectedIndex.Value = ""
+
             End If
         End If
         'Edit cart
@@ -24,7 +25,7 @@ Public Class CartGrid
                 Dim index As Integer = CType(hdSelectedIndex.Value, Integer)
                 BLL.SessionManager.ManageCart.Cart(index).Amount = FormatAmount(CType(hdEditAmount.Value, Double))
                 UpdateCartCount()
-                populateNonLookupGrid()
+                PopulateGrid(Me.ID)
                 hdMode.Value = ""
                 hdSelectedIndex.Value = ""
             End If
@@ -50,16 +51,24 @@ Public Class CartGrid
         rptSSO.Visible = BLL.SessionManager.ClientType = B2P.Cart.EClientType.SSO
     End Sub
     Private Sub populateNonLookupGrid()
+        ResetIndex()
         rptNonLookup.DataSource = BLL.SessionManager.ManageCart.Cart
         rptNonLookup.DataBind()
     End Sub
     Private Sub populateLookupGrid()
+        ResetIndex()
         rptLookup.DataSource = BLL.SessionManager.ManageCart.Cart
         rptLookup.DataBind()
     End Sub
     Private Sub populateSSOGrid()
+        ResetIndex()
         rptSSO.DataSource = BLL.SessionManager.ManageCart.Cart
         rptSSO.DataBind()
+    End Sub
+    Private Sub ResetIndex()
+        For i As Integer = 0 To BLL.SessionManager.ManageCart.Cart.Count - 1
+            BLL.SessionManager.ManageCart.Cart(i).Index = i.ToString()
+        Next
     End Sub
     Protected Function GetPropertyAddress(Index As Integer) As String
         Dim CartItem As B2P.Cart.Cart = BLL.SessionManager.ManageCart.Cart(Index)
