@@ -98,7 +98,7 @@ Public Class BreadCrumbMenu
             tab.Index = 5
             tab.PageName = "PaymentComplete.aspx"
             tab.PageTag = PageTabName.PaymentSuccess.ToString()
-            tab.MenuName = WebResources.PaymentCompleate
+            tab.MenuName = WebResources.PaymentSuccess
             tab.IsVisited = False
             tabList.Add(tab)
 
@@ -106,7 +106,7 @@ Public Class BreadCrumbMenu
             tab.Index = 6
             tab.PageName = "PaymentFailure.aspx"
             tab.PageTag = PageTabName.PaymentFaild.ToString()
-            tab.MenuName = WebResources.PaymentFailure
+            tab.MenuName = WebResources.PaymentFailed
             tab.IsVisited = False
             tabList.Add(tab)
 
