@@ -447,14 +447,14 @@ Namespace B2P.PaymentLanding.Express.Web
 
         ''' <summary>
         ''' setting Contact Info flag from bread crumb menu
-        ''' If Demographics or HomePhone either are enabled, then customer will see this Contact Info page
-        ''' If neither are enabled Contact Info page will not display 
+        ''' If Demographics is enabled, then customer will see this Contact Info page
+        ''' 
         ''' </summary>
         ''' <param name="z"></param>
 
         Public Shared Sub SetBreadCrumbContactInfo(z As Objects.Product)
 
-            If z.WebOptions.Demographics = Objects.WebConfiguration.OptionalFields.NotUsed And z.WebOptions.HomePhone = Objects.WebConfiguration.OptionalFields.NotUsed Then
+            If z.WebOptions.Demographics = Objects.WebConfiguration.OptionalFields.NotUsed Then
                 BLL.SessionManager.IsContactInfoRequired = False
             Else
                 BLL.SessionManager.IsContactInfoRequired = True
