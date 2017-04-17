@@ -8,6 +8,9 @@ Namespace B2P.PaymentLanding.Express.Web
     Public Class ContactInfo : Inherits SiteBasePage
 
         Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+            If Not BLL.SessionManager.IsContactInfoRequired Then
+                Response.Redirect("/Errors/Error.aspx", False)
+            End If
             If Not IsPostBack Then
                 BindCountries()
                 BindState()

@@ -16,7 +16,7 @@ Public Class CartGrid
                 PopulateGrid(Me.ID)
                 hdMode.Value = ""
                 hdSelectedIndex.Value = ""
-
+                CType(Me.Parent.FindControl("CartDetails"), CartDetails).LoadContent()
             End If
             If BLL.SessionManager.ManageCart.Cart.Count = 0 Then
                 BLL.SessionManager.ManageCart.ShowCart = False

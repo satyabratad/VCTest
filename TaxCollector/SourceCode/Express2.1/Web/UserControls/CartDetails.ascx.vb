@@ -5,11 +5,14 @@ Public Class CartDetails
     Inherits System.Web.UI.UserControl
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        LoadContent()
+        SetVisibility()
+    End Sub
+    Public Sub LoadContent()
         If BLL.SessionManager.ManageCart.Cart.Count = 0 Then
             tblCartDetails.Visible = False
             Exit Sub
         End If
-        SetVisibility()
         cartProduct.Text = BLL.SessionManager.ManageCart.Cart(BLL.SessionManager.ManageCart.Cart.Count - 1).Item
         cartHeadingCount.Text = BLL.SessionManager.ManageCart.Cart.Count.ToString()
         cartHeadingAmount.Text = SubTotal()
