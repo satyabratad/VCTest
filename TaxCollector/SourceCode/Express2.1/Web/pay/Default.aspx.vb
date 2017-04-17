@@ -47,13 +47,7 @@ Namespace B2P.PaymentLanding.Express.Web
                     BLL.SessionManager.LookupAmountEditable = True
                     getProductLookup()
 
-                    If BLL.SessionManager.ClientType = B2P.Cart.EClientType.Lookup Then
-                        ctlPropertyAddress.Address1 = y.Address1
-                        ctlPropertyAddress.Address2 = y.Address2
-                        ctlPropertyAddress.City = y.City
-                        ctlPropertyAddress.StateValue = y.State
-                        ctlPropertyAddress.Zip = y.ZipCode
-                    End If
+
                 Else
                     Response.Redirect("/errors/")
                 End If
@@ -287,6 +281,15 @@ Namespace B2P.PaymentLanding.Express.Web
                         Page.ClientScript.RegisterStartupScript(Me.GetType, "Show", "$(document).ready(function() { $('#pnlLookupError').modal({show: 'true', backdrop: 'static', keyboard: false}); });", True)
 
                 End Select
+
+                Dim _client As B2P.Objects.Client = B2P.Objects.Client.GetClient(BLL.SessionManager.ClientCode.ToString)
+
+                ctlPropertyAddress.Address1 = _client.Address1
+                ctlPropertyAddress.Address2 = _client.Address2
+                ctlPropertyAddress.City = _client.City
+                ctlPropertyAddress.StateValue = _client.State
+                ctlPropertyAddress.Zip = _client.ZipCode
+
             Catch ex As Exception
                 ' Build the error message
                 errMsg = Utility.BuildErrorMessage(Request.Url.Host, Request.Url.AbsolutePath,
