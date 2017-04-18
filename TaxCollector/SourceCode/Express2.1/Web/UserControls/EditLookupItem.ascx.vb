@@ -36,7 +36,11 @@ Public Class EditLookupItem
             BLL.SessionManager.ManageCart.UpdateCartItem(_SelectedItem)
             BLL.SessionManager.ManageCart.ShowCart = True
             BLL.SessionManager.ManageCart.EditItemIndex = -1
-            Response.Redirect("~/pay/")
+            If BLL.SessionManager.ClientType = B2P.Cart.EClientType.SSO Then
+                Response.Redirect("~/sso/")
+            Else
+                Response.Redirect("~/pay/")
+            End If
         End If
     End Sub
 

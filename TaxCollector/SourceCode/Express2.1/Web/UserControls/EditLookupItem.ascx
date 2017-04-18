@@ -60,8 +60,7 @@
          <% If Not SelectedItem Is Nothing Then%>
         var newValue = parseFloat($("#txtAmountEdit").val());
         var oldValue = parseFloat(<%= SelectedItem.AmountDue%>);
-
-
+       
          var item = new ValidationItem();
 
         // Create instance of the form validator

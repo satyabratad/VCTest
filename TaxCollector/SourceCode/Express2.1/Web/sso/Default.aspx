@@ -8,6 +8,8 @@
 <%@ Register TagPrefix="b2p" TagName="CartGrid" Src="~/UserControls/CartGrid.ascx" %>
 <%@ Register Src="~/UserControls/ShoppingCart.ascx" TagPrefix="b2p" TagName="ShoppingCart" %>
 <%@ Register Src="~/UserControls/CartDetails.ascx" TagPrefix="b2p" TagName="CartDetails" %>
+<%@ Register Src="~/UserControls/EditLookupItem.ascx" TagPrefix="b2p" TagName="EditLookupItem" %>
+
 
 
 <!DOCTYPE html>
@@ -77,6 +79,9 @@
                                             <asp:Button ID="btnSubmit" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, ButtonContinue %>" ToolTip="<%$ Resources:WebResources, ButtonContinue %>" runat="server" />
                                         </div>
                                     </div>
+                                </asp:Panel>
+                                <asp:Panel ID="pnlEdit" runat="server" Visible="false">
+                                    <b2p:EditLookupItem runat="server" ID="ctlEditLookupItem" />
                                 </asp:Panel>
                             </div>
 

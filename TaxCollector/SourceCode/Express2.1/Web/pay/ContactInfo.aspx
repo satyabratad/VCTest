@@ -84,6 +84,7 @@
                                                 <asp:HiddenField ID="hdContactState" runat="server" Value="required" />
                                                 <asp:HiddenField ID="hdContactCountry" runat="server" Value="required" />
                                                 <asp:HiddenField ID="hdContactZip" runat="server" Value="required" />
+                                                 <asp:HiddenField ID="hdZipRequired" runat="server" Value="required" />
 
                                                 <div class="form-group form-group-sm">
                                                     <asp:Panel runat="server" ID="pnlHeading">
@@ -95,7 +96,7 @@
                                                         <label class="control-label" for="txtContactName" id="lblContactName">
                                                             <asp:Label ID="lblContName" runat="server" Text="<%$ Resources:WebResources, ContactName %>"></asp:Label>
                                                         </label>
-                                                        <asp:TextBox runat="server" MaxLength="40" ID="txtContactName"  required="true" class="form-control input-sm"
+                                                        <asp:TextBox runat="server" MaxLength="40" ID="txtContactName"   class="form-control input-sm"
                                                             onkeypress="return restrictInput(event, restrictionTypes.AlphaNumericAndExtraChars)"
                                                             onpaste="return reformatInput(this, restrictionTypes.AlphaNumericAndExtraChars)"></asp:TextBox>
                                                     </asp:Panel>
@@ -105,7 +106,7 @@
                                                         <label class="control-label" for="txtContactAddress1" id="lblContactAddress1">
                                                             <asp:Label ID="lblAddress1" runat="server" Text="<%$ Resources:WebResources, Address1Label %>"></asp:Label>
                                                         </label>
-                                                        <asp:TextBox runat="server" MaxLength="40" ID="txtContactAddress1"  required="true" class="form-control input-sm"
+                                                        <asp:TextBox runat="server" MaxLength="40" ID="txtContactAddress1"   class="form-control input-sm"
                                                             onkeypress="return restrictInput(event, restrictionTypes.AlphaNumericAndExtraChars)"
                                                             onpaste="return reformatInput(this, restrictionTypes.AlphaNumericAndExtraChars)"></asp:TextBox>
                                                     </asp:Panel>
@@ -126,7 +127,7 @@
                                                         <label class="control-label" for="ddlContactCountry" id="lblContactCountry">
                                                             <asp:Label ID="lblCountry" runat="server" Text="<%$ Resources:WebResources, lblCountry %>"></asp:Label>
                                                         </label>
-                                                        <asp:DropDownList runat="server" ID="ddlContactCountry"  required="true" class="form-control input-sm" AutoPostBack="True">
+                                                        <asp:DropDownList runat="server" ID="ddlContactCountry"   class="form-control input-sm" AutoPostBack="True">
                                                         </asp:DropDownList>
                                                     </asp:Panel>
                                                 </div>
@@ -135,7 +136,7 @@
                                                         <label class="control-label" for="ddlContactState" id="lblContactState">
                                                             <asp:Label ID="lblState" runat="server" Text="<%$ Resources:WebResources, StateLabel %>"></asp:Label>
                                                         </label>
-                                                        <asp:DropDownList runat="server" ID="ddlContactState"  required="true" class="form-control input-sm">
+                                                        <asp:DropDownList runat="server" ID="ddlContactState"   class="form-control input-sm">
                                                         </asp:DropDownList>
                                                     </asp:Panel>
                                                 </div>
@@ -144,7 +145,7 @@
                                                         <label class="control-label" for="txtContactCity" id="lblContactCity">
                                                             <asp:Label ID="lblCity" runat="server" Text="<%$ Resources:WebResources, CityLabel %>"></asp:Label>
                                                         </label>
-                                                        <asp:TextBox runat="server" MaxLength="40" ID="txtContactCity"  required="true" class="form-control input-sm"
+                                                        <asp:TextBox runat="server" MaxLength="25" ID="txtContactCity"   class="form-control input-sm"
                                                             onkeypress="return restrictInput(event, restrictionTypes.AlphaNumericAndExtraChars)"
                                                             onpaste="return reformatInput(this, restrictionTypes.AlphaNumericAndExtraChars)"></asp:TextBox>
                                                     </asp:Panel>
@@ -154,7 +155,7 @@
                                                         <label class="control-label" for="txtContactZip" id="lblContactZip">
                                                             <asp:Label ID="lblZip" runat="server" Text="<%$ Resources:WebResources, ZipLabel %>"></asp:Label>
                                                         </label>
-                                                        <asp:TextBox runat="server" MaxLength="40" ID="txtContactZip"  required="true" class="form-control input-sm"
+                                                        <asp:TextBox runat="server" MaxLength="10" ID="txtContactZip"   class="form-control input-sm"
                                                             onkeypress="return restrictInput(event, restrictionTypes.ZipCode)" onpaste="return reformatInput(this, restrictionTypes.ZipCode)"></asp:TextBox>
                                                     </asp:Panel>
                                                 </div>
@@ -163,7 +164,7 @@
                                                         <label class="control-label" for="txtContactPhone" id="lblContactPhone">
                                                             <asp:Label ID="lblPhone" runat="server" Text="<%$ Resources:WebResources, PhoneLabel %>"></asp:Label>
                                                         </label>
-                                                        <asp:TextBox runat="server" MaxLength="15" ID="txtContactPhone"
+                                                        <asp:TextBox runat="server" MaxLength="14" ID="txtContactPhone"
                                                             class="form-control input-sm" onkeypress="return restrictInput(event, restrictionTypes.NumbersOnly)" onpaste="return reformatInput(this, restrictionTypes.NumbersOnly)"></asp:TextBox>
                                                     </asp:Panel>
 
@@ -238,7 +239,7 @@
                 debugger;
                 // Add validation items to validator
 
-                // Check to see if contact name is present
+                <%--// Check to see if contact name is present
                 contactName = doc.getElementById('hdContactName').value;
                 if (contactName !== '') {
                     // Set the validator
@@ -256,9 +257,9 @@
                 if (country !== '') {
                     // Set the validator
                     validator.addValidationItem(new ValidationItem("ddlContactCountry", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
-                }
+                }--%>
 
-                if ($("#ddlContactCountry").val() != "OT") {
+                <%--if ($("#ddlContactCountry").val() != "OT") {
                     // Check to see if city is required
                     city = doc.getElementById('hdContactCity').value;
                     if (city !== '') {
@@ -271,12 +272,17 @@
                         // Set the validator
                         validator.addValidationItem(new ValidationItem("ddlContactState", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
                     }
-
+                }--%>
                     // Check to see if zip is required
+                if ($("#hdZipRequired").val() == 'Y') {
+                    zip = doc.getElementById('hdContactZip').value;
+                    if (zip !== '') {
+                        validator.addValidationItem(new ValidationItem("txtContactZip", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
+                    }
+                }
                     zip = doc.getElementById('hdContactZip').value;
                     if (zip !== '') {
                         // Set the validator
-                        validator.addValidationItem(new ValidationItem("txtContactZip", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
                         if ($("#ddlContactCountry").val() == "US")
                             validator.addValidationItem(new ValidationItem("txtContactZip", fieldTypes.ZipCodeUnitedStates, true, "<%=GetGlobalResourceObject("WebResources", "InvalidZipMsg").ToString()%>"));
                         if ($("#ddlContactCountry").val() == "CA")
@@ -284,7 +290,7 @@
                         if ($("#ddlContactCountry").val() == "OT")
                             validator.addValidationItem(new ValidationItem("txtContactZip", fieldTypes.ZipCodeInternational, true, "<%=GetGlobalResourceObject("WebResources", "InvalidZipMsg").ToString()%>"));
                     }
-                }
+                
                 return validator.validate();
             }
 

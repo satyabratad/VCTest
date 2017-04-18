@@ -103,6 +103,8 @@ Namespace B2P.PaymentLanding.Express.Web
                         grdLookup.DataSource = dt
                         ' Get the address and name to display on the confirmation page
                         BLL.SessionManager.ServiceAddress = Utility.SafeEncode(y.Demographics.Address1.Value)
+
+
                         BLL.SessionManager.NameOnLookupAccount = Utility.SafeEncode(y.Demographics.FirstName.Value & " " & y.Demographics.LastName.Value)
                         grdLookup.DataBind()
                         btnLookupGo.Visible = True

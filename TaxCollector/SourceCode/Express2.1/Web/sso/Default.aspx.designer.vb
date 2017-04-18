@@ -114,6 +114,24 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected WithEvents btnSubmit As Global.System.Web.UI.WebControls.Button
         
         '''<summary>
+        '''pnlEdit control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents pnlEdit As Global.System.Web.UI.WebControls.Panel
+        
+        '''<summary>
+        '''ctlEditLookupItem control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents ctlEditLookupItem As Global.EditLookupItem
+        
+        '''<summary>
         '''pnlError control.
         '''</summary>
         '''<remarks>

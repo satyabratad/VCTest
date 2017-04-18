@@ -5,6 +5,20 @@ Namespace B2P.PaymentLanding.Express.Web
     Public Class _ssodefault : Inherits System.Web.UI.Page
 
         Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+            If BLL.SessionManager.ManageCart.EditItemIndex > -1 Then
+                pnlCart.Visible = False
+                pnlEdit.Visible = True
+                pnlError.Visible = False
+                Dim _SelectedItem = BLL.SessionManager.ManageCart.Cart.FirstOrDefault(Function(p) p.Index = BLL.SessionManager.ManageCart.EditItemIndex)
+                If Not _SelectedItem Is Nothing Then
+                    ctlEditLookupItem.SelectedItem = _SelectedItem
+                End If
+                Exit Sub
+            Else
+                pnlCart.Visible = False
+                pnlEdit.Visible = False
+                pnlError.Visible = False
+            End If
             Dim redirectAddress As String = String.Empty
 
 
@@ -172,6 +186,16 @@ Namespace B2P.PaymentLanding.Express.Web
                         BLL.SessionManager.ServiceAddress = Utility.SafeEncode(y.Demographics.Address1.Value)
                         BLL.SessionManager.NameOnLookupAccount = Utility.SafeEncode(y.Demographics.FirstName.Value & " " & y.Demographics.LastName.Value)
 
+                        'Added by RS
+                        Dim address1 As String = Utility.SafeEncode(y.Demographics.Address1.Value)
+                        Dim address2 As String = Utility.SafeEncode(y.Demographics.Address2.Value)
+                        Dim contactName As String = ""
+                        Dim country As String = ""
+                        Dim city As String = Utility.SafeEncode(y.Demographics.City.Value)
+                        Dim state As String = Utility.SafeEncode(y.Demographics.State.Value)
+                        Dim zipCode As String = Utility.SafeEncode(y.Demographics.ZipCode.Value)
+                        Dim homePhone As String = Utility.SafeEncode(y.Demographics.HomePhone.Value)
+                        BLL.SessionManager.AddContactInfo(address1, address2, contactName, country, state, city, zipCode, homePhone)
 
                         Select Case y.PaymentStatus
                             Case B2P.ClientInterface.Manager.ClientInterfaceWS.PaymentStatusCodes.Allowed

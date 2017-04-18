@@ -18,6 +18,10 @@ Namespace B2P.PaymentLanding.Express.Web
                 PopulateContactInfo()
             End If
             disableControls()
+            Dim avsCheckTypes As B2P.Objects.Client.AVSCheckTypes = B2P.Objects.Client.GetAVSSetting(BLL.SessionManager.ClientCode, B2P.Common.Enumerations.TransactionSources.Web)
+            hdZipRequired.Value = IIf(avsCheckTypes = Objects.Client.AVSCheckTypes.CheckZipOnly Or avsCheckTypes = Objects.Client.AVSCheckTypes.CheckBoth, "Y", "N")
+
+
         End Sub
         Protected Sub ddlContactCountry_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlContactCountry.SelectedIndexChanged
             BindState()
@@ -52,30 +56,34 @@ Namespace B2P.PaymentLanding.Express.Web
         ''' Get Contact Info
         ''' </summary>
         Private Sub PopulateContactInfo()
+
             If Not BLL.SessionManager.ContactInfo Is Nothing Then
                 With BLL.SessionManager.ContactInfo
-                    txtContactName.Text = .ContactName
+                    txtContactName.Text = .UserField1
                     txtContactAddress1.Text = .Address1
                     txtContactAddress2.Text = .Address2
-                    ddlContactCountry.SelectedValue = .Country
+                    ddlContactCountry.SelectedValue = .UserField2
                     ddlContactState.SelectedValue = .State
                     txtContactCity.Text = .City
                     txtContactZip.Text = .Zip
-                    txtContactPhone.Text = .Phone
+                    txtContactPhone.Text = .HomePhone
                 End With
             End If
         End Sub
         Private Sub SetContactInfo()
-            Dim contactInfo As New B2P.Cart.ContactInfo()
-            contactInfo.ContactName = txtContactName.Text
-            contactInfo.Address1 = txtContactAddress1.Text
-            contactInfo.Address2 = txtContactAddress2.Text
-            contactInfo.Country = ddlContactCountry.SelectedValue
-            contactInfo.State = ddlContactState.SelectedValue
-            contactInfo.City = txtContactCity.Text
-            contactInfo.Zip = txtContactZip.Text
-            contactInfo.Phone = txtContactPhone.Text
-            BLL.SessionManager.ContactInfo = contactInfo
+            If BLL.SessionManager.ContactInfo Is Nothing Then
+                BLL.SessionManager.ContactInfo = New B2P.Payment.PaymentBase.OptionalUserData()
+            End If
+            BLL.SessionManager.ContactInfo.UserField1 = txtContactName.Text
+            BLL.SessionManager.ContactInfo.Address1 = txtContactAddress1.Text
+            BLL.SessionManager.ContactInfo.Address2 = txtContactAddress2.Text
+            BLL.SessionManager.ContactInfo.UserField2 = ddlContactCountry.SelectedValue
+            If Not ddlContactState.SelectedValue.Trim() = "" Then
+                BLL.SessionManager.ContactInfo.State = ddlContactState.SelectedValue
+            End If
+            BLL.SessionManager.ContactInfo.City = txtContactCity.Text
+            BLL.SessionManager.ContactInfo.Zip = txtContactZip.Text
+            BLL.SessionManager.ContactInfo.HomePhone = txtContactPhone.Text
         End Sub
         ''' <summary>
         ''' Adds client side javascript to the various server controls.
@@ -89,7 +97,9 @@ Namespace B2P.PaymentLanding.Express.Web
         Private Sub BindState()
             Dim StateAbbr As String = ddlContactCountry.SelectedValue
             If Not BLL.SessionManager.ContactInfo Is Nothing Then
-                StateAbbr = BLL.SessionManager.ContactInfo.Country
+                If BLL.SessionManager.ContactInfo.UserField2.Trim() <> "" Then
+                    StateAbbr = BLL.SessionManager.ContactInfo.UserField2
+                End If
             End If
 
             ddlContactState.Items.Clear()

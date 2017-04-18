@@ -827,15 +827,15 @@ Namespace B2P.PaymentLanding.Express.BLL
         ''' Contact info
         ''' </summary>
         ''' <returns></returns>
-        Public Shared Property ContactInfo() As B2P.Cart.ContactInfo
+        Public Shared Property ContactInfo() As B2P.Payment.PaymentBase.OptionalUserData
             Get
                 If HttpContext.Current.Session(_contactInfo) Is Nothing Then
                     Return Nothing
                 Else
-                    Return DirectCast(HttpContext.Current.Session(_contactInfo), B2P.Cart.ContactInfo)
+                    Return DirectCast(HttpContext.Current.Session(_contactInfo), B2P.Payment.PaymentBase.OptionalUserData)
                 End If
             End Get
-            Set(value As B2P.Cart.ContactInfo)
+            Set(value As  B2P.Payment.PaymentBase.OptionalUserData)
                 HttpContext.Current.Session(_contactInfo) = value
             End Set
         End Property
@@ -866,6 +866,26 @@ Namespace B2P.PaymentLanding.Express.BLL
         Public Shared Sub Clear()
             HttpContext.Current.Session.Clear()
             HttpContext.Current.Session.Abandon()
+        End Sub
+        ''' <summary>
+        ''' Set Demographics Address
+        ''' </summary>
+        Public Shared Sub AddContactInfo(Address1 As String, Address2 As String, ContactName As String, Country As String, State As String, City As String, ZipCode As String, HomePhone As String)
+            If ContactInfo Is Nothing Then
+                ContactInfo = New B2P.Payment.PaymentBase.OptionalUserData()
+            End If
+            ContactInfo.Address1 = Address1
+            ContactInfo.Address2 = Address2
+            'ContactInfo.UserField1 = ContactInformation.Address1.Value
+            'ContactInfo.UserField2 = ContactInformation.Address1.Value
+            If State <> "" Then
+                ContactInfo.State = State
+            End If
+            If State <> "" Then
+                ContactInfo.City = City
+            End If
+            ContactInfo.Zip = ZipCode
+            ContactInfo.HomePhone = HomePhone
         End Sub
 
 #End Region

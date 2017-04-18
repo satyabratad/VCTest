@@ -98,7 +98,7 @@
         <ItemTemplate>
             <tbody>
                 <tr id="trIndex" <%# Eval("Index") %>>
-                    <td class="table-row" style="align-content: center; cursor: pointer;"><a onclick="removeItems(<%# Eval("Index") %>);" title="Delete Item"><i class="fa fa-trash-o fa-lg" aria-hidden="true"></i></a></td>
+                    <td class="table-row" style="align-content: center; cursor: pointer;"><a onclick="editItems(<%# Eval("Index") %>);" title="Edit Item"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a></td>
                     <td class="table-row"><%# Eval("Item") %></td>
                     <td class="table-row"><%# GetAccountInformation(Eval("Index")) %><br>
                         <strong>Property Address:</strong><br>

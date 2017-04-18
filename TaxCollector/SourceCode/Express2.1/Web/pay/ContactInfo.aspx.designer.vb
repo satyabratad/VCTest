@@ -141,6 +141,15 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected WithEvents hdContactZip As Global.System.Web.UI.WebControls.HiddenField
         
         '''<summary>
+        '''hdZipRequired control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents hdZipRequired As Global.System.Web.UI.WebControls.HiddenField
+        
+        '''<summary>
         '''pnlHeading control.
         '''</summary>
         '''<remarks>

@@ -501,7 +501,7 @@ Namespace B2P.PaymentLanding.Express.Web
                         BLL.SessionManager.CreditCard = card
                         x.PaymentSource = B2P.Common.Enumerations.TransactionSources.Web
                         x.Items.Add(BLL.SessionManager.AccountNumber1, BLL.SessionManager.AccountNumber2, BLL.SessionManager.AccountNumber3, BLL.SessionManager.CurrentCategory.Name.ToString, CDec(BLL.SessionManager.PaymentAmount), BLL.SessionManager.ConvenienceFee, BLL.SessionManager.TransactionFee)
-                        x.UserData.Address1 = BLL.SessionManager.ServiceAddress
+                        x.UserData.Address1 = "Test1" ' BLL.SessionManager.ServiceAddress
                         If BLL.SessionManager.IsSSOProduct Then
                             x.VendorReferenceCode = BLL.SessionManager.TokenInfo.VendorReferenceCode
                         End If

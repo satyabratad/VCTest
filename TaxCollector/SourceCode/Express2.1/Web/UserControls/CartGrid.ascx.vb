@@ -133,6 +133,10 @@ Public Class CartGrid
     Protected Sub btnEditItem_Click(sender As Object, e As EventArgs) Handles btnEditItem.Click
         BLL.SessionManager.ManageCart.EditItemIndex = hdSelectedIndex.Value
         BLL.SessionManager.ManageCart.ShowCart = False
-        Response.Redirect("~/pay/")
+        If BLL.SessionManager.ClientType = B2P.Cart.EClientType.SSO Then
+            Response.Redirect("~/sso/")
+        Else
+            Response.Redirect("~/pay/")
+        End If
     End Sub
 End Class
