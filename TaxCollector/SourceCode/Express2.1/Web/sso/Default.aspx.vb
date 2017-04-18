@@ -461,9 +461,9 @@ Namespace B2P.PaymentLanding.Express.Web
 
                             cart.Item = ci.ProductName
 
-                            Dim acc1 As New B2P.Cart.AccountIdField(ci.AccountNumber1, Utility.SafeEncode(ci.AccountNumber1))
-                            Dim acc2 As New B2P.Cart.AccountIdField(ci.AccountNumber2, Utility.SafeEncode(ci.AccountNumber2))
-                            Dim acc3 As New B2P.Cart.AccountIdField(ci.AccountNumber3, Utility.SafeEncode(ci.AccountNumber3))
+                            Dim acc1 As New B2P.Cart.AccountIdField(CurrentCategory.WebOptions.AccountIDField1.Label, Utility.SafeEncode(ci.AccountNumber1))
+                            Dim acc2 As New B2P.Cart.AccountIdField(CurrentCategory.WebOptions.AccountIDField2.Label, Utility.SafeEncode(ci.AccountNumber2))
+                            Dim acc3 As New B2P.Cart.AccountIdField(CurrentCategory.WebOptions.AccountIDField3.Label, Utility.SafeEncode(ci.AccountNumber3))
                             cart.AccountIdFields = New List(Of B2P.Cart.AccountIdField)
                             cart.AccountIdFields.Add(acc1)
                             cart.AccountIdFields.Add(acc2)

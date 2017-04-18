@@ -8,7 +8,12 @@ Public Class EditLookupItem
         If Not IsPostBack Then
             If Not _SelectedItem Is Nothing Then
                 lblSelectedItemValue.Text = _SelectedItem.Item
-                _SelectedItem.AccountIdFields.RemoveAll(Function(p) p.Label.Equals(String.Empty))
+                Try
+                    _SelectedItem.AccountIdFields.RemoveAll(Function(p) p.Label.Equals(String.Empty))
+                Catch ex As Exception
+
+                End Try
+
 
                 ripAccountIds.DataSource = _SelectedItem.AccountIdFields
                 ripAccountIds.DataBind()

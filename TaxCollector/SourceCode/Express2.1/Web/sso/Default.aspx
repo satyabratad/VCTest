@@ -117,10 +117,20 @@
 
         <!--// END FOOTER CONTENT //-->
 
+       
         <!-- JavaScript -->
         <script src="/Js/jquery-1.11.1.min.js"></script>
         <script src="/Js/bootstrap.min.js"></script>
 
+
+        <!--[if lt IE 9]><script src="/Js/B2P.Enums.IE8.js"></script><![endif]-->
+        <!--[if (gte IE 9)|!(IE)]><!-->
+        <script src="/Js/B2P.Enums.js"></script>
+        <!--<![endif]-->
+
+        <script src="/Js/B2P.Utility.js"></script>
+        <script src="/Js/B2P.FormValidator.js"></script>
+        <script src="/Js/B2P.ValidationType.js"></script>
 
 
 
