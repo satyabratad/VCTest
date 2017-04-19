@@ -236,7 +236,6 @@
                 validator.setErrorMessageHeader("<%=GetGlobalResourceObject("WebResources", "ErrMsgHeader").ToString()%>\n\n")
                 validator.setInvalidCssClass("has-error");
                 validator.setAlertBoxStatus(false);
-                debugger;
                 // Add validation items to validator
 
                 // Check to see if contact name is present

@@ -56,7 +56,7 @@ Public Class BreadCrumbMenu
     ''' <summary>
     ''' This method will initiate the list of Bread creumb menu tab pages
     ''' </summary>
-    Private Sub PopulateTabList()
+    Public Sub PopulateTabList()
         Dim tab As BreadCrumbTab
         If SessionManager.BreadCrumbMenuTab Is Nothing Then
 
@@ -119,7 +119,7 @@ Public Class BreadCrumbMenu
     ''' <summary>
     ''' This method will generate the bread crumb menu
     ''' </summary>
-    Private Sub GenerateBreadCrumb()
+    Public Sub GenerateBreadCrumb()
         Dim currentTab As BreadCrumbTab
         Dim finalTab As BreadCrumbTab
         Dim pageIndex As Integer

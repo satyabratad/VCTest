@@ -451,15 +451,18 @@ Namespace B2P.PaymentLanding.Express.Web
         ''' 
         ''' </summary>
         ''' <param name="z"></param>
+        ''' <param name="ControlId"></param>
 
-        Public Shared Sub SetBreadCrumbContactInfo(z As Objects.Product)
+        Public Shared Sub SetBreadCrumbContactInfo(z As Objects.Product, ControlId As String)
 
             If z.WebOptions.Demographics = Objects.WebConfiguration.OptionalFields.NotUsed Then
                 BLL.SessionManager.IsContactInfoRequired = False
             Else
                 BLL.SessionManager.IsContactInfoRequired = True
             End If
-
+            Dim page As Page = CType(HttpContext.Current.Handler, Page)
+            CType(page.FindControl(ControlId), BreadCrumbMenu).PopulateTabList()
+            CType(page.FindControl(ControlId), BreadCrumbMenu).GenerateBreadCrumb()
         End Sub
 #End Region
 

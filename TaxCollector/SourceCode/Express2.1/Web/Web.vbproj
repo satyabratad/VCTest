@@ -158,6 +158,7 @@
     <Content Include="Img\icons\visa_small.png" />
     <Content Include="Img\info.png" />
     <Content Include="Img\success.png" />
+    <Content Include="Img\vs-secure.jpg" />
     <Content Include="Js\B2P.Enums.IE8.js" />
     <Content Include="Js\B2P.Enums.js" />
     <Content Include="Js\B2P.FormValidator.js" />

@@ -316,7 +316,6 @@
         <script type="text/javascript">
 
             function validateForm() {
-                debugger;
                 var doc = document;
                 var item = new ValidationItem();
 
