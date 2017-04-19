@@ -856,6 +856,7 @@ Namespace B2P.PaymentLanding.Express.BLL
                 HttpContext.Current.Session(_isContactInfoRequired) = value
             End Set
         End Property
+
 #End Region
 
 #Region " ::: Methods ::: "

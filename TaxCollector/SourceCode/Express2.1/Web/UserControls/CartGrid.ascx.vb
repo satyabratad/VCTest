@@ -2,6 +2,7 @@
 Imports B2P.PaymentLanding.Express.Web
 Imports System.Web.UI
 Imports System
+Imports B2P
 
 Public Class CartGrid
     Inherits System.Web.UI.UserControl
@@ -17,6 +18,11 @@ Public Class CartGrid
                 hdMode.Value = ""
                 hdSelectedIndex.Value = ""
                 CType(Me.Parent.FindControl("CartDetails"), CartDetails).LoadContent()
+
+                Utility.SetBreadCrumbContactInfo("BreadCrumbMenu")
+
+
+                'End Show/Hide Contact Info
             End If
             If BLL.SessionManager.ManageCart.Cart.Count = 0 Then
                 BLL.SessionManager.ManageCart.ShowCart = False

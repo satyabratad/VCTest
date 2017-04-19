@@ -3,7 +3,18 @@
 Namespace B2P.PaymentLanding.Express.Web
 
     Public Class _paydefault : Inherits SiteBasePage
-
+        Private _selectedProduct As String = "SelectedProduct"
+        Public Property SelectedProduct() As String
+            Get
+                If Session(_selectedProduct) Is Nothing Then
+                    Return Nothing
+                End If
+                Return Session(_selectedProduct).ToString()
+            End Get
+            Set(ByVal value As String)
+                Session(_selectedProduct) = value
+            End Set
+        End Property
         Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
             lnkCSS.Href = BLL.SessionManager.ClientCSS
@@ -16,17 +27,18 @@ Namespace B2P.PaymentLanding.Express.Web
 
             If Not IsPostBack Then
                 If BLL.SessionManager.IsSSOProduct = False Then
-
                     Dim y As B2P.Objects.Client = B2P.Objects.Client.GetClient(BLL.SessionManager.ClientCode.ToString)
 
                     lblClientMessage.Text = B2P.Objects.Client.GetClientMessage("Welcome", BLL.SessionManager.ClientCode.ToString)
                     ddlCategories.DataSource = BLL.SessionManager.CategoryList
                     ddlCategories.DataBind()
+
+
                     If ddlCategories.Items.Count = 1 Then
                         pnlProducts.Visible = False
                     End If
 
-                    If y.DefaultProductName <> "" Then
+                        If y.DefaultProductName <> "" Then
                         ddlCategories.SelectedValue = y.DefaultProductName.Trim
 
                     End If
@@ -360,15 +372,17 @@ Namespace B2P.PaymentLanding.Express.Web
         End Sub
 
         Private Sub ddlCategories_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlCategories.SelectedIndexChanged
+            SelectedProduct = ddlCategories.SelectedValue
             getProductLookup()
         End Sub
 
         Private Sub getProductLookup()
             Dim errMsg As String = String.Empty
             Try
-                Dim z As New B2P.Objects.Product(BLL.SessionManager.ClientCode, ddlCategories.SelectedValue, B2P.Common.Enumerations.TransactionSources.Web)
-                Utility.SetBreadCrumbContactInfo(z, "BreadCrumbMenu")
-
+                'Show/Hide Contact Info
+                Dim z As New B2P.Objects.Product(BLL.SessionManager.ClientCode, IIf(SelectedProduct Is Nothing, ddlCategories.SelectedValue, SelectedProduct), B2P.Common.Enumerations.TransactionSources.Web)
+                Utility.SetBreadCrumbContactInfo("BreadCrumbMenu", z)
+                'End Show/Hide Contact Info
 
                 If z.AmountDueSource = B2P.Common.Enumerations.AmountDueSources.Lookup Or z.AmountDueSource = B2P.Common.Enumerations.AmountDueSources.Table Then
                     'pnlLookupAccount.Visible = True
@@ -529,6 +543,7 @@ Namespace B2P.PaymentLanding.Express.Web
         End Sub
 
         Private Sub AddtoCart()
+
             Dim cart As New B2P.Cart.Cart
             cart.Item = ddlCategories.SelectedValue
 
@@ -565,6 +580,7 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected Sub btnAddMoreItem_Click(sender As Object, e As EventArgs) Handles btnAddMoreItem.Click
             BLL.SessionManager.ManageCart.ShowCart = False
             BLL.SessionManager.ManageCart.EditItemIndex = -1
+
             Response.Redirect("~/pay/")
         End Sub
 
