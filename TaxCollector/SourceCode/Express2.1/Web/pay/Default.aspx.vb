@@ -284,13 +284,17 @@ Namespace B2P.PaymentLanding.Express.Web
 
                 End Select
 
-                Dim _client As B2P.Objects.Client = B2P.Objects.Client.GetClient(BLL.SessionManager.ClientCode.ToString)
+                Dim z As New B2P.Objects.Product(BLL.SessionManager.ClientCode, ddlCategories.SelectedValue, B2P.Common.Enumerations.TransactionSources.Web)
 
-                ctlPropertyAddress.Address1 = _client.Address1
-                ctlPropertyAddress.Address2 = _client.Address2
-                ctlPropertyAddress.City = _client.City
-                ctlPropertyAddress.StateValue = _client.State
-                ctlPropertyAddress.Zip = _client.ZipCode
+                If z.CollectAddress Then
+                    Dim _client As B2P.Objects.Client = B2P.Objects.Client.GetClient(BLL.SessionManager.ClientCode.ToString)
+
+                    ctlPropertyAddress.Address1 = _client.Address1
+                    ctlPropertyAddress.Address2 = _client.Address2
+                    ctlPropertyAddress.City = _client.City
+                    ctlPropertyAddress.StateValue = _client.State
+                    ctlPropertyAddress.Zip = _client.ZipCode
+                End If
 
             Catch ex As Exception
                 ' Build the error message
