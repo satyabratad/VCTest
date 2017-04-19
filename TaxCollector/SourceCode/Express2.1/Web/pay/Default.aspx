@@ -133,7 +133,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <asp:Button ID="btnAddtoCart" CssClass="btn btn-primary btn-sm pull-right" Text="<%$ Resources:WebResources, AddToCartButton %>" ToolTip="<%$ Resources:WebResources, AddToCartButton %>" runat="server" Visible="true" />
+                                        <asp:Button ID="btnAddtoCart" CssClass="btn btn-primary btn-sm pull-right" Text="<%$ Resources:WebResources, AddToCartButton %>" ToolTip="<%$ Resources:WebResources, AddToCartButton %>" runat="server" Visible="true" OnClientClick="return validateForm();" />
                                         <br />
                                         <br />
                                     </div>
@@ -316,6 +316,7 @@
         <script type="text/javascript">
 
             function validateForm() {
+                debugger;
                 var doc = document;
                 var item = new ValidationItem();
 
@@ -353,8 +354,22 @@
                 // Check to see if amount is required
                 // Set the validator
                 validator.addValidationItem(new ValidationItem("txtAmount", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
-
-
+                //Validate Zip
+                if ($("#txtZip").val() != "") {
+                   
+                    var optiongroup = $('#ddlState').find(":selected").attr("optiongroup");
+                    if (optiongroup == null) {
+                        validator.addValidationItem(new ValidationItem("txtZip", fieldTypes.ZipCodeInternational, true, "<%=GetGlobalResourceObject("WebResources", "InvalidZipMsg").ToString()%>"));
+                    }
+                    else {
+                        if (optiongroup.toUpperCase() == "USA") {
+                            validator.addValidationItem(new ValidationItem("txtZip", fieldTypes.ZipCodeUnitedStates, true, "<%=GetGlobalResourceObject("WebResources", "InvalidZipMsg").ToString()%>"));
+                        }
+                        else if (optiongroup.toUpperCase() == "CANADA") {
+                            validator.addValidationItem(new ValidationItem("txtZip", fieldTypes.ZipCodeCanada, true, "<%=GetGlobalResourceObject("WebResources", "InvalidZipMsg").ToString()%>"));
+                        }
+                    }
+                }
                 <% End If %>
                 return validator.validate();
             }
