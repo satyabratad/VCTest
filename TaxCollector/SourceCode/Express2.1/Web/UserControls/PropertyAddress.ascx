@@ -50,7 +50,7 @@
                 <asp:Label ID="lblZip" runat="server" Text="<%$ Resources:WebResources, ZipLabel %>"></asp:Label>
             </label>
             <asp:TextBox runat="server" MaxLength="40" ID="txtZip" class="form-control input-sm"
-                onkeypress="return isNumberKey(event);"></asp:TextBox>
+                onkeypress="return restrictInput(event, restrictionTypes.ZipCode)" onpaste="return reformatInput(this, restrictionTypes.ZipCode)"></asp:TextBox>
         </asp:Panel>
     </div>
 

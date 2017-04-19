@@ -239,7 +239,7 @@
                 debugger;
                 // Add validation items to validator
 
-                <%--// Check to see if contact name is present
+                // Check to see if contact name is present
                 contactName = doc.getElementById('hdContactName').value;
                 if (contactName !== '') {
                     // Set the validator
@@ -252,28 +252,7 @@
                     // Set the validator
                     validator.addValidationItem(new ValidationItem("txtContactAddress1", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
                 }
-                  // Check to see if country is required
-                country = doc.getElementById('hdContactCountry').value;
-                if (country !== '') {
-                    // Set the validator
-                    validator.addValidationItem(new ValidationItem("ddlContactCountry", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
-                }--%>
-
-                <%--if ($("#ddlContactCountry").val() != "OT") {
-                    // Check to see if city is required
-                    city = doc.getElementById('hdContactCity').value;
-                    if (city !== '') {
-                        // Set the validator
-                        validator.addValidationItem(new ValidationItem("txtContactCity", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
-                    }
-                    // Check to see if state is required
-                    state = doc.getElementById('hdContactState').value;
-                    if (state !== '') {
-                        // Set the validator
-                        validator.addValidationItem(new ValidationItem("ddlContactState", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
-                    }
-                }--%>
-                    // Check to see if zip is required
+                // Check to see if zip is required
                 if ($("#hdZipRequired").val() == 'Y') {
                     zip = doc.getElementById('hdContactZip').value;
                     if (zip !== '') {

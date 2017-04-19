@@ -84,32 +84,34 @@ Public Class CartGrid
         Dim propertyAddress As StringBuilder = New StringBuilder()
         If Not CartItem.PropertyAddress Is Nothing Then
             If Not String.IsNullOrEmpty(CartItem.PropertyAddress.Address1) Then
-                propertyAddress.AppendFormat("{0},", CartItem.PropertyAddress.Address1)
+                propertyAddress.AppendFormat("{0}, ", CartItem.PropertyAddress.Address1)
             End If
             If Not String.IsNullOrEmpty(CartItem.PropertyAddress.Address2) Then
-                propertyAddress.AppendFormat("{0},", CartItem.PropertyAddress.Address2)
+                propertyAddress.AppendFormat("{0}, ", CartItem.PropertyAddress.Address2)
             End If
             If Not String.IsNullOrEmpty(CartItem.PropertyAddress.City) Then
-                propertyAddress.AppendFormat("{0},", CartItem.PropertyAddress.City)
+                propertyAddress.AppendFormat("{0}, ", CartItem.PropertyAddress.City)
             End If
             If Not String.IsNullOrEmpty(CartItem.PropertyAddress.State) Then
-                propertyAddress.AppendFormat("{0},", CartItem.PropertyAddress.State)
+                propertyAddress.AppendFormat("{0}, ", CartItem.PropertyAddress.State)
             End If
             If Not String.IsNullOrEmpty(CartItem.PropertyAddress.Zip) Then
-                propertyAddress.AppendFormat("{0},", CartItem.PropertyAddress.Zip)
+                propertyAddress.AppendFormat("{0}, ", CartItem.PropertyAddress.Zip)
             End If
         End If
-        Return propertyAddress.ToString().TrimEnd(",")
+        Return IIf(String.IsNullOrEmpty(propertyAddress.ToString().Trim().TrimEnd(",")), "Not Available", propertyAddress.ToString().Trim().TrimEnd(","))
     End Function
     Protected Function GetAccountInformation(Index As Integer) As String
         Dim CartItem As B2P.Cart.Cart = BLL.SessionManager.ManageCart.Cart(Index)
         Dim accountInfo As StringBuilder = New StringBuilder()
 
         For Each fields In CartItem.AccountIdFields
-            accountInfo.AppendFormat("{0},", fields.Value)
+            If Not String.IsNullOrEmpty(fields.Value) Then
+                accountInfo.AppendFormat("{0}, ", fields.Value)
+            End If
         Next
 
-        Return accountInfo.ToString().TrimEnd(",")
+        Return accountInfo.ToString().Trim().TrimEnd(",")
 
     End Function
     Protected Function FormatAmount(Amount As Double) As String

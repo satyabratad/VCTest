@@ -2,6 +2,15 @@
 <div id="divAccountDetails3" style="display: block;">
     <div class="col-xs-12 col-sm-6">
         <div class="row">
+            <asp:Panel runat="server" ID="Panel1">
+                <div class="col-xs-12">
+                    <div class="form-group form-group-sm">
+                         <label class="control-label" for="txtAmount" id="lblHeading">
+                            <asp:Label ID="Label1" runat="server" Text="<%$ Resources:WebResources, EditAmountCaption %>"></asp:Label>
+                        </label>
+                    </div>
+                </div>
+            </asp:Panel>
             <asp:Panel runat="server" ID="divSelectedItem">
                 <div class="col-xs-12">
                     <div class="form-group form-group-sm">
@@ -68,7 +77,8 @@
          validator.setErrorMessageHeader("Please review the following errors and resubmit the form:\n\n")
          validator.setInvalidCssClass("has-error");
          validator.setAlertBoxStatus(false);
-         if (newValue > oldValue) {
+        
+         if ((!newValue>0) ||(newValue > oldValue)) {
              // Set the validator
              validator.addValidationItem(new ValidationItem("txtAmountEdit", fieldTypes.AmountDue, true, "Invalid Amount"));
              $("#txtAmountEdit").val(oldValue);

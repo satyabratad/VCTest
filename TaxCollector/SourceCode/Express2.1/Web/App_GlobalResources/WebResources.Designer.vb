@@ -452,6 +452,15 @@ Namespace Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Edit Amount.
+        '''</summary>
+        Friend Shared ReadOnly Property EditAmountCaption() As String
+            Get
+                Return ResourceManager.GetString("EditAmountCaption", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Invalid account number..
         '''</summary>
         Friend Shared ReadOnly Property ErrMsgAccountNumber() As String

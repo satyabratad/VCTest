@@ -39,19 +39,11 @@ Namespace B2P.PaymentLanding.Express.Web
         Sub disableControls()
             Dim enableFlag As Boolean = Not ddlContactCountry.SelectedValue = "OT"
             pnlState.Visible = enableFlag
-            pnlCity.Visible = enableFlag
-            pnlZip.Visible = enableFlag
         End Sub
         Sub DisableOrEnableControl(ControlId As String, Flag As Boolean)
             Dim cs As ClientScriptManager = Page.ClientScript
             cs.RegisterStartupScript(Me.GetType(), "tmp", "<script type='text/javascript'>disableOrEnableControl(" + ControlId + "," + IIf(Flag, "0", "1") + ");</script>", False)
         End Sub
-        ''' <summary>
-        ''' Validate if this page need to be rendered
-        ''' </summary>
-        Private Function IsContactInfoNeedToBePopulated() As Boolean
-
-        End Function
         ''' <summary>
         ''' Get Contact Info
         ''' </summary>

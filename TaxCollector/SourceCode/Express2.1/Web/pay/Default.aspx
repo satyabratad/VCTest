@@ -353,6 +353,8 @@
                 // Check to see if amount is required
                 // Set the validator
                 validator.addValidationItem(new ValidationItem("txtAmount", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
+
+
                 <% End If %>
                 return validator.validate();
             }

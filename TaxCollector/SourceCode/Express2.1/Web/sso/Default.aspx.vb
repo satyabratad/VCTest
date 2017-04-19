@@ -19,6 +19,7 @@ Namespace B2P.PaymentLanding.Express.Web
                 pnlEdit.Visible = False
                 pnlError.Visible = False
             End If
+
             Dim redirectAddress As String = String.Empty
 
 
@@ -28,6 +29,7 @@ Namespace B2P.PaymentLanding.Express.Web
                     If Not IsNothing(BLL.SessionManager.LookupData) Then
                         Response.Redirect("/errors/session", False)
                     Else
+
 
 
                         Session.Clear()
