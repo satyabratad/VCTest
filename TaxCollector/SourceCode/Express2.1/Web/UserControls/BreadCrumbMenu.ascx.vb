@@ -171,7 +171,7 @@ Public Class BreadCrumbMenu
                             htmlString.AppendFormat("<li class='danger'><a href='#' class=''><span Class='badge badge-inverse'>")
                             htmlString.AppendFormat("{0}</span> {1} <span class='hidden-xs hidden-sm'>{2}</span></a></li>", pageIndex.ToString(), menuNames(0), menuNames(1))
                         Else
-                            'If Not PageTagName.Equals(PageTabName.PaymentSuccess.ToString(), System.StringComparison.InvariantCultureIgnoreCase) And Not PageTagName.Equals(PageTabName.PaymentFaild.ToString(), System.StringComparison.InvariantCultureIgnoreCase) Then
+
                             htmlString.AppendFormat("<li class='active'><a href='#' class=''  ><span Class='badge badge-inverse'>")
                             htmlString.AppendFormat("{0}</span> {1} <span class='hidden-xs hidden-sm'>{2}</span></a></li>", pageIndex.ToString(), menuNames(0), menuNames(1))
 
