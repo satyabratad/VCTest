@@ -126,8 +126,10 @@ Public Class BreadCrumbMenu
         Dim htmlString As New StringBuilder
 
         IsContactInfoVisible = SessionManager.IsContactInfoRequired
-
-        If String.IsNullOrEmpty(PageTagName) = False And Not IsDBNull(tabList) Then
+        If tabList Is Nothing Then
+            PopulateTabList()
+        End If
+        If String.IsNullOrEmpty(PageTagName) = False Then
             currentTab = tabList.Where(Function(t As BreadCrumbTab) t.PageTag.Equals(PageTagName, System.StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault()
 
             If String.IsNullOrEmpty(RedirectAddress) = False Then

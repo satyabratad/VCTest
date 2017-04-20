@@ -3,18 +3,7 @@
 Namespace B2P.PaymentLanding.Express.Web
 
     Public Class _paydefault : Inherits SiteBasePage
-        Private _selectedProduct As String = "SelectedProduct"
-        Public Property SelectedProduct() As String
-            Get
-                If Session(_selectedProduct) Is Nothing Then
-                    Return Nothing
-                End If
-                Return Session(_selectedProduct).ToString()
-            End Get
-            Set(ByVal value As String)
-                Session(_selectedProduct) = value
-            End Set
-        End Property
+
         Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
             lnkCSS.Href = BLL.SessionManager.ClientCSS
@@ -372,7 +361,7 @@ Namespace B2P.PaymentLanding.Express.Web
         End Sub
 
         Private Sub ddlCategories_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlCategories.SelectedIndexChanged
-            SelectedProduct = ddlCategories.SelectedValue
+            'SelectedProduct = ddlCategories.SelectedValue
             getProductLookup()
         End Sub
 
@@ -380,8 +369,9 @@ Namespace B2P.PaymentLanding.Express.Web
             Dim errMsg As String = String.Empty
             Try
                 'Show/Hide Contact Info
-                Dim z As New B2P.Objects.Product(BLL.SessionManager.ClientCode, IIf(SelectedProduct Is Nothing, ddlCategories.SelectedValue, SelectedProduct), B2P.Common.Enumerations.TransactionSources.Web)
-                Utility.SetBreadCrumbContactInfo("BreadCrumbMenu", z)
+                'Dim z As New B2P.Objects.Product(BLL.SessionManager.ClientCode, IIf(SelectedProduct Is Nothing, ddlCategories.SelectedValue, SelectedProduct), B2P.Common.Enumerations.TransactionSources.Web)
+                Dim z As New B2P.Objects.Product(BLL.SessionManager.ClientCode, ddlCategories.SelectedValue, B2P.Common.Enumerations.TransactionSources.Web)
+                Utility.SetBreadCrumbContactInfo("BreadCrumbMenu")
                 'End Show/Hide Contact Info
 
                 If z.AmountDueSource = B2P.Common.Enumerations.AmountDueSources.Lookup Or z.AmountDueSource = B2P.Common.Enumerations.AmountDueSources.Table Then

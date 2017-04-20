@@ -80,7 +80,7 @@ Namespace B2P.PaymentLanding.Express.Web
                                         Dim z As B2P.Objects.Client = B2P.Objects.Client.GetClient(BLL.SessionManager.ClientCode.ToString)
 
                                         ''TODO: For test purpose only need to delete after development
-                                        'z.SSODisplayType = Objects.Client.SSODisplayTypes.ShoppingCart
+                                        z.SSODisplayType = Objects.Client.SSODisplayTypes.ShoppingCart
 
                                         'Determine SSO type
                                         Select Case z.SSODisplayType
@@ -331,6 +331,7 @@ Namespace B2P.PaymentLanding.Express.Web
             Dim errMsg As String = String.Empty
 
             Try
+
                 Dim z As B2P.Objects.Client = B2P.Objects.Client.GetClient(BLL.SessionManager.ClientCode.ToString)
                 BLL.SessionManager.Client = z
                 BLL.SessionManager.LookupAmount = Nothing
@@ -407,6 +408,7 @@ Namespace B2P.PaymentLanding.Express.Web
             Try
 
                 Dim z As B2P.Objects.Client = B2P.Objects.Client.GetClient(BLL.SessionManager.ClientCode.ToString)
+                BLL.SessionManager.CategoryList = B2P.Objects.Product.ListProducts(BLL.SessionManager.ClientCode, B2P.Common.Enumerations.TransactionSources.Web)
                 BLL.SessionManager.Client = z
                 BLL.SessionManager.LookupAmount = Nothing
                 BLL.SessionManager.LookupAmountMinimum = False
@@ -426,7 +428,7 @@ Namespace B2P.PaymentLanding.Express.Web
                 BLL.SessionManager.LookupData = y
 
                 Dim p As New B2P.Objects.Product(BLL.SessionManager.ClientCode, TokenInfo.CartItems(0).ProductName, B2P.Common.Enumerations.TransactionSources.Web)
-                Utility.SetBreadCrumbContactInfo("BreadCrumbMenu", p)
+                Utility.SetBreadCrumbContactInfo("BreadCrumbMenu")
 
                 Dim CurrentCategory As New B2P.Objects.Product(BLL.SessionManager.ClientCode.ToString, BLL.SessionManager.LookupProduct, B2P.Common.Enumerations.TransactionSources.Web)
                 Dim a As New B2P.Payment.FeeDesciptions(BLL.SessionManager.ClientCode.ToString, BLL.SessionManager.LookupProduct, B2P.Common.Enumerations.TransactionSources.Web)
