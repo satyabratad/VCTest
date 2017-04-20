@@ -80,7 +80,7 @@ Namespace B2P.PaymentLanding.Express.Web
                                         Dim z As B2P.Objects.Client = B2P.Objects.Client.GetClient(BLL.SessionManager.ClientCode.ToString)
 
                                         ''TODO: For test purpose only need to delete after development
-                                        z.SSODisplayType = Objects.Client.SSODisplayTypes.ShoppingCart
+                                        'z.SSODisplayType = Objects.Client.SSODisplayTypes.ShoppingCart
 
                                         'Determine SSO type
                                         Select Case z.SSODisplayType
