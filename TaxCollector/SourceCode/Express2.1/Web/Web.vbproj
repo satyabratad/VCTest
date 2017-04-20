@@ -185,6 +185,7 @@
     <Content Include="UserControls\BankAccount.ascx" />
     <Content Include="UserControls\BreadCrumbMenu.ascx" />
     <Content Include="UserControls\CartDetails.ascx" />
+    <Content Include="UserControls\PaymentCartGrid.ascx" />
     <Content Include="UserControls\CartGrid.ascx" />
     <Content Include="UserControls\ConvenienceFee.ascx" />
     <Content Include="UserControls\CreditCard.ascx" />
@@ -345,6 +346,13 @@
     </Compile>
     <Compile Include="UserControls\CartDetails.ascx.vb">
       <DependentUpon>CartDetails.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\PaymentCartGrid.ascx.designer.vb">
+      <DependentUpon>PaymentCartGrid.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PaymentCartGrid.ascx.vb">
+      <DependentUpon>PaymentCartGrid.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="UserControls\CartGrid.ascx.designer.vb">
