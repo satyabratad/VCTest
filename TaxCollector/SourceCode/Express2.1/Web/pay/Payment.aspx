@@ -6,6 +6,11 @@
 <%@ Register TagPrefix="b2p" TagName="PaymentCreditCard" Src="~/UserControls/CreditCard.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="PaymentBankAccount" Src="~/UserControls/BankAccount.ascx" %>
 <%@ Register TagPrefix="b2p" TagName="BreadCrumbMenu" Src="~/UserControls/BreadCrumbMenu.ascx"  %>
+<%@ Register TagPrefix="b2p" TagName="SubTotal" Src="~/UserControls/SubTotal.ascx"  %>
+<%@ Register TagPrefix="b2p" TagName="OrderDetails" Src="~/UserControls/OrderDetails.ascx"  %>
+
+
+
 
 
 
@@ -86,7 +91,7 @@
                                   
                                   <div class="row">
                                     <div class="col-xs-12 col-sm-6 col-sm-push-6">
-                                
+                                        <b2p:OrderDetails runat="server" id="OrderDetails" />
                                         <asp:Panel ID="pnlAccountDetails" runat="server">
                                         <br />
                                                 <p><strong>My Account Details</strong></p>                                     
@@ -183,14 +188,16 @@
                                
 
                             <div class="col-xs-12 col-sm-6 col-sm-pull-6"> 
-                              
+                                    
+                                            
+                                         <b2p:SubTotal runat="server" id="SubTotal" />
                                     <div id="pnlFormContents" role="form" runat="server">
                                         <br />  
                                        <strong><asp:Literal ID="litSelectPaymentMethod" runat="server" Text="<%$ Resources:WebResources, lblSelectPaymentMethod %>" /></strong>
                                         <asp:Button id="btnFees"  cssclass="btn btn-link btn-sm"  text="<%$ Resources:WebResources, ButtonConvFee %>" tooltip="<%$ Resources:WebResources, ButtonConvFee %>" runat="server" Visible="false" />
                                         <b2p:PaymentStatusMessage id="psmErrorMessage" runat="server" />  
                                        
-                                        
+                                       
                                         <ul id="paymentTabs" class="nav  nav-tabs" role="tablist">                              
                                           <li id="tabCredit" runat="server">
                                             <a href="#pnlTabCredit" onclick="clearValidationItems('ACH');" role="tab" data-toggle="tab">
@@ -204,7 +211,7 @@
                                             </a>
                                           </li>
                                         </ul>
-
+                                         
                                         <div class="tab-content">
                                              <br />
                                              <asp:Panel id="pnlTabCredit" cssclass="tab-pane" defaultbutton="btnSubmitCredit" runat="server">
