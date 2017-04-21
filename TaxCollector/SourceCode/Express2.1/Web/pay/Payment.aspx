@@ -570,6 +570,24 @@
                           isValid: ($.payment.validateCardCVC(doc.getElementById("txtCCV").value, cardType))
                       });
 
+                      // Check to see if zip is required
+                if ($("#hdZipRequired").val() == 'Y') {
+                    zip = doc.getElementById('txtBillingZip').value;
+                    if (zip !== '') {
+                        validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
+                    }
+                }
+                      zip = doc.getElementById('txtBillingZip').value;
+                    if (zip !== '') {
+                        // Set the validator
+                        if ($("#ddlCountry").val() == "US")
+                            validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeUnitedStates, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
+                        if ($("#ddlCountry").val() == "CA")
+                            validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeCanada, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
+                        if ($("#ddlCountry").val() == "OT")
+                            validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeInternational, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
+                    }
+
                      if (panel && doc.getElementById("rdAmount").checked) {
                          validator.addValidationItem(item = {
                              field: "txtAmount",
@@ -664,6 +682,9 @@
                       $('#txtCreditCardNumber').val("");
                       $('#txtExpireDate').val("");
                       $('#txtCCV').val("");
+
+                      $('#ddlCountry').selectedIndex = 0;
+                      $('#txtBillingZip').val("");
 
                       // Hide the CC error messages
                       $('#pnlErrorMessage').hide();
