@@ -11,6 +11,10 @@
 <%@ Register TagPrefix="b2p" TagName="BreadCrumbMenu" Src="~/UserControls/BreadCrumbMenu.ascx" %>
 <%@ Register Src="~/UserControls/ShoppingCart.ascx" TagPrefix="b2p" TagName="ShoppingCart" %>
 <%@ Register Src="~/UserControls/PaymentCartGrid.ascx" TagPrefix="b2p" TagName="PaymentCartGrid" %>
+<%@ Register Src="~/UserControls/EditPayment.ascx" TagPrefix="b2p" TagName="EditPayment" %>
+<%@ Register Src="~/UserControls/EditContactInfo.ascx" TagPrefix="b2p" TagName="EditContactInfo" %>
+
+
 
 
 
@@ -154,6 +158,11 @@
                                         <br />
                                     </div>
 
+                                </div>
+                                <div class="col-xs-12 col-sm-6">
+                                    <b2p:EditPayment runat="server" ID="EditPayment" />
+                                    <br />
+                                    <b2p:EditContactInfo runat="server" ID="EditContactInfo" />
                                 </div>
                             </div>
 

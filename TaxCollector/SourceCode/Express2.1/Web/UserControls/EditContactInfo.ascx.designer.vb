@@ -15,30 +15,39 @@ Namespace B2P.PaymentLanding.Express.Web
     Partial Public Class EditContactInfo
         
         '''<summary>
-        '''litLink1 control.
+        '''pnlEditContactInfo control.
         '''</summary>
         '''<remarks>
         '''Auto-generated field.
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
-        Protected WithEvents litLink1 As Global.System.Web.UI.WebControls.Literal
+        Protected WithEvents pnlEditContactInfo As Global.System.Web.UI.WebControls.Panel
         
         '''<summary>
-        '''litBill2Pay control.
+        '''lnkEdit control.
         '''</summary>
         '''<remarks>
         '''Auto-generated field.
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
-        Protected WithEvents litBill2Pay As Global.System.Web.UI.WebControls.Literal
+        Protected WithEvents lnkEdit As Global.System.Web.UI.WebControls.LinkButton
         
         '''<summary>
-        '''litYear control.
+        '''lblContactInfoName control.
         '''</summary>
         '''<remarks>
         '''Auto-generated field.
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
-        Protected WithEvents litYear As Global.System.Web.UI.WebControls.Literal
+        Protected WithEvents lblContactInfoName As Global.System.Web.UI.WebControls.Label
+        
+        '''<summary>
+        '''lblContactAddress control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents lblContactAddress As Global.System.Web.UI.WebControls.Label
     End Class
 End Namespace

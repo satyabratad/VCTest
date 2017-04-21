@@ -3,24 +3,45 @@
 Namespace B2P.PaymentLanding.Express.Web
 
     Public Class EditContactInfo : Inherits System.Web.UI.UserControl
-
-        Private Sub Footer_Load(sender As Object, e As EventArgs) Handles Me.Load
-            If Not IsPostBack Then
-                litYear.Text = Now.Year
-                If BLL.SessionManager.Client IsNot Nothing Then
-                    If BLL.SessionManager.Client.Website.Contains("http") Then
-                        litLink1.Text = String.Format("<a href={0} target=""_blank"">{1}</a>", BLL.SessionManager.Client.Website, BLL.SessionManager.Client.ClientName)
-                    Else
-                        litLink1.Text = String.Format("<a href=http://{0} target=""_blank"">{1}</a>", BLL.SessionManager.Client.Website, BLL.SessionManager.Client.ClientName)
-                    End If
-                    litBill2Pay.Text = String.Format("<a href={0} target=""_blank"">{1}</a>", "http://www.bill2pay.com", "www.Bill2Pay.com")
-                Else
-                    litLink1.Visible = False
-                    litBill2Pay.Visible = False
-                End If
-
-
+        Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+            If Not BLL.SessionManager.IsContactInfoRequired Then
+                pnlEditContactInfo.Visible = False
+                Exit Sub
             End If
+            If Not IsPostBack Then
+                If Not BLL.SessionManager.ContactInfo Is Nothing Then
+                    lblContactInfoName.Text = BLL.SessionManager.ContactInfo.UserField1
+                    lblContactAddress.Text = GetContactAddress()
+                End If
+            End If
+        End Sub
+        Private Function GetContactAddress() As String
+            Dim propertyAddress As StringBuilder = New StringBuilder()
+            If Not BLL.SessionManager.ContactInfo Is Nothing Then
+                If Not String.IsNullOrEmpty(BLL.SessionManager.ContactInfo.Address1) Then
+                    propertyAddress.AppendFormat("{0}, ", BLL.SessionManager.ContactInfo.Address1)
+                End If
+                If Not String.IsNullOrEmpty(BLL.SessionManager.ContactInfo.Address2) Then
+                    propertyAddress.AppendFormat("{0}, ", BLL.SessionManager.ContactInfo.Address2)
+                End If
+                If Not String.IsNullOrEmpty(BLL.SessionManager.ContactInfo.UserField2) Then
+                    propertyAddress.AppendFormat("{0}, ", BLL.SessionManager.ContactInfo.UserField2)
+                End If
+                If Not String.IsNullOrEmpty(BLL.SessionManager.ContactInfo.City) Then
+                    propertyAddress.AppendFormat("{0}, ", BLL.SessionManager.ContactInfo.City)
+                End If
+                If Not String.IsNullOrEmpty(BLL.SessionManager.ContactInfo.State) Then
+                    propertyAddress.AppendFormat("{0} ", BLL.SessionManager.ContactInfo.State)
+                End If
+                If Not String.IsNullOrEmpty(BLL.SessionManager.ContactInfo.Zip) Then
+                    propertyAddress.AppendFormat("{0}, ", BLL.SessionManager.ContactInfo.Zip)
+                End If
+            End If
+            Return propertyAddress.ToString().Trim().TrimEnd(",")
+        End Function
+
+        Protected Sub lnkEdit_Click(sender As Object, e As EventArgs) Handles lnkEdit.Click
+            Response.Redirect("/pay/ContactInfo.aspx", False)
         End Sub
     End Class
 

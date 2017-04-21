@@ -1,26 +1,25 @@
 ﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="EditPayment.ascx.vb" Inherits="B2P.PaymentLanding.Express.Web.EditPayment" %>
 
 
-    <div class="footer">
-        <div class="container">
-
-            <div class="row rowheight" style="background-color: #195575;">
-                <div class="col-xs-12 col-sm-12 text-center">
-                    <div class="col-sm-6">
-                        <asp:Literal Id="litLink1" runat="server" />           
-                    </div>
-                   
-                    <div class="col-sm-6">      
-                       <asp:Literal Id="litBill2Pay" runat="server" />   
-                    </div>
-                </div>
-
-            </div>
-          
-           <div class="row rowheight" style="background-color: #0e3042;">
-                  <div class="col-xs-12 col-sm-12 text-center">
-                    &copy; <asp:Literal ID="litYear" runat="server" /> <a href="http://www.bill2pay.com" target="_blank">BILL2PAY</a> LLC, ALL RIGHTS RESERVED. POWERED BY STREAM.
-                 </div>
-            </div>
+<div class="row">
+    <div class="col-xs-6 contentHeadingBlack14">Payment Details</div>
+    <div class="col-xs-6">
+        <div class="pull-right">
+            <asp:LinkButton Text="Edit Payment Details" runat="server" ID="lnkEdit" />
         </div>
     </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-xs-5 contentHeadingBlack13">Payment Method: </div>
+    <asp:Label runat="server" CssClass="contentBlack13" id="lblPaymentMethod"></asp:Label>
+</div>
+<asp:panel runat="server" CssClass="row" id="pnlExpDate">
+    <div class="col-xs-5 contentHeadingBlack13" id="expDateCap">Expiration Date:</div>
+    <asp:Label runat="server" cssclass="contentBlack13" id="lblExpDate"></asp:Label>
+</asp:panel>
+<asp:panel CssClass="row" id="pnlZip" runat="server">
+    <asp:Label runat="server" ID="lblBillingZipCaption"  cssclass="col-xs-5 contentHeadingBlack13">Billing Zip:</asp:Label>
+    <asp:Label runat="server" cssclass="contentBlack13" id="lblBillZip"></asp:Label>
+</asp:panel>
+    

@@ -186,6 +186,24 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected WithEvents btnPleaseWait As Global.System.Web.UI.WebControls.Button
         
         '''<summary>
+        '''EditPayment control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents EditPayment As Global.B2P.PaymentLanding.Express.Web.EditPayment
+        
+        '''<summary>
+        '''EditContactInfo control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents EditContactInfo As Global.B2P.PaymentLanding.Express.Web.EditContactInfo
+        
+        '''<summary>
         '''pfDefault control.
         '''</summary>
         '''<remarks>

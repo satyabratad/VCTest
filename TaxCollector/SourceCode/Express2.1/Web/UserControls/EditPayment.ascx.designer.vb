@@ -15,30 +15,66 @@ Namespace B2P.PaymentLanding.Express.Web
     Partial Public Class EditPayment
         
         '''<summary>
-        '''litLink1 control.
+        '''lnkEdit control.
         '''</summary>
         '''<remarks>
         '''Auto-generated field.
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
-        Protected WithEvents litLink1 As Global.System.Web.UI.WebControls.Literal
+        Protected WithEvents lnkEdit As Global.System.Web.UI.WebControls.LinkButton
         
         '''<summary>
-        '''litBill2Pay control.
+        '''lblPaymentMethod control.
         '''</summary>
         '''<remarks>
         '''Auto-generated field.
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
-        Protected WithEvents litBill2Pay As Global.System.Web.UI.WebControls.Literal
+        Protected WithEvents lblPaymentMethod As Global.System.Web.UI.WebControls.Label
         
         '''<summary>
-        '''litYear control.
+        '''pnlExpDate control.
         '''</summary>
         '''<remarks>
         '''Auto-generated field.
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
-        Protected WithEvents litYear As Global.System.Web.UI.WebControls.Literal
+        Protected WithEvents pnlExpDate As Global.System.Web.UI.WebControls.Panel
+        
+        '''<summary>
+        '''lblExpDate control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents lblExpDate As Global.System.Web.UI.WebControls.Label
+        
+        '''<summary>
+        '''pnlZip control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents pnlZip As Global.System.Web.UI.WebControls.Panel
+        
+        '''<summary>
+        '''lblBillingZipCaption control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents lblBillingZipCaption As Global.System.Web.UI.WebControls.Label
+        
+        '''<summary>
+        '''lblBillZip control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents lblBillZip As Global.System.Web.UI.WebControls.Label
     End Class
 End Namespace

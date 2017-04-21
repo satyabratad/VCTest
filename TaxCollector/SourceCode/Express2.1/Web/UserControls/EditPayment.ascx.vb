@@ -4,23 +4,45 @@ Namespace B2P.PaymentLanding.Express.Web
 
     Public Class EditPayment : Inherits System.Web.UI.UserControl
 
-        Private Sub Footer_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
             If Not IsPostBack Then
-                litYear.Text = Now.Year
-                If BLL.SessionManager.Client IsNot Nothing Then
-                    If BLL.SessionManager.Client.Website.Contains("http") Then
-                        litLink1.Text = String.Format("<a href={0} target=""_blank"">{1}</a>", BLL.SessionManager.Client.Website, BLL.SessionManager.Client.ClientName)
-                    Else
-                        litLink1.Text = String.Format("<a href=http://{0} target=""_blank"">{1}</a>", BLL.SessionManager.Client.Website, BLL.SessionManager.Client.ClientName)
-                    End If
-                    litBill2Pay.Text = String.Format("<a href={0} target=""_blank"">{1}</a>", "http://www.bill2pay.com", "www.Bill2Pay.com")
+
+                If Not BLL.SessionManager.ContactInfo Is Nothing Then
+                    pnlZip.Visible = True
+                    Select Case BLL.SessionManager.ContactInfo.UserField1
+                        Case "US"
+                            lblBillingZipCaption.Text = GetGlobalResourceObject("WebResources", "lblBillingZip").ToString()
+                        Case "CA"
+                            lblBillingZipCaption.Text = GetGlobalResourceObject("WebResources", "lblBillingPostalCode").ToString()
+                        Case Else
+                            lblBillingZipCaption.Text = GetGlobalResourceObject("WebResources", "lblBillingZip").ToString()
+                    End Select
                 Else
-                    litLink1.Visible = False
-                    litBill2Pay.Visible = False
+                    pnlZip.Visible = False
                 End If
 
+                Select Case BLL.SessionManager.PaymentType
+                    Case Common.Enumerations.PaymentTypes.BankAccount
+                        ' Show the payment method info
+                        lblPaymentMethod.Text = BLL.SessionManager.BankAccount.BankAccountType.ToString.Replace("_", " ") & " " & "*" & Right(BLL.SessionManager.BankAccount.BankAccountNumber, BLL.SessionManager.BankAccount.BankAccountNumber.Length - 1)
+                        pnlExpDate.Visible = False
+                        pnlZip.Visible = False
+                    Case Common.Enumerations.PaymentTypes.CreditCard
+                        ' Show the payment method info
+                        lblPaymentMethod.Text = BLL.SessionManager.CreditCard.CardIssuer & " " & Right(BLL.SessionManager.CreditCard.CreditCardNumber, 6)
+                        ' Set Exp Date
+                        pnlExpDate.Visible = True
+                        lblExpDate.Text = BLL.SessionManager.CreditCard.ExpirationMonth + "/" + BLL.SessionManager.CreditCard.ExpirationYear
+                        'set zip code
+                        pnlZip.Visible = True
+                        lblBillZip.Text = BLL.SessionManager.BillingZipCode
+                End Select
 
             End If
+        End Sub
+
+        Protected Sub lnkEdit_Click(sender As Object, e As EventArgs) Handles lnkEdit.Click
+            Response.Redirect("/pay/Payment.aspx", False)
         End Sub
     End Class
 
