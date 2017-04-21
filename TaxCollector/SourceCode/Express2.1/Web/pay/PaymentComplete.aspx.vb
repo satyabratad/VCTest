@@ -11,6 +11,9 @@ Namespace B2P.PaymentLanding.Express.Web
                 ' Add client side javascript attributes to the various form controls
                 RegisterClientJs()
 
+                'Populate grid
+                PaymentCartGrid.PopulateGrid("PaymentCartGrid")
+
                 ' Build the account information
                 BuildForm()
 
@@ -187,45 +190,6 @@ Namespace B2P.PaymentLanding.Express.Web
             litClientName.Text = BLL.SessionManager.Client.ClientName
             litConfirmationNumber.Text = BLL.SessionManager.ConfirmationNumber
 
-            If BLL.SessionManager.SSODisplayType <> B2P.Objects.Client.SSODisplayTypes.ReadOnlyGrid Then
-
-                With CurrentCategory.WebOptions
-
-                    If .AccountIDField1.Enabled = True Then
-                        litAccountNumber1.Text = Utility.SafeEncode(.AccountIDField1.Label)
-                        litAccountNumber1Data.Text = BLL.SessionManager.AccountNumber1
-                    Else
-                        pnlAccount1.Visible = False
-                        pnlAccount1.Style.Add("display", "none")
-                    End If
-
-                    If .AccountIDField2.Enabled = True Then
-                        litAccountNumber2.Text = Utility.SafeEncode(.AccountIDField2.Label)
-                        litAccountNumber2Data.Text = BLL.SessionManager.AccountNumber2
-                    Else
-                        pnlAccount2.Visible = False
-                        pnlAccount2.Style.Add("display", "none")
-                    End If
-
-                    If .AccountIDField3.Enabled = True Then
-                        litAccountNumber3.Text = Utility.SafeEncode(.AccountIDField3.Label)
-                        litAccountNumber3Data.Text = BLL.SessionManager.AccountNumber3
-                    Else
-                        pnlAccount3.Visible = False
-                        pnlAccount3.Style.Add("display", "none")
-                    End If
-
-                End With
-            Else
-                ' Hide the panels so they don't take up white space
-                pnlAccount1.Visible = False
-                pnlAccount2.Visible = False
-                pnlAccount3.Visible = False
-                pnlAccount1.Style.Add("display", "none")
-                pnlAccount2.Style.Add("display", "none")
-                pnlAccount3.Style.Add("display", "none")
-            End If
-
             ' Set the payment date
             litPaymentDate.Text = BLL.SessionManager.PaymentDate
 
@@ -270,11 +234,8 @@ Namespace B2P.PaymentLanding.Express.Web
                         ' Show the payment method info
                         litPaymentMethod.Text = BLL.SessionManager.BankAccount.BankAccountType.ToString.Replace("_", " ") & " " & "*" & Right(BLL.SessionManager.BankAccount.BankAccountNumber, BLL.SessionManager.BankAccount.BankAccountNumber.Length - 1)
                         ' Set the payment amounts and fees
-                        litAmount.Text = BLL.SessionManager.PaymentAmount.ToString("C2")
-                        litFee.Text = cf.ConvenienceFee.ToString("C2")
                         BLL.SessionManager.ConvenienceFee = cf.ConvenienceFee
                         BLL.SessionManager.TransactionFee = cf.TransactionFee
-                        litTotalAmount.Text = total.ToString("C2")
                         pnlCreditCardSuppInfo.Visible = False
                         If BLL.SessionManager.BankAccount.Owner.EMailAddress <> "" Then
                             txtProfileEmailAddress.Text = BLL.SessionManager.BankAccount.Owner.EMailAddress
@@ -287,11 +248,8 @@ Namespace B2P.PaymentLanding.Express.Web
                         ' Show the payment method info
                         litPaymentMethod.Text = BLL.SessionManager.CreditCard.CardIssuer & " " & Right(BLL.SessionManager.CreditCard.CreditCardNumber, 6)
                         ' Set the payment amounts and fees
-                        litAmount.Text = BLL.SessionManager.PaymentAmount.ToString("C2")
-                        litFee.Text = cf.ConvenienceFee.ToString("C2")
                         BLL.SessionManager.ConvenienceFee = cf.ConvenienceFee
                         BLL.SessionManager.TransactionFee = cf.TransactionFee
-                        litTotalAmount.Text = total.ToString("C2")
                         pnlCreditCardSuppInfo.Visible = True
                         If BLL.SessionManager.CreditCard.Owner.EMailAddress <> "" Then
                             txtProfileEmailAddress.Text = BLL.SessionManager.CreditCard.Owner.EMailAddress
@@ -300,10 +258,6 @@ Namespace B2P.PaymentLanding.Express.Web
 
                 ' Hide convenience fee link if there are no fees
                 Dim fees As New B2P.Payment.FeeDesciptions(BLL.SessionManager.ClientCode, BLL.SessionManager.ProductName, Common.Enumerations.TransactionSources.Web)
-
-                If fees.HasACHConvenienceFee Or fees.HasCCConvenienceFee Or fees.HasPDConvenienceFee Or fees.HasPNMConvenienceFee Then
-                    pnlFees.Visible = True
-                End If
 
             Catch ex As Exception
                 ' Build the error message

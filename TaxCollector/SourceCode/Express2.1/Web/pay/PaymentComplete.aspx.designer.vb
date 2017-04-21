@@ -114,24 +114,6 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected WithEvents litThankYou As Global.System.Web.UI.WebControls.Literal
         
         '''<summary>
-        '''PostBackStatusMessage control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents PostBackStatusMessage As Global.B2P.PaymentLanding.Express.Web.StatusMessage
-        
-        '''<summary>
-        '''pnlAccountDetails control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents pnlAccountDetails As Global.System.Web.UI.WebControls.Panel
-        
-        '''<summary>
         '''litConfirmText control.
         '''</summary>
         '''<remarks>
@@ -150,85 +132,49 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected WithEvents litConfirmationNumber As Global.System.Web.UI.WebControls.Literal
         
         '''<summary>
-        '''pnlAccount1 control.
+        '''PaymentCartGrid control.
         '''</summary>
         '''<remarks>
         '''Auto-generated field.
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
-        Protected WithEvents pnlAccount1 As Global.System.Web.UI.WebControls.Panel
+        Protected WithEvents PaymentCartGrid As Global.PaymentCartGrid
         
         '''<summary>
-        '''litAccountNumber1 control.
+        '''pnlCreateProfile control.
         '''</summary>
         '''<remarks>
         '''Auto-generated field.
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
-        Protected WithEvents litAccountNumber1 As Global.System.Web.UI.WebControls.Literal
+        Protected WithEvents pnlCreateProfile As Global.System.Web.UI.WebControls.Panel
         
         '''<summary>
-        '''litAccountNumber1Data control.
+        '''litCreateProfile control.
         '''</summary>
         '''<remarks>
         '''Auto-generated field.
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
-        Protected WithEvents litAccountNumber1Data As Global.System.Web.UI.WebControls.Literal
+        Protected WithEvents litCreateProfile As Global.System.Web.UI.WebControls.Literal
         
         '''<summary>
-        '''pnlAccount2 control.
+        '''Panel1 control.
         '''</summary>
         '''<remarks>
         '''Auto-generated field.
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
-        Protected WithEvents pnlAccount2 As Global.System.Web.UI.WebControls.Panel
+        Protected WithEvents Panel1 As Global.System.Web.UI.WebControls.Panel
         
         '''<summary>
-        '''litAccountNumber2 control.
+        '''litClientMessage control.
         '''</summary>
         '''<remarks>
         '''Auto-generated field.
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
-        Protected WithEvents litAccountNumber2 As Global.System.Web.UI.WebControls.Literal
-        
-        '''<summary>
-        '''litAccountNumber2Data control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litAccountNumber2Data As Global.System.Web.UI.WebControls.Literal
-        
-        '''<summary>
-        '''pnlAccount3 control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents pnlAccount3 As Global.System.Web.UI.WebControls.Panel
-        
-        '''<summary>
-        '''litAccountNumber3 control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litAccountNumber3 As Global.System.Web.UI.WebControls.Literal
-        
-        '''<summary>
-        '''litAccountNumber3Data control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litAccountNumber3Data As Global.System.Web.UI.WebControls.Literal
+        Protected WithEvents litClientMessage As Global.System.Web.UI.WebControls.Literal
         
         '''<summary>
         '''litPaymentDateText control.
@@ -294,69 +240,6 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected WithEvents litEmailAddress As Global.System.Web.UI.WebControls.Literal
         
         '''<summary>
-        '''litAmountText control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litAmountText As Global.System.Web.UI.WebControls.Literal
-        
-        '''<summary>
-        '''litAmount control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litAmount As Global.System.Web.UI.WebControls.Literal
-        
-        '''<summary>
-        '''pnlFees control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents pnlFees As Global.System.Web.UI.WebControls.Panel
-        
-        '''<summary>
-        '''litFeeText control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litFeeText As Global.System.Web.UI.WebControls.Literal
-        
-        '''<summary>
-        '''litFee control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litFee As Global.System.Web.UI.WebControls.Literal
-        
-        '''<summary>
-        '''litTotalAmountText control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litTotalAmountText As Global.System.Web.UI.WebControls.Literal
-        
-        '''<summary>
-        '''litTotalAmount control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litTotalAmount As Global.System.Web.UI.WebControls.Literal
-        
-        '''<summary>
         '''litSystemMessage control.
         '''</summary>
         '''<remarks>
@@ -366,49 +249,13 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected WithEvents litSystemMessage As Global.System.Web.UI.WebControls.Literal
         
         '''<summary>
-        '''pnlCreateProfile control.
+        '''PostBackStatusMessage control.
         '''</summary>
         '''<remarks>
         '''Auto-generated field.
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
-        Protected WithEvents pnlCreateProfile As Global.System.Web.UI.WebControls.Panel
-        
-        '''<summary>
-        '''litCreateProfile control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litCreateProfile As Global.System.Web.UI.WebControls.Literal
-        
-        '''<summary>
-        '''Panel1 control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents Panel1 As Global.System.Web.UI.WebControls.Panel
-        
-        '''<summary>
-        '''litClientMessage control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litClientMessage As Global.System.Web.UI.WebControls.Literal
-        
-        '''<summary>
-        '''pfDefault control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents pfDefault As Global.B2P.PaymentLanding.Express.Web.Footer
+        Protected WithEvents PostBackStatusMessage As Global.B2P.PaymentLanding.Express.Web.StatusMessage
         
         '''<summary>
         '''litFeesTitle control.
@@ -634,5 +481,14 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents btnCreateProfile As Global.System.Web.UI.WebControls.Button
+        
+        '''<summary>
+        '''pfDefault control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents pfDefault As Global.B2P.PaymentLanding.Express.Web.Footer
     End Class
 End Namespace
