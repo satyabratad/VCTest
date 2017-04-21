@@ -10,6 +10,7 @@
 '
 '==========================================================================
 Imports System.Collections.Generic
+Imports System.Configuration
 Imports System.Web
 Imports B2P.Cart
 
@@ -147,13 +148,39 @@ Public Class ManageCart
             _SelectedItem.Amount = selectedItem.Amount
         End If
     End Sub
-    Public Function SavePropertyAddress() As Boolean
+    Public Sub SavePropertyAddress(ClientCode As String, BatchId As String)
+        For Each cartItem As Cart In Me.Cart
+            SavePropertyAddress(cartItem, ClientCode, BatchId)
+        Next
+    End Sub
+    Private Sub SavePropertyAddress(cartItem As Cart, ClientCode As String, BatchId As String)
         Try
+            Dim connectionString As String = ConfigurationManager.ConnectionStrings("ConnectionString").ConnectionString
+            Using sqlConnection As New SqlClient.SqlConnection(connectionString)
+                Using sqlCommand As New SqlClient.SqlCommand
+                    sqlCommand.CommandText = "ap_InsertPropertyAddress"
+                    sqlCommand.CommandType = CommandType.StoredProcedure
+                    sqlCommand.Parameters.Add("@BatchID", SqlDbType.VarChar, 40).Value = BatchId
+                    sqlCommand.Parameters.Add("@ClientCode", SqlDbType.VarChar, 10).Value = ClientCode
+                    sqlCommand.Parameters.Add("@ProductName", SqlDbType.VarChar, 40).Value = cartItem.Item
+                    sqlCommand.Parameters.Add("@AccountNumber1", SqlDbType.VarChar, 40).Value = cartItem.AccountIdFields(0).Value
+                    sqlCommand.Parameters.Add("@AccountNumber2", SqlDbType.VarChar, 40).Value = cartItem.AccountIdFields(1).Value
+                    sqlCommand.Parameters.Add("@AccountNumber3", SqlDbType.VarChar, 40).Value = cartItem.AccountIdFields(2).Value
+                    sqlCommand.Parameters.Add("@Address1", SqlDbType.VarChar, 40).Value = cartItem.PropertyAddress.Address1
+                    sqlCommand.Parameters.Add("@Address2", SqlDbType.VarChar, 40).Value = cartItem.PropertyAddress.Address2
+                    sqlCommand.Parameters.Add("@State", SqlDbType.VarChar, 40).Value = cartItem.PropertyAddress.State
+                    sqlCommand.Parameters.Add("@City", SqlDbType.VarChar, 40).Value = cartItem.PropertyAddress.City
+                    sqlCommand.Parameters.Add("@ZipCode", SqlDbType.VarChar, 40).Value = cartItem.PropertyAddress.Zip
 
+                    sqlCommand.Connection = sqlConnection
+                    sqlConnection.Open()
+                    sqlCommand.ExecuteNonQuery()
+                End Using
+            End Using
         Catch ex As Exception
-
+            Throw New Exception(ex.Message)
         End Try
-    End Function
+    End Sub
 End Class
 
 
