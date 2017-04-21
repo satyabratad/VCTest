@@ -514,4 +514,7 @@
   <data name="EditAmountCaption" xml:space="preserve">
     <value>Edit Amount</value>
   </data>
+  <data name="ErrMsgBillingZip" xml:space="preserve">
+    <value>Invalid Billing Zip</value>
+  </data>
 </root>

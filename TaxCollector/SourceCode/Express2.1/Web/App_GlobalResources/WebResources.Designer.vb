@@ -506,6 +506,15 @@ Namespace Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Invalid Billing Zip.
+        '''</summary>
+        Friend Shared ReadOnly Property ErrMsgBillingZip() As String
+            Get
+                Return ResourceManager.GetString("ErrMsgBillingZip", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Not a valid security code..
         '''</summary>
         Friend Shared ReadOnly Property ErrMsgCreditCardCVC() As String
