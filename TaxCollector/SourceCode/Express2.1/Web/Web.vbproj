@@ -185,6 +185,8 @@
     <Content Include="UserControls\BankAccount.ascx" />
     <Content Include="UserControls\BreadCrumbMenu.ascx" />
     <Content Include="UserControls\CartDetails.ascx" />
+    <Content Include="UserControls\EditContactInfo.ascx" />
+    <Content Include="UserControls\EditPayment.ascx" />
     <Content Include="UserControls\OrderDetails.ascx" />
     <Content Include="UserControls\PaymentCartGrid.ascx" />
     <Content Include="UserControls\CartGrid.ascx" />
@@ -348,6 +350,20 @@
     </Compile>
     <Compile Include="UserControls\CartDetails.ascx.vb">
       <DependentUpon>CartDetails.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\EditContactInfo.ascx.designer.vb">
+      <DependentUpon>EditContactInfo.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\EditContactInfo.ascx.vb">
+      <DependentUpon>EditContactInfo.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\EditPayment.ascx.designer.vb">
+      <DependentUpon>EditPayment.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\EditPayment.ascx.vb">
+      <DependentUpon>EditPayment.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="UserControls\OrderDetails.ascx.designer.vb">
