@@ -6,6 +6,9 @@ Public Class SubTotal
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Page.IsPostBack = False Then
             lblSubTotal.Text = CalculateSubTotal()
+            'hdCCAmount.Value = CalculateSubTotal()
+
+
         End If
 
     End Sub

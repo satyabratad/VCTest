@@ -1,4 +1,5 @@
 ﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="SubTotal.ascx.vb" Inherits=".SubTotal" %>
+<asp:HiddenField ID="hdCCAmount" runat="server" Value="" />
 <div class="table-responsive">
 <table class="table" style="width: 100%;border:none" id="tblsubTotal">
     <tr >
