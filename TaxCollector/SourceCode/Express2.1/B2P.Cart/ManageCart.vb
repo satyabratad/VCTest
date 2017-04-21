@@ -155,7 +155,7 @@ Public Class ManageCart
     End Sub
     Private Sub SavePropertyAddress(cartItem As Cart, ClientCode As String, BatchId As String)
         Try
-            Dim connectionString As String = ConfigurationManager.ConnectionStrings("ConnectionString").ConnectionString
+            Dim connectionString As String = ConfigurationManager.AppSettings("ConnectionString")
             Using sqlConnection As New SqlClient.SqlConnection(connectionString)
                 Using sqlCommand As New SqlClient.SqlCommand
                     sqlCommand.CommandText = "ap_InsertPropertyAddress"

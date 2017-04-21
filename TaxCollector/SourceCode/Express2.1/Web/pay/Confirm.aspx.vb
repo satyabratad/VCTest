@@ -269,6 +269,10 @@ Namespace B2P.PaymentLanding.Express.Web
                         bapr = x.PayByBankAccount(ba)
 
                         If bapr.Result = B2P.Payment.BankAccountPayment.BankAccountPaymentResults.Results.Success Then
+
+                            'Added by Rs
+                            SavePropertyAddress(bapr.ConfirmationNumber)
+
                             BLL.SessionManager.ConfirmationNumber = Utility.SafeEncode(bapr.ConfirmationNumber)
                             BLL.SessionManager.PaymentDate = B2P.Payment.Utility.GetClientTime(BLL.SessionManager.ClientCode)
                             Dim b As New B2P.ClientInterface.Manager.ClientInterface.ServiceInformation
@@ -340,7 +344,11 @@ Namespace B2P.PaymentLanding.Express.Web
                         Dim bapr As B2P.Payment.BankAccountPayment.BankAccountPaymentResults
                         bapr = x.PayByBankAccount(ba)
 
+
                         If bapr.Result = B2P.Payment.BankAccountPayment.BankAccountPaymentResults.Results.Success Then
+                            'Added by Rs
+                            SavePropertyAddress(bapr.ConfirmationNumber)
+
                             BLL.SessionManager.ConfirmationNumber = Utility.SafeEncode(bapr.ConfirmationNumber)
                             BLL.SessionManager.PaymentDate = B2P.Payment.Utility.GetClientTime(BLL.SessionManager.ClientCode)
                             Dim b As New B2P.ClientInterface.Manager.ClientInterface.ServiceInformation
@@ -442,7 +450,12 @@ Namespace B2P.PaymentLanding.Express.Web
 
                         ccpr = x.PayByCreditCard(card)
 
+
                         If ccpr.Result = B2P.Payment.CreditCardPayment.CreditCardPaymentResults.Results.Success Then
+
+                            'Added by Rs
+                            SavePropertyAddress(ccpr.ConfirmationNumber)
+
                             BLL.SessionManager.ConfirmationNumber = Utility.SafeEncode(ccpr.ConfirmationNumber)
                             BLL.SessionManager.PaymentDate = B2P.Payment.Utility.GetClientTime(BLL.SessionManager.ClientCode)
 
@@ -553,7 +566,7 @@ Namespace B2P.PaymentLanding.Express.Web
         Private Sub SetUserData(Of T)(ByRef Param As T)
             Dim instance = Nothing
             If GetType(T) Is GetType(B2P.Payment.CreditCardPayment) Then
-                instance = CType(CType(Param, Object), B2P.Payment.CreditCardPayment).UserData.UserField1
+                instance = CType(CType(Param, Object), B2P.Payment.CreditCardPayment)
             End If
             If GetType(T) Is GetType(B2P.Payment.BankAccountPayment) Then
                 instance = CType(CType(Param, Object), B2P.Payment.BankAccountPayment)
@@ -567,7 +580,9 @@ Namespace B2P.PaymentLanding.Express.Web
                     instance.UserData.Address1 = .Address1
                     instance.UserData.Address2 = .Address2
                     instance.UserData.UserField2 = .UserField2
-                    instance.UserData.State = .State
+                    If Not String.IsNullOrEmpty(.State.Trim()) Then
+                        instance.UserData.State = .State
+                    End If
                     instance.UserData.City = .City
                     instance.UserData.Zip = .Zip
                     instance.UserData.HomePhone = .HomePhone
@@ -577,7 +592,7 @@ Namespace B2P.PaymentLanding.Express.Web
             End If
         End Sub
         Private Sub SavePropertyAddress(BatchId As String)
-
+            BLL.SessionManager.ManageCart.SavePropertyAddress(BLL.SessionManager.ClientCode, BatchId)
         End Sub
     End Class
 End Namespace
