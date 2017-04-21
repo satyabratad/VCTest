@@ -1,7 +1,11 @@
-﻿Imports System.Configuration.ConfigurationManager
+﻿Imports System
+Imports System.Configuration.ConfigurationManager
 Imports System.Data
+Imports System.Globalization
+Imports System.IO
 Imports System.Web
 Imports System.Web.UI.WebControls
+Imports System.Xml
 
 Namespace B2P.PaymentLanding.Express.Web
 
@@ -65,6 +69,11 @@ Namespace B2P.PaymentLanding.Express.Web
             If Not Me.IsPostBack Then
                 ' Set accepted card the images
                 litCardImages.Text = Utility.BuildAllowedCardImages()
+                BindCountries()
+                'AVS checking
+                Dim avsCheckTypes As B2P.Objects.Client.AVSCheckTypes = B2P.Objects.Client.GetAVSSetting(BLL.SessionManager.ClientCode, B2P.Common.Enumerations.TransactionSources.Web)
+                hdZipRequired.Value = IIf(avsCheckTypes = Objects.Client.AVSCheckTypes.CheckZipOnly Or avsCheckTypes = Objects.Client.AVSCheckTypes.CheckBoth, "Y", "N")
+
             End If
         End Sub
 
@@ -102,7 +111,53 @@ Namespace B2P.PaymentLanding.Express.Web
 
         End Sub
 
+        Private Sub BindCountries()
+            ddlCountry.Items.Clear()
+            ddlCountry.Items.Add(New ListItem("--Select--", ""))
 
+            If ConfigurationManager.AppSettings("Countries") IsNot Nothing Then
+                Dim countryPath = ConfigurationManager.AppSettings("Countries")
+
+                If Not countryPath.StartsWith("~/") Then
+                    countryPath = String.Format("~/{0}", countryPath)
+                End If
+                countryPath = Server.MapPath(countryPath)
+
+
+                Dim countries = ReadStateXML(countryPath)
+                For Each item As KeyValuePair(Of String, String) In countries
+                    Dim element = New ListItem(item.Value, item.Key)
+                    element.Attributes("OptionGroup") = "Country"
+                    ddlCountry.Items.Add(element)
+                Next
+            End If
+        End Sub
+
+        Private Function ReadStateXML(path As String) As IEnumerable(Of KeyValuePair(Of String, String))
+
+            Dim _Values As List(Of KeyValuePair(Of String, String)) =
+            New List(Of KeyValuePair(Of String, String))
+
+            If (IO.File.Exists(path)) Then
+                Dim document As XmlReader = New XmlTextReader(path)
+                While (document.Read())
+                    Dim type = document.NodeType
+                    If (type = XmlNodeType.Element) Then
+                        If (document.Name = "state" Or document.Name = "country") Then
+                            Dim key = document.GetAttribute("abbreviation")
+                            Dim value = document.GetAttribute("name")
+                            Dim element = New KeyValuePair(Of String, String)(key, value)
+
+                            _Values.Add(element)
+                        End If
+                    End If
+                End While
+            Else
+                Throw New FileNotFoundException(String.Format(CultureInfo.InvariantCulture, "{0} Not Found", path))
+            End If
+
+            Return _Values
+        End Function
 #End Region
 
     End Class

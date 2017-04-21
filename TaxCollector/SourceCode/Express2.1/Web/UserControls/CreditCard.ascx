@@ -35,3 +35,21 @@
     </div>
   </div>
 </div>
+<div class="row">
+  <div class="col-xs-12 col-sm-8">
+    <div class="form-group form-group-sm">
+      <label class="control-label" for="txtCountry"><asp:Literal ID="litCountry" runat="server" text="<%$ Resources:WebResources, lblCountry %>" />:</label>
+      <asp:DropDownList runat="server" ID="ddlCountry"   class="form-control input-sm" AutoPostBack="false"> </asp:DropDownList>
+                                                        
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-sm-4">
+    <div class="form-group form-group-sm">
+         <asp:HiddenField ID="hdZipRequired" runat="server" Value="required" />
+      <label class="control-label" for="txtBillingZip"><asp:Literal ID="litBillingZip" runat="server" text="<%$ Resources:WebResources, lblBillingZip %>" /></label>
+      <asp:TextBox id="txtBillingZip" type="tel" cssclass="form-control input-sm txtBillingZip " placeholder="Billing Zip" maxlength="4" autocomplete="off" runat="server"
+           onkeypress="return restrictInput(event, restrictionTypes.ZipCode)" onpaste="return reformatInput(this, restrictionTypes.ZipCode)"></asp:TextBox>
+    </div>
+  </div>
+</div>

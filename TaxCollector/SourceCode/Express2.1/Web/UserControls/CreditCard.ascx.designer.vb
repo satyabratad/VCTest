@@ -85,5 +85,50 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents txtCCV As Global.System.Web.UI.WebControls.TextBox
+        
+        '''<summary>
+        '''litCountry control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents litCountry As Global.System.Web.UI.WebControls.Literal
+        
+        '''<summary>
+        '''ddlCountry control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents ddlCountry As Global.System.Web.UI.WebControls.DropDownList
+        
+        '''<summary>
+        '''hdZipRequired control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents hdZipRequired As Global.System.Web.UI.WebControls.HiddenField
+        
+        '''<summary>
+        '''litBillingZip control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents litBillingZip As Global.System.Web.UI.WebControls.Literal
+        
+        '''<summary>
+        '''txtBillingZip control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents txtBillingZip As Global.System.Web.UI.WebControls.TextBox
     End Class
 End Namespace
