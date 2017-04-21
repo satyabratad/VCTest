@@ -54,7 +54,7 @@
         <b2p:PaymentHeader id="phDefault" runat="server" />
              
         <!--// END LOGO, HEADER AND NAV //-->
-      
+      <asp:HiddenField ID="hdCCAmount" runat="server" Value="" />
       
        <div class="row" style="background-color:white; padding-bottom:10px;">
             <br />
@@ -263,7 +263,7 @@
                  <!--// END MIDDLE CONTENT //-->      
      
           </div><br /><br />
-        </div>      
+        <%--</div>--%>      
       <!--// START FOOTER CONTENT //-->
 
       <b2p:PaymentFooter id="pfDefault" runat="server" />
@@ -513,7 +513,7 @@
         function validateForm(paymentType) {
 
             
-              var doc = document;
+            <%--  var doc = document;
             <% =B2P.PaymentLanding.Express.Web.Utility.BuildAllowedCardsPattern()%> 
               var panel = doc.getElementById("pnlOtherAmount");
               var cardType = $.payment.cardType(doc.getElementById("txtCreditCardNumber").value);
@@ -569,24 +569,27 @@
                           errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgCreditCardCVC").ToString()%>",
                           isValid: ($.payment.validateCardCVC(doc.getElementById("txtCCV").value, cardType))
                       });
-
+                      
                       // Check to see if zip is required
-                if ($("#hdZipRequired").val() == 'Y') {
-                    zip = doc.getElementById('txtBillingZip').value;
-                    if (zip !== '') {
-                        validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
-                    }
-                }
-                      zip = doc.getElementById('txtBillingZip').value;
-                    if (zip !== '') {
-                        // Set the validator
-                        if ($("#ddlCountry").val() == "US")
-                            validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeUnitedStates, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
-                        if ($("#ddlCountry").val() == "CA")
-                            validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeCanada, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
-                        if ($("#ddlCountry").val() == "OT")
-                            validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeInternational, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
-                    }
+                      
+                          //if ($("#hdZipRequired").val() == 'Y') {
+                              zip = doc.getElementById('txtBillingZip').value;
+                              if (zip == '') {
+                                  validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>")
+                                      );
+                              }
+                          //}
+                              zip = doc.getElementById('txtBillingZip').value;
+                              if (zip !== '') {
+                                  // Set the validator
+                                  if ($("#ddlCountry").val() == "US")
+                                      validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeUnitedStates, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
+                                  if ($("#ddlCountry").val() == "CA")
+                                      validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeCanada, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
+                                  if ($("#ddlCountry").val() == "OT")
+                                      validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeInternational, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
+                              }
+                          
 
                      if (panel && doc.getElementById("rdAmount").checked) {
                          validator.addValidationItem(item = {
@@ -634,7 +637,8 @@
                       break;
               }
 
-              return validator.validate();
+              return validator.validate();--%>
+            return true;
           }
 
         // Validate payment amount
@@ -683,7 +687,7 @@
                       $('#txtExpireDate').val("");
                       $('#txtCCV').val("");
 
-                      $('#ddlCountry').selectedIndex = 0;
+                      //$('#ddlCountry').selectedIndex = 0;
                       $('#txtBillingZip').val("");
 
                       // Hide the CC error messages

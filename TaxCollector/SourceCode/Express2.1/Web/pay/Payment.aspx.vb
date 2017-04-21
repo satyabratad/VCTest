@@ -18,6 +18,7 @@ Namespace B2P.PaymentLanding.Express.Web
             ' Gets the last active Bootstrap tab before the postback
             hdfTabName.Value = Request.Form(hdfTabName.UniqueID)
 
+
             If Not IsPostBack Then
 
                 ' Build the account information panel
@@ -38,10 +39,18 @@ Namespace B2P.PaymentLanding.Express.Web
                     pnlSSOBreadcrumb.Visible = False
                     pnlNonSSOBreadcrumb.Visible = True
                 End If
-
+                txtAmount.Text = CalculateSubTotal()
             End If
         End Sub
-
+        Protected Function CalculateSubTotal() As String
+            Dim total As Double = 0
+            If Not BLL.SessionManager.ManageCart.Cart Is Nothing Then
+                For Each item As B2P.Cart.Cart In BLL.SessionManager.ManageCart.Cart
+                    total += item.Amount
+                Next
+            End If
+            Return String.Format("{0:C}", total)
+        End Function
         Private Sub btnCancelAch_Click(sender As Object, e As EventArgs) Handles btnCancelAch.Click
             If BLL.SessionManager.IsSSOProduct Then
                 ' what do we do here?

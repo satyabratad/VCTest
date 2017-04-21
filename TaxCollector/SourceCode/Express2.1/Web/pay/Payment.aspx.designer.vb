@@ -51,6 +51,15 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected WithEvents phDefault As Global.B2P.PaymentLanding.Express.Web.Header
         
         '''<summary>
+        '''hdCCAmount control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents hdCCAmount As Global.System.Web.UI.WebControls.HiddenField
+        
+        '''<summary>
         '''pjsJavascript control.
         '''</summary>
         '''<remarks>
