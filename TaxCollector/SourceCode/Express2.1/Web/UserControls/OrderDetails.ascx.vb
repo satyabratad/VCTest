@@ -6,20 +6,11 @@ Public Class OrderDetails
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Page.IsPostBack = False Then
-            lblSubTotal.Text = CalculateSubTotal()
+
             PopulateOrderGrid()
         End If
     End Sub
-    Protected Function CalculateSubTotal() As String
-        Dim total As Double = 0
-        If Not BLL.SessionManager.ManageCart.Cart Is Nothing Then
-            For Each item As B2P.Cart.Cart In BLL.SessionManager.ManageCart.Cart
-                total += item.Amount
 
-            Next
-        End If
-        Return String.Format("{0:C}", total)
-    End Function
 
     Protected Function PopulateOrderGrid()
 
@@ -29,11 +20,20 @@ Public Class OrderDetails
 
     Protected Sub rptOrder_ItemCommand(source As Object, e As RepeaterCommandEventArgs) Handles rptOrder.ItemCommand
 
-        Dim drv As DataRowView = DirectCast(e.Item.DataItem, DataRowView)
 
-        'Repeater rptOrderAcc = DirectCast(e.Item.FindControl("rptOrderAccount"), Repeater)
-        'rptOrderAcc.DataSource = BLL.SessionManager.ManageCart.Cart(0).AccountIdFields
-        'rptOrderAcc.DataBind()
+    End Sub
+    Protected Function FormatAmount(Amount As Double) As String
+        Return String.Format("{0:C}", Amount)
+    End Function
+    Protected Sub rptOrder_ItemDataBound(sender As Object, e As RepeaterItemEventArgs) Handles rptOrder.ItemDataBound
+        Dim item As RepeaterItem = e.Item
+        Dim AccRepeater As Repeater = DirectCast(e.Item.FindControl("rptOrderAccount"), Repeater)
+        If Not item.DataItem Is Nothing Then
+            Dim crt As B2P.Cart.Cart = DirectCast(item.DataItem, B2P.Cart.Cart)
+            AccRepeater.DataSource = crt.AccountIdFields
+            AccRepeater.DataBind()
+        End If
+
     End Sub
 End Class
 

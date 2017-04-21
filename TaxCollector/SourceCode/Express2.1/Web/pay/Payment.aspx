@@ -8,6 +8,8 @@
 <%@ Register TagPrefix="b2p" TagName="BreadCrumbMenu" Src="~/UserControls/BreadCrumbMenu.ascx"  %>
 <%@ Register TagPrefix="b2p" TagName="SubTotal" Src="~/UserControls/SubTotal.ascx"  %>
 <%@ Register TagPrefix="b2p" TagName="OrderDetails" Src="~/UserControls/OrderDetails.ascx"  %>
+<%@ Register TagPrefix="b2p" TagName="ShoppingCart" Src="~/UserControls/ShoppingCart.ascx" %>
+
 
 
 
@@ -34,6 +36,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="/Css/app.css" type="text/css" id="lnkCSS" runat="server" />
     <link rel="stylesheet" href="/Css/progress.css" type="text/css" runat="server" />
+    <link rel="stylesheet" href="/Css/custom.css" type="text/css" runat="server" />
 
     <!-- JavaScript -->
     <!--[if lt IE 9]>
@@ -76,23 +79,19 @@
                                 </asp:Panel>
                                 <asp:Panel ID="pnlSSOBreadcrumb" runat="server" aria-hidden="true" aria-label="Breadcrumb Menu" >
                                     <b2p:BreadCrumbMenu runat="server" PageTagName="PaymentDetails"   ID="BreadCrumbMenuSSO" />
-	                                    <%--<div class="row">
-		                                    <ul class="breadcrumb">
-			                                    
-			                                    <li class="active"><a href="/pay/payment.aspx"><span class="badge badge-inverse">1</span> Payment <span class="hidden-xs hidden-sm">Details</span></a></li>
-			                                    <li><a href="#" class="inactiveLink"><span class="badge">2</span><span class="hidden-xs hidden-sm"> Confirm Payment</span></a></li>
-			                                    <li><a href="#" class="inactiveLink"><span class="badge">3</span><span class="hidden-xs hidden-sm"> Payment Complete</span></a></li>
-		                                    </ul>
-	                                    </div>--%>
+	                                   
                                     
                                 </asp:Panel> 
                                 <!--// END BREADCRUMBS -->  
                                   
-                                  
+                                  <div class="col-xs-12 col-sm-12">
+                                      <b2p:ShoppingCart runat="server" ID="ShoppingCart" />
+                                  </div>
                                   <div class="row">
                                     <div class="col-xs-12 col-sm-6 col-sm-push-6">
+                                        
                                         <b2p:OrderDetails runat="server" id="OrderDetails" />
-                                        <asp:Panel ID="pnlAccountDetails" runat="server">
+                                        <asp:Panel ID="pnlAccountDetails" runat="server" Visible="false">
                                         <br />
                                                 <p><strong>My Account Details</strong></p>                                     
                                                 <hr />       
@@ -157,7 +156,7 @@
                                     </div>
                                 
                                
-                                <div class="col-xs-12 col-sm-6 col-sm-pull-6">   
+                                <div class="col-xs-12 col-sm-6 col-sm-pull-6"  style="display:none ">   
                                                                
                                     <br />     
                                     <strong><asp:Literal ID="litSelectAmount" runat="server" Text="<%$ Resources:WebResources, lblSelectAmount %>" /></strong>            
@@ -190,7 +189,7 @@
                             <div class="col-xs-12 col-sm-6 col-sm-pull-6"> 
                                     
                                             
-                                         <b2p:SubTotal runat="server" id="SubTotal" />
+                                   <b2p:SubTotal runat="server" id="SubTotal" />
                                     <div id="pnlFormContents" role="form" runat="server">
                                         <br />  
                                        <strong><asp:Literal ID="litSelectPaymentMethod" runat="server" Text="<%$ Resources:WebResources, lblSelectPaymentMethod %>" /></strong>

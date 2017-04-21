@@ -96,6 +96,15 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected WithEvents BreadCrumbMenuSSO As Global.BreadCrumbMenu
         
         '''<summary>
+        '''ShoppingCart control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents ShoppingCart As Global.ShoppingCart
+        
+        '''<summary>
         '''OrderDetails control.
         '''</summary>
         '''<remarks>
