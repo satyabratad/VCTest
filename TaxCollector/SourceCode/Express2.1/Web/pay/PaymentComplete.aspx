@@ -324,12 +324,18 @@
                     var disp_setting = "toolbar=yes,location=no,directories=yes,menubar=yes,";
                     disp_setting += "scrollbars=yes,width=650, height=600, left=100, top=25";
                     $('#leftSideButtons').css('display', 'none');
+                    $('#feeInfoModal').css('display', 'none');
                     var content_vlue = $("#print_content").clone().html();
                     $('#leftSideButtons').css('display', 'block');
+                    $('#feeInfoModal').css('display', 'block');
+                    
                     var docprint = window.open("", "", disp_setting);
                     docprint.document.open();
                     docprint.document.write('<html><head><title>Payment Receipt</title>');
+                    
+                    docprint.document.write('<link rel="stylesheet" href="../css/bootstrap.min.css">');
                     docprint.document.write('<link rel="stylesheet" href="../css/print.css">');
+
                     docprint.document.write('</head><body onLoad="self.print()">');
                     docprint.document.write('<div id="pageheader"> ');
                     docprint.document.write('<%=Session("CustTitle") %></div>');
