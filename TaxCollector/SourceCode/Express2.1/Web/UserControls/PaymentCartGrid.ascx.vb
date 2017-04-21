@@ -8,45 +8,6 @@ Public Class PaymentCartGrid
     Inherits System.Web.UI.UserControl
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
-        'Delete from cart
-        If hdMode.Value.ToUpper().Trim() = "DELETE" Then
-            If BLL.SessionManager.ManageCart.Cart.Count > 0 Then
-                Dim index As Integer = CType(hdSelectedIndex.Value, Integer)
-                BLL.SessionManager.ManageCart.Cart.RemoveAt(index)
-                UpdateCartCount()
-                PopulateGrid(Me.ID)
-                hdMode.Value = ""
-                hdSelectedIndex.Value = ""
-                CType(Me.Parent.FindControl("CartDetails"), CartDetails).LoadContent()
-
-                Utility.SetBreadCrumbContactInfo("BreadCrumbMenu")
-
-
-                'End Show/Hide Contact Info
-            End If
-            If BLL.SessionManager.ManageCart.Cart.Count = 0 Then
-                BLL.SessionManager.ManageCart.ShowCart = False
-                BLL.SessionManager.ManageCart.EditItemIndex = -1
-                If BLL.SessionManager.ClientType = B2P.Cart.EClientType.SSO Then
-                    Response.Redirect("~/sso/")
-                Else
-                    Response.Redirect("~/pay/")
-                End If
-            End If
-        End If
-        'Edit cart
-        If hdMode.Value.ToUpper().Trim() = "EDIT" Then
-            If BLL.SessionManager.ManageCart.Cart.Count > 0 Then
-                Dim index As Integer = CType(hdSelectedIndex.Value, Integer)
-                BLL.SessionManager.ManageCart.Cart(index).Amount = FormatAmount(CType(hdEditAmount.Value, Double))
-                UpdateCartCount()
-                PopulateGrid(Me.ID)
-                hdMode.Value = ""
-                hdSelectedIndex.Value = ""
-            End If
-        End If
-
-
     End Sub
     Public Sub PopulateGrid(ctrlName As String)
         Dim page As Page = HttpContext.Current.Handler
@@ -66,25 +27,57 @@ Public Class PaymentCartGrid
         rptSSO.Visible = BLL.SessionManager.ClientType = B2P.Cart.EClientType.SSO
     End Sub
     Private Sub populateNonLookupGrid()
-        ResetIndex()
         rptNonLookup.DataSource = BLL.SessionManager.ManageCart.Cart
         rptNonLookup.DataBind()
     End Sub
     Private Sub populateLookupGrid()
-        ResetIndex()
         rptLookup.DataSource = BLL.SessionManager.ManageCart.Cart
         rptLookup.DataBind()
     End Sub
     Private Sub populateSSOGrid()
-        ResetIndex()
         rptSSO.DataSource = BLL.SessionManager.ManageCart.Cart
         rptSSO.DataBind()
     End Sub
-    Private Sub ResetIndex()
-        For i As Integer = 0 To BLL.SessionManager.ManageCart.Cart.Count - 1
-            BLL.SessionManager.ManageCart.Cart(i).Index = i.ToString()
-        Next
+    Protected Sub SetConvenienceFeesApplicability()
+        Dim cf As B2P.Payment.FeeCalculation.CalculatedFee = Nothing
+        Select Case BLL.SessionManager.PaymentType
+            Case Common.Enumerations.PaymentTypes.BankAccount
+                cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, BLL.SessionManager.CurrentCategory.Name, B2P.Common.Enumerations.TransactionSources.Web, B2P.Payment.FeeCalculation.PaymentTypes.BankAccount, SubTotal())
+                BLL.SessionManager.ConvenienceFee = cf.ConvenienceFee
+                BLL.SessionManager.TransactionFee = cf.TransactionFee
+                pnlACHFee.Visible = True
+                litACHFee.Text = BLL.SessionManager.AchFeeDescription
+            Case Common.Enumerations.PaymentTypes.CreditCard
+                Dim cardType As B2P.Payment.FeeCalculation.PaymentTypes = B2P.Payment.FeeCalculation.GetCardType(BLL.SessionManager.CreditCard.InternalCreditCardNumber)
+                cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, BLL.SessionManager.CurrentCategory.Name, B2P.Common.Enumerations.TransactionSources.Web, cardType, SubTotal())
+                BLL.SessionManager.ConvenienceFee = cf.ConvenienceFee
+                BLL.SessionManager.TransactionFee = cf.TransactionFee
+                pnlCCFee.Visible = True
+                litCCFee.Text = BLL.SessionManager.CreditFeeDescription
+        End Select
     End Sub
+    Protected Function IsConvenienceFeesApplicable() As Boolean
+        Dim cf As B2P.Payment.FeeCalculation.CalculatedFee = Nothing
+        Select Case BLL.SessionManager.PaymentType
+            Case Common.Enumerations.PaymentTypes.BankAccount
+                cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, BLL.SessionManager.CurrentCategory.Name, B2P.Common.Enumerations.TransactionSources.Web, B2P.Payment.FeeCalculation.PaymentTypes.BankAccount, SubTotal())
+
+            Case Common.Enumerations.PaymentTypes.CreditCard
+                Dim cardType As B2P.Payment.FeeCalculation.PaymentTypes = B2P.Payment.FeeCalculation.GetCardType(BLL.SessionManager.CreditCard.InternalCreditCardNumber)
+                cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, BLL.SessionManager.CurrentCategory.Name, B2P.Common.Enumerations.TransactionSources.Web, cardType, SubTotal())
+
+        End Select
+        BLL.SessionManager.IsConvenienceFeesApplicable = BLL.SessionManager.Client.ConfirmFees And cf.ConvenienceFee > 0
+        Return BLL.SessionManager.IsConvenienceFeesApplicable
+    End Function
+    Protected Function GetConvenienceFee() As String
+        SetConvenienceFeesApplicability()
+        If BLL.SessionManager.IsConvenienceFeesApplicable Then
+            Return BLL.SessionManager.ConvenienceFee.ToString("C2")
+        Else
+            Return 0
+        End If
+    End Function
     Protected Function GetPropertyAddress(Index As Integer) As String
         Dim CartItem As B2P.Cart.Cart = BLL.SessionManager.ManageCart.Cart(Index)
         Dim propertyAddress As StringBuilder = New StringBuilder()
@@ -116,9 +109,7 @@ Public Class PaymentCartGrid
                 accountInfo.AppendFormat("{0}, ", fields.Value)
             End If
         Next
-
         Return accountInfo.ToString().Trim().TrimEnd(",")
-
     End Function
     Protected Function FormatAmount(Amount As Double) As String
         Return String.Format("{0:C}", Amount)
@@ -133,18 +124,11 @@ Public Class PaymentCartGrid
         Next
         Return String.Format("{0:C}", amount)
     End Function
-    Private Sub UpdateCartCount()
-        Dim cs As ClientScriptManager = Page.ClientScript
-        cs.RegisterStartupScript(Me.GetType(), "tmp", "<script type='text/javascript'>updateCartCount(" + BLL.SessionManager.ManageCart.Cart.Count.ToString() + ");</script>", False)
-    End Sub
-
-    Protected Sub btnEditItem_Click(sender As Object, e As EventArgs) Handles btnEditItem.Click
-        BLL.SessionManager.ManageCart.EditItemIndex = hdSelectedIndex.Value
-        BLL.SessionManager.ManageCart.ShowCart = False
-        If BLL.SessionManager.ClientType = B2P.Cart.EClientType.SSO Then
-            Response.Redirect("~/sso/")
-        Else
-            Response.Redirect("~/pay/")
+    Protected Function Total() As String
+        Dim totalAmount As Double = CType(SubTotal(), Double)
+        If IsConvenienceFeesApplicable() Then
+            totalAmount += CType(GetConvenienceFee(), Double)
         End If
-    End Sub
+        Return String.Format("{0:C}", totalAmount)
+    End Function
 End Class

@@ -80,6 +80,7 @@ Namespace B2P.PaymentLanding.Express.BLL
         Private Const _breadCrumbMenuTab As Object = "BreadCrumbMenuTab"
         Private Const _contactInfo As Object = "ContactInfo"
         Private Const _isContactInfoRequired As String = "IsContactInfoRequired"
+        Private Const _isConvenienceFeesApplicable As String = "_isConvenienceFeesApplicable"
 #End Region
 
 #Region " ::: Contructors ::: "
@@ -854,6 +855,23 @@ Namespace B2P.PaymentLanding.Express.BLL
             End Get
             Set(ByVal value As Boolean)
                 HttpContext.Current.Session(_isContactInfoRequired) = value
+            End Set
+        End Property
+        ''' <summary>
+        ''' This will provide information weather Convenience Fess applicable
+        ''' </summary>
+
+        Public Shared Property IsConvenienceFeesApplicable() As Boolean
+            Get
+                If HttpContext.Current.Session(_isConvenienceFeesApplicable) Is Nothing Then
+                    Return Nothing
+                Else
+                    Return DirectCast(HttpContext.Current.Session(_isConvenienceFeesApplicable), Boolean)
+                End If
+
+            End Get
+            Set(ByVal value As Boolean)
+                HttpContext.Current.Session(_isConvenienceFeesApplicable) = value
             End Set
         End Property
 

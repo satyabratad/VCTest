@@ -19,7 +19,7 @@
         <ItemTemplate>
             <tbody>
                 <tr id="trIndex" <%# Eval("Index") %>>
-                    <td class="table-row" style="align-content: center; cursor: pointer;"><a onclick="removeItems(<%# Eval("Index") %>);" title="Delete Item"><i class="fa fa-trash-o fa-lg" aria-hidden="true"></i></a></td>
+                    <td class="table-row" style="align-content: center;"><%#CType(Eval("Index"), Integer) + 1%></td>
                     <td class="table-row"><%# Eval("Item") %></td>
                     <td class="table-row"><%# GetAccountInformation(Eval("Index")) %><br>
                         <strong>Property Address:</strong><br>
@@ -32,6 +32,21 @@
             <tr>
                 <td class="table-row-bold" colspan="3" align="right">Subtotal (<%# GetCartItemCount() %> item(s)): </td>
                 <td class="table-row-bold" align="right"><%# SubTotal() %></td>
+            </tr>
+            <% If BLL.SessionManager.IsConvenienceFeesApplicable Then %>
+            <tr>
+                <td class="table-alternateRow" colspan="3" align="right">
+                    <span>Convenience Fee </span>
+                    <a href="#" data-toggle="modal" data-target="#feeInfoModal" data-keyboard="false" title="Fee Info" tabindex="-1">
+                        <i class="fa fa-question-circle fa-1" aria-hidden="true"></i>
+                        <span class="text-hide">Fee Information</span></a><span>:</span>
+                </td>
+                <td class="table-alternateRow" align="right"><%# GetConvenienceFee() %></td>
+            </tr>
+            <% End If %>
+            <tr>
+                <td class="table-row-bold" colspan="3" align="right"><span>Total Amount:</span></td>
+                <td class="table-row-bold" align="right"><%# Total() %></td>
             </tr>
             </tbody>
     </table>
@@ -47,9 +62,8 @@
                 <thead>
                     <tr>
                         <td class="table-header" width="5%"></td>
-                        <td class="table-header" width="5%"></td>
                         <td class="table-header" width="20%">Item</td>
-                        <td class="table-header" width="50%">Details</td>
+                        <td class="table-header" width="55%">Details</td>
                         <td class="table-header" width="10%" align="right">Amount Due</td>
                         <td class="table-header" width="10%" align="right">Amount</td>
                     </tr>
@@ -58,8 +72,7 @@
         <ItemTemplate>
             <tbody>
                 <tr id="trIndex" <%# Eval("Index") %>>
-                    <td class="table-row" style="align-content: center; cursor: pointer;"><a onclick="removeItems(<%# Eval("Index") %>);" title="Delete Item"><i class="fa fa-trash-o fa-lg" aria-hidden="true"></i></a></td>
-                    <td class="table-row" style="align-content: center; cursor: pointer;"><a onclick="editItems(<%# Eval("Index") %>);" title="Edit Item"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a></td>
+                    <td class="table-row" style="align-content: center;"><%# ctype(Eval("Index"), Integer) + 1%>);</td>
                     <td class="table-row"><%# Eval("Item") %></td>
                     <td class="table-row"><%# GetAccountInformation(Eval("Index")) %><br>
                         <strong>Property Address:</strong><br>
@@ -71,8 +84,23 @@
         </ItemTemplate>
         <FooterTemplate>
             <tr>
-                <td class="table-row-bold" colspan="5" align="right">Subtotal (<%# GetCartItemCount() %> item(s)): </td>
+                <td class="table-row-bold" colspan="4" align="right">Subtotal (<%# GetCartItemCount() %> item(s)): </td>
                 <td class="table-row-bold" align="right"><%# SubTotal() %></td>
+            </tr>
+            <% If BLL.SessionManager.IsConvenienceFeesApplicable Then %>
+            <tr>
+                <td class="table-alternateRow" colspan="4" align="right">
+                    <span>Convenience Fee </span>
+                    <a href="#" data-toggle="modal" data-target="#feeInfoModal" data-keyboard="false" title="Fee Info" tabindex="-1">
+                        <i class="fa fa-question-circle fa-1" aria-hidden="true"></i>
+                        <span class="text-hide">Fee Information</span></a><span>:</span>
+                </td>
+                <td class="table-alternateRow" align="right"><%# GetConvenienceFee() %></td>
+            </tr>
+            <% End If %>
+            <tr>
+                <td class="table-row-bold" colspan="4" align="right"><span>Total Amount:</span></td>
+                <td class="table-row-bold" align="right"><%# Total() %></td>
             </tr>
             </tbody>
     </table>
@@ -98,7 +126,7 @@
         <ItemTemplate>
             <tbody>
                 <tr id="trIndex" <%# Eval("Index") %>>
-                    <td class="table-row" style="align-content: center; cursor: pointer;"><a onclick="editItems(<%# Eval("Index") %>);" title="Edit Item"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a></td>
+                    <td class="table-row" style="align-content: center;"><%# ctype(Eval("Index"), Integer) + 1%></td>
                     <td class="table-row"><%# Eval("Item") %></td>
                     <td class="table-row"><%# GetAccountInformation(Eval("Index")) %><br>
                         <strong>Property Address:</strong><br>
@@ -113,6 +141,21 @@
                 <td class="table-row-bold" colspan="4" align="right">Subtotal (<%# GetCartItemCount() %> item(s)): </td>
                 <td class="table-row-bold" align="right"><%# SubTotal() %></td>
             </tr>
+            <% If BLL.SessionManager.IsConvenienceFeesApplicable Then %>
+            <tr>
+                <td class="table-alternateRow" colspan="4" align="right">
+                    <span>Convenience Fee </span>
+                    <a href="#" data-toggle="modal" data-target="#feeInfoModal" data-keyboard="false" title="Fee Info" tabindex="-1">
+                        <i class="fa fa-question-circle fa-1" aria-hidden="true"></i>
+                        <span class="text-hide">Fee Information</span></a><span>:</span>
+                </td>
+                <td class="table-alternateRow" align="right"><%# GetConvenienceFee() %></td>
+            </tr>
+            <% End If %>
+            <tr>
+                <td class="table-row-bold" colspan="4" align="right"><span>Total Amount:</span></td>
+                <td class="table-row-bold" align="right"><%# Total() %></td>
+            </tr>
             </tbody>
     </table>
         </FooterTemplate>
@@ -121,54 +164,43 @@
     <!--End SSO------------------------------------------------------------------------------------->
 
 </div>
-<!-- START DELETE CONFIRM MODAL DIALOG -->
-<div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
+      <!-- START FEE DIALOG -->
+      <div class="modal fade" id="feeInfoModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    &times;</button>
-                <h4 class="modal-title">Confirm Item delete.</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close"><span aria-hidden="true">&times;</span></button>
+              <h4>
+                <asp:Literal id="Literal1" text="<%$ Resources:WebResources, FeeInfoModalTitle %>" runat="server" />
+              </h4>
             </div>
-            <div class="modal-body">
-                <div id="div1" role="alert" style="margin-top: 10px;" class="alert alert-success">
-                    <div class="status-msg-text">
-                        <span class="control-label">Are you sure you want to delete this item?</span>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="btnYes" name="btnYes" onclick="removeItemsFromCart();"
-                    class="btn btn-primary" title="Yes" class="btn btn-default" data-dismiss="modal">
-                    Yes</button>
-                <button type="button" id="btnNo" name="btnNo" class="btn btn-primary" title="No"
-                    class="btn btn-default" data-dismiss="modal">
-                    No</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- END DELETE CONFIRM MODAL DIALOG -->
-<input id="hdSelectedIndex" runat="server" type="hidden" value="" />
-<input id="hdMode" type="hidden" value="" runat="server" />
-<input id="hdEditAmount" type="hidden" value="" runat="server" />
-<asp:Button ID="btnEditItem" runat="server" Style="display: none; visibility: hidden" Text="Edit" />
-<script>
-    function removeItems(Index) {
-        $('#hdSelectedIndex').val(Index);
-        $('#myModal').modal();
-    }
-    function removeItemsFromCart() {
-        $('#hdMode').val("DELETE");
-        $("#frmDefault").submit();
-    }
-    function editItems(Index) {
-        $('#hdSelectedIndex').val(Index);
-        $('#<%=btnEditItem.ClientID%>').click()
-    }
 
-    function updateCartCount(count) {
-        $("#cartCount").html(count);
-    }
-</script>
+            <div class="modal-body">
+                <asp:Panel ID="pnlACHFee" runat="server" Visible="false">
+                    <p class="text-primarydark"><strong><asp:Literal id="litBankAccountPaymentsTitle" text="<%$ Resources:WebResources, lblBankAccountPayments %>" runat="server" /></strong></p>
+                    <hr />
+                      <p>
+                        <asp:Literal id="litACHFee" runat="server" />
+                      </p> 
+                    <br />
+                </asp:Panel>
+                <asp:Panel ID="pnlCCFee" runat="server" Visible="false">
+                    <p class="text-primarydark"><strong><asp:Literal id="litCreditCardPaymentsTitle" text="<%$ Resources:WebResources, lblCreditCardPayments %>" runat="server" /></strong></p>
+                    <hr />
+                       <p>
+                        <asp:Literal id="litCCFee" runat="server" />
+                      </p>
+                </asp:Panel>               
+            </div>
+
+            <div class="modal-footer">
+              <asp:Button id="Button1"
+                          text="<%$ Resources:WebResources, ButtonClose %>"
+                          cssclass="btn btn-primary btn-sm"
+                          data-dismiss="modal"
+                          runat="server" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END FEE MODAL DIALOG -->

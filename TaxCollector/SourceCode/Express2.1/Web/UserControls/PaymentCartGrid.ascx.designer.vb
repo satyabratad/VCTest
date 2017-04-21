@@ -41,38 +41,74 @@ Partial Public Class PaymentCartGrid
     Protected WithEvents rptSSO As Global.System.Web.UI.WebControls.Repeater
     
     '''<summary>
-    '''hdSelectedIndex control.
+    '''Literal1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hdSelectedIndex As Global.System.Web.UI.HtmlControls.HtmlInputHidden
+    Protected WithEvents Literal1 As Global.System.Web.UI.WebControls.Literal
     
     '''<summary>
-    '''hdMode control.
+    '''pnlACHFee control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hdMode As Global.System.Web.UI.HtmlControls.HtmlInputHidden
+    Protected WithEvents pnlACHFee As Global.System.Web.UI.WebControls.Panel
     
     '''<summary>
-    '''hdEditAmount control.
+    '''litBankAccountPaymentsTitle control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents hdEditAmount As Global.System.Web.UI.HtmlControls.HtmlInputHidden
+    Protected WithEvents litBankAccountPaymentsTitle As Global.System.Web.UI.WebControls.Literal
     
     '''<summary>
-    '''btnEditItem control.
+    '''litACHFee control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btnEditItem As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents litACHFee As Global.System.Web.UI.WebControls.Literal
+    
+    '''<summary>
+    '''pnlCCFee control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents pnlCCFee As Global.System.Web.UI.WebControls.Panel
+    
+    '''<summary>
+    '''litCreditCardPaymentsTitle control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents litCreditCardPaymentsTitle As Global.System.Web.UI.WebControls.Literal
+    
+    '''<summary>
+    '''litCCFee control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents litCCFee As Global.System.Web.UI.WebControls.Literal
+    
+    '''<summary>
+    '''Button1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Button1 As Global.System.Web.UI.WebControls.Button
 End Class

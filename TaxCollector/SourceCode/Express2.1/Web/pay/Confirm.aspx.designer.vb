@@ -96,6 +96,15 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected WithEvents BreadCrumbMenuSSO As Global.BreadCrumbMenu
         
         '''<summary>
+        '''ShoppingCart control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents ShoppingCart As Global.ShoppingCart
+        
+        '''<summary>
         '''litReviewPayment control.
         '''</summary>
         '''<remarks>
@@ -105,13 +114,13 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected WithEvents litReviewPayment As Global.System.Web.UI.WebControls.Literal
         
         '''<summary>
-        '''litEditDetails control.
+        '''PaymentCartGrid control.
         '''</summary>
         '''<remarks>
         '''Auto-generated field.
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
-        Protected WithEvents litEditDetails As Global.System.Web.UI.WebControls.Literal
+        Protected WithEvents PaymentCartGrid As Global.PaymentCartGrid
         
         '''<summary>
         '''pnlAccountDetails control.
@@ -121,222 +130,6 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pnlAccountDetails As Global.System.Web.UI.WebControls.Panel
-        
-        '''<summary>
-        '''pnlAccount1 control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents pnlAccount1 As Global.System.Web.UI.WebControls.Panel
-        
-        '''<summary>
-        '''litAccountNumber1 control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litAccountNumber1 As Global.System.Web.UI.WebControls.Literal
-        
-        '''<summary>
-        '''litAccountNumber1Data control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litAccountNumber1Data As Global.System.Web.UI.WebControls.Literal
-        
-        '''<summary>
-        '''pnlAccount2 control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents pnlAccount2 As Global.System.Web.UI.WebControls.Panel
-        
-        '''<summary>
-        '''litAccountNumber2 control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litAccountNumber2 As Global.System.Web.UI.WebControls.Literal
-        
-        '''<summary>
-        '''litAccountNumber2Data control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litAccountNumber2Data As Global.System.Web.UI.WebControls.Literal
-        
-        '''<summary>
-        '''pnlAccount3 control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents pnlAccount3 As Global.System.Web.UI.WebControls.Panel
-        
-        '''<summary>
-        '''litAccountNumber3 control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litAccountNumber3 As Global.System.Web.UI.WebControls.Literal
-        
-        '''<summary>
-        '''litAccountNumber3Data control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litAccountNumber3Data As Global.System.Web.UI.WebControls.Literal
-        
-        '''<summary>
-        '''pnlNameonAccount control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents pnlNameonAccount As Global.System.Web.UI.WebControls.Panel
-        
-        '''<summary>
-        '''litNameonAccountText control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litNameonAccountText As Global.System.Web.UI.WebControls.Literal
-        
-        '''<summary>
-        '''litNameOnAccount control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litNameOnAccount As Global.System.Web.UI.WebControls.Literal
-        
-        '''<summary>
-        '''pnlAddress control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents pnlAddress As Global.System.Web.UI.WebControls.Panel
-        
-        '''<summary>
-        '''litAddressLabel control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litAddressLabel As Global.System.Web.UI.WebControls.Literal
-        
-        '''<summary>
-        '''litAddress control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litAddress As Global.System.Web.UI.WebControls.Literal
-        
-        '''<summary>
-        '''litPaymentMethodText control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litPaymentMethodText As Global.System.Web.UI.WebControls.Literal
-        
-        '''<summary>
-        '''litPaymentMethod control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litPaymentMethod As Global.System.Web.UI.WebControls.Literal
-        
-        '''<summary>
-        '''litAmountText control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litAmountText As Global.System.Web.UI.WebControls.Literal
-        
-        '''<summary>
-        '''litAmount control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litAmount As Global.System.Web.UI.WebControls.Literal
-        
-        '''<summary>
-        '''pnlFees control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents pnlFees As Global.System.Web.UI.WebControls.Panel
-        
-        '''<summary>
-        '''litFeeText control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litFeeText As Global.System.Web.UI.WebControls.Literal
-        
-        '''<summary>
-        '''litFee control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litFee As Global.System.Web.UI.WebControls.Literal
-        
-        '''<summary>
-        '''litTotalAmountText control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litTotalAmountText As Global.System.Web.UI.WebControls.Literal
-        
-        '''<summary>
-        '''litTotalAmount control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents litTotalAmount As Global.System.Web.UI.WebControls.Literal
         
         '''<summary>
         '''cptConfirmPaymentInfo control.
