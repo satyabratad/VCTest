@@ -29,6 +29,15 @@
                 _pageName = value
             End Set
         End Property
+        Private _isPageVisible As Boolean
+        Public Property IsPageVisible() As Boolean
+            Get
+                Return _isPageVisible
+            End Get
+            Set(ByVal value As Boolean)
+                _isPageVisible = value
+            End Set
+        End Property
 
         Private _index As Integer
         Public Property Index() As Integer

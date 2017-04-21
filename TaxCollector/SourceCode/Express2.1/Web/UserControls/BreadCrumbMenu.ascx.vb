@@ -15,7 +15,15 @@ Public Class BreadCrumbMenu
     Inherits System.Web.UI.UserControl
 #Region "Properties"
     ' Public IsContactInfoVisible As Boolean = False
-
+    Private _isAccountPageVisible As Boolean = True
+    Public Property IsAccountPageVisible() As Boolean
+        Get
+            Return _isAccountPageVisible
+        End Get
+        Set(ByVal value As Boolean)
+            _isAccountPageVisible = value
+        End Set
+    End Property
     Private _isContactInfoVisible As String
     Public Property IsContactInfoVisible() As String
         Get
@@ -68,6 +76,7 @@ Public Class BreadCrumbMenu
             tab.PageTag = PageTabName.Home.ToString()
             tab.MenuName = WebResources.AccountDetails
             tab.IsVisited = False
+            tab.IsPageVisible = True
             tabList.Add(tab)
 
             tab = New BreadCrumbTab()
@@ -76,6 +85,7 @@ Public Class BreadCrumbMenu
             tab.PageTag = PageTabName.ContactInfo.ToString()
             tab.MenuName = WebResources.ContactInfo
             tab.IsVisited = False
+            tab.IsPageVisible = True
             tabList.Add(tab)
 
             tab = New BreadCrumbTab()
@@ -84,6 +94,7 @@ Public Class BreadCrumbMenu
             tab.PageTag = PageTabName.PaymentDetails.ToString()
             tab.MenuName = WebResources.PaymentDetails
             tab.IsVisited = False
+            tab.IsPageVisible = True
             tabList.Add(tab)
 
             tab = New BreadCrumbTab()
@@ -92,6 +103,7 @@ Public Class BreadCrumbMenu
             tab.PageTag = PageTabName.PaymentConfirm.ToString()
             tab.MenuName = WebResources.PaymentConfirm
             tab.IsVisited = False
+            tab.IsPageVisible = True
             tabList.Add(tab)
 
             tab = New BreadCrumbTab()
@@ -100,6 +112,7 @@ Public Class BreadCrumbMenu
             tab.PageTag = PageTabName.PaymentSuccess.ToString()
             tab.MenuName = WebResources.PaymentSuccess
             tab.IsVisited = False
+            tab.IsPageVisible = True
             tabList.Add(tab)
 
             tab = New BreadCrumbTab()
@@ -108,6 +121,7 @@ Public Class BreadCrumbMenu
             tab.PageTag = PageTabName.PaymentFaild.ToString()
             tab.MenuName = WebResources.PaymentFailed
             tab.IsVisited = False
+            tab.IsPageVisible = True
             tabList.Add(tab)
 
             SessionManager.BreadCrumbMenuTab = tabList
@@ -129,9 +143,14 @@ Public Class BreadCrumbMenu
         If tabList Is Nothing Then
             PopulateTabList()
         End If
+
+
         If String.IsNullOrEmpty(PageTagName) = False Then
             currentTab = tabList.Where(Function(t As BreadCrumbTab) t.PageTag.Equals(PageTagName, System.StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault()
 
+            If (currentTab.PageTag.Equals(PageTabName.Home.ToString(), System.StringComparison.InvariantCultureIgnoreCase)) And IsAccountPageVisible = False Then
+                currentTab.IsPageVisible = False
+            End If
             If String.IsNullOrEmpty(RedirectAddress) = False Then
 
                 currentTab.PageName = RedirectAddress
@@ -160,10 +179,11 @@ Public Class BreadCrumbMenu
                                 pageIndex = pageIndex + 1
                             End If
                         Else
-
-                            htmlString.AppendFormat("<li class='active'><a href='{0}' class='' title='{1} {2}' ><span Class='badge badge-inverse'>", tab.PageName, menuNames(0), menuNames(1))
-                            htmlString.AppendFormat("{0}</span>  <span class='hidden-xs hidden-sm'>{1} {2}</span></a></li>", pageIndex.ToString(), menuNames(0), menuNames(1))
-                            pageIndex = pageIndex + 1
+                            If tab.IsPageVisible = True Then
+                                htmlString.AppendFormat("<li class='active'><a href='{0}' class='' title='{1} {2}' ><span Class='badge badge-inverse'>", tab.PageName, menuNames(0), menuNames(1))
+                                htmlString.AppendFormat("{0}</span>  <span class='hidden-xs hidden-sm'>{1} {2}</span></a></li>", pageIndex.ToString(), menuNames(0), menuNames(1))
+                                pageIndex = pageIndex + 1
+                            End If
                         End If
                     Else
 
@@ -171,12 +191,12 @@ Public Class BreadCrumbMenu
                             htmlString.AppendFormat("<li class='danger'><a href='#' class='' title='{0} {1}'><span Class='badge badge-inverse'>", menuNames(0), menuNames(1))
                             htmlString.AppendFormat("{0}</span>  <span class='hidden-xs hidden-sm'>{1} {2}</span></a></li>", pageIndex.ToString(), menuNames(0), menuNames(1))
                         Else
-
-                            htmlString.AppendFormat("<li class='active'><a href='#' class='' title='{0} {1}' ><span Class='badge badge-inverse'>", menuNames(0), menuNames(1))
-                            htmlString.AppendFormat("{0}</span>  <span class='hidden-xs hidden-sm'>{1} {2}</span></a></li>", pageIndex.ToString(), menuNames(0), menuNames(1))
-
+                            If tab.IsPageVisible = True Then
+                                htmlString.AppendFormat("<li class='active'><a href='#' class='' title='{0} {1}' ><span Class='badge badge-inverse'>", menuNames(0), menuNames(1))
+                                htmlString.AppendFormat("{0}</span>  <span class='hidden-xs hidden-sm'>{1} {2}</span></a></li>", pageIndex.ToString(), menuNames(0), menuNames(1))
+                            End If
                         End If
-                        pageIndex = pageIndex + 1
+                            pageIndex = pageIndex + 1
                     End If
 
                 Else

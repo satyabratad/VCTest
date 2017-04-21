@@ -80,11 +80,12 @@ Namespace B2P.PaymentLanding.Express.Web
                                         Dim z As B2P.Objects.Client = B2P.Objects.Client.GetClient(BLL.SessionManager.ClientCode.ToString)
 
                                         ''TODO: For test purpose only need to delete after development
-                                        z.SSODisplayType = Objects.Client.SSODisplayTypes.ShoppingCart
+                                        'z.SSODisplayType = Objects.Client.SSODisplayTypes.ShoppingCart
 
                                         'Determine SSO type
                                         Select Case z.SSODisplayType
                                             Case B2P.Objects.Client.SSODisplayTypes.ReadOnlyGrid
+                                                BreadCrumbMenu.IsAccountPageVisible = False
                                                 BLL.SessionManager.SSODisplayType = B2P.Objects.Client.SSODisplayTypes.ReadOnlyGrid
                                                 loadDataGrid(x, Token)
                                             Case B2P.Objects.Client.SSODisplayTypes.ShoppingCart
@@ -93,6 +94,7 @@ Namespace B2P.PaymentLanding.Express.Web
                                                 BLL.SessionManager.ClientType = Cart.EClientType.SSO
                                                 loadShopingCartDataGrid(x, Token)
                                             Case B2P.Objects.Client.SSODisplayTypes.SingleItem
+                                                BreadCrumbMenu.IsAccountPageVisible = False
                                                 BLL.SessionManager.SSODisplayType = B2P.Objects.Client.SSODisplayTypes.SingleItem
                                                 loadData(x, Token)
                                         End Select
@@ -237,6 +239,10 @@ Namespace B2P.PaymentLanding.Express.Web
                         psmErrorMessage.ToggleStatusMessage("Missing or invalid token.", StatusMessageType.Danger, True, True)
                         Exit Sub
                 End Select
+                '' Add to Cart
+                Dim ci As SSOLookup.PaymentInformation.CartItem
+                ci = DirectCast(TokenInfo.CartItems(0), SSOLookup.PaymentInformation.CartItem)
+                AddToCart(z, CurrentCategory, ci)
 
                 If CurrentCategory.PaymentInformation.ACHAccepted = False AndAlso CurrentCategory.PaymentInformation.CreditCardAccepted = False Then
                     psmErrorMessage.ToggleStatusMessage("We are not able to accept any online payments for this account. Please call Customer Service at " & BLL.SessionManager.Client.ContactPhone & ".", StatusMessageType.Danger, True, True)
@@ -247,6 +253,8 @@ Namespace B2P.PaymentLanding.Express.Web
                 BLL.SessionManager.CreditFeeDescription = a.CreditCardFeeDescription
                 BLL.SessionManager.AchFeeDescription = a.BankAccountFeeDescription
                 BLL.SessionManager.CurrentCategory = CurrentCategory
+
+
 
                 Dim bk As New B2P.Common.BlockedAccounts.BlockedAccountResults
                 bk = B2P.Common.BlockedAccounts.CheckForBlockedAccount(BLL.SessionManager.ClientCode, BLL.SessionManager.LookupProduct, Utility.SafeEncode(BLL.SessionManager.LookupData.AccountNumber1.Value),
@@ -374,6 +382,9 @@ Namespace B2P.PaymentLanding.Express.Web
                                 BLL.SessionManager.BlockedCC = True
                             End If
                         End If
+
+                        '' Add to Cart
+                        AddToCart(z, CurrentCategory, ci)
                     Next
                     If BLL.SessionManager.BlockedCC And BLL.SessionManager.BlockedACH Then
                         psmErrorMessage.ToggleStatusMessage("We are not able to accept any online payments for this account. Please call Customer Service at " & BLL.SessionManager.Client.ContactPhone & ".", StatusMessageType.Danger, True, True)
@@ -463,36 +474,8 @@ Namespace B2P.PaymentLanding.Express.Web
                             ' Adding to cart 
 
 
-                            cart.Item = ci.ProductName
 
-                            Dim acc1 As New B2P.Cart.AccountIdField(CurrentCategory.WebOptions.AccountIDField1.Label, Utility.SafeEncode(ci.AccountNumber1))
-                            Dim acc2 As New B2P.Cart.AccountIdField(CurrentCategory.WebOptions.AccountIDField2.Label, Utility.SafeEncode(ci.AccountNumber2))
-                            Dim acc3 As New B2P.Cart.AccountIdField(CurrentCategory.WebOptions.AccountIDField3.Label, Utility.SafeEncode(ci.AccountNumber3))
-                            cart.AccountIdFields = New List(Of B2P.Cart.AccountIdField)
-                            cart.AccountIdFields.Add(acc1)
-                            cart.AccountIdFields.Add(acc2)
-                            cart.AccountIdFields.Add(acc3)
-                            cart.Amount = ci.Amount
-                            cart.AmountDue = ci.Amount
-
-                            cart.PropertyAddress = New Cart.PropertyAddress
-
-
-
-                            cart.PropertyAddress.Address1 = z.Address1
-                            cart.PropertyAddress.Address2 = z.Address2
-                            cart.PropertyAddress.City = z.City
-                            cart.PropertyAddress.State = z.State
-                            cart.PropertyAddress.Zip = z.ZipCode
-
-
-
-
-
-                            If BLL.SessionManager.ManageCart.AddToCart(cart) Then
-                                BLL.SessionManager.ManageCart.ShowCart = True
-                            End If
-
+                            AddToCart(z, CurrentCategory, ci)
 
                         End If
                     Next
@@ -524,5 +507,37 @@ Namespace B2P.PaymentLanding.Express.Web
 
         End Sub
 
+        Private Shared Function AddToCart(z As Objects.Client, CurrentCategory As Objects.Product, ci As SSOLookup.PaymentInformation.CartItem)
+            Dim cart As New B2P.Cart.Cart
+
+            cart.Item = ci.ProductName
+            Dim acc1 As New B2P.Cart.AccountIdField(CurrentCategory.WebOptions.AccountIDField1.Label, Utility.SafeEncode(ci.AccountNumber1))
+            Dim acc2 As New B2P.Cart.AccountIdField(CurrentCategory.WebOptions.AccountIDField2.Label, Utility.SafeEncode(ci.AccountNumber2))
+            Dim acc3 As New B2P.Cart.AccountIdField(CurrentCategory.WebOptions.AccountIDField3.Label, Utility.SafeEncode(ci.AccountNumber3))
+            cart.AccountIdFields = New List(Of B2P.Cart.AccountIdField)
+            cart.AccountIdFields.Add(acc1)
+            cart.AccountIdFields.Add(acc2)
+            cart.AccountIdFields.Add(acc3)
+            cart.Amount = ci.Amount
+            cart.AmountDue = ci.Amount
+
+            cart.PropertyAddress = New Cart.PropertyAddress
+
+            cart.PropertyAddress.Address1 = z.Address1
+            cart.PropertyAddress.Address2 = z.Address2
+            cart.PropertyAddress.City = z.City
+            cart.PropertyAddress.State = z.State
+            cart.PropertyAddress.Zip = z.ZipCode
+
+
+
+
+
+            If BLL.SessionManager.ManageCart.AddToCart(cart) Then
+                BLL.SessionManager.ManageCart.ShowCart = True
+            End If
+
+            Return cart
+        End Function
     End Class
 End Namespace
