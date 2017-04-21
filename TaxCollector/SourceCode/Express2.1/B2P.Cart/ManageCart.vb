@@ -146,8 +146,14 @@ Public Class ManageCart
         If Not _SelectedItem Is Nothing Then
             _SelectedItem.Amount = selectedItem.Amount
         End If
-
     End Sub
+    Public Function SavePropertyAddress() As Boolean
+        Try
+
+        Catch ex As Exception
+
+        End Try
+    End Function
 End Class
 
 

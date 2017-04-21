@@ -7,9 +7,6 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
             If Not IsPostBack Then
 
-                ' Build the account information 
-                ' BuildForm()
-
                 ' Build the payment method
                 BuildPaymentMethod()
 
@@ -46,70 +43,6 @@ Namespace B2P.PaymentLanding.Express.Web
 
 
         ''' <summary>
-        ''' Builds the account information panels.
-        ''' </summary>
-        'Private Sub BuildForm()
-        '    Dim CurrentCategory As B2P.Objects.Product
-        '    CurrentCategory = BLL.SessionManager.CurrentCategory
-
-        '    If BLL.SessionManager.SSODisplayType <> B2P.Objects.Client.SSODisplayTypes.ReadOnlyGrid Then
-
-        '        With CurrentCategory.WebOptions
-
-        '            If .AccountIDField1.Enabled = True Then
-        '                litAccountNumber1.Text = Utility.SafeEncode(.AccountIDField1.Label)
-        '                litAccountNumber1Data.Text = BLL.SessionManager.AccountNumber1
-        '            Else
-        '                pnlAccount1.Visible = False
-        '                pnlAccount1.Style.Add("display", "none")
-        '            End If
-
-        '            If .AccountIDField2.Enabled = True Then
-        '                litAccountNumber2.Text = Utility.SafeEncode(.AccountIDField2.Label)
-        '                litAccountNumber2Data.Text = BLL.SessionManager.AccountNumber2
-        '            Else
-        '                pnlAccount2.Visible = False
-        '                pnlAccount2.Style.Add("display", "none")
-        '            End If
-
-        '            If .AccountIDField3.Enabled = True Then
-        '                litAccountNumber3.Text = Utility.SafeEncode(.AccountIDField3.Label)
-        '                litAccountNumber3Data.Text = BLL.SessionManager.AccountNumber3
-        '            Else
-        '                pnlAccount3.Visible = False
-        '                pnlAccount3.Style.Add("display", "none")
-        '            End If
-
-        '        End With
-
-        '        ' Show the address panel
-        '        If BLL.SessionManager.ServiceAddress IsNot Nothing AndAlso BLL.SessionManager.ServiceAddress.Trim <> "" Then
-        '            pnlAddress.Visible = True
-        '            litAddress.Text = BLL.SessionManager.ServiceAddress
-        '        End If
-
-        '        If BLL.SessionManager.NameOnLookupAccount.Trim IsNot Nothing AndAlso BLL.SessionManager.NameOnLookupAccount.Trim <> "" Then
-        '            pnlNameonAccount.Visible = True
-        '            litNameOnAccount.Text = BLL.SessionManager.NameOnLookupAccount
-        '        End If
-
-
-        '    Else
-        '        ' Hide the panels so they don't take up white space
-        '        pnlAccount1.Visible = False
-        '        pnlAccount2.Visible = False
-        '        pnlAccount3.Visible = False
-        '        pnlAccount1.Style.Add("display", "none")
-        '        pnlAccount2.Style.Add("display", "none")
-        '        pnlAccount3.Style.Add("display", "none")
-
-        '    End If
-
-
-
-
-        'End Sub
-        ''' <summary>
         ''' Builds the payment method information panels.
         ''' </summary>
         Private Sub BuildPaymentMethod()
@@ -125,32 +58,12 @@ Namespace B2P.PaymentLanding.Express.Web
                         cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, BLL.SessionManager.CurrentCategory.Name, B2P.Common.Enumerations.TransactionSources.Web, B2P.Payment.FeeCalculation.PaymentTypes.BankAccount, BLL.SessionManager.PaymentAmount)
                         total = BLL.SessionManager.PaymentAmount + cf.ConvenienceFee
                         sb.Append("I hereby authorize " & BLL.SessionManager.Client.ClientName & " to deduct my bank account via ACH " & total.ToString("C2") & " on " & Date.Today & " for payment to " & BLL.SessionManager.Client.ClientName & ". ")
-                        ' Show the payment method info
-                        'litPaymentMethod.Text = BLL.SessionManager.BankAccount.BankAccountType.ToString.Replace("_", " ") & " " & "*" & Right(BLL.SessionManager.BankAccount.BankAccountNumber, BLL.SessionManager.BankAccount.BankAccountNumber.Length - 1)
-                        '' Set the payment amounts and fees
-                        'litAmount.Text = BLL.SessionManager.PaymentAmount.ToString("C2")
-                        'litFee.Text = cf.ConvenienceFee.ToString("C2")
-                        'BLL.SessionManager.ConvenienceFee = cf.ConvenienceFee
-                        'BLL.SessionManager.TransactionFee = cf.TransactionFee
-                        'litTotalAmount.Text = total.ToString("C2")
-                        'pnlACHFee.Visible = True
-                        'litACHFee.Text = BLL.SessionManager.AchFeeDescription
 
                     Case Common.Enumerations.PaymentTypes.CreditCard
                         Dim cardType As B2P.Payment.FeeCalculation.PaymentTypes = B2P.Payment.FeeCalculation.GetCardType(BLL.SessionManager.CreditCard.InternalCreditCardNumber)
                         cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, BLL.SessionManager.CurrentCategory.Name, B2P.Common.Enumerations.TransactionSources.Web, cardType, BLL.SessionManager.PaymentAmount)
                         total = BLL.SessionManager.PaymentAmount + cf.ConvenienceFee
                         sb.Append("I hereby authorize " & BLL.SessionManager.Client.ClientName & " to deduct from my credit/debit card " & total.ToString("C2") & " on " & Date.Today & " for payment to " & BLL.SessionManager.Client.ClientName & ". ")
-                        ' Show the payment method info
-                        ''litPaymentMethod.Text = BLL.SessionManager.CreditCard.CardIssuer & " " & Right(BLL.SessionManager.CreditCard.CreditCardNumber, 6)
-                        ' Set the payment amounts and fees
-                        '' litAmount.Text = BLL.SessionManager.PaymentAmount.ToString("C2")
-                        '' litFee.Text = cf.ConvenienceFee.ToString("C2")
-                        'BLL.SessionManager.ConvenienceFee = cf.ConvenienceFee
-                        'BLL.SessionManager.TransactionFee = cf.TransactionFee
-                        ''' litTotalAmount.Text = total.ToString("C2")
-                        'pnlCCFee.Visible = True
-                        'litCCFee.Text = BLL.SessionManager.CreditFeeDescription
 
                 End Select
 
@@ -412,7 +325,11 @@ Namespace B2P.PaymentLanding.Express.Web
                         End Select
 
                         x.PaymentSource = B2P.Common.Enumerations.TransactionSources.Web
-                        x.UserData.Address1 = BLL.SessionManager.ServiceAddress
+
+                        'Commented By Rs -- Save Contact Details
+                        'x.UserData.Address1 = BLL.SessionManager.ServiceAddress
+                        SetUserData(Of B2P.Payment.BankAccountPayment)(x)
+
                         If BLL.SessionManager.IsSSOProduct Then
                             x.VendorReferenceCode = BLL.SessionManager.TokenInfo.VendorReferenceCode
                         End If
@@ -512,7 +429,10 @@ Namespace B2P.PaymentLanding.Express.Web
                         'x.Items.Add(BLL.SessionManager.AccountNumber1, BLL.SessionManager.AccountNumber2, BLL.SessionManager.AccountNumber3, BLL.SessionManager.CurrentCategory.Name.ToString, CDec(BLL.SessionManager.PaymentAmount), BLL.SessionManager.ConvenienceFee, BLL.SessionManager.TransactionFee)
                         MapCart(Of B2P.Payment.CreditCardPayment)(x)
 
-                        x.UserData.Address1 = BLL.SessionManager.ServiceAddress
+                        'Commented By Rs -- Save Contact Details
+                        'x.UserData.Address1 = BLL.SessionManager.ServiceAddress
+                        SetUserData(Of B2P.Payment.CreditCardPayment)(x)
+
                         If BLL.SessionManager.IsSSOProduct Then
                             x.VendorReferenceCode = BLL.SessionManager.TokenInfo.VendorReferenceCode
                         End If
@@ -630,6 +550,34 @@ Namespace B2P.PaymentLanding.Express.Web
                 End If
             Next
         End Sub
+        Private Sub SetUserData(Of T)(ByRef Param As T)
+            Dim instance = Nothing
+            If GetType(T) Is GetType(B2P.Payment.CreditCardPayment) Then
+                instance = CType(CType(Param, Object), B2P.Payment.CreditCardPayment).UserData.UserField1
+            End If
+            If GetType(T) Is GetType(B2P.Payment.BankAccountPayment) Then
+                instance = CType(CType(Param, Object), B2P.Payment.BankAccountPayment)
+            End If
+            If GetType(T) Is GetType(B2P.Payment.PaymentBase.TransactionItems) Then
+                instance = CType(CType(Param, Object), B2P.Payment.PaymentBase.TransactionItems)
+            End If
+            If Not BLL.SessionManager.ContactInfo Is Nothing Then
+                With BLL.SessionManager.ContactInfo
+                    instance.UserData.UserField1 = .UserField1
+                    instance.UserData.Address1 = .Address1
+                    instance.UserData.Address2 = .Address2
+                    instance.UserData.UserField2 = .UserField2
+                    instance.UserData.State = .State
+                    instance.UserData.City = .City
+                    instance.UserData.Zip = .Zip
+                    instance.UserData.HomePhone = .HomePhone
+                End With
+            Else
+                instance.UserData.Address1 = BLL.SessionManager.ServiceAddress
+            End If
+        End Sub
+        Private Sub SavePropertyAddress(BatchId As String)
 
+        End Sub
     End Class
 End Namespace
