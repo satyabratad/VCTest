@@ -49,7 +49,7 @@ Namespace B2P.PaymentLanding.Express.Web
                     total += item.Amount
                 Next
             End If
-            Return String.Format("{0:C}", total)
+            Return total.ToString()
         End Function
         Private Sub btnCancelAch_Click(sender As Object, e As EventArgs) Handles btnCancelAch.Click
             If BLL.SessionManager.IsSSOProduct Then

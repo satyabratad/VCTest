@@ -3,10 +3,18 @@ Imports B2P.PaymentLanding.Express.Web
 Public Class SubTotal
     Inherits System.Web.UI.UserControl
 
+    Private _subTotalAmount As String
+    Public Property SubTotalAmount() As String
+        Get
+            Return _subTotalAmount
+        End Get
+        Set(ByVal value As String)
+            _subTotalAmount = value
+        End Set
+    End Property
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Page.IsPostBack = False Then
             lblSubTotal.Text = CalculateSubTotal()
-            'hdCCAmount.Value = CalculateSubTotal()
 
 
         End If
