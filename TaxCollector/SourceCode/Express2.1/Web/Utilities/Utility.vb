@@ -452,37 +452,33 @@ Namespace B2P.PaymentLanding.Express.Web
         ''' </summary>
         ''' <param name="z"></param>
         ''' <param name="ControlId"></param>
+        ''' <returns></returns>
+        Public Shared Sub SetBreadCrumbContactInfo(ControlId As String)
 
-        Public Shared Sub SetBreadCrumbContactInfo(ControlId As String, Optional z As Objects.Product = Nothing)
-            If Not z Is Nothing Then
-                If z.WebOptions.Demographics = Objects.WebConfiguration.OptionalFields.NotUsed Then
-                    BLL.SessionManager.IsContactInfoRequired = False
-                Else
-                    BLL.SessionManager.IsContactInfoRequired = True
-                End If
-            Else
+            If BLL.SessionManager.IsContactInfoRequired = False Then
                 isContactInfoPresentInCartItems()
             End If
-
-            Dim page As Page = CType(HttpContext.Current.Handler, Page)
-            CType(page.FindControl(ControlId), BreadCrumbMenu).PopulateTabList()
-            CType(page.FindControl(ControlId), BreadCrumbMenu).GenerateBreadCrumb()
         End Sub
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <returns></returns>
         Public Shared Function isContactInfoPresentInCartItems() As Boolean
             'Show/Hide Contact Info
             Dim z As B2P.Objects.Product = Nothing
             BLL.SessionManager.IsContactInfoRequired = False
-            For Each cart As B2P.Cart.Cart In BLL.SessionManager.ManageCart.Cart
 
-                z = New B2P.Objects.Product(BLL.SessionManager.ClientCode, cart.Item, B2P.Common.Enumerations.TransactionSources.Web)
-                If Not z.WebOptions.Demographics = Objects.WebConfiguration.OptionalFields.NotUsed Then
+            For Each productName In BLL.SessionManager.CategoryList
 
-                    BLL.SessionManager.IsContactInfoRequired = True
-                    Exit For
-                End If
+                    z = New B2P.Objects.Product(BLL.SessionManager.ClientCode, productName, B2P.Common.Enumerations.TransactionSources.Web)
+                    If Not z.WebOptions.Demographics = Objects.WebConfiguration.OptionalFields.NotUsed Then
 
-            Next
-            Return BLL.SessionManager.IsContactInfoRequired
+                        BLL.SessionManager.IsContactInfoRequired = True
+                        Exit For
+                    End If
+
+                Next
+                Return BLL.SessionManager.IsContactInfoRequired
         End Function
 
 #End Region
