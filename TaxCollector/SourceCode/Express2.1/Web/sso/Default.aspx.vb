@@ -5,6 +5,7 @@ Namespace B2P.PaymentLanding.Express.Web
     Public Class _ssodefault : Inherits System.Web.UI.Page
 
         Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
             If BLL.SessionManager.ManageCart.EditItemIndex > -1 Then
                 pnlCart.Visible = False
                 pnlEdit.Visible = True
@@ -21,7 +22,9 @@ Namespace B2P.PaymentLanding.Express.Web
             End If
 
             Dim redirectAddress As String = String.Empty
-
+            If Not IsPostBack Then
+                Session.Clear()
+            End If
 
             If BLL.SessionManager.ManageCart.ShowCart = False Then
                 If Not IsPostBack Then
@@ -85,7 +88,7 @@ Namespace B2P.PaymentLanding.Express.Web
                                         'Determine SSO type
                                         Select Case z.SSODisplayType
                                             Case B2P.Objects.Client.SSODisplayTypes.ReadOnlyGrid
-                                                BreadCrumbMenu.IsAccountPageVisible = False
+                                                'BreadCrumbMenu.IsAccountPageVisible = False
                                                 BLL.SessionManager.SSODisplayType = B2P.Objects.Client.SSODisplayTypes.ReadOnlyGrid
                                                 loadDataGrid(x, Token)
                                             Case B2P.Objects.Client.SSODisplayTypes.ShoppingCart
@@ -94,7 +97,7 @@ Namespace B2P.PaymentLanding.Express.Web
                                                 BLL.SessionManager.ClientType = Cart.EClientType.SSO
                                                 loadShopingCartDataGrid(x, Token)
                                             Case B2P.Objects.Client.SSODisplayTypes.SingleItem
-                                                BreadCrumbMenu.IsAccountPageVisible = False
+                                                ' BreadCrumbMenu.IsAccountPageVisible = False
                                                 BLL.SessionManager.SSODisplayType = B2P.Objects.Client.SSODisplayTypes.SingleItem
                                                 loadData(x, Token)
                                         End Select
