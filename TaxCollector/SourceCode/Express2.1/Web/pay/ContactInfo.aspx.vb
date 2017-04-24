@@ -6,14 +6,19 @@ Imports System.Xml
 Namespace B2P.PaymentLanding.Express.Web
 
     Public Class ContactInfo : Inherits SiteBasePage
-
+        Dim StateAbbr As String = ""
         Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
             If Not BLL.SessionManager.IsContactInfoRequired Then
                 Response.Redirect("/Errors/Error.aspx", False)
             End If
             If Not IsPostBack Then
                 BindCountries()
-                BindState()
+                If Not BLL.SessionManager.ContactInfo Is Nothing Then
+                    If BLL.SessionManager.ContactInfo.UserField2.Trim() <> "" Then
+                        StateAbbr = BLL.SessionManager.ContactInfo.UserField2
+                    End If
+                End If
+                BindState(StateAbbr)
                 RegisterClientJs()
                 PopulateContactInfo()
             End If
@@ -87,13 +92,12 @@ Namespace B2P.PaymentLanding.Express.Web
         ''' <summary>
         ''' Bind State from XML
         ''' </summary>
-        Private Sub BindState()
+        Private Sub BindState(Optional ByVal prepopulatedState As String = "")
             Dim StateAbbr As String = ddlContactCountry.SelectedValue
-            If Not BLL.SessionManager.ContactInfo Is Nothing Then
-                If BLL.SessionManager.ContactInfo.UserField2.Trim() <> "" Then
-                    StateAbbr = BLL.SessionManager.ContactInfo.UserField2
-                End If
+            If Not String.IsNullOrEmpty(prepopulatedState) Then
+                StateAbbr = prepopulatedState
             End If
+
 
             ddlContactState.Items.Clear()
             ddlContactState.Items.Add(New ListItem("--Select--", ""))

@@ -150,6 +150,15 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected WithEvents hdZipRequired As Global.System.Web.UI.WebControls.HiddenField
         
         '''<summary>
+        '''hdPhone control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents hdPhone As Global.System.Web.UI.WebControls.HiddenField
+        
+        '''<summary>
         '''pnlHeading control.
         '''</summary>
         '''<remarks>

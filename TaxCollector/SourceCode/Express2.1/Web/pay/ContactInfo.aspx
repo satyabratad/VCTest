@@ -85,6 +85,7 @@
                                                 <asp:HiddenField ID="hdContactCountry" runat="server" Value="required" />
                                                 <asp:HiddenField ID="hdContactZip" runat="server" Value="required" />
                                                  <asp:HiddenField ID="hdZipRequired" runat="server" Value="required" />
+                                                 <asp:HiddenField ID="hdPhone" runat="server" Value="required" />
 
                                                 <div class="form-group form-group-sm">
                                                     <asp:Panel runat="server" ID="pnlHeading">
@@ -251,6 +252,28 @@
                     // Set the validator
                     validator.addValidationItem(new ValidationItem("txtContactAddress1", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
                 }
+                  // Check to see if country is required
+                country = doc.getElementById('hdContactCountry').value;
+                if (country !== '') {
+                    // Set the validator
+                    validator.addValidationItem(new ValidationItem("ddlContactCountry", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
+                }
+                if ($("#ddlContactCountry").val() != "OT") {
+                   
+                    // Check to see if state is required
+                    state = doc.getElementById('hdContactState').value;
+                    if (state !== '') {
+                        // Set the validator
+                        validator.addValidationItem(new ValidationItem("ddlContactState", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
+                    }
+                }
+                 // Check to see if city is required
+                    city = doc.getElementById('hdContactCity').value;
+                    if (city !== '') {
+                        // Set the validator
+                        validator.addValidationItem(new ValidationItem("txtContactCity", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
+                    }
+               
                 // Check to see if zip is required
                 if ($("#hdZipRequired").val() == 'Y') {
                     zip = doc.getElementById('hdContactZip').value;
@@ -258,6 +281,16 @@
                         validator.addValidationItem(new ValidationItem("txtContactZip", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
                     }
                 }
+                else {
+                    doc.getElementById('hdContactZip').value = '';
+                }
+                // Check to see if phone is required
+               
+                    phone = doc.getElementById('hdPhone').value;
+                    if (phone !== '') {
+                        validator.addValidationItem(new ValidationItem("txtContactPhone", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
+                    }
+              
                     zip = doc.getElementById('hdContactZip').value;
                     if (zip !== '') {
                         // Set the validator
