@@ -111,7 +111,7 @@ Namespace B2P.PaymentLanding.Express.Web
                         btnLookupGo.Visible = True
                         btnClear.Visible = True
                         btnLookupOK.Visible = False
-
+                        BLL.SessionManager.PaymentStatusCode = y.PaymentStatus
                         Select Case y.PaymentStatus
                             Case B2P.ClientInterface.Manager.ClientInterfaceWS.PaymentStatusCodes.Allowed
                                 'Check for blocked payment methods

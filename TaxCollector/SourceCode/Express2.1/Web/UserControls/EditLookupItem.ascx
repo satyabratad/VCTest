@@ -115,15 +115,33 @@
         validator.setInvalidCssClass("has-error");
         validator.setAlertBoxStatus(false);
 
+        <%  Select Case B2P.PaymentLanding.Express.BLL.SessionManager.PaymentStatusCode %>
+        <%Case B2P.ClientInterface.Manager.ClientInterfaceWS.PaymentStatusCodes.Allowed%>
         if ((!newValue > 0) || (newValue > oldValue)) {
             // Set the validator
             validator.addValidationItem(new ValidationItem("txtAmountEdit", fieldTypes.AmountDue, true, "Invalid Amount"));
             $("#txtAmountEdit").val(oldValue);
             return validator.validate();
         }
+        <%Case B2P.ClientInterface.Manager.ClientInterfaceWS.PaymentStatusCodes.MinimumPaymentRequired%>
+        if ((!newValue > 0) || (newValue < oldValue)) {
+            // Set the validator
+            validator.addValidationItem(new ValidationItem("txtAmountEdit", fieldTypes.AmountDue, true, "Invalid Amount"));
+            $("#txtAmountEdit").val(oldValue);
+            return validator.validate();
+        }
+        <% Case Else%>
+        validator.addValidationItem(new ValidationItem("txtAmountEdit", fieldTypes.AmountDue, true, "Invalid Amount"));
+        $("#txtAmountEdit").val(oldValue);
+        return validator.validate();
+        <%  End Select %>
+
+       
         <% Else  %>
         return false;
         <% End If %>
+
+
     }
 
 </script>

@@ -893,6 +893,19 @@ Namespace B2P.PaymentLanding.Express.BLL
             End Set
         End Property
 
+        ''' <summary>
+        ''' Payment Status Code
+        ''' </summary>
+        Private Shared _PaymentStatusCode As B2P.ClientInterface.Manager.ClientInterfaceWS.PaymentStatusCodes
+        Public Shared Property PaymentStatusCode() As B2P.ClientInterface.Manager.ClientInterfaceWS.PaymentStatusCodes
+            Get
+                Return _PaymentStatusCode
+            End Get
+            Set(ByVal value As B2P.ClientInterface.Manager.ClientInterfaceWS.PaymentStatusCodes)
+                _PaymentStatusCode = value
+            End Set
+        End Property
+
 #End Region
 
 #Region " ::: Methods ::: "
