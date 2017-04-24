@@ -22,6 +22,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Express Payment - Payment Complete</title>
 
     <!-- CSS -->
@@ -35,7 +36,7 @@
         <script src="/Js/html5shiv.min.js"></script>
         <script src="/Js/respond.min.js"></script>
     <![endif]-->
-
+   
 </head>
 <body>
 

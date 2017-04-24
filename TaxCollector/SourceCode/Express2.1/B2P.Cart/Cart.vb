@@ -17,5 +17,6 @@ Public Class Cart
     Public Property Amount As Double
     Public Property AmountDue As Double
     Public Property PropertyAddress As PropertyAddress
+    Public Property CollectPropertyAddress As Boolean
 End Class
 

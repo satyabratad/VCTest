@@ -592,6 +592,11 @@ Namespace B2P.PaymentLanding.Express.Web
             End If
         End Sub
         Private Sub SavePropertyAddress(BatchId As String)
+            For Each cart As B2P.Cart.Cart In BLL.SessionManager.ManageCart.Cart
+                Dim z As New B2P.Objects.Product(BLL.SessionManager.ClientCode, cart.Item, B2P.Common.Enumerations.TransactionSources.Web)
+                cart.CollectPropertyAddress = z.CollectAddress
+            Next
+
             BLL.SessionManager.ManageCart.SavePropertyAddress(BLL.SessionManager.ClientCode, BatchId)
         End Sub
     End Class
