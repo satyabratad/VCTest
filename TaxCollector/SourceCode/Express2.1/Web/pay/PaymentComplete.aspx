@@ -36,7 +36,7 @@
         <script src="/Js/html5shiv.min.js"></script>
         <script src="/Js/respond.min.js"></script>
     <![endif]-->
-   
+
 </head>
 <body>
 
@@ -122,6 +122,7 @@
                                                             <div class="col-xs-12">
                                                                 <button type="button" class="btn" style="white-space: normal;" title="Print" onclick="javascript:Clickheretoprint();">
                                                                     <asp:Literal runat="server" Text="<%$ Resources:WebResources, btnPrint%>" /></button>
+                                                                <asp:Button runat="server" ID="btnAddNew" CssClass="btn btn-primary btn-sm pull-right" Text="<%$ Resources:WebResources, btnNewPayment %>" ToolTip="<%$ Resources:WebResources, btnNewPayment %>" />
                                                             </div>
                                                             <br />
                                                             <br />
@@ -329,11 +330,11 @@
                     var content_vlue = $("#print_content").clone().html();
                     $('#leftSideButtons').css('display', 'block');
                     $('#feeInfoModal').css('display', 'block');
-                    
+
                     var docprint = window.open("", "", disp_setting);
                     docprint.document.open();
                     docprint.document.write('<html><head><title>Payment Receipt</title>');
-                    
+
                     docprint.document.write('<link rel="stylesheet" href="../css/bootstrap.min.css">');
                     docprint.document.write('<link rel="stylesheet" href="../css/print.css">');
 
@@ -353,17 +354,17 @@
                     // Create instance of the form validator
                     var validator = new FormValidator();
                     validator.setErrorMessageHeader("<%=GetGlobalResourceObject("WebResources", "ErrMsgHeader").ToString()%>\n\n")
-                validator.setInvalidCssClass("has-error");
-                validator.setAlertBoxStatus(false);
+                    validator.setInvalidCssClass("has-error");
+                    validator.setAlertBoxStatus(false);
 
-                // Add validation items to validator            
-                validator.addValidationItem(new ValidationItem("txtUserID", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
+                    // Add validation items to validator            
+                    validator.addValidationItem(new ValidationItem("txtUserID", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
                 validator.addValidationItem(new ValidationItem("txtProfileEmailAddress", fieldTypes.Email, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgEmailAddress").ToString()%>"));
 
-                validator.addValidationItem(item = {
-                    field: "txtPassword1",
-                    styleParent: true,
-                    errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrPassword").ToString()%>",
+                    validator.addValidationItem(item = {
+                        field: "txtPassword1",
+                        styleParent: true,
+                        errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrPassword").ToString()%>",
                     isValid: (!!/(?=^.{8,100}$)((?=.*\d)(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[^A-Za-z0-9])(?=.*[a-z])|(?=.*[^A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[A-Z])(?=.*[^A-Za-z0-9]))^.*$/.test(doc.getElementById("txtPassword1").value))
                 });
 

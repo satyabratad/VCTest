@@ -146,6 +146,15 @@ Namespace Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to New Payment.
+        '''</summary>
+        Friend Shared ReadOnly Property btnNewPayment() As String
+            Get
+                Return ResourceManager.GetString("btnNewPayment", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Print for your Records.
         '''</summary>
         Friend Shared ReadOnly Property btnPrint() As String
@@ -457,6 +466,15 @@ Namespace Resources
         Friend Shared ReadOnly Property EditAmountCaption() As String
             Get
                 Return ResourceManager.GetString("EditAmountCaption", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Are you sure you want to change the payment amount ?.
+        '''</summary>
+        Friend Shared ReadOnly Property EditItemMessage() As String
+            Get
+                Return ResourceManager.GetString("EditItemMessage", resourceCulture)
             End Get
         End Property
         
@@ -1055,7 +1073,7 @@ Namespace Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Select Product/Service.
+        '''  Looks up a localized string similar to Select Item.
         '''</summary>
         Friend Shared ReadOnly Property lblSelectProductService() As String
             Get

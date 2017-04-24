@@ -40,6 +40,10 @@ Namespace B2P.PaymentLanding.Express.Web
                     pnlSSOBreadcrumb.Visible = False
                     pnlNonSSOBreadcrumb.Visible = True
                 End If
+
+                If BLL.SessionManager.ClientType = B2P.Cart.EClientType.SSO Then
+                    btnAddNew.Visible = False
+                End If
             End If
         End Sub
 
@@ -320,6 +324,8 @@ Namespace B2P.PaymentLanding.Express.Web
             End Select
         End Sub
 
-
+        Protected Sub btnAddNew_Click(sender As Object, e As EventArgs) Handles btnAddNew.Click
+            Response.Redirect("~/pay/")
+        End Sub
     End Class
 End Namespace

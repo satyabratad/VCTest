@@ -430,7 +430,7 @@
     <value>Select Payment Method</value>
   </data>
   <data name="lblSelectProductService" xml:space="preserve">
-    <value>Select Product/Service</value>
+    <value>Select Item</value>
   </data>
   <data name="lblPaymentAmountTitle" xml:space="preserve">
     <value>Payment Amount Information</value>
@@ -516,5 +516,11 @@
   </data>
   <data name="ErrMsgBillingZip" xml:space="preserve">
     <value>Invalid Billing Zip</value>
+  </data>
+  <data name="btnNewPayment" xml:space="preserve">
+    <value>New Payment</value>
+  </data>
+  <data name="EditItemMessage" xml:space="preserve">
+    <value>Are you sure you want to change the payment amount ?</value>
   </data>
 </root>

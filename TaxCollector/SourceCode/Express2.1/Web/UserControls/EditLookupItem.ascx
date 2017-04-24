@@ -5,7 +5,7 @@
             <asp:Panel runat="server" ID="Panel1">
                 <div class="col-xs-12">
                     <div class="form-group form-group-sm">
-                         <label class="control-label" for="txtAmount" id="lblHeading">
+                        <label class="control-label" for="txtAmount" id="lblHeading">
                             <asp:Label ID="Label1" runat="server" Text="<%$ Resources:WebResources, EditAmountCaption %>"></asp:Label>
                         </label>
                     </div>
@@ -57,33 +57,70 @@
         </div>
 
         <div class="pull-right">
-            <asp:Button ID="btnUpdateItem" OnClientClick="return ValidateUpdateCartItem()" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, ButtonUpdateCart %>" ToolTip="<%$ Resources:WebResources, ButtonUpdateCart %>" runat="server" />
+            <asp:Button ID="Button1" OnClientClick="return AlertEditItem();" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, ButtonUpdateCart %>" ToolTip="<%$ Resources:WebResources, ButtonUpdateCart %>" runat="server" />
         </div>
         <br />
     </div>
 </div>
 
-<script type="text/javascript">
-    function ValidateUpdateCartItem() {
+<asp:Panel ID="pnlLookupAlert" CssClass="modal fade" TabIndex="-1" role="dialog" aria-label="Confirm Edit" aria-hidden="true" runat="server">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Confirm Amount</h4>
+            </div>
+            <div class="modal-body">
+                <div role="alert" id="divLookupAlertError" runat="server" style="margin-top: 10px;">
+                    <div class="fa fa-exclamation-circle fa-2x status-msg-icon"></div>
+                    <div class="status-msg-text">
+                        <asp:Label ID="lblLookupHeaderError" runat="server" Text="<%$ Resources:WebResources, EditItemMessage %>" class="control-label" />
+                    </div>
+                </div>
 
-         <% If Not SelectedItem Is Nothing Then%>
+
+                <br />
+            </div>
+            <div class="modal-footer">
+                <asp:Button ID="btnClear"
+                    runat="server"
+                    Text="<%$ Resources:WebResources, ButtonCancel %>"
+                    CssClass="btn btn-link btn-sm"
+                    ToolTip="<%$ Resources:WebResources, ButtonCancel %>"
+                    data-dismiss="modal"
+                    UseSubmitBehavior="false" />
+
+                <asp:Button ID="btnUpdateItem" OnClientClick="return ValidateUpdateCartItem()" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, ButtonLookupGo %>" ToolTip="<%$ Resources:WebResources, ButtonLookupGo %>" runat="server" />
+            </div>
+        </div>
+    </div>
+</asp:Panel>
+
+<script type="text/javascript">
+    function AlertEditItem() {
+        $('#pnlLookupAlert').modal({ show: 'true', backdrop: 'static', keyboard: false });
+        return false;
+    }
+    function ValidateUpdateCartItem() {
+        debugger;
+        <% If Not SelectedItem Is Nothing Then%>
+        $('#pnlLookupAlert').modal('hide');
         var newValue = parseFloat($("#txtAmountEdit").val());
         var oldValue = parseFloat(<%= SelectedItem.AmountDue%>);
-       
-         var item = new ValidationItem();
+
+        var item = new ValidationItem();
 
         // Create instance of the form validator
-         var validator = new FormValidator();
-         validator.setErrorMessageHeader("Please review the following errors and resubmit the form:\n\n")
-         validator.setInvalidCssClass("has-error");
-         validator.setAlertBoxStatus(false);
-        
-         if ((!newValue>0) ||(newValue > oldValue)) {
-             // Set the validator
-             validator.addValidationItem(new ValidationItem("txtAmountEdit", fieldTypes.AmountDue, true, "Invalid Amount"));
-             $("#txtAmountEdit").val(oldValue);
-             return validator.validate();
-         }
+        var validator = new FormValidator();
+        validator.setErrorMessageHeader("Please review the following errors and resubmit the form:\n\n")
+        validator.setInvalidCssClass("has-error");
+        validator.setAlertBoxStatus(false);
+
+        if ((!newValue > 0) || (newValue > oldValue)) {
+            // Set the validator
+            validator.addValidationItem(new ValidationItem("txtAmountEdit", fieldTypes.AmountDue, true, "Invalid Amount"));
+            $("#txtAmountEdit").val(oldValue);
+            return validator.validate();
+        }
         <% Else  %>
         return false;
         <% End If %>
