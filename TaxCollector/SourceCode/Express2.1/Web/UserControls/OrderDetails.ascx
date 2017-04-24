@@ -1,46 +1,37 @@
 ﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="OrderDetails.ascx.vb" Inherits=".OrderDetails" %>
 <%@ Import Namespace="B2P.PaymentLanding.Express" %>
 <%@ Import Namespace="B2P.PaymentLanding.Express.Web" %>
-<%@ Register TagPrefix="uc1" TagName="SubTotal" Src="~/UserControls/SubTotal.ascx"  %>
+<%@ Register TagPrefix="uc1" TagName="SubTotal" Src="~/UserControls/SubTotal.ascx" %>
 
 
 <div>
-    <div class="table-responsive" >
-        <table   style="width: 100%;border:none" id="tblOrder">
+    <p>
+        <strong>
+            My Order Details
+        </strong>
+    </p>
+    <hr />
+    <div class="table-responsive">
+        <table class="table table-condensed table-no-border" id="tblOrder">
             <asp:Repeater ID="rptOrder" runat="server">
-
                 <ItemTemplate>
                     <tbody>
-                        <tr id="trIndex" >
-                            <td class="table-header"  style="width: 75%"><%# Eval("Item") %></td>
-                            <td class="table-header" align="right"><%# FormatAmount(Eval("Amount")) %></td>
+                        <tr id="trIndex" class="bg-primarydark">
+                            <td class="col-sm-6 text-uppercase"><label><%# Eval("Item") %></label></td>
+                            <td style="text-align:right"><label><%# FormatAmount(Eval("Amount")) %></label></td>
                         </tr>
-                        <tr>
-                            <td colspan="2">
-                                <table style="width: 100%;border:none" id="tblOrderdet">
-                                    <asp:Repeater ID="rptOrderAccount" runat="server">
-
-                                        <ItemTemplate>
-                                            <tbody>
-                                                <tr id="trAccindex">
-                                                    <td style="width: 75%"><%# Eval("Label") %></td>
-                                                    <td align="right"><%# (Eval("Value")) %></td>
-                                                </tr>
-                                            </tbody>
-                                        </ItemTemplate>
-
-                                    </asp:Repeater>
-                                </table>
-                            </td>
-                        </tr>
+                        <asp:Repeater ID="rptOrderAccount" runat="server">
+                            <ItemTemplate>
+                                <tr id="trAccindex">
+                                    <td class="col-sm-6 text-uppercase"><%# Eval("Label") %></td>
+                                    <td style="text-align: right"><%# (Eval("Value")) %></td>
+                                </tr>
+                            </ItemTemplate>
+                        </asp:Repeater>
                     </tbody>
                 </ItemTemplate>
-
-
             </asp:Repeater>
         </table>
     </div>
-    
     <uc1:SubTotal runat="server" ID="SubTotal" />
-
 </div>
