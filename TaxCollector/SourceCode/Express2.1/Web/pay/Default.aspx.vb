@@ -362,9 +362,20 @@ Namespace B2P.PaymentLanding.Express.Web
 
         Private Sub ddlCategories_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlCategories.SelectedIndexChanged
             'SelectedProduct = ddlCategories.SelectedValue
+            ClearFields()
             getProductLookup()
         End Sub
+        Private Sub ClearFields()
+            lblAccountNumber1.Text = String.Empty
+            lblAccountNumber2.Text = String.Empty
+            lblAccountNumber3.Text = String.Empty
+            txtLookupAccount1.Text = String.Empty
+            txtLookupAccount2.Text = String.Empty
+            txtLookupAccount3.Text = String.Empty
 
+
+
+        End Sub
         Private Sub getProductLookup()
             Dim errMsg As String = String.Empty
             Try
@@ -536,14 +547,23 @@ Namespace B2P.PaymentLanding.Express.Web
 
             Dim cart As New B2P.Cart.Cart
             cart.Item = ddlCategories.SelectedValue
-
-            Dim acc1 As New B2P.Cart.AccountIdField(lblAccountNumber1.Text, Utility.SafeEncode(txtLookupAccount1.Text))
-            Dim acc2 As New B2P.Cart.AccountIdField(lblAccountNumber2.Text, Utility.SafeEncode(txtLookupAccount2.Text))
-            Dim acc3 As New B2P.Cart.AccountIdField(lblAccountNumber3.Text, Utility.SafeEncode(txtLookupAccount3.Text))
             cart.AccountIdFields = New List(Of B2P.Cart.AccountIdField)
-            cart.AccountIdFields.Add(acc1)
-            cart.AccountIdFields.Add(acc2)
-            cart.AccountIdFields.Add(acc3)
+            If pnlAccount1.Visible = True Then
+                Dim acc1 As New B2P.Cart.AccountIdField(lblAccountNumber1.Text, Utility.SafeEncode(txtLookupAccount1.Text))
+                cart.AccountIdFields.Add(acc1)
+            End If
+            If pnlAccount2.Visible = True Then
+                Dim acc2 As New B2P.Cart.AccountIdField(lblAccountNumber2.Text, Utility.SafeEncode(txtLookupAccount2.Text))
+                cart.AccountIdFields.Add(acc2)
+            End If
+            If pnlAccount3.Visible = True Then
+                Dim acc3 As New B2P.Cart.AccountIdField(lblAccountNumber3.Text, Utility.SafeEncode(txtLookupAccount3.Text))
+                cart.AccountIdFields.Add(acc3)
+
+            End If
+
+
+
             cart.Amount = ctlPropertyAddress.Amount
             cart.AmountDue = ctlPropertyAddress.Amount
             Dim propAddr As New B2P.Cart.PropertyAddress
