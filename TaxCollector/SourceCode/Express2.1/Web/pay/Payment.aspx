@@ -305,11 +305,7 @@
             <br />
             <br />
             <%--</div>--%>
-            <!--// START FOOTER CONTENT //-->
-
-            <b2p:PaymentFooter ID="pfDefault" runat="server" />
-
-            <!--// END FOOTER CONTENT //-->
+            
 
 
             <!-- START PAYMENT AMOUNT MODAL DIALOG -->
@@ -620,13 +616,12 @@
 
                       // Check to see if zip is required
 
-                      if ($("#hdZipRequired").val() == 'Y') {
-                          zip = doc.getElementById('txtBillingZip').value;
+                      
                           if (zip == '') {
                               validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
 
                       }
-                  }
+
                   zip = doc.getElementById('txtBillingZip').value;
                   if (zip !== '') {
                       // Set the validator
@@ -754,6 +749,11 @@
             </script>
 
         </div>
+        <!--// START FOOTER CONTENT //-->
+
+            <b2p:PaymentFooter ID="pfDefault" runat="server" />
+
+            <!--// END FOOTER CONTENT //-->
     </form>
 
 </body>

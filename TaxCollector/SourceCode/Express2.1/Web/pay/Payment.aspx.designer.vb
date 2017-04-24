@@ -519,15 +519,6 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected WithEvents btnSubmitAch As Global.System.Web.UI.WebControls.Button
         
         '''<summary>
-        '''pfDefault control.
-        '''</summary>
-        '''<remarks>
-        '''Auto-generated field.
-        '''To modify move field declaration from designer file to code-behind file.
-        '''</remarks>
-        Protected WithEvents pfDefault As Global.B2P.PaymentLanding.Express.Web.Footer
-        
-        '''<summary>
         '''litPaymentAmountTitle control.
         '''</summary>
         '''<remarks>
@@ -796,5 +787,14 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents hdfTabName As Global.System.Web.UI.WebControls.HiddenField
+        
+        '''<summary>
+        '''pfDefault control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents pfDefault As Global.B2P.PaymentLanding.Express.Web.Footer
     End Class
 End Namespace
