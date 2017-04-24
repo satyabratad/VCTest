@@ -353,9 +353,19 @@
                 // Check to see if amount is required
                 // Set the validator
                 validator.addValidationItem(new ValidationItem("txtAmount", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
+                if ($("#txtAmount").val().trim() == "") {
+                    // Set the validator
+                    validator.addValidationItem(new ValidationItem("txtAmount", fieldTypes.AmountDue, true, "Invalid Amount"));
+                    return validator.validate();
+                }
+                if (!(parseFloat($("#txtAmount").val().trim())) > 0) {
+                    // Set the validator
+                    validator.addValidationItem(new ValidationItem("txtAmount", fieldTypes.AmountDue, true, "Invalid Amount"));
+                    return validator.validate();
+                }
                 //Validate Zip
                 if ($("#txtZip").val() != "") {
-                   
+
                     var optiongroup = $('#ddlState').find(":selected").attr("optiongroup");
                     if (optiongroup == null) {
                         validator.addValidationItem(new ValidationItem("txtZip", fieldTypes.ZipCodeInternational, true, "<%=GetGlobalResourceObject("WebResources", "InvalidZipMsg").ToString()%>"));
@@ -367,8 +377,8 @@
                         else if (optiongroup.toUpperCase() == "CANADA") {
                             validator.addValidationItem(new ValidationItem("txtZip", fieldTypes.ZipCodeCanada, true, "<%=GetGlobalResourceObject("WebResources", "InvalidZipMsg").ToString()%>"));
                         }
-                    }
                 }
+            }
                 <% End If %>
                 return validator.validate();
             }
