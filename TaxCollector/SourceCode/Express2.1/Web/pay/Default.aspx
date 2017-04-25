@@ -316,6 +316,7 @@
         <script type="text/javascript">
 
             function validateForm() {
+                
                 var doc = document;
                 var item = new ValidationItem();
 
@@ -333,23 +334,25 @@
                     // Set the validator
                     validator.addValidationItem(new ValidationItem("txtLookupAccount1", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
                 }
-
+                
                 // Check to see if account 2 is required
-                acct2 = doc.getElementById('hdAccount2').value;
-                if (acct2 !== '') {
-                    // Set the validator
-                    validator.addValidationItem(new ValidationItem("txtLookupAccount2", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
+                if ($("#txtLookupAccount2").is('visible')) {
+                    acct2 = doc.getElementById('hdAccount2').value;
+                    if (acct2 !== '') {
+                        // Set the validator
+                        validator.addValidationItem(new ValidationItem("txtLookupAccount2", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
+                    }
                 }
 
                 // Check to see if account 3 is required
-                acct3 = doc.getElementById('hdAccount3').value;
-                if (acct3 !== '') {
-                    // Set the validator
-                    validator.addValidationItem(new ValidationItem("txtLookupAccount3", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
+                if ($("#txtLookupAccount3").is('visible')) {
+                    acct3 = doc.getElementById('hdAccount3').value;
+                    if (acct3 !== '') {
+                        // Set the validator
+                        validator.addValidationItem(new ValidationItem("txtLookupAccount3", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
+                    }
                 }
-
-
-                <%If ctlPropertyAddress.Visible Then %>
+               
                 // Check to see if amount is required
                 // Set the validator
                 validator.addValidationItem(new ValidationItem("txtAmount", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
@@ -363,8 +366,10 @@
                     validator.addValidationItem(new ValidationItem("txtAmount", fieldTypes.AmountDue, true, "Invalid Amount"));
                     return validator.validate();
                 }
+
+                 <%If ctlPropertyAddress.Visible Then %>
                 //Validate Zip
-                 if ($("#txtZip").val() != "") {
+                if ($("#txtZip").val() != "") {
 
                     var optiongroup = $('#ddlState').find(":selected").attr("optiongroup");
                     if (optiongroup == null) {
@@ -378,6 +383,7 @@
                             validator.addValidationItem(new ValidationItem("txtZip", fieldTypes.ZipCodeCanada, true, "<%=GetGlobalResourceObject("WebResources", "InvalidZipMsg").ToString()%>"));
                         }
                 }
+
             }
                 <% End If %>
                 return validator.validate();
