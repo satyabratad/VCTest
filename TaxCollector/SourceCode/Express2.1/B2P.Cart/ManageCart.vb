@@ -150,7 +150,7 @@ Public Class ManageCart
     End Sub
     Public Sub SavePropertyAddress(ClientCode As String, BatchId As String)
         For Each cartItem As Cart In Me.Cart
-            SavePropertyAddress(cartItem, ClientCode, BatchId)
+            ''  SavePropertyAddress(cartItem, ClientCode, BatchId)
         Next
     End Sub
     Private Sub SavePropertyAddress(cartItem As Cart, ClientCode As String, BatchId As String)

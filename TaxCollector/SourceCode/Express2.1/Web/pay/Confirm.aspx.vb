@@ -547,21 +547,28 @@ Namespace B2P.PaymentLanding.Express.Web
                 Dim accfldVal1 As String = ""
                 Dim accfldVal2 As String = ""
                 Dim accfldVal3 As String = ""
-                If Not cart.AccountIdFields(0) Is Nothing Then
-                    accfldVal1 = cart.AccountIdFields(0).Value
-                End If
-                If Not cart.AccountIdFields(1) Is Nothing Then
-                    accfldVal2 = cart.AccountIdFields(1).Value
-                End If
-                If Not cart.AccountIdFields(2) Is Nothing Then
-                    accfldVal3 = cart.AccountIdFields(2).Value
-                End If
+                Dim index As Integer = 0
+                For Each accField As B2P.Cart.AccountIdField In cart.AccountIdFields
+                    If Not cart.AccountIdFields(index) Is Nothing Then
+                        Select Case index
+                            Case 0
+
+                                accfldVal1 = cart.AccountIdFields(0).Value
+                            Case 1
+                                accfldVal2 = cart.AccountIdFields(1).Value
+                            Case 2
+                                accfldVal3 = cart.AccountIdFields(2).Value
+                        End Select
+                    End If
+                    index += 1
+                Next
+
                 instance.Items.Add(accfldVal1, accfldVal2, accfldVal3, BLL.SessionManager.CurrentCategory.Name.ToString, CDec(cart.Amount), ConvenienceFee, TransactionFee)
-                If BLL.SessionManager.ManageCart.Cart.Count > 0 Then
-                    ConvenienceFee = 0
-                    TransactionFee = 0
-                End If
-            Next
+                    If BLL.SessionManager.ManageCart.Cart.Count > 0 Then
+                        ConvenienceFee = 0
+                        TransactionFee = 0
+                    End If
+                Next
         End Sub
         Private Sub SetUserData(Of T)(ByRef Param As T)
             Dim instance = Nothing

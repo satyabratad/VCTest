@@ -304,7 +304,7 @@
     <value>I accept the convenience fee</value>
   </data>
   <data name="ButtonMakeAPayment" xml:space="preserve">
-    <value>Make a Payment</value>
+    <value>Submit Payment</value>
   </data>
   <data name="ErrMsgAgreeToFees" xml:space="preserve">
     <value>Must agree to the convenience fee</value>

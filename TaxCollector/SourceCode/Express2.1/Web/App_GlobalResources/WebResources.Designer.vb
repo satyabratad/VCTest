@@ -245,7 +245,7 @@ Namespace Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Make a Payment.
+        '''  Looks up a localized string similar to Submit Payment.
         '''</summary>
         Friend Shared ReadOnly Property ButtonMakeAPayment() As String
             Get
