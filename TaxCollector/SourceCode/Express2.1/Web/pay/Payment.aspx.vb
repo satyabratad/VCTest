@@ -293,7 +293,9 @@ Namespace B2P.PaymentLanding.Express.Web
                     card.Owner.City = "NA"
                     ':::::::::::::::::::::::::::::::::::::::::::::::::
                     'card.Owner.CountryCode ="US"
-                    card.Owner.CountryCode = pccEnterCreditCardInfo.CreditCardCountry
+                    If Not String.IsNullOrEmpty(pccEnterCreditCardInfo.CreditCardCountry) Then
+                        card.Owner.CountryCode = pccEnterCreditCardInfo.CreditCardCountry
+                    End If
 
                     ' Set international info to FL and 11111 per Ken Ponder
                     ' May want to visit this later and validate

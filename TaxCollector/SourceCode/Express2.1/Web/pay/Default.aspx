@@ -353,8 +353,10 @@
                     }
                 }
                
+                <% If B2P.PaymentLanding.Express.BLL.SessionManager.ClientType = B2P.Cart.EClientType.NonLookup Then%>
                 // Check to see if amount is required
                 // Set the validator
+
                 validator.addValidationItem(new ValidationItem("txtAmount", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
                 if ($("#txtAmount").val().trim() == "") {
                     // Set the validator
@@ -366,6 +368,7 @@
                     validator.addValidationItem(new ValidationItem("txtAmount", fieldTypes.AmountDue, true, "Invalid Amount"));
                     return validator.validate();
                 }
+                <%End If%>
 
                  <%If ctlPropertyAddress.Visible Then %>
                 //Validate Zip
