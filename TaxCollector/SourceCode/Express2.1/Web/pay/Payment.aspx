@@ -607,6 +607,7 @@
                                       cardYear <= new Date().getFullYear() + 10)
                       });
 
+
                         validator.addValidationItem(item = {
                             field: "txtCCV",
                             styleParent: true,
@@ -615,14 +616,15 @@
                       });
 
                       // Check to see if zip is required
-
-                      
+                      zip = doc.getElementById('txtBillingZip').value;                      
                           if (zip == '') {
                               validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
 
                       }
 
-                  zip = doc.getElementById('txtBillingZip').value;
+
+                      //zip = doc.getElementById('txtBillingZip').value;
+
                   if (zip !== '') {
                       // Set the validator
                       if ($("#ddlCountry").val() == "US")
@@ -632,7 +634,6 @@
                                   if ($("#ddlCountry").val() == "OT")
                                       validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeInternational, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
                               }
-
 
                               if (panel && doc.getElementById("rdAmount").checked) {
 
