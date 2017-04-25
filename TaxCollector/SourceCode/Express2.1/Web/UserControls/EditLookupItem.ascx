@@ -101,7 +101,7 @@
         return false;
     }
     function ValidateUpdateCartItem() {
-        debugger;
+        
         <% If Not SelectedItem Is Nothing Then%>
         $('#pnlLookupAlert').modal('hide');
         var newValue = parseFloat($("#txtAmountEdit").val());

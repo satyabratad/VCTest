@@ -290,15 +290,18 @@
                     if (phone !== '') {
                         validator.addValidationItem(new ValidationItem("txtContactPhone", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
                     }
-              
-                    zip = doc.getElementById('hdContactZip').value;
+                
+                zip = doc.getElementById('txtContactZip').value;
+               
                     if (zip !== '') {
                         // Set the validator
                         if ($("#ddlContactCountry").val() == "US")
                             validator.addValidationItem(new ValidationItem("txtContactZip", fieldTypes.ZipCodeUnitedStates, true, "<%=GetGlobalResourceObject("WebResources", "InvalidZipMsg").ToString()%>"));
-                        if ($("#ddlContactCountry").val() == "CA")
+                        else if ($("#ddlContactCountry").val() == "CA")
                             validator.addValidationItem(new ValidationItem("txtContactZip", fieldTypes.ZipCodeCanada, true, "<%=GetGlobalResourceObject("WebResources", "InvalidZipMsg").ToString()%>"));
-                        if ($("#ddlContactCountry").val() == "OT")
+                        else if ($("#ddlContactCountry").val() == "OT")
+                            validator.addValidationItem(new ValidationItem("txtContactZip", fieldTypes.ZipCodeInternational, true, "<%=GetGlobalResourceObject("WebResources", "InvalidZipMsg").ToString()%>"));
+                        else
                             validator.addValidationItem(new ValidationItem("txtContactZip", fieldTypes.ZipCodeInternational, true, "<%=GetGlobalResourceObject("WebResources", "InvalidZipMsg").ToString()%>"));
                     }
                 

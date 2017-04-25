@@ -364,7 +364,7 @@
                     return validator.validate();
                 }
                 //Validate Zip
-                if ($("#txtZip").val() != "") {
+                 if ($("#txtZip").val() != "") {
 
                     var optiongroup = $('#ddlState').find(":selected").attr("optiongroup");
                     if (optiongroup == null) {
