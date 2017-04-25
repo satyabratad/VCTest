@@ -292,12 +292,14 @@ Namespace B2P.PaymentLanding.Express.Web
                     card.Owner.Address2 = "NA"
                     card.Owner.City = "NA"
                     ':::::::::::::::::::::::::::::::::::::::::::::::::
+                    'card.Owner.CountryCode ="US"
+                    card.Owner.CountryCode = pccEnterCreditCardInfo.CreditCardCountry
 
-                    card.Owner.CountryCode = "US"
                     ' Set international info to FL and 11111 per Ken Ponder
                     ' May want to visit this later and validate
                     card.Owner.State = "FL"
-                    card.Owner.ZipCode = "11111"
+                    'card.Owner.ZipCode = "11111"
+                    card.Owner.ZipCode = pccEnterCreditCardInfo.CreditCardBillingZip
 
                     card.Owner.EMailAddress = String.Empty
                     card.Owner.PhoneNumber = String.Empty
