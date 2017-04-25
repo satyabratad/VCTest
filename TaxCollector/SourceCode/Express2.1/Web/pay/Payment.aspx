@@ -623,7 +623,7 @@
 
                           }
 
-
+                      }
                           //zip = doc.getElementById('txtBillingZip').value;
 
                           if (zip !== '') {
@@ -635,7 +635,7 @@
                               if ($("#ddlCountry").val() == "OT")
                                   validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeInternational, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
                           }
-                      }
+                     
 
                               if (panel && doc.getElementById("rdAmount").checked) {
 
