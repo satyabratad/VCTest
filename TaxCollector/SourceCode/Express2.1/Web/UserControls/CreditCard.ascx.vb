@@ -72,8 +72,10 @@ Namespace B2P.PaymentLanding.Express.Web
 
 
                 BindCountries()
-                Me.txtBillingZip.Text = BLL.SessionManager.ContactInfo.Zip
-                Me.ddlCountry.SelectedValue = BLL.SessionManager.ContactInfo.UserField2
+                If BLL.SessionManager.IsContactInfoRequired = True Then
+                    Me.txtBillingZip.Text = BLL.SessionManager.ContactInfo.Zip
+                    Me.ddlCountry.SelectedValue = BLL.SessionManager.ContactInfo.UserField2
+                End If
             End If
         End Sub
 

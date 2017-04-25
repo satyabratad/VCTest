@@ -5,6 +5,10 @@ Namespace B2P.PaymentLanding.Express.Web
     Public Class _ssodefault : Inherits System.Web.UI.Page
 
         Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+            If Not BLL.SessionManager.ClientType = Cart.EClientType.SSO Then
+                Session.Clear()
+                BLL.SessionManager.ManageCart.ShowCart = False
+            End If
 
             If BLL.SessionManager.ManageCart.EditItemIndex > -1 Then
                 pnlCart.Visible = False
