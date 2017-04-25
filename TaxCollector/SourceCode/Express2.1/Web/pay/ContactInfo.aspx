@@ -290,6 +290,10 @@
                     if (phone !== '') {
                         validator.addValidationItem(new ValidationItem("txtContactPhone", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
                     }
+               <%-- phone = doc.getElementById('txtContactPhone').value;
+                    if (phone !== '') {
+                        validator.addValidationItem(new ValidationItem("txtContactPhone", fieldTypes.PhoneNumber, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
+                    }--%>
                 
                 zip = doc.getElementById('txtContactZip').value;
                
@@ -312,7 +316,20 @@
                 $("#"+ctrlId).prop('disabled', (state==0));
             }
 
+            $('#txtContactPhone').keyup(function (ev) {
+                var key = ev.which;
+                if (key < 48 || key > 57 || key != 45) {
+                    ev.preventDefault();
+                }
 
+                if (this.value.length > 12) {
+                    this.value = this.value.slice(0, -1);
+                    return;
+                }
+
+                this.value = this.value.replace(/^(\d{3})(\d)/, '$1-$2')
+                  .replace(/^(\d{3}-\d{3})(\d)/, '$1-$2');
+            });
 
         </script>
 

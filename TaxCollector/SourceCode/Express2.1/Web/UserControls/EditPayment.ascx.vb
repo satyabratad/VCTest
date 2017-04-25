@@ -9,7 +9,7 @@ Namespace B2P.PaymentLanding.Express.Web
 
                 If Not BLL.SessionManager.ContactInfo Is Nothing Then
                     pnlZip.Visible = True
-                    Select Case BLL.SessionManager.ContactInfo.UserField1
+                    Select Case BLL.SessionManager.CreditCard.Owner.CountryCode
                         Case "US"
                             lblBillingZipCaption.Text = GetGlobalResourceObject("WebResources", "lblBillingZip").ToString()
                         Case "CA"
@@ -32,10 +32,10 @@ Namespace B2P.PaymentLanding.Express.Web
                         lblPaymentMethod.Text = BLL.SessionManager.CreditCard.CardIssuer & " " & Right(BLL.SessionManager.CreditCard.CreditCardNumber, 6)
                         ' Set Exp Date
                         pnlExpDate.Visible = True
-                        lblExpDate.Text = BLL.SessionManager.CreditCard.ExpirationMonth + "/" + BLL.SessionManager.CreditCard.ExpirationYear
+                        lblExpDate.Text = BLL.SessionManager.CreditCard.ExpirationMonth + "/" + BLL.SessionManager.CreditCard.ExpirationYear.Substring(2)
                         'set zip code
                         pnlZip.Visible = True
-                        lblBillZip.Text = BLL.SessionManager.BillingZipCode
+                        lblBillZip.Text = BLL.SessionManager.CreditCard.Owner.ZipCode
                 End Select
 
             End If

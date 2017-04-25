@@ -27,7 +27,10 @@ Namespace B2P.PaymentLanding.Express.Web
             End If
 
         End Sub
-        Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
+        Protected Sub btnYes_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
+            Response.Redirect("~/pay/")
+        End Sub
+        Protected Sub btnNo_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
             If BLL.SessionManager.IsSSOProduct Then
                 Response.Redirect("/sso/" & BLL.SessionManager.Token)
             Else
@@ -544,24 +547,11 @@ Namespace B2P.PaymentLanding.Express.Web
                 TransactionFee = 0
             End If
             For Each cart As B2P.Cart.Cart In BLL.SessionManager.ManageCart.Cart
-                Dim accfldVal1 As String = ""
-                Dim accfldVal2 As String = ""
-                Dim accfldVal3 As String = ""
+                Dim accfldVal1 As String = BLL.SessionManager.ManageCart.GetAccountFieldValue(cart, 0)
+                Dim accfldVal2 As String = BLL.SessionManager.ManageCart.GetAccountFieldValue(cart, 0)
+                Dim accfldVal3 As String = BLL.SessionManager.ManageCart.GetAccountFieldValue(cart, 0)
                 Dim index As Integer = 0
-                For Each accField As B2P.Cart.AccountIdField In cart.AccountIdFields
-                    If Not cart.AccountIdFields(index) Is Nothing Then
-                        Select Case index
-                            Case 0
 
-                                accfldVal1 = cart.AccountIdFields(0).Value
-                            Case 1
-                                accfldVal2 = cart.AccountIdFields(1).Value
-                            Case 2
-                                accfldVal3 = cart.AccountIdFields(2).Value
-                        End Select
-                    End If
-                    index += 1
-                Next
 
                 instance.Items.Add(accfldVal1, accfldVal2, accfldVal3, BLL.SessionManager.CurrentCategory.Name.ToString, CDec(cart.Amount), ConvenienceFee, TransactionFee)
                     If BLL.SessionManager.ManageCart.Cart.Count > 0 Then

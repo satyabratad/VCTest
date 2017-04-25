@@ -150,11 +150,17 @@ Public Class ManageCart
     End Sub
     Public Sub SavePropertyAddress(ClientCode As String, BatchId As String)
         For Each cartItem As Cart In Me.Cart
-            ''  SavePropertyAddress(cartItem, ClientCode, BatchId)
+            If cartItem.CollectPropertyAddress Then
+                SavePropertyAddress(cartItem, ClientCode, BatchId)
+            End If
         Next
     End Sub
     Private Sub SavePropertyAddress(cartItem As Cart, ClientCode As String, BatchId As String)
         Try
+            Dim timeUtc = DateTime.UtcNow
+            Dim easternZone As TimeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time")
+            Dim easternTime As DateTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, easternZone)
+
             Dim connectionString As String = ConfigurationManager.AppSettings("ConnectionString")
             Using sqlConnection As New SqlClient.SqlConnection(connectionString)
                 Using sqlCommand As New SqlClient.SqlCommand
@@ -163,14 +169,15 @@ Public Class ManageCart
                     sqlCommand.Parameters.Add("@BatchID", SqlDbType.VarChar, 40).Value = BatchId
                     sqlCommand.Parameters.Add("@ClientCode", SqlDbType.VarChar, 10).Value = ClientCode
                     sqlCommand.Parameters.Add("@ProductName", SqlDbType.VarChar, 40).Value = cartItem.Item
-                    sqlCommand.Parameters.Add("@AccountNumber1", SqlDbType.VarChar, 40).Value = cartItem.AccountIdFields(0).Value
-                    sqlCommand.Parameters.Add("@AccountNumber2", SqlDbType.VarChar, 40).Value = cartItem.AccountIdFields(1).Value
-                    sqlCommand.Parameters.Add("@AccountNumber3", SqlDbType.VarChar, 40).Value = cartItem.AccountIdFields(2).Value
+                    sqlCommand.Parameters.Add("@AccountNumber1", SqlDbType.VarChar, 40).Value = GetAccountFieldValue(cartItem, 0)
+                    sqlCommand.Parameters.Add("@AccountNumber2", SqlDbType.VarChar, 40).Value = GetAccountFieldValue(cartItem, 1)
+                    sqlCommand.Parameters.Add("@AccountNumber3", SqlDbType.VarChar, 40).Value = GetAccountFieldValue(cartItem, 2)
                     sqlCommand.Parameters.Add("@Address1", SqlDbType.VarChar, 40).Value = cartItem.PropertyAddress.Address1
                     sqlCommand.Parameters.Add("@Address2", SqlDbType.VarChar, 40).Value = cartItem.PropertyAddress.Address2
                     sqlCommand.Parameters.Add("@State", SqlDbType.VarChar, 40).Value = cartItem.PropertyAddress.State
                     sqlCommand.Parameters.Add("@City", SqlDbType.VarChar, 40).Value = cartItem.PropertyAddress.City
                     sqlCommand.Parameters.Add("@ZipCode", SqlDbType.VarChar, 40).Value = cartItem.PropertyAddress.Zip
+                    sqlCommand.Parameters.Add("@CreateDateEST", SqlDbType.DateTime, 8).Value = easternTime
 
                     sqlCommand.Connection = sqlConnection
                     sqlConnection.Open()
@@ -181,6 +188,13 @@ Public Class ManageCart
             Throw New Exception(ex.Message)
         End Try
     End Sub
+    Public Function GetAccountFieldValue(CartItem As Cart, Index As Integer) As String
+        Dim maxItemCount As Integer = CartItem.AccountIdFields.Count
+        If Index < maxItemCount Then
+            Return CartItem.AccountIdFields(Index).Value
+        End If
+        Return Nothing
+    End Function
 End Class
 
 

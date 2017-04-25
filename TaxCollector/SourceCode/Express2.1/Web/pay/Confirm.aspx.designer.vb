@@ -337,5 +337,23 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents Button1 As Global.System.Web.UI.WebControls.Button
+        
+        '''<summary>
+        '''btnYes control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents btnYes As Global.System.Web.UI.WebControls.Button
+        
+        '''<summary>
+        '''btnNo control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents btnNo As Global.System.Web.UI.WebControls.Button
     End Class
 End Namespace

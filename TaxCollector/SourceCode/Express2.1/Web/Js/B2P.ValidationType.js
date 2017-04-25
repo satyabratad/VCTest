@@ -158,7 +158,11 @@ function ValidationItem(field, fieldType, styleParent, errorMsg) {
             // USA zip codes can match zip or zip+4
             this.isValid = validate(this.field, /^\d{5}(?:-\d{4})?$/);
             break;
-
+        //case fieldTypes.PhoneNumber:
+            
+        //    this.isValid = validate(this.field, /^(\d{3}-\d{3}-\d{4})/);
+        //    debugger;
+        //    break;
         default:
             this.isValid = false;
     }

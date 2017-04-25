@@ -81,7 +81,6 @@ Namespace B2P.PaymentLanding.Express.BLL
         Private Const _contactInfo As Object = "ContactInfo"
         Private Const _isContactInfoRequired As String = "IsContactInfoRequired"
         Private Const _isConvenienceFeesApplicable As String = "_isConvenienceFeesApplicable"
-        Private Const _billingZipCode As String = "_billingZipCode"
 #End Region
 
 #Region " ::: Contructors ::: "
@@ -873,23 +872,6 @@ Namespace B2P.PaymentLanding.Express.BLL
             End Get
             Set(ByVal value As Boolean)
                 HttpContext.Current.Session(_isConvenienceFeesApplicable) = value
-            End Set
-        End Property
-        ''' <summary>
-        ''' This will store billing zip code
-        ''' </summary>
-
-        Public Shared Property BillingZipCode() As String
-            Get
-                If HttpContext.Current.Session(_billingZipCode) Is Nothing Then
-                    Return Nothing
-                Else
-                    Return DirectCast(HttpContext.Current.Session(_billingZipCode), String)
-                End If
-
-            End Get
-            Set(ByVal value As String)
-                HttpContext.Current.Session(_billingZipCode) = value
             End Set
         End Property
 
