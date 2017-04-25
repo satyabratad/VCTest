@@ -22,9 +22,9 @@ Namespace B2P.PaymentLanding.Express.Web
             End If
 
             Dim redirectAddress As String = String.Empty
-            If Not IsPostBack Then
-                Session.Clear()
-            End If
+            'If Not IsPostBack Then
+            '    Session.Clear()
+            'End If
 
             If BLL.SessionManager.ManageCart.ShowCart = False Then
                 If Not IsPostBack Then
@@ -89,6 +89,7 @@ Namespace B2P.PaymentLanding.Express.Web
                                         Select Case z.SSODisplayType
                                             Case B2P.Objects.Client.SSODisplayTypes.ReadOnlyGrid
                                                 'BreadCrumbMenu.IsAccountPageVisible = False
+                                                BLL.SessionManager.ClientType = Cart.EClientType.SSO
                                                 BLL.SessionManager.SSODisplayType = B2P.Objects.Client.SSODisplayTypes.ReadOnlyGrid
                                                 loadDataGrid(x, Token)
                                             Case B2P.Objects.Client.SSODisplayTypes.ShoppingCart
@@ -98,6 +99,7 @@ Namespace B2P.PaymentLanding.Express.Web
                                                 loadShopingCartDataGrid(x, Token)
                                             Case B2P.Objects.Client.SSODisplayTypes.SingleItem
                                                 ' BreadCrumbMenu.IsAccountPageVisible = False
+                                                BLL.SessionManager.ClientType = Cart.EClientType.SSO
                                                 BLL.SessionManager.SSODisplayType = B2P.Objects.Client.SSODisplayTypes.SingleItem
                                                 loadData(x, Token)
                                         End Select
@@ -203,7 +205,7 @@ Namespace B2P.PaymentLanding.Express.Web
                         Dim zipCode As String = Utility.SafeEncode(y.Demographics.ZipCode.Value)
                         Dim homePhone As String = Utility.SafeEncode(y.Demographics.HomePhone.Value)
                         BLL.SessionManager.AddContactInfo(address1, address2, contactName, country, state, city, zipCode, homePhone)
-
+                        BLL.SessionManager.PaymentStatusCode = y.PaymentStatus
                         Select Case y.PaymentStatus
                             Case B2P.ClientInterface.Manager.ClientInterfaceWS.PaymentStatusCodes.Allowed
 
@@ -285,7 +287,11 @@ Namespace B2P.PaymentLanding.Express.Web
                         BLL.SessionManager.BlockedCC = False
                         BLL.SessionManager.BlockedACH = False
                         BLL.SessionManager.IsInitialized = True
-                        Response.Redirect("/pay/payment.aspx", False)
+                        If BLL.SessionManager.ManageCart.ShowCart = True Then
+                            Response.Redirect(BreadCrumbMenu.RedirectAddress, False)
+                            'Response.Redirect("~/sso/", False)
+                        End If
+                        'Response.Redirect("/pay/payment.aspx", False)
                     End If
 
                 Else
@@ -316,7 +322,11 @@ Namespace B2P.PaymentLanding.Express.Web
                             BLL.SessionManager.BlockedCC = False
                             BLL.SessionManager.BlockedACH = False
                             BLL.SessionManager.IsInitialized = True
-                            Response.Redirect("/pay/payment.aspx", False)
+                            If BLL.SessionManager.ManageCart.ShowCart = True Then
+                                Response.Redirect(BreadCrumbMenu.RedirectAddress, False)
+                                'Response.Redirect("~/sso/", False)
+                            End If
+                            'Response.Redirect("/pay/payment.aspx", False)
                         End If
 
                     End If
@@ -395,7 +405,11 @@ Namespace B2P.PaymentLanding.Express.Web
                     Else
 
                         BLL.SessionManager.IsInitialized = True
-                        Response.Redirect("/pay/payment.aspx", False)
+                        If BLL.SessionManager.ManageCart.ShowCart = True Then
+                            Response.Redirect(BreadCrumbMenu.RedirectAddress, False)
+                            'Response.Redirect("~/sso/", False)
+                        End If
+                        'Response.Redirect("/pay/payment.aspx", False)
                     End If
                 End If
 
