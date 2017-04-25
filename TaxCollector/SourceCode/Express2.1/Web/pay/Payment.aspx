@@ -615,9 +615,10 @@
                           isValid: ($.payment.validateCardCVC(doc.getElementById("txtCCV").value, cardType))
                       });
 
+                      zip = doc.getElementById('txtBillingZip').value;
                       // Check to see if zip is required
                       if ($("#hdZipRequired").val() == 'Y') {
-                          zip = doc.getElementById('txtBillingZip').value;
+                         
                           if (zip == '') {
                               validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
 
