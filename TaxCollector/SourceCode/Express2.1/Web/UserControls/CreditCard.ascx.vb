@@ -13,6 +13,7 @@ Namespace B2P.PaymentLanding.Express.Web
 
 #Region "::: Properties :::"
 
+
         Public ReadOnly Property CreditCardNumber() As String
             Get
                 Return Utility.SafeEncode(txtCreditCardNumber.Text.Trim.Replace(" ", ""))
@@ -56,6 +57,18 @@ Namespace B2P.PaymentLanding.Express.Web
                 txtNameonCard.Text = value.Trim
             End Set
         End Property
+        Public ReadOnly Property CreditCardCountry() As String
+            Get
+                Return Utility.SafeEncode(ddlCountry.SelectedValue.Trim)
+            End Get
+        End Property
+        Public ReadOnly Property CreditCardBillingZip() As String
+            Get
+                Return Utility.SafeEncode(txtBillingZip.Text.Trim.Replace(" ", ""))
+            End Get
+        End Property
+
+
 
 #End Region
 
