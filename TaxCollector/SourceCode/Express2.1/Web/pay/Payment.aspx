@@ -616,24 +616,26 @@
                       });
 
                       // Check to see if zip is required
-                      zip = doc.getElementById('txtBillingZip').value;                      
+                      if ($("#hdZipRequired").val() == 'Y') {
+                          zip = doc.getElementById('txtBillingZip').value;
                           if (zip == '') {
                               validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
 
+                          }
+
+
+                          //zip = doc.getElementById('txtBillingZip').value;
+
+                          if (zip !== '') {
+                              // Set the validator
+                              if ($("#ddlCountry").val() == "US")
+                                  validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeUnitedStates, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
+                              if ($("#ddlCountry").val() == "CA")
+                                  validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeCanada, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
+                              if ($("#ddlCountry").val() == "OT")
+                                  validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeInternational, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
+                          }
                       }
-
-
-                      //zip = doc.getElementById('txtBillingZip').value;
-
-                  if (zip !== '') {
-                      // Set the validator
-                      if ($("#ddlCountry").val() == "US")
-                          validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeUnitedStates, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
-                                  if ($("#ddlCountry").val() == "CA")
-                                      validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeCanada, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
-                                  if ($("#ddlCountry").val() == "OT")
-                                      validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeInternational, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
-                              }
 
                               if (panel && doc.getElementById("rdAmount").checked) {
 
