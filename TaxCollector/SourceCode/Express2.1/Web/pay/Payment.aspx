@@ -226,6 +226,13 @@
 
 
                                         <b2p:SubTotal runat="server" ID="SubTotal" />
+                                        
+                                        <div class="alert alert-danger" style="display:none" id="lblErrAmount" role="alert">
+                                            <div class="fa fa-exclamation-circle fa-2x status-msg-icon" id="imgStatusMsgIcon"></div>
+                                            <div class="status-msg-text" id="txtStatusMsg"></div>
+
+                                        </div>
+                                        
                                         <div id="pnlFormContents" role="form" runat="server">
                                             <br />
                                             <strong>
@@ -639,14 +646,22 @@
                      
 
                               if (panel && doc.getElementById("rdAmount").checked) {
-
+                                  
                                   validator.addValidationItem(item = {
                                       field: "txtAmount",
                                       styleParent: true,
                                       errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString()%>",
                              isValid: (validatePaymentAmount(doc.getElementById("txtAmount").value, ccMinMaxAmounts))
-                         });
-                     }
+                                  });
+
+                                  
+                              }
+                              if(validatePaymentAmount(doc.getElementById("txtAmount").value, ccMinMaxAmounts)==false)
+                               {
+                                     
+                                    $("#txtStatusMsg").text("<%=GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString()%>");
+                                    $("#lblErrAmount").show();
+                               }
 
 
 
@@ -680,7 +695,15 @@
                              errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString()%>",
                              isValid: (validatePaymentAmount(doc.getElementById("txtAmount").value, achMinMaxAmounts))
                          });
+
                      }
+
+                     if(validatePaymentAmount(doc.getElementById("txtAmount").value, ccMinMaxAmounts)==false)
+                        {
+                                     
+                          $("#txtStatusMsg").text("<%=GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString()%>");
+                          $("#lblErrAmount").show();
+                        }
 
                      break;
              }
