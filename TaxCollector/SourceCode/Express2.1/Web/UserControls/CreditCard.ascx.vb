@@ -72,9 +72,18 @@ Namespace B2P.PaymentLanding.Express.Web
 
 
                 BindCountries()
-                If BLL.SessionManager.IsContactInfoRequired = True Then
-                    Me.txtBillingZip.Text = BLL.SessionManager.ContactInfo.Zip
-                    Me.ddlCountry.SelectedValue = BLL.SessionManager.ContactInfo.UserField2
+                'AVS checking
+                Dim avsCheckTypes As B2P.Objects.Client.AVSCheckTypes = B2P.Objects.Client.GetAVSSetting(BLL.SessionManager.ClientCode, B2P.Common.Enumerations.TransactionSources.Web)
+                hdZipRequired.Value = IIf(avsCheckTypes = Objects.Client.AVSCheckTypes.CheckZipOnly Or avsCheckTypes = Objects.Client.AVSCheckTypes.CheckBoth, "Y", "N")
+                If hdZipRequired.Value = "Y" Then
+                    If Not BLL.SessionManager.ContactInfo Is Nothing Then
+                        If Not String.IsNullOrEmpty(BLL.SessionManager.ContactInfo.UserField2) Then
+                            ddlCountry.SelectedValue = BLL.SessionManager.ContactInfo.UserField2
+                        End If
+                        If Not String.IsNullOrEmpty(BLL.SessionManager.ContactInfo.Zip) Then
+                            txtBillingZip.Text = BLL.SessionManager.ContactInfo.Zip
+                        End If
+                    End If
                 End If
             End If
         End Sub

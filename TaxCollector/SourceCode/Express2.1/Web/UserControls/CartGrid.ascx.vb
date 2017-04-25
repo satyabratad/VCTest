@@ -6,6 +6,7 @@ Imports B2P
 
 Public Class CartGrid
     Inherits System.Web.UI.UserControl
+    Protected Property IsEditIconVisible As Boolean = True
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
         'Delete from cart
@@ -44,6 +45,17 @@ Public Class CartGrid
                 hdMode.Value = ""
                 hdSelectedIndex.Value = ""
             End If
+        End If
+
+
+
+        If BLL.SessionManager.ClientType = Cart.EClientType.SSO Then
+            'Set visibility of edit icon for SSO
+            Dim z As B2P.Objects.Client = B2P.Objects.Client.GetClient(BLL.SessionManager.ClientCode.ToString)
+            IsEditIconVisible = Not z.SSODisplayType = Objects.Client.SSODisplayTypes.ReadOnlyGrid
+        ElseIf BLL.SessionManager.ClientType = Cart.EClientType.Lookup Then
+            'Set visibility of delete icon for Lookup
+            IsEditIconVisible = (BLL.SessionManager.PaymentStatusCode = ClientInterface.Manager.ClientInterfaceWS.PaymentStatusCodes.Allowed Or BLL.SessionManager.PaymentStatusCode = ClientInterface.Manager.ClientInterfaceWS.PaymentStatusCodes.MinimumPaymentRequired)
         End If
 
 
@@ -147,4 +159,12 @@ Public Class CartGrid
             Response.Redirect("~/pay/")
         End If
     End Sub
+    Protected Function GetCssClass(ItemIndex As String) As String
+        Dim index As Integer = CType(ItemIndex, Integer)
+        If index Mod 2 = 0 Then
+            Return "table-row"
+        Else
+            Return "table-alternateRow"
+        End If
+    End Function
 End Class

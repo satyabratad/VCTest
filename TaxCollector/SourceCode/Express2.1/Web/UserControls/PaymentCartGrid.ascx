@@ -19,13 +19,13 @@
         <ItemTemplate>
             <tbody>
                 <tr id="trIndex" <%# Eval("Index") %>>
-                    <td class="table-row" style="align-content: center;"><%#CType(Eval("Index"), Integer) + 1%></td>
-                    <td class="table-row"><%# Eval("Item") %></td>
-                    <td class="table-row"><%# GetAccountInformation(Eval("Index")) %><br>
+                    <td class="<%# GetCssClass(Eval("Index")) %>" style="align-content: center;"><%#CType(Eval("Index"), Integer) + 1%></td>
+                    <td class="<%# GetCssClass(Eval("Index")) %>"><%# Eval("Item") %></td>
+                    <td class="<%# GetCssClass(Eval("Index")) %>"><%# GetAccountInformation(Eval("Index")) %><br>
                         <strong>Property Address:</strong><br>
                         <%# GetPropertyAddress(Eval("Index")) %>
                     </td>
-                    <td class="table-row" align="right"><%# FormatAmount(Eval("Amount")) %></td>
+                    <td class="<%# GetCssClass(Eval("Index")) %>" align="right"><%# FormatAmount(Eval("Amount")) %></td>
                 </tr>
         </ItemTemplate>
         <FooterTemplate>
@@ -72,14 +72,14 @@
         <ItemTemplate>
             <tbody>
                 <tr id="trIndex" <%# Eval("Index") %>>
-                    <td class="table-row" style="align-content: center;"><%# ctype(Eval("Index"), Integer) + 1%></td>
-                    <td class="table-row"><%# Eval("Item") %></td>
-                    <td class="table-row"><%# GetAccountInformation(Eval("Index")) %><br>
+                    <td class="<%# GetCssClass(Eval("Index")) %>" style="align-content: center;"><%# ctype(Eval("Index"), Integer) + 1%></td>
+                    <td class="<%# GetCssClass(Eval("Index")) %>"><%# Eval("Item") %></td>
+                    <td class="<%# GetCssClass(Eval("Index")) %>"><%# GetAccountInformation(Eval("Index")) %><br>
                         <strong>Property Address:</strong><br>
                         <%# GetPropertyAddress(Eval("Index")) %>
                     </td>
-                    <td class="table-row" align="right"><%# FormatAmount(Eval("AmountDue")) %></td>
-                    <td class="table-row" align="right"><%# FormatAmount(Eval("Amount")) %></td>
+                    <td class="<%# GetCssClass(Eval("Index")) %>" align="right"><%# FormatAmount(Eval("AmountDue")) %></td>
+                    <td class="<%# GetCssClass(Eval("Index")) %>" align="right"><%# FormatAmount(Eval("Amount")) %></td>
                 </tr>
         </ItemTemplate>
         <FooterTemplate>
@@ -126,14 +126,14 @@
         <ItemTemplate>
             <tbody>
                 <tr id="trIndex" <%# Eval("Index") %>>
-                    <td class="table-row" style="align-content: center;"><%# ctype(Eval("Index"), Integer) + 1%></td>
-                    <td class="table-row"><%# Eval("Item") %></td>
-                    <td class="table-row"><%# GetAccountInformation(Eval("Index")) %><br>
+                    <td class="<%# GetCssClass(Eval("Index")) %>" style="align-content: center;"><%# ctype(Eval("Index"), Integer) + 1%></td>
+                    <td class="<%# GetCssClass(Eval("Index")) %>"><%# Eval("Item") %></td>
+                    <td class="<%# GetCssClass(Eval("Index")) %>"><%# GetAccountInformation(Eval("Index")) %><br>
                         <strong>Property Address:</strong><br>
                         <%# GetPropertyAddress(Eval("Index")) %>
                     </td>
-                    <td class="table-row" align="right"><%# FormatAmount(Eval("AmountDue")) %></td>
-                    <td class="table-row" align="right"><%# FormatAmount(Eval("Amount")) %></td>
+                    <td class="<%# GetCssClass(Eval("Index")) %>" align="right"><%# FormatAmount(Eval("AmountDue")) %></td>
+                    <td class="<%# GetCssClass(Eval("Index")) %>" align="right"><%# FormatAmount(Eval("Amount")) %></td>
                 </tr>
         </ItemTemplate>
         <FooterTemplate>

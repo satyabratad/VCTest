@@ -131,4 +131,12 @@ Public Class PaymentCartGrid
         End If
         Return String.Format("{0:C}", totalAmount)
     End Function
+    Protected Function GetCssClass(ItemIndex As String) As String
+        Dim index As Integer = CType(ItemIndex, Integer)
+        If index Mod 2 = 0 Then
+            Return "table-row"
+        Else
+            Return "table-alternateRow"
+        End If
+    End Function
 End Class
