@@ -69,11 +69,11 @@ Namespace B2P.PaymentLanding.Express.Web
             If Not Me.IsPostBack Then
                 ' Set accepted card the images
                 litCardImages.Text = Utility.BuildAllowedCardImages()
-                BindCountries()
-                'AVS checking
-                Dim avsCheckTypes As B2P.Objects.Client.AVSCheckTypes = B2P.Objects.Client.GetAVSSetting(BLL.SessionManager.ClientCode, B2P.Common.Enumerations.TransactionSources.Web)
-                hdZipRequired.Value = IIf(avsCheckTypes = Objects.Client.AVSCheckTypes.CheckZipOnly Or avsCheckTypes = Objects.Client.AVSCheckTypes.CheckBoth, "Y", "N")
 
+
+                BindCountries()
+                Me.txtBillingZip.Text = BLL.SessionManager.ContactInfo.Zip
+                Me.ddlCountry.SelectedValue = BLL.SessionManager.ContactInfo.UserField2
             End If
         End Sub
 
