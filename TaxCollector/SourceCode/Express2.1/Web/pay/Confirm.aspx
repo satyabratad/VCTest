@@ -313,7 +313,7 @@
             </div>
             <div class="modal-footer">
                 <asp:button type="button" id="btnYes" runat="server" CssClass="btn btn-primary" title="Yes" OnClick="btnYes_Click" Text="Yes"></asp:button>
-                <asp:button type="button" id="btnNo" runat="server" CssClass="btn btn-primary" title="No" OnClick="btnNo_Click"   Text="Yes"></asp:button>               
+                <asp:button type="button" id="btnNo" runat="server" CssClass="btn btn-primary" title="No" OnClick="btnNo_Click"   Text="No"></asp:button>               
             </div>
         </div>
     </div>
