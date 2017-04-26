@@ -264,7 +264,7 @@
                                                     <br />
                                                     <div class="pull-right">
                                                         
-                                                        <asp:Button ID="btnCancelCredit" CssClass="btn btn-link btn-sm" Text="<%$ Resources:WebResources, ButtonCancel %>" ToolTip="<%$ Resources:WebResources, ButtonCancel %>" runat="server" />
+                                                        <asp:Button ID="btnCancelCredit" CssClass="btn btn-link btn-sm" Text="<%$ Resources:WebResources, ButtonCancel %>" ToolTip="<%$ Resources:WebResources, ButtonCancel %>" runat="server" OnClientClick="return cancelModal();"/>
                                                         
                                                         <asp:Button ID="btnAddMoreItemCredit" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, AddMoreItemsButton %>" ToolTip="<%$ Resources:WebResources, AddMoreItemsButton %>" runat="server" />
                                                         <asp:Button ID="btnSubmitCredit" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, ButtonContinue %>" ToolTip="<%$ Resources:WebResources, ButtonContinue %>" runat="server" />
@@ -276,7 +276,7 @@
                                                     <b2p:PaymentBankAccount ID="pbaEnterBankAccountInfo" runat="server" />
                                                     <br />
                                                     <div class="pull-right">
-                                                        <asp:Button ID="btnCancelAch" CssClass="btn btn-link btn-sm" Text="<%$ Resources:WebResources, ButtonCancel %>" ToolTip="<%$ Resources:WebResources, ButtonCancel %>" runat="server" />
+                                                        <asp:Button ID="btnCancelAch" CssClass="btn btn-link btn-sm" Text="<%$ Resources:WebResources, ButtonCancel %>" ToolTip="<%$ Resources:WebResources, ButtonCancel %>" runat="server" OnClientClick="return cancelModal();"/>
                                                         <asp:Button ID="btnAddMoreItemAch" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, AddMoreItemsButton %>" ToolTip="<%$ Resources:WebResources, AddMoreItemsButton %>" runat="server" />
                                                         <asp:Button ID="btnSubmitAch" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, ButtonContinue %>" ToolTip="<%$ Resources:WebResources, ButtonContinue %>" runat="server" />
                                                         <br />
