@@ -474,6 +474,15 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected WithEvents btnCancelCredit As Global.System.Web.UI.WebControls.Button
         
         '''<summary>
+        '''btnAddMoreItemCredit control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents btnAddMoreItemCredit As Global.System.Web.UI.WebControls.Button
+        
+        '''<summary>
         '''btnSubmitCredit control.
         '''</summary>
         '''<remarks>
@@ -508,6 +517,15 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents btnCancelAch As Global.System.Web.UI.WebControls.Button
+        
+        '''<summary>
+        '''btnAddMoreItemAch control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents btnAddMoreItemAch As Global.System.Web.UI.WebControls.Button
         
         '''<summary>
         '''btnSubmitAch control.

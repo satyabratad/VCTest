@@ -40,6 +40,11 @@ Namespace B2P.PaymentLanding.Express.Web
                     pnlNonSSOBreadcrumb.Visible = True
                 End If
                 txtAmount.Text = CalculateSubTotal()
+
+                If BLL.SessionManager.ClientType = Cart.EClientType.SSO Then
+                    btnAddMoreItemCredit.Visible = False
+                    btnAddMoreItemAch.Visible = False
+                End If
             End If
         End Sub
         Protected Function CalculateSubTotal() As String
@@ -263,16 +268,30 @@ Namespace B2P.PaymentLanding.Express.Web
                     card.Owner.Address2 = "NA"
                     card.Owner.City = "NA"
                     ':::::::::::::::::::::::::::::::::::::::::::::::::
-                    'card.Owner.CountryCode ="US"
+                    '
                     If Not String.IsNullOrEmpty(pccEnterCreditCardInfo.CreditCardCountry) Then
                         card.Owner.CountryCode = pccEnterCreditCardInfo.CreditCardCountry
+                    Else
+                        card.Owner.CountryCode = "US"
                     End If
 
                     ' Set international info to FL and 11111 per Ken Ponder
                     ' May want to visit this later and validate
-                    card.Owner.State = "FL"
-                    'card.Owner.ZipCode = "11111"
-                    card.Owner.ZipCode = pccEnterCreditCardInfo.CreditCardBillingZip
+
+                    ''Seting the default state as per coutry setting 
+                    If card.Owner.CountryCode = "US" Or card.Owner.CountryCode = "OT" Then
+                        card.Owner.State = "FL"
+                    ElseIf card.Owner.CountryCode = "CA" Then
+                        card.Owner.State = "ON"
+                    End If
+
+                    If Not String.IsNullOrEmpty(pccEnterCreditCardInfo.CreditCardBillingZip) Then
+                        card.Owner.ZipCode = pccEnterCreditCardInfo.CreditCardBillingZip
+                    Else
+                        card.Owner.ZipCode = "11111"
+                    End If
+
+
 
                     card.Owner.EMailAddress = String.Empty
                     card.Owner.PhoneNumber = String.Empty
@@ -606,5 +625,19 @@ Namespace B2P.PaymentLanding.Express.Web
 
             Return Utility.IIf(Of Boolean)(errFound, False, True)
         End Function
+
+        Protected Sub btnAddMoreItemCredit_Click(sender As Object, e As EventArgs) Handles btnAddMoreItemCredit.Click
+            BLL.SessionManager.ManageCart.ShowCart = False
+            BLL.SessionManager.ManageCart.EditItemIndex = -1
+
+            Response.Redirect("~/pay/")
+        End Sub
+
+        Protected Sub btnAddMoreItemAch_Click(sender As Object, e As EventArgs) Handles btnAddMoreItemAch.Click
+            BLL.SessionManager.ManageCart.ShowCart = False
+            BLL.SessionManager.ManageCart.EditItemIndex = -1
+
+            Response.Redirect("~/pay/")
+        End Sub
     End Class
 End Namespace
