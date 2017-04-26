@@ -771,6 +771,24 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected WithEvents lblPaymentMsg As Global.System.Web.UI.WebControls.Label
         
         '''<summary>
+        '''btnYes control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents btnYes As Global.System.Web.UI.WebControls.Button
+        
+        '''<summary>
+        '''btnNo control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents btnNo As Global.System.Web.UI.WebControls.Button
+        
+        '''<summary>
         '''hdfCollapseState control.
         '''</summary>
         '''<remarks>

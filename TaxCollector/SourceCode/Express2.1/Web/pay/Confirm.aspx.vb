@@ -27,14 +27,17 @@ Namespace B2P.PaymentLanding.Express.Web
             End If
 
         End Sub
-        Protected Sub btnYes_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
+        Protected Sub btnYes_Click(sender As Object, e As EventArgs) Handles btnYes.Click
             Response.Redirect("~/pay/")
         End Sub
-        Protected Sub btnNo_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
+        Protected Sub btnNo_Click(sender As Object, e As EventArgs) Handles btnNo.Click
+            Dim redirectToken As String = BLL.SessionManager.Token
+            Dim redirectClientCode As String = BLL.SessionManager.ClientCode
+            BLL.SessionManager.Clear()
             If BLL.SessionManager.IsSSOProduct Then
-                Response.Redirect("/sso/" & BLL.SessionManager.Token)
+                Response.Redirect("/sso/" & redirectToken)
             Else
-                Response.Redirect("/client/" & BLL.SessionManager.ClientCode)
+                Response.Redirect("/client/" & redirectClientCode)
             End If
         End Sub
         Protected Sub btnFeesConfirm_Click(sender As Object, e As EventArgs) Handles btnFeesConfirm.Click
@@ -593,7 +596,6 @@ Namespace B2P.PaymentLanding.Express.Web
                 Dim z As New B2P.Objects.Product(BLL.SessionManager.ClientCode, cart.Item, B2P.Common.Enumerations.TransactionSources.Web)
                 cart.CollectPropertyAddress = z.CollectAddress
             Next
-
             BLL.SessionManager.ManageCart.SavePropertyAddress(BLL.SessionManager.ClientCode, BatchId)
         End Sub
     End Class

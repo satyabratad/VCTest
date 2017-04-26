@@ -226,13 +226,13 @@
 
 
                                         <b2p:SubTotal runat="server" ID="SubTotal" />
-                                        
-                                        <div class="alert alert-danger" style="display:none" id="lblErrAmount" role="alert">
+
+                                        <div class="alert alert-danger" style="display: none" id="lblErrAmount" role="alert">
                                             <div class="fa fa-exclamation-circle fa-2x status-msg-icon" id="imgStatusMsgIcon"></div>
                                             <div class="status-msg-text" id="txtStatusMsg"></div>
 
                                         </div>
-                                        
+
                                         <div id="pnlFormContents" role="form" runat="server">
                                             <br />
                                             <strong>
@@ -263,7 +263,7 @@
                                                     <b2p:PaymentCreditCard ID="pccEnterCreditCardInfo" runat="server" />
                                                     <br />
                                                     <div class="pull-right">
-                                                        <asp:Button ID="btnCancelCredit" CssClass="btn btn-link btn-sm" Text="<%$ Resources:WebResources, ButtonCancel %>" ToolTip="<%$ Resources:WebResources, ButtonCancel %>" runat="server" />
+                                                        <asp:Button ID="btnCancelCredit" CssClass="btn btn-link btn-sm" Text="<%$ Resources:WebResources, ButtonCancel %>" ToolTip="<%$ Resources:WebResources, ButtonCancel %>" runat="server" OnClientClick="return cancelModal();" />
                                                         <asp:Button ID="btnSubmitCredit" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, ButtonContinue %>" ToolTip="<%$ Resources:WebResources, ButtonContinue %>" runat="server" />
                                                         <br />
                                                     </div>
@@ -273,7 +273,7 @@
                                                     <b2p:PaymentBankAccount ID="pbaEnterBankAccountInfo" runat="server" />
                                                     <br />
                                                     <div class="pull-right">
-                                                        <asp:Button ID="btnCancelAch" CssClass="btn btn-link btn-sm" Text="<%$ Resources:WebResources, ButtonCancel %>" ToolTip="<%$ Resources:WebResources, ButtonCancel %>" runat="server" />
+                                                        <asp:Button ID="btnCancelAch" CssClass="btn btn-link btn-sm" Text="<%$ Resources:WebResources, ButtonCancel %>" ToolTip="<%$ Resources:WebResources, ButtonCancel %>" runat="server" OnClientClick="return cancelModal();" />
                                                         <asp:Button ID="btnSubmitAch" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, ButtonContinue %>" ToolTip="<%$ Resources:WebResources, ButtonContinue %>" runat="server" />
                                                         <br />
                                                     </div>
@@ -312,7 +312,7 @@
             <br />
             <br />
             <%--</div>--%>
-            
+
 
 
             <!-- START PAYMENT AMOUNT MODAL DIALOG -->
@@ -328,8 +328,10 @@
 
                         <div class="modal-body">
                             <asp:Panel ID="pnlBankAccountAmount" runat="server">
-                                <p class="text-primarydark"><strong>
-                                    <asp:Literal ID="Literal2" Text="<%$ Resources:WebResources, lblBankAccountPayments %>" runat="server" /></strong></p>
+                                <p class="text-primarydark">
+                                    <strong>
+                                        <asp:Literal ID="Literal2" Text="<%$ Resources:WebResources, lblBankAccountPayments %>" runat="server" /></strong>
+                                </p>
                                 <hr />
                                 <p>
                                     <asp:Literal ID="litBankAccountMinMaxAmounts" runat="server" />
@@ -337,8 +339,10 @@
                                 <br />
                             </asp:Panel>
                             <asp:Panel ID="pnlCreditCardAmount" runat="server">
-                                <p class="text-primarydark"><strong>
-                                    <asp:Literal ID="Literal4" Text="<%$ Resources:WebResources, lblCreditCardPayments %>" runat="server" /></strong></p>
+                                <p class="text-primarydark">
+                                    <strong>
+                                        <asp:Literal ID="Literal4" Text="<%$ Resources:WebResources, lblCreditCardPayments %>" runat="server" /></strong>
+                                </p>
                                 <hr />
                                 <p>
                                     <asp:Literal ID="litCreditCardMinMaxAmounts" runat="server" />
@@ -462,8 +466,10 @@
 
                         <div class="modal-body">
                             <asp:Panel ID="pnlACHFee" runat="server">
-                                <p class="text-primarydark"><strong>
-                                    <asp:Literal ID="litBankAccountPaymentsTitle" Text="<%$ Resources:WebResources, lblBankAccountPayments %>" runat="server" /></strong></p>
+                                <p class="text-primarydark">
+                                    <strong>
+                                        <asp:Literal ID="litBankAccountPaymentsTitle" Text="<%$ Resources:WebResources, lblBankAccountPayments %>" runat="server" /></strong>
+                                </p>
                                 <hr />
                                 <p>
                                     <asp:Literal ID="litACHFee" runat="server" />
@@ -471,8 +477,10 @@
                                 <br />
                             </asp:Panel>
                             <asp:Panel ID="pnlCCFee" runat="server">
-                                <p class="text-primarydark"><strong>
-                                    <asp:Literal ID="litCreditCardPaymentsTitle" Text="<%$ Resources:WebResources, lblCreditCardPayments %>" runat="server" /></strong></p>
+                                <p class="text-primarydark">
+                                    <strong>
+                                        <asp:Literal ID="litCreditCardPaymentsTitle" Text="<%$ Resources:WebResources, lblCreditCardPayments %>" runat="server" /></strong>
+                                </p>
                                 <hr />
                                 <p>
                                     <asp:Literal ID="litCCFee" runat="server" />
@@ -515,7 +523,32 @@
                 </div>
             </div>
             <!-- END PAYMENT WARNING MODAL DIALOG -->
-
+            <!-- START CANCEL CONFIRM MODAL DIALOG -->
+            <div id="cancelModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                                &times;</button>
+                           
+                            <h4 class="modal-title"><asp:Literal ID="Literal3" Text="<%$ Resources:WebResources, ModalCancelConfirmation %>" runat="server" /></h4>
+                        </div>
+                        <div class="modal-body">
+                            <div id="div1" role="alert" style="margin-top: 10px;" class="alert alert-success">
+                                <div class="status-msg-text">
+                                    <span class="control-label"><asp:Literal ID="Literal5" Text="<%$ Resources:WebResources, ModalCancelConfirmationText %>" runat="server" /></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <asp:Button type="button" ID="btnYes" runat="server" CssClass="btn btn-primary" title="Yes" OnClick="btnYes_Click" Text="<%$ Resources:WebResources, YesButton %>"></asp:Button>
+                            <asp:Button type="button" ID="btnNo" runat="server" CssClass="btn btn-primary" title="No" OnClick="btnNo_Click" Text="<%$ Resources:WebResources, NoButton %>"></asp:Button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END CANCEL CONFIRM MODAL DIALOG -->
 
             <asp:HiddenField ID="hdfCollapseState" runat="server" />
             <asp:HiddenField ID="hdfTabName" runat="server" />
@@ -566,22 +599,22 @@
 
                     var doc = document;
             <% =B2P.PaymentLanding.Express.Web.Utility.BuildAllowedCardsPattern()%>
-            var panel = doc.getElementById("pnlOtherAmount");
-            var cardType = $.payment.cardType(doc.getElementById("txtCreditCardNumber").value);
-            var item = new ValidationItem();
+                    var panel = doc.getElementById("pnlOtherAmount");
+                    var cardType = $.payment.cardType(doc.getElementById("txtCreditCardNumber").value);
+                    var item = new ValidationItem();
 
 
-            // Create instance of the form validator
-            var validator = new FormValidator();
-            validator.setErrorMessageHeader("<%=GetGlobalResourceObject("WebResources", "ErrMsgHeader").ToString()%>\n\n")
-              validator.setInvalidCssClass("has-error");
-              validator.setAlertBoxStatus(false);
+                    // Create instance of the form validator
+                    var validator = new FormValidator();
+                    validator.setErrorMessageHeader("<%=GetGlobalResourceObject("WebResources", "ErrMsgHeader").ToString()%>\n\n")
+            validator.setInvalidCssClass("has-error");
+            validator.setAlertBoxStatus(false);
 
-            // Add validation items to validator
+                    // Add validation items to validator
 
-              switch (paymentType) {
+            switch (paymentType) {
 
-                  case "CC":
+                case "CC":
 
                      <% =B2P.PaymentLanding.Express.Web.Utility.BuildCCAmount()%>
                       var cardType = $.payment.cardType(doc.getElementById("txtCreditCardNumber").value);
@@ -609,66 +642,65 @@
                           field: "txtExpireDate",
                           styleParent: true,
                           errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgCreditCardExpiry").ToString%>",
-                            isValid: (!!/^\d{2} \/ \d{2}$/.test(doc.getElementById("txtExpireDate").value) &&
-                                      $.payment.validateCardExpiry($.payment.cardExpiryVal(cardMonth.concat("/", cardYear))) &&
-                                      cardYear <= new Date().getFullYear() + 10)
+                          isValid: (!!/^\d{2} \/ \d{2}$/.test(doc.getElementById("txtExpireDate").value) &&
+                                    $.payment.validateCardExpiry($.payment.cardExpiryVal(cardMonth.concat("/", cardYear))) &&
+                                    cardYear <= new Date().getFullYear() + 10)
                       });
 
 
-                        validator.addValidationItem(item = {
-                            field: "txtCCV",
-                            styleParent: true,
-                            errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgCreditCardCVC").ToString()%>",
-                          isValid: ($.payment.validateCardCVC(doc.getElementById("txtCCV").value, cardType))
-                      });
+                      validator.addValidationItem(item = {
+                          field: "txtCCV",
+                          styleParent: true,
+                          errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgCreditCardCVC").ToString()%>",
+                            isValid: ($.payment.validateCardCVC(doc.getElementById("txtCCV").value, cardType))
+                        });
 
-                      zip = doc.getElementById('txtBillingZip').value;
+                        zip = doc.getElementById('txtBillingZip').value;
                       // Check to see if zip is required
-                      if ($("#hdZipRequired").val() == 'Y') {
-                         
-                          if (zip == '') {
-                              validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
+                        if ($("#hdZipRequired").val() == 'Y') {
 
-                          }
+                            if (zip == '') {
+                                validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
 
                       }
-                          //zip = doc.getElementById('txtBillingZip').value;
 
-                          if (zip !== '') {
-                              // Set the validator
-                              if ($("#ddlCountry").val() == "US")
-                                  validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeUnitedStates, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
+                  }
+                      //zip = doc.getElementById('txtBillingZip').value;
+
+                  if (zip !== '') {
+                      // Set the validator
+                      if ($("#ddlCountry").val() == "US")
+                          validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeUnitedStates, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
                               if ($("#ddlCountry").val() == "CA")
                                   validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeCanada, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
                               if ($("#ddlCountry").val() == "OT")
                                   validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeInternational, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
                           }
-                     
 
-                              if (panel && doc.getElementById("rdAmount").checked) {
-                                  
-                                  validator.addValidationItem(item = {
-                                      field: "txtAmount",
-                                      styleParent: true,
-                                      errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString()%>",
-                             isValid: (validatePaymentAmount(doc.getElementById("txtAmount").value, ccMinMaxAmounts))
+
+                          if (panel && doc.getElementById("rdAmount").checked) {
+
+                              validator.addValidationItem(item = {
+                                  field: "txtAmount",
+                                  styleParent: true,
+                                  errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString()%>",
+                                      isValid: (validatePaymentAmount(doc.getElementById("txtAmount").value, ccMinMaxAmounts))
                                   });
 
-                                  
+
                               }
-                              if(validatePaymentAmount(doc.getElementById("txtAmount").value, ccMinMaxAmounts)==false)
-                               {
-                                     
-                                    $("#txtStatusMsg").text("<%=GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString()%>");
-                                    $("#lblErrAmount").show();
-                               }
+                              if (validatePaymentAmount(doc.getElementById("txtAmount").value, ccMinMaxAmounts) == false) {
+
+                                  $("#txtStatusMsg").text("<%=GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString()%>");
+                                  $("#lblErrAmount").show();
+                              }
 
 
 
 
-                     break;
+                              break;
 
-                 case "ACH":
+                          case "ACH":
                       <% =B2P.PaymentLanding.Express.Web.Utility.BuildACHAmount()%>
                      validator.addValidationItem(new ValidationItem("txtNameonBankAccount", fieldTypes.Name, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgNameOnBankAccount").ToString()%>"));
                      validator.addValidationItem(new ValidationItem("ddlBankAccountType", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
@@ -678,8 +710,8 @@
                          field: "txtBankAccountNumber",
                          styleParent: true,
                          errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgBankAccount").ToString()%>",
-                          isValid: (!!/^\d{1,17}$/.test(doc.getElementById("txtBankAccountNumber").value))
-                      });
+                         isValid: (!!/^\d{1,17}$/.test(doc.getElementById("txtBankAccountNumber").value))
+                     });
 
                      //validator.addValidationItem(item = {
                      //    field: "txtBankAccountNumber2",
@@ -698,12 +730,11 @@
 
                      }
 
-                     if(validatePaymentAmount(doc.getElementById("txtAmount").value, ccMinMaxAmounts)==false)
-                        {
-                                     
-                          $("#txtStatusMsg").text("<%=GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString()%>");
-                          $("#lblErrAmount").show();
-                        }
+                     if (validatePaymentAmount(doc.getElementById("txtAmount").value, ccMinMaxAmounts) == false) {
+
+                         $("#txtStatusMsg").text("<%=GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString()%>");
+                         $("#lblErrAmount").show();
+                     }
 
                      break;
              }
@@ -770,6 +801,12 @@
          }
 
 
+         //Open cancel modal window
+         function cancelModal() {
+             debugger;
+             $('#cancelModal').modal();
+             return false;
+         }
 
 
 
@@ -778,9 +815,9 @@
         </div>
         <!--// START FOOTER CONTENT //-->
 
-            <b2p:PaymentFooter ID="pfDefault" runat="server" />
+        <b2p:PaymentFooter ID="pfDefault" runat="server" />
 
-            <!--// END FOOTER CONTENT //-->
+        <!--// END FOOTER CONTENT //-->
     </form>
 
 </body>

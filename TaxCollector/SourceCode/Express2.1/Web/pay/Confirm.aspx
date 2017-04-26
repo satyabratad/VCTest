@@ -295,30 +295,31 @@
         </div>
         <!-- END FEE MODAL DIALOG -->
         <!-- START CANCEL CONFIRM MODAL DIALOG -->
-<div id="cancelModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    &times;</button>
-                <h4 class="modal-title">Cancel Confirmation</h4>
-            </div>
-            <div class="modal-body">
-                <div id="div1" role="alert" style="margin-top: 10px;" class="alert alert-success">
-                    <div class="status-msg-text">
-                        <span class="control-label">Do you want to go back to shopping cart?</span>
+            <div id="cancelModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                                &times;</button>
+                           
+                            <h4 class="modal-title"><asp:Literal ID="Literal3" Text="<%$ Resources:WebResources, ModalCancelConfirmation %>" runat="server" /></h4>
+                        </div>
+                        <div class="modal-body">
+                            <div id="div1" role="alert" style="margin-top: 10px;" class="alert alert-success">
+                                <div class="status-msg-text">
+                                    <span class="control-label"><asp:Literal ID="Literal5" Text="<%$ Resources:WebResources, ModalCancelConfirmationText %>" runat="server" /></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <asp:Button type="button" ID="btnYes" runat="server" CssClass="btn btn-primary" title="Yes" OnClick="btnYes_Click" Text="<%$ Resources:WebResources, YesButton %>"></asp:Button>
+                            <asp:Button type="button" ID="btnNo" runat="server" CssClass="btn btn-primary" title="No" OnClick="btnNo_Click" Text="<%$ Resources:WebResources, NoButton %>"></asp:Button>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <asp:button type="button" id="btnYes" runat="server" CssClass="btn btn-primary" title="Yes" OnClick="btnYes_Click" Text="Yes"></asp:button>
-                <asp:button type="button" id="btnNo" runat="server" CssClass="btn btn-primary" title="No" OnClick="btnNo_Click"   Text="No"></asp:button>               
-            </div>
-        </div>
-    </div>
-</div>
-<!-- END CANCEL CONFIRM MODAL DIALOG -->
+            <!-- END CANCEL CONFIRM MODAL DIALOG -->
 
         <!-- JavaScript -->
         <script src="/Js/jquery-1.11.1.min.js"></script>
@@ -400,7 +401,6 @@
 
         </script>
 
-        </div>
     </form>
 
 </body>

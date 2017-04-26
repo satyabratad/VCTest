@@ -523,4 +523,16 @@
   <data name="EditItemMessage" xml:space="preserve">
     <value>Are you sure you want to change the payment amount ?</value>
   </data>
+  <data name="ModalCancelConfirmation" xml:space="preserve">
+    <value>Cancel Confirmation</value>
+  </data>
+  <data name="ModalCancelConfirmationText" xml:space="preserve">
+    <value>Do you want to go back to shopping cart?</value>
+  </data>
+  <data name="NoButton" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="YesButton" xml:space="preserve">
+    <value>Yes</value>
+  </data>
 </root>

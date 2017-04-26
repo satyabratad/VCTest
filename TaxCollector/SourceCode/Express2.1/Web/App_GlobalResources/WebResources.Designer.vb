@@ -1118,6 +1118,33 @@ Namespace Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Cancel Confirmation.
+        '''</summary>
+        Friend Shared ReadOnly Property ModalCancelConfirmation() As String
+            Get
+                Return ResourceManager.GetString("ModalCancelConfirmation", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Do you want to go back to shopping cart?.
+        '''</summary>
+        Friend Shared ReadOnly Property ModalCancelConfirmationText() As String
+            Get
+                Return ResourceManager.GetString("ModalCancelConfirmationText", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to No.
+        '''</summary>
+        Friend Shared ReadOnly Property NoButton() As String
+            Get
+                Return ResourceManager.GetString("NoButton", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Uppercase letter.
         '''</summary>
         Friend Shared ReadOnly Property PasswordRequirementBullet1() As String
@@ -1249,6 +1276,15 @@ Namespace Resources
         Friend Shared ReadOnly Property ThankYouforYourPayment() As String
             Get
                 Return ResourceManager.GetString("ThankYouforYourPayment", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Yes.
+        '''</summary>
+        Friend Shared ReadOnly Property YesButton() As String
+            Get
+                Return ResourceManager.GetString("YesButton", resourceCulture)
             End Get
         End Property
         

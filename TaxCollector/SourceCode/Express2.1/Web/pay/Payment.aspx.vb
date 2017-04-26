@@ -51,48 +51,19 @@ Namespace B2P.PaymentLanding.Express.Web
             End If
             Return total.ToString()
         End Function
-        Private Sub btnCancelAch_Click(sender As Object, e As EventArgs) Handles btnCancelAch.Click
+        Protected Sub btnYes_Click(sender As Object, e As EventArgs) Handles btnYes.Click
+            Response.Redirect("~/pay/")
+        End Sub
+        Protected Sub btnNo_Click(sender As Object, e As EventArgs) Handles btnNo.Click
+            Dim redirectToken As String = BLL.SessionManager.Token
+            Dim redirectClientCode As String = BLL.SessionManager.ClientCode
+            BLL.SessionManager.Clear()
             If BLL.SessionManager.IsSSOProduct Then
-                ' what do we do here?
+                Response.Redirect("/sso/" & redirectToken)
             Else
-                Dim redirectUrl As String = String.Empty
-
-                Me.CheckSession()
-
-                ' Got to here -- session is still good
-                If BLL.SessionManager.IsInitialized Then
-
-                    redirectUrl = "/client/" &
-                                  BLL.SessionManager.ClientCode
-
-                    BLL.SessionManager.Clear()
-
-                    Response.Redirect(Utility.SafeEncode(redirectUrl.Trim))
-                End If
+                Response.Redirect("/client/" & redirectClientCode)
             End If
         End Sub
-
-        Private Sub btnCancelCredit_Click(sender As Object, e As EventArgs) Handles btnCancelCredit.Click
-            If BLL.SessionManager.IsSSOProduct Then
-                ' what do we do here?
-            Else
-                Dim redirectUrl As String = String.Empty
-
-                Me.CheckSession()
-
-                ' Got to here -- session is still good
-                If BLL.SessionManager.IsInitialized Then
-
-                    redirectUrl = "/client/" &
-                                  BLL.SessionManager.ClientCode
-
-                    BLL.SessionManager.Clear()
-
-                    Response.Redirect(Utility.SafeEncode(redirectUrl.Trim))
-                End If
-            End If
-        End Sub
-
         Private Sub btnFees_Click(sender As Object, e As EventArgs) Handles btnFees.Click
             ' Show the convenience fees modal dialog
             Page.ClientScript.RegisterStartupScript(Me.GetType, "Show", "$(document).ready(function() { $('#feeInfoModal').modal({show: 'true', backdrop: 'static', keyboard: false}); });", True)

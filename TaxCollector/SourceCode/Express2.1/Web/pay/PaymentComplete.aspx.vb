@@ -326,7 +326,7 @@ Namespace B2P.PaymentLanding.Express.Web
 
         Protected Sub btnAddNew_Click(sender As Object, e As EventArgs) Handles btnAddNew.Click
             Dim clientCode As String = BLL.SessionManager.ClientCode
-            Session.Clear()
+            BLL.SessionManager.Clear()
             Response.Redirect("/client/" & clientCode)
         End Sub
     End Class
