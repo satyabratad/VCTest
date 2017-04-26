@@ -72,6 +72,7 @@ Public Class PaymentCartGrid
     End Function
     Protected Function GetConvenienceFee() As String
         SetConvenienceFeesApplicability()
+        IsConvenienceFeesApplicable()
         If BLL.SessionManager.IsConvenienceFeesApplicable Then
             Return BLL.SessionManager.ConvenienceFee.ToString("C2")
         Else
