@@ -334,6 +334,7 @@
         <script src="/Js/B2P.Utility.js"></script>
         <script src="/Js/B2P.FormValidator.js"></script>
         <script src="/Js/B2P.ValidationType.js"></script>
+      
 
 
         <script type="text/javascript">
@@ -387,17 +388,10 @@
 
             }
             //Open cancel modal window
-            function cancelModal() {
-                debugger;
+            function cancelModal() {              
                 $('#cancelModal').modal();
                 return false;
             }
-
-
-
-
-
-
 
         </script>
 

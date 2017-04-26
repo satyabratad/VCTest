@@ -806,8 +806,7 @@
 
 
          //Open cancel modal window
-         function cancelModal() {
-             debugger;
+         function cancelModal() {            
              $('#cancelModal').modal();
              return false;
          }

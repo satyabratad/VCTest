@@ -224,6 +224,7 @@
         <script src="/Js/B2P.Utility.js"></script>
         <script src="/Js/B2P.FormValidator.js"></script>
         <script src="/Js/B2P.ValidationType.js"></script>
+          <script src="/Js/jquery.maskedinput.js"></script>
 
 
         <script type="text/javascript">
@@ -316,20 +317,13 @@
                 $("#"+ctrlId).prop('disabled', (state==0));
             }
 
-            $('#txtContactPhone').keyup(function (ev) {
-                var key = ev.which;
-                if (key < 48 || key > 57 || key != 45) {
-                    ev.preventDefault();
-                }
-
-                if (this.value.length > 12) {
-                    this.value = this.value.slice(0, -1);
-                    return;
-                }
-
-                this.value = this.value.replace(/^(\d{3})(\d)/, '$1-$2')
-                  .replace(/^(\d{3}-\d{3})(\d)/, '$1-$2');
+           //mask phone number
+            jQuery(function ($) {
+                $("#txtContactPhone").mask("999-999-9999");
             });
+        
+     
+            
 
         </script>
 
