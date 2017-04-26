@@ -27,7 +27,7 @@ Namespace B2P.PaymentLanding.Express.Web
                         pnlProducts.Visible = False
                     End If
 
-                        If y.DefaultProductName <> "" Then
+                    If y.DefaultProductName <> "" Then
                         ddlCategories.SelectedValue = y.DefaultProductName.Trim
 
                     End If
@@ -372,9 +372,7 @@ Namespace B2P.PaymentLanding.Express.Web
             txtLookupAccount1.Text = String.Empty
             txtLookupAccount2.Text = String.Empty
             txtLookupAccount3.Text = String.Empty
-
-
-
+            ctlPropertyAddress.ClearFields()
         End Sub
         Private Sub getProductLookup()
             Dim errMsg As String = String.Empty

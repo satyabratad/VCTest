@@ -197,5 +197,17 @@ Public Class PropertyAddress
 
         Return _Values
     End Function
+
+    ''' <summary>
+    ''' Clear All Fields
+    ''' </summary>
+    Friend Sub ClearFields()
+        txtAddress1.Text = String.Empty
+        txtAddress2.Text = String.Empty
+        txtCity.Text = String.Empty
+        ddlState.ClearSelection()
+        txtZip.Text = String.Empty
+        txtAmount.Text = String.Empty
+    End Sub
 #End Region
 End Class
