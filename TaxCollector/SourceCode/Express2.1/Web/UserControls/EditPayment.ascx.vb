@@ -6,20 +6,22 @@ Namespace B2P.PaymentLanding.Express.Web
 
         Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
             If Not IsPostBack Then
-
-                If Not BLL.SessionManager.ContactInfo Is Nothing Then
-                    pnlZip.Visible = True
-                    Select Case BLL.SessionManager.CreditCard.Owner.CountryCode
-                        Case "US"
-                            lblBillingZipCaption.Text = GetGlobalResourceObject("WebResources", "lblBillingZip").ToString()
-                        Case "CA"
-                            lblBillingZipCaption.Text = GetGlobalResourceObject("WebResources", "lblBillingPostalCode").ToString()
-                        Case Else
-                            lblBillingZipCaption.Text = GetGlobalResourceObject("WebResources", "lblBillingZip").ToString()
-                    End Select
-                Else
-                    pnlZip.Visible = False
+                If Not BLL.SessionManager.CreditCard Is Nothing Then
+                    If Not BLL.SessionManager.ContactInfo Is Nothing Then
+                        pnlZip.Visible = True
+                        Select Case BLL.SessionManager.CreditCard.Owner.CountryCode
+                            Case "US"
+                                lblBillingZipCaption.Text = GetGlobalResourceObject("WebResources", "lblBillingZip").ToString()
+                            Case "CA"
+                                lblBillingZipCaption.Text = GetGlobalResourceObject("WebResources", "lblBillingPostalCode").ToString()
+                            Case Else
+                                lblBillingZipCaption.Text = GetGlobalResourceObject("WebResources", "lblBillingZip").ToString()
+                        End Select
+                    Else
+                        pnlZip.Visible = False
+                    End If
                 End If
+
 
                 Select Case BLL.SessionManager.PaymentType
                     Case Common.Enumerations.PaymentTypes.BankAccount
