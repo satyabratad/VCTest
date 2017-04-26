@@ -30,16 +30,7 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected Sub btnYes_Click(sender As Object, e As EventArgs) Handles btnYes.Click
             Response.Redirect("~/pay/")
         End Sub
-        Protected Sub btnNo_Click(sender As Object, e As EventArgs) Handles btnNo.Click
-            Dim redirectToken As String = BLL.SessionManager.Token
-            Dim redirectClientCode As String = BLL.SessionManager.ClientCode
-            BLL.SessionManager.Clear()
-            If BLL.SessionManager.IsSSOProduct Then
-                Response.Redirect("/sso/" & redirectToken)
-            Else
-                Response.Redirect("/client/" & redirectClientCode)
-            End If
-        End Sub
+
         Protected Sub btnFeesConfirm_Click(sender As Object, e As EventArgs) Handles btnFeesConfirm.Click
             cptConfirmFeeInfo.AgreedToTerms = True
         End Sub

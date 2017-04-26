@@ -547,7 +547,7 @@
                         </div>
                         <div class="modal-footer">
                             <asp:Button type="button" ID="btnYes" runat="server" CssClass="btn btn-primary" title="Yes" OnClick="btnYes_Click" Text="<%$ Resources:WebResources, YesButton %>"></asp:Button>
-                            <asp:Button type="button" ID="btnNo" runat="server" CssClass="btn btn-primary" title="No" OnClick="btnNo_Click" Text="<%$ Resources:WebResources, NoButton %>"></asp:Button>
+                            <asp:Button type="button" ID="btnNo" runat="server" CssClass="btn btn-primary" title="No" OnClientClick="return false;" data-dismiss="modal" Text="<%$ Resources:WebResources, NoButton %>"></asp:Button>
                         </div>
                     </div>
                 </div>
