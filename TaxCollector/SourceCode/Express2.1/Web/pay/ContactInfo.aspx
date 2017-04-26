@@ -276,25 +276,19 @@
                     }
                
                 // Check to see if zip is required
-                if ($("#hdZipRequired").val() == 'Y') {
+               
                     zip = doc.getElementById('hdContactZip').value;
                     if (zip !== '') {
                         validator.addValidationItem(new ValidationItem("txtContactZip", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
                     }
-                }
-                else {
-                    doc.getElementById('hdContactZip').value = '';
-                }
+               
                 // Check to see if phone is required
                
                     phone = doc.getElementById('hdPhone').value;
                     if (phone !== '') {
                         validator.addValidationItem(new ValidationItem("txtContactPhone", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
                     }
-               <%-- phone = doc.getElementById('txtContactPhone').value;
-                    if (phone !== '') {
-                        validator.addValidationItem(new ValidationItem("txtContactPhone", fieldTypes.PhoneNumber, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
-                    }--%>
+             
                 
                 zip = doc.getElementById('txtContactZip').value;
                
