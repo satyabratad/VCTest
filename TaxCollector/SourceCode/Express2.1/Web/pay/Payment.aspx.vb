@@ -621,15 +621,23 @@ Namespace B2P.PaymentLanding.Express.Web
 
             Return Utility.IIf(Of Boolean)(errFound, False, True)
         End Function
-
+        ''' <summary>
+        ''' Redirect to default page for add new item
+        ''' </summary>
+        ''' <param name="sender"></param>
+        ''' <param name="e"></param>
         Protected Sub btnAddMoreItemCredit_Click(sender As Object, e As EventArgs) Handles btnAddMoreItemCredit.Click
-            'Redirect to default page for add new item
+
             BLL.SessionManager.ManageCart.ShowCart = False
             BLL.SessionManager.ManageCart.EditItemIndex = -1
 
             Response.Redirect("~/pay/")
         End Sub
-
+        ''' <summary>
+        ''' Redirect to default page for add new item 
+        ''' </summary>
+        ''' <param name="sender"></param>
+        ''' <param name="e"></param>
         Protected Sub btnAddMoreItemAch_Click(sender As Object, e As EventArgs) Handles btnAddMoreItemAch.Click
             'Redirect to default page for add new item
             BLL.SessionManager.ManageCart.ShowCart = False
