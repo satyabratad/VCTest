@@ -11,10 +11,15 @@ Imports B2P.PaymentLanding.Express.Web
 Imports B2P.PaymentLanding.Express.BLL
 Imports Resources
 
+''' <summary>
+'''  This will manage the Bread Crumb menu
+''' </summary>
 Public Class BreadCrumbMenu
     Inherits System.Web.UI.UserControl
 #Region "Properties"
-
+    ''' <summary>
+    ''' Identify the account details tab  will be visible or not
+    ''' </summary>
     Private _isAccountPageVisible As Boolean = True
     Public Property IsAccountPageVisible() As Boolean
         Get
@@ -24,6 +29,10 @@ Public Class BreadCrumbMenu
             _isAccountPageVisible = value
         End Set
     End Property
+
+    ''' <summary>
+    ''' Identify the Contact Info tab  will be visible or not
+    ''' </summary>
     Private _isContactInfoVisible As String
     Public Property IsContactInfoVisible() As String
         Get
@@ -34,6 +43,9 @@ Public Class BreadCrumbMenu
         End Set
     End Property
 
+    ''' <summary>
+    ''' Indicate the current page 
+    ''' </summary>
     Private _pageTagName As String
     Public Property PageTagName() As String
         Get
@@ -44,6 +56,10 @@ Public Class BreadCrumbMenu
         End Set
     End Property
 
+    ''' <summary>
+    ''' Link address of the current page.
+    ''' Uasd if the link is other than defaulft page link
+    ''' </summary>
     Private _RedirectAddress As String
     Public Property RedirectAddress() As String
         Get
