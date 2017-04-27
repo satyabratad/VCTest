@@ -90,6 +90,7 @@ Namespace B2P.PaymentLanding.Express.Web
         ''' </summary>
         Private Sub RegisterClientJs()
             btnContinue.Attributes.Add("onClick", "return validateForm()")
+            btnAddMoreItems.Attributes.Add("onClick", "return validateForm()")
         End Sub
         ''' <summary>
         ''' Bind State from XML
