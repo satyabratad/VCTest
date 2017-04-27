@@ -1,7 +1,15 @@
 ﻿Namespace B2P.PaymentLanding.Express.Web
+    ''' <summary>
+    ''' This class is for maintainting the information in bread crumb menu tab pages
+    ''' </summary>
     Public Class BreadCrumbTab
 
         Private _pageTag As String
+        ''' <summary>
+        ''' Tag name of the page 
+        ''' 
+        ''' </summary>
+        ''' <returns></returns>
         Public Property PageTag() As String
             Get
                 Return _pageTag
@@ -11,6 +19,10 @@
             End Set
         End Property
         Private _menuName As String
+        ''' <summary>
+        ''' Display brad crumb menu name
+        ''' </summary>
+        ''' <returns></returns>
         Public Property MenuName() As String
             Get
                 Return _menuName
@@ -21,6 +33,10 @@
         End Property
 
         Private _pageName As String
+        ''' <summary>
+        ''' Linked page or file name 
+        ''' </summary>
+        ''' <returns></returns>
         Public Property PageName() As String
             Get
                 Return _pageName
@@ -30,6 +46,10 @@
             End Set
         End Property
         Private _isPageVisible As Boolean
+        ''' <summary>
+        ''' Indicate the page is visible or not
+        ''' </summary>
+        ''' <returns></returns>
         Public Property IsPageVisible() As Boolean
             Get
                 Return _isPageVisible
@@ -40,6 +60,10 @@
         End Property
 
         Private _index As Integer
+        ''' <summary>
+        ''' Index of the bread crumb menu
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Index() As Integer
             Get
                 Return _index
@@ -50,6 +74,10 @@
         End Property
 
         Private _isVisited As Boolean
+        ''' <summary>
+        ''' Indicate the page is already visited or not
+        ''' </summary>
+        ''' <returns></returns>
         Public Property IsVisited() As Boolean
             Get
                 Return _isVisited
