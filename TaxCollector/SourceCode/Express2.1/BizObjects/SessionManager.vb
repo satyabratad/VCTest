@@ -262,9 +262,6 @@ Namespace B2P.PaymentLanding.Express.BLL
             End Set
         End Property
 
-        'Public Shared Property BreadCrumbMenuList() As(Of )
-
-
         ''' <summary>
         ''' The product list for a transaction.
         ''' </summary>
@@ -908,8 +905,6 @@ Namespace B2P.PaymentLanding.Express.BLL
             End If
             ContactInfo.Address1 = Address1
             ContactInfo.Address2 = Address2
-            'ContactInfo.UserField1 = ContactInformation.Address1.Value
-            'ContactInfo.UserField2 = ContactInformation.Address1.Value
             If State <> "" Then
                 ContactInfo.State = State
             End If
