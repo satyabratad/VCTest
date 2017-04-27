@@ -12,6 +12,7 @@ Namespace B2P.PaymentLanding.Express.Web
                 Response.Redirect("/Errors/Error.aspx", False)
             End If
             If Not IsPostBack Then
+                Me.CheckSession()
                 BindCountries()
                 If Not BLL.SessionManager.ContactInfo Is Nothing Then
                     If BLL.SessionManager.ContactInfo.UserField2.Trim() <> "" Then
