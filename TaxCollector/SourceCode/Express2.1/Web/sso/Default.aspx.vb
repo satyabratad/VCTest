@@ -2,6 +2,9 @@
 Imports System.IO
 
 Namespace B2P.PaymentLanding.Express.Web
+    ''' <summary>
+    ''' Default page for SSO client
+    ''' </summary>
     Public Class _ssodefault : Inherits System.Web.UI.Page
 
         Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -26,9 +29,7 @@ Namespace B2P.PaymentLanding.Express.Web
             End If
 
             Dim redirectAddress As String = String.Empty
-            'If Not IsPostBack Then
-            '    Session.Clear()
-            'End If
+
 
             If BLL.SessionManager.ManageCart.ShowCart = False Then
                 If Not IsPostBack Then
@@ -86,13 +87,12 @@ Namespace B2P.PaymentLanding.Express.Web
 
                                         Dim z As B2P.Objects.Client = B2P.Objects.Client.GetClient(BLL.SessionManager.ClientCode.ToString)
 
-                                        ''TODO: For test purpose only need to delete after development
-                                        'z.SSODisplayType = Objects.Client.SSODisplayTypes.ShoppingCart
+
 
                                         'Determine SSO type
                                         Select Case z.SSODisplayType
                                             Case B2P.Objects.Client.SSODisplayTypes.ReadOnlyGrid
-                                                'BreadCrumbMenu.IsAccountPageVisible = False
+
                                                 BLL.SessionManager.ClientType = Cart.EClientType.SSO
                                                 BLL.SessionManager.SSODisplayType = B2P.Objects.Client.SSODisplayTypes.ReadOnlyGrid
                                                 loadDataGrid(x, Token)
@@ -102,7 +102,7 @@ Namespace B2P.PaymentLanding.Express.Web
                                                 BLL.SessionManager.ClientType = Cart.EClientType.SSO
                                                 loadShopingCartDataGrid(x, Token)
                                             Case B2P.Objects.Client.SSODisplayTypes.SingleItem
-                                                ' BreadCrumbMenu.IsAccountPageVisible = False
+
                                                 BLL.SessionManager.ClientType = Cart.EClientType.SSO
                                                 BLL.SessionManager.SSODisplayType = B2P.Objects.Client.SSODisplayTypes.SingleItem
                                                 loadData(x, Token)
@@ -293,9 +293,9 @@ Namespace B2P.PaymentLanding.Express.Web
                         BLL.SessionManager.IsInitialized = True
                         If BLL.SessionManager.ManageCart.ShowCart = True Then
                             Response.Redirect(BreadCrumbMenu.RedirectAddress, False)
-                            'Response.Redirect("~/sso/", False)
+
                         End If
-                        'Response.Redirect("/pay/payment.aspx", False)
+
                     End If
 
                 Else
@@ -328,9 +328,9 @@ Namespace B2P.PaymentLanding.Express.Web
                             BLL.SessionManager.IsInitialized = True
                             If BLL.SessionManager.ManageCart.ShowCart = True Then
                                 Response.Redirect(BreadCrumbMenu.RedirectAddress, False)
-                                'Response.Redirect("~/sso/", False)
+
                             End If
-                            'Response.Redirect("/pay/payment.aspx", False)
+
                         End If
 
                     End If
@@ -411,9 +411,9 @@ Namespace B2P.PaymentLanding.Express.Web
                         BLL.SessionManager.IsInitialized = True
                         If BLL.SessionManager.ManageCart.ShowCart = True Then
                             Response.Redirect(BreadCrumbMenu.RedirectAddress, False)
-                            'Response.Redirect("~/sso/", False)
+
                         End If
-                        'Response.Redirect("/pay/payment.aspx", False)
+
                     End If
                 End If
 
@@ -431,7 +431,11 @@ Namespace B2P.PaymentLanding.Express.Web
         End Sub
 
 
-
+        ''' <summary>
+        ''' This method will load the shopping cart details in to data grid 
+        ''' </summary>
+        ''' <param name="TokenInfo"></param>
+        ''' <param name="Token"></param>
         Private Sub loadShopingCartDataGrid(ByVal TokenInfo As B2P.SSOLookup.PaymentInformation, ByVal Token As String)
             Dim errMsg As String = String.Empty
             Dim cart As New B2P.Cart.Cart
@@ -493,9 +497,6 @@ Namespace B2P.PaymentLanding.Express.Web
                             End If
                         Else
                             ' Adding to cart 
-
-
-
                             AddToCart(z, CurrentCategory, ci)
 
                         End If
@@ -508,10 +509,10 @@ Namespace B2P.PaymentLanding.Express.Web
                         BLL.SessionManager.IsInitialized = True
                         If BLL.SessionManager.ManageCart.ShowCart = True Then
                             Response.Redirect(BreadCrumbMenu.RedirectAddress, False)
-                            'Response.Redirect("~/sso/", False)
+
                         End If
 
-                        'Response.Redirect("/pay/payment.aspx", False)
+
                     End If
                 End If
 
@@ -528,6 +529,13 @@ Namespace B2P.PaymentLanding.Express.Web
 
         End Sub
 
+        ''' <summary>
+        ''' This method will add the items for the SSO client in to  shopping cart
+        ''' </summary>
+        ''' <param name="z"> Clint object</param>
+        ''' <param name="CurrentCategory">Category</param>
+        ''' <param name="ci">Cart item</param>
+        ''' <returns></returns>
         Private Shared Function AddToCart(z As Objects.Client, CurrentCategory As Objects.Product, ci As SSOLookup.PaymentInformation.CartItem)
             Dim cart As New B2P.Cart.Cart
 
@@ -549,9 +557,6 @@ Namespace B2P.PaymentLanding.Express.Web
             cart.PropertyAddress.City = z.City
             cart.PropertyAddress.State = z.State
             cart.PropertyAddress.Zip = z.ZipCode
-
-
-
 
 
             If BLL.SessionManager.ManageCart.AddToCart(cart) Then
