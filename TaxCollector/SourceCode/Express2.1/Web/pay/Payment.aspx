@@ -263,9 +263,9 @@
                                                     <b2p:PaymentCreditCard ID="pccEnterCreditCardInfo" runat="server" />
                                                     <br />
                                                     <div class="pull-right">
-                                                        
-                                                        <asp:Button ID="btnCancelCredit" CssClass="btn btn-link btn-sm" Text="<%$ Resources:WebResources, ButtonCancel %>" ToolTip="<%$ Resources:WebResources, ButtonCancel %>" runat="server" OnClientClick="return cancelModal();"/>
-                                                        
+
+                                                        <asp:Button ID="btnCancelCredit" CssClass="btn btn-link btn-sm" Text="<%$ Resources:WebResources, ButtonCancel %>" ToolTip="<%$ Resources:WebResources, ButtonCancel %>" runat="server" OnClientClick="return cancelModal();" />
+
                                                         <asp:Button ID="btnAddMoreItemCredit" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, AddMoreItemsButton %>" ToolTip="<%$ Resources:WebResources, AddMoreItemsButton %>" runat="server" />
                                                         <asp:Button ID="btnSubmitCredit" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, ButtonContinue %>" ToolTip="<%$ Resources:WebResources, ButtonContinue %>" runat="server" />
                                                         <br />
@@ -276,7 +276,7 @@
                                                     <b2p:PaymentBankAccount ID="pbaEnterBankAccountInfo" runat="server" />
                                                     <br />
                                                     <div class="pull-right">
-                                                        <asp:Button ID="btnCancelAch" CssClass="btn btn-link btn-sm" Text="<%$ Resources:WebResources, ButtonCancel %>" ToolTip="<%$ Resources:WebResources, ButtonCancel %>" runat="server" OnClientClick="return cancelModal();"/>
+                                                        <asp:Button ID="btnCancelAch" CssClass="btn btn-link btn-sm" Text="<%$ Resources:WebResources, ButtonCancel %>" ToolTip="<%$ Resources:WebResources, ButtonCancel %>" runat="server" OnClientClick="return cancelModal();" />
                                                         <asp:Button ID="btnAddMoreItemAch" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, AddMoreItemsButton %>" ToolTip="<%$ Resources:WebResources, AddMoreItemsButton %>" runat="server" />
                                                         <asp:Button ID="btnSubmitAch" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, ButtonContinue %>" ToolTip="<%$ Resources:WebResources, ButtonContinue %>" runat="server" />
                                                         <br />
@@ -535,13 +535,15 @@
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">
                                 &times;</button>
-                           
-                            <h4 class="modal-title"><asp:Literal ID="Literal3" Text="<%$ Resources:WebResources, ModalCancelConfirmation %>" runat="server" /></h4>
+
+                            <h4 class="modal-title">
+                                <asp:Literal ID="Literal3" Text="<%$ Resources:WebResources, ModalCancelConfirmation %>" runat="server" /></h4>
                         </div>
                         <div class="modal-body">
                             <div id="div1" role="alert" style="margin-top: 10px;" class="alert alert-success">
                                 <div class="status-msg-text">
-                                    <span class="control-label"><asp:Literal ID="Literal5" Text="<%$ Resources:WebResources, ModalCancelConfirmationText %>" runat="server" /></span>
+                                    <span class="control-label">
+                                        <asp:Literal ID="Literal5" Text="<%$ Resources:WebResources, ModalCancelConfirmationText %>" runat="server" /></span>
                                 </div>
                             </div>
                         </div>
@@ -602,7 +604,7 @@
 
 
                     var doc = document;
-            <% =B2P.PaymentLanding.Express.Web.Utility.BuildAllowedCardsPattern()%>
+                    <% =B2P.PaymentLanding.Express.Web.Utility.BuildAllowedCardsPattern()%>
                     var panel = doc.getElementById("pnlOtherAmount");
                     var cardType = $.payment.cardType(doc.getElementById("txtCreditCardNumber").value);
                     var item = new ValidationItem();
@@ -611,28 +613,28 @@
                     // Create instance of the form validator
                     var validator = new FormValidator();
                     validator.setErrorMessageHeader("<%=GetGlobalResourceObject("WebResources", "ErrMsgHeader").ToString()%>\n\n")
-            validator.setInvalidCssClass("has-error");
-            validator.setAlertBoxStatus(false);
+                    validator.setInvalidCssClass("has-error");
+                    validator.setAlertBoxStatus(false);
 
                     // Add validation items to validator
 
-            switch (paymentType) {
+                    switch (paymentType) {
 
-                case "CC":
+                        case "CC":
 
                      <% =B2P.PaymentLanding.Express.Web.Utility.BuildCCAmount()%>
-                      var cardType = $.payment.cardType(doc.getElementById("txtCreditCardNumber").value);
-                      var currentYear = "20";
-                      var cardMonth = doc.getElementById("txtExpireDate").value.split("/")[0];
-                      var cardYear = currentYear.concat(doc.getElementById("txtExpireDate").value.split("/")[1]);
-                      var cardYear = cardYear.replace(" ", "");
-                      var cardMonth = cardMonth.replace(" ", "");
+                    var cardType = $.payment.cardType(doc.getElementById("txtCreditCardNumber").value);
+                    var currentYear = "20";
+                    var cardMonth = doc.getElementById("txtExpireDate").value.split("/")[0];
+                    var cardYear = currentYear.concat(doc.getElementById("txtExpireDate").value.split("/")[1]);
+                    var cardYear = cardYear.replace(" ", "");
+                    var cardMonth = cardMonth.replace(" ", "");
 
 
-                      validator.addValidationItem(new ValidationItem("txtNameonCard", fieldTypes.Name, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgNameonCard").ToString()%>"));
+                    validator.addValidationItem(new ValidationItem("txtNameonCard", fieldTypes.Name, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgNameonCard").ToString()%>"));
 
-                      // Let the next three fields validate with Swipe's payment utility (jquery.payment.js)
-                      // Set the objects up using JSON to set the fields
+                    // Let the next three fields validate with Swipe's payment utility (jquery.payment.js)
+                    // Set the objects up using JSON to set the fields
                       validator.addValidationItem(item = {
                           field: "txtCreditCardNumber",
                           styleParent: true,
@@ -656,29 +658,28 @@
                           field: "txtCCV",
                           styleParent: true,
                           errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgCreditCardCVC").ToString()%>",
-                            isValid: ($.payment.validateCardCVC(doc.getElementById("txtCCV").value, cardType))
-                        });
+                          isValid: ($.payment.validateCardCVC(doc.getElementById("txtCCV").value, cardType))
+                      });
 
-                        zip = doc.getElementById('txtBillingZip').value;
-                      // Check to see if zip is required
-                        if ($("#hdZipRequired").val() == 'Y') {
+                      zip = doc.getElementById('txtBillingZip').value;
+                    // Check to see if zip is required
+                      if ($("#hdZipRequired").val() == 'Y') {
 
-                            if (zip == '') {
-                                validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
+                          if (zip == '') {
+                              validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
 
-                      }
+                        }
 
-                  }
-                      //zip = doc.getElementById('txtBillingZip').value;
+                    }
 
-                  if (zip !== '') {
-                      // Set the validator
-                      if ($("#ddlCountry").val() == "US")
-                          validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeUnitedStates, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
-                              if ($("#ddlCountry").val() == "CA")
-                                  validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeCanada, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
-                              if ($("#ddlCountry").val() == "OT")
-                                  validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeInternational, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
+                    if (zip !== '') {
+                        // Set the validator
+                        if ($("#ddlCountry").val() == "US")
+                            validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeUnitedStates, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
+                        if ($("#ddlCountry").val() == "CA")
+                            validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeCanada, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
+                        if ($("#ddlCountry").val() == "OT")
+                            validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeInternational, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
                           }
 
 
@@ -688,14 +689,14 @@
                                   field: "txtAmount",
                                   styleParent: true,
                                   errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString()%>",
-                                      isValid: (validatePaymentAmount(doc.getElementById("txtAmount").value, ccMinMaxAmounts))
-                                  });
+                                  isValid: (validatePaymentAmount(doc.getElementById("txtAmount").value, ccMinMaxAmounts))
+                              });
 
 
-                              }
-                              if (validatePaymentAmount(doc.getElementById("txtAmount").value, ccMinMaxAmounts) == false) {
+                          }
+                          if (validatePaymentAmount(doc.getElementById("txtAmount").value, ccMinMaxAmounts) == false) {
 
-                                  $("#txtStatusMsg").text("<%=GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString()%>");
+                              $("#txtStatusMsg").text("<%=GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString()%>");
                                   $("#lblErrAmount").show();
                               }
 
@@ -705,30 +706,30 @@
                               break;
 
                           case "ACH":
-                      <% =B2P.PaymentLanding.Express.Web.Utility.BuildACHAmount()%>
-                     validator.addValidationItem(new ValidationItem("txtNameonBankAccount", fieldTypes.Name, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgNameOnBankAccount").ToString()%>"));
-                     validator.addValidationItem(new ValidationItem("ddlBankAccountType", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
-                     validator.addValidationItem(new ValidationItem("txtBankRoutingNumber", fieldTypes.RoutingNumber, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRoutingNumber").ToString()%>"));
+                                <% =B2P.PaymentLanding.Express.Web.Utility.BuildACHAmount()%>
+                              validator.addValidationItem(new ValidationItem("txtNameonBankAccount", fieldTypes.Name, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgNameOnBankAccount").ToString()%>"));
+                              validator.addValidationItem(new ValidationItem("ddlBankAccountType", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
+                              validator.addValidationItem(new ValidationItem("txtBankRoutingNumber", fieldTypes.RoutingNumber, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRoutingNumber").ToString()%>"));
 
-                     validator.addValidationItem(item = {
-                         field: "txtBankAccountNumber",
-                         styleParent: true,
-                         errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgBankAccount").ToString()%>",
+                              validator.addValidationItem(item = {
+                                  field: "txtBankAccountNumber",
+                                  styleParent: true,
+                                  errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgBankAccount").ToString()%>",
                          isValid: (!!/^\d{1,17}$/.test(doc.getElementById("txtBankAccountNumber").value))
                      });
 
-                     //validator.addValidationItem(item = {
-                     //    field: "txtBankAccountNumber2",
-                     //    styleParent: true,
-                     //    errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgBankAccount").ToString()%>",
-                     //    isValid: (!!/^\d{1,17}$/.test(doc.getElementById("txtBankAccountNumber2").value) && !!(doc.getElementById("txtBankAccountNumber").value === doc.getElementById("txtBankAccountNumber2").value))
-                     //});
+                              //validator.addValidationItem(item = {
+                              //    field: "txtBankAccountNumber2",
+                              //    styleParent: true,
+                              //    errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgBankAccount").ToString()%>",
+                              //    isValid: (!!/^\d{1,17}$/.test(doc.getElementById("txtBankAccountNumber2").value) && !!(doc.getElementById("txtBankAccountNumber").value === doc.getElementById("txtBankAccountNumber2").value))
+                              //});
 
-                     if (panel && doc.getElementById("rdAmount").checked) {
-                         validator.addValidationItem(item = {
-                             field: "txtAmount",
-                             styleParent: true,
-                             errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString()%>",
+                              if (panel && doc.getElementById("rdAmount").checked) {
+                                  validator.addValidationItem(item = {
+                                      field: "txtAmount",
+                                      styleParent: true,
+                                      errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString()%>",
                              isValid: (validatePaymentAmount(doc.getElementById("txtAmount").value, achMinMaxAmounts))
                          });
 
@@ -806,7 +807,7 @@
 
 
          //Open cancel modal window
-         function cancelModal() {            
+         function cancelModal() {
              $('#cancelModal').modal();
              return false;
          }
