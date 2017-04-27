@@ -623,6 +623,7 @@ Namespace B2P.PaymentLanding.Express.Web
         End Function
 
         Protected Sub btnAddMoreItemCredit_Click(sender As Object, e As EventArgs) Handles btnAddMoreItemCredit.Click
+            'Redirect to default page for add new item
             BLL.SessionManager.ManageCart.ShowCart = False
             BLL.SessionManager.ManageCart.EditItemIndex = -1
 
@@ -630,6 +631,7 @@ Namespace B2P.PaymentLanding.Express.Web
         End Sub
 
         Protected Sub btnAddMoreItemAch_Click(sender As Object, e As EventArgs) Handles btnAddMoreItemAch.Click
+            'Redirect to default page for add new item
             BLL.SessionManager.ManageCart.ShowCart = False
             BLL.SessionManager.ManageCart.EditItemIndex = -1
 
