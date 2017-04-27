@@ -4,9 +4,6 @@
 ' Author:   RS
 '  
 ' Summary:  Manage Cart is used to manage shopping cart items 
-'           
-'
-' TODO:     
 '
 '==========================================================================
 Imports System.Collections.Generic
@@ -100,7 +97,9 @@ Public Class ManageCart
             _ShowCart = value
         End Set
     End Property
-
+    ''' <summary>
+    ''' Index stored for edit items
+    ''' </summary>
     Private _EditItemIndex As Integer = -1
     Public Property EditItemIndex() As Integer
         Get
@@ -110,7 +109,9 @@ Public Class ManageCart
             _EditItemIndex = value
         End Set
     End Property
-
+    ''' <summary>
+    ''' Add to cart
+    ''' </summary>
     Public Function AddToCart(cartItem As Cart) As Boolean
         Dim IsExists As Boolean = False
 
@@ -141,13 +142,18 @@ Public Class ManageCart
         Return Not IsExists
 
     End Function
-
+    ''' <summary>
+    ''' Update cart
+    ''' </summary>
     Public Sub UpdateCartItem(selectedItem As Cart)
         Dim _SelectedItem = Cart.FirstOrDefault(Function(p) p.Index = selectedItem.Index)
         If Not _SelectedItem Is Nothing Then
             _SelectedItem.Amount = selectedItem.Amount
         End If
     End Sub
+    ''' <summary>
+    ''' Save property address
+    ''' </summary>
     Public Sub SavePropertyAddress(ClientCode As String, BatchId As String)
         For Each cartItem As Cart In Me.Cart
             If cartItem.CollectPropertyAddress Then
@@ -155,6 +161,9 @@ Public Class ManageCart
             End If
         Next
     End Sub
+    ''' <summary>
+    ''' Save property address
+    ''' </summary>
     Private Sub SavePropertyAddress(cartItem As Cart, ClientCode As String, BatchId As String)
         Try
             Dim timeUtc = DateTime.UtcNow
@@ -188,6 +197,9 @@ Public Class ManageCart
             Throw New Exception(ex.Message)
         End Try
     End Sub
+    ''' <summary>
+    ''' Get account field vaule index wise
+    ''' </summary>
     Public Function GetAccountFieldValue(CartItem As Cart, Index As Integer) As String
         Dim maxItemCount As Integer = CartItem.AccountIdFields.Count
         If Index < maxItemCount Then

@@ -77,7 +77,7 @@
                                 <!--// START PRINT CONTENT //-->
 
                                 <div>
-                                    <div id="print_content">
+                                    <div id="print_content1">
                                         <div id="divAccountDetails2">
                                             <div class="container-fluid">
                                                 <div class="row">
@@ -103,6 +103,7 @@
                                                     <b2p:PaymentCartGrid runat="server" ID="PaymentCartGrid" />
                                                 </div>
                                             </div>
+                                        </div>
                                         </div>
                                         <div id="divLeftConfirmationPanel">
                                             <div id="leftSideButtons" class="col-xs-12 col-sm-6" style="display: block;">
@@ -135,6 +136,7 @@
                                                     </asp:Panel>
                                                 </div>
                                             </div>
+                                             <div id="print_content2">
                                             <div class="col-xs-12 col-sm-6">
                                                 <!--PAYMENT DETAILS-->
                                                 <div class="col-xs-12">
@@ -180,11 +182,14 @@
                                                 </div>
                                                 <!--END PAYMENT DETAILS-->
                                             </div>
+                                                 </div>
                                             <!--END CONTACT INFORMATION-->
                                             <!--END CONFIRM EMAIL AND PAYMENT DETAILS-->
                                         </div>
+                                     <div id="print_content3">
                                         <b2p:PaymentStatusMessage ID="PostBackStatusMessage" runat="server" />
-                                    </div>
+                                         </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -325,11 +330,12 @@
                 function Clickheretoprint() {
                     var disp_setting = "toolbar=yes,location=no,directories=yes,menubar=yes,";
                     disp_setting += "scrollbars=yes,width=650, height=600, left=100, top=25";
-                    $('#leftSideButtons').css('display', 'none');
-                    $('#feeInfoModal').css('display', 'none');
-                    var content_vlue = $("#print_content").clone().html();
-                    $('#leftSideButtons').css('display', 'block');
-                    $('#feeInfoModal').css('display', 'block');
+                  
+                    var content_vlue = "";
+                    var print_content1 =   $("#print_content1").clone().html();
+                    var print_content2 =   $("#print_content2").clone().html();
+                    var print_content3 =   $("#print_content3").clone().html();
+                    content_vlue = print_content1 + print_content2 + print_content3
 
                     var docprint = window.open("", "", disp_setting);
                     docprint.document.open();
@@ -345,6 +351,7 @@
                     docprint.document.write('</body><p style="padding-left:210px;"><a href="javascript:self.close();" class="Paragraph" >Close</a></p></html>');
                     docprint.document.close();
                     docprint.focus();
+                   
                 }
 
                 function validateForm(paymentType) {
