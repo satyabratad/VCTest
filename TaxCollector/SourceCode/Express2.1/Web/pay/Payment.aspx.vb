@@ -41,12 +41,17 @@ Namespace B2P.PaymentLanding.Express.Web
                 End If
                 txtAmount.Text = CalculateSubTotal()
 
+                ' set addmore item button in case of SSO client
                 If BLL.SessionManager.ClientType = Cart.EClientType.SSO Then
                     btnAddMoreItemCredit.Visible = False
                     btnAddMoreItemAch.Visible = False
                 End If
             End If
         End Sub
+        ''' <summary>
+        ''' Calculate the total amount of item / service in the cart
+        ''' </summary>
+        ''' <returns></returns>
         Protected Function CalculateSubTotal() As String
             Dim total As Double = 0
             If Not BLL.SessionManager.ManageCart.Cart Is Nothing Then
