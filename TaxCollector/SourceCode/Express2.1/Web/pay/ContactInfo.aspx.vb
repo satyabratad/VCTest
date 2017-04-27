@@ -38,6 +38,7 @@ Namespace B2P.PaymentLanding.Express.Web
             Response.Redirect("/pay/payment.aspx", False)
         End Sub
         Protected Sub btnAddMoreItems_Click(sender As Object, e As EventArgs) Handles btnAddMoreItems.Click
+            SetContactInfo()
             BLL.SessionManager.ManageCart.ShowCart = False
             BLL.SessionManager.ManageCart.EditItemIndex = -1
             Response.Redirect("~/pay/")
