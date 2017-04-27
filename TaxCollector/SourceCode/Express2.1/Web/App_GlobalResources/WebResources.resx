@@ -535,4 +535,28 @@
   <data name="YesButton" xml:space="preserve">
     <value>Yes</value>
   </data>
+  <data name="CartHeaderMultipleItemCount" xml:space="preserve">
+    <value>items</value>
+  </data>
+  <data name="CartHeaderSingleItemCount" xml:space="preserve">
+    <value>item</value>
+  </data>
+  <data name="CartHeaderText" xml:space="preserve">
+    <value>Cart Subtotal</value>
+  </data>
+  <data name="CartHeaderText1" xml:space="preserve">
+    <value>Added to Cart</value>
+  </data>
+  <data name="lblCartSubtotal" xml:space="preserve">
+    <value>Subtotal</value>
+  </data>
+  <data name="lblCartTotalAmount" xml:space="preserve">
+    <value>Total Amount:</value>
+  </data>
+  <data name="lblConfirmDeleteHeader" xml:space="preserve">
+    <value>Confirm Item delete</value>
+  </data>
+  <data name="lblConfirmDeleteMessage" xml:space="preserve">
+    <value>Are you sure you want to delete this item?</value>
+  </data>
 </root>

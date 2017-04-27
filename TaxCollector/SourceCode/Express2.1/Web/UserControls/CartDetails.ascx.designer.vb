@@ -41,20 +41,47 @@ Partial Public Class CartDetails
     Protected WithEvents cartProduct As Global.System.Web.UI.WebControls.Label
     
     '''<summary>
-    '''cartHeadingCount control.
+    '''lblCartHeadingText1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cartHeadingCount As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lblCartHeadingText1 As Global.System.Web.UI.WebControls.Label
     
     '''<summary>
-    '''cartHeadingAmount control.
+    '''lblCartText1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents cartHeadingAmount As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents lblCartText1 As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
+    '''lblCartHeadingCount control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblCartHeadingCount As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
+    '''lblCartText2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblCartText2 As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
+    '''lblCartHeadingAmount control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblCartHeadingAmount As Global.System.Web.UI.WebControls.Label
 End Class

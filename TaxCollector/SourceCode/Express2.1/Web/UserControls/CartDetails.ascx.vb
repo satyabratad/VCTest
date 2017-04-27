@@ -13,9 +13,16 @@ Public Class CartDetails
             tblCartDetails.Visible = False
             Exit Sub
         End If
+        lblCartHeadingText1.Text = GetGlobalResourceObject("WebResources", "CartHeaderText1").ToString()
+        lblCartText1.Text = GetGlobalResourceObject("WebResources", "CartHeaderText").ToString()
         cartProduct.Text = BLL.SessionManager.ManageCart.Cart(BLL.SessionManager.ManageCart.Cart.Count - 1).Item
-        cartHeadingCount.Text = BLL.SessionManager.ManageCart.Cart.Count.ToString()
-        cartHeadingAmount.Text = SubTotal()
+        If BLL.SessionManager.ManageCart.Cart.Count <= 1 Then
+            lblCartText2.Text = GetGlobalResourceObject("WebResources", "CartHeaderSingleItemCount").ToString() + "): "
+        Else
+            lblCartText2.Text = GetGlobalResourceObject("WebResources", "CartHeaderMultipleItemCount").ToString() + "): "
+        End If
+        lblCartHeadingCount.Text = " (" + BLL.SessionManager.ManageCart.Cart.Count.ToString()
+        lblCartHeadingAmount.Text = SubTotal()
     End Sub
     Private Sub SetVisibility()
         tblCartDetails.Visible = Me.Parent.FindControl("ctlCartGrid").Visible

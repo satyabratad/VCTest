@@ -41,6 +41,42 @@ Partial Public Class CartGrid
     Protected WithEvents rptSSO As Global.System.Web.UI.WebControls.Repeater
     
     '''<summary>
+    '''lblConfirmDeleteHeader control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblConfirmDeleteHeader As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
+    '''lblConfirmDeleteMessage control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lblConfirmDeleteMessage As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
+    '''btnYes control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnYes As Global.System.Web.UI.WebControls.Button
+    
+    '''<summary>
+    '''Button2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Button2 As Global.System.Web.UI.WebControls.Button
+    
+    '''<summary>
     '''hdSelectedIndex control.
     '''</summary>
     '''<remarks>

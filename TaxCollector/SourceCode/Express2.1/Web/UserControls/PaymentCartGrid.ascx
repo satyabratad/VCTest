@@ -30,22 +30,22 @@
         </ItemTemplate>
         <FooterTemplate>
             <tr>
-                <td class="table-row-bold" colspan="3" align="right">Subtotal (<%# GetCartItemCount() %> item(s)): </td>
+                <td class="table-row-bold" colspan="3" align="right"><%# FormatCartItemCount() %></td>
                 <td class="table-row-bold" align="right"><%# SubTotal() %></td>
             </tr>
             <% If BLL.SessionManager.IsConvenienceFeesApplicable Then %>
             <tr>
                 <td class="table-alternateRow" colspan="3" align="right">
-                    <span>Convenience Fee </span>
+                    <span><asp:Literal ID="litFee" Text="<%$ Resources:WebResources,LblFee %>" runat="server" /> </span>
                     <a href="#" data-toggle="modal" data-target="#feeInfoModal" data-keyboard="false" title="Fee Info" tabindex="-1">
                         <i class="fa fa-question-circle fa-1" aria-hidden="true"></i>
-                        <span class="text-hide">Fee Information</span></a><span>:</span>
+                        <span class="text-hide"></span></a><span>:</span>
                 </td>
                 <td class="table-alternateRow" align="right"><%# GetConvenienceFee() %></td>
             </tr>
             <% End If %>
             <tr>
-                <td class="table-row-bold" colspan="3" align="right"><span>Total Amount:</span></td>
+                <td class="table-row-bold" colspan="3" align="right"><span><asp:Literal ID="litTotal" Text="<%$ Resources:WebResources, lblCartTotalAmount %>" runat="server" /></span></td>
                 <td class="table-row-bold" align="right"><%# Total() %></td>
             </tr>
             </tbody>
@@ -84,22 +84,22 @@
         </ItemTemplate>
         <FooterTemplate>
             <tr>
-                <td class="table-row-bold" colspan="4" align="right">Subtotal (<%# GetCartItemCount() %> item(s)): </td>
+                <td class="table-row-bold" colspan="4" align="right"><%# FormatCartItemCount() %></td>
                 <td class="table-row-bold" align="right"><%# SubTotal() %></td>
             </tr>
             <% If BLL.SessionManager.IsConvenienceFeesApplicable Then %>
             <tr>
                 <td class="table-alternateRow" colspan="4" align="right">
-                    <span>Convenience Fee </span>
+                    <span><asp:Literal ID="litFee" Text="<%$ Resources:WebResources, LblFee %>" runat="server" /> </span>
                     <a href="#" data-toggle="modal" data-target="#feeInfoModal" data-keyboard="false" title="Fee Info" tabindex="-1">
                         <i class="fa fa-question-circle fa-1" aria-hidden="true"></i>
-                        <span class="text-hide">Fee Information</span></a><span>:</span>
+                        <span class="text-hide"></span></a><span>:</span>
                 </td>
                 <td class="table-alternateRow" align="right"><%# GetConvenienceFee() %></td>
             </tr>
             <% End If %>
             <tr>
-                <td class="table-row-bold" colspan="4" align="right"><span>Total Amount:</span></td>
+                <td class="table-row-bold" colspan="4" align="right"><span><asp:Literal ID="litTotal" Text="<%$ Resources:WebResources, lblCartTotalAmount %>" runat="server" /></span></td>
                 <td class="table-row-bold" align="right"><%# Total() %></td>
             </tr>
             </tbody>
@@ -138,22 +138,22 @@
         </ItemTemplate>
         <FooterTemplate>
             <tr>
-                <td class="table-row-bold" colspan="4" align="right">Subtotal (<%# GetCartItemCount() %> item(s)): </td>
+                <td class="table-row-bold" colspan="4" align="right"><%# FormatCartItemCount() %></td>
                 <td class="table-row-bold" align="right"><%# SubTotal() %></td>
             </tr>
             <% If BLL.SessionManager.IsConvenienceFeesApplicable Then %>
             <tr>
                 <td class="table-alternateRow" colspan="4" align="right">
-                    <span>Convenience Fee </span>
+                    <span><asp:Literal ID="litFee" Text="<%$ Resources:WebResources, LblFee %>" runat="server" /> </span>
                     <a href="#" data-toggle="modal" data-target="#feeInfoModal" data-keyboard="false" title="Fee Info" tabindex="-1">
                         <i class="fa fa-question-circle fa-1" aria-hidden="true"></i>
-                        <span class="text-hide">Fee Information</span></a><span>:</span>
+                        <span class="text-hide"></span></a><span>:</span>
                 </td>
                 <td class="table-alternateRow" align="right"><%# GetConvenienceFee() %></td>
             </tr>
             <% End If %>
             <tr>
-                <td class="table-row-bold" colspan="4" align="right"><span>Total Amount:</span></td>
+                <td class="table-row-bold" colspan="4" align="right"><span><asp:Literal ID="litTotal" Text="<%$ Resources:WebResources, lblCartTotalAmount %>" runat="server" /></span></td>
                 <td class="table-row-bold" align="right"><%# Total() %></td>
             </tr>
             </tbody>

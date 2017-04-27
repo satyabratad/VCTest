@@ -30,7 +30,7 @@
         </ItemTemplate>
         <FooterTemplate>
             <tr>
-                <td class="table-row-bold" colspan="3" align="right">Subtotal (<%# GetCartItemCount() %>item(s)): </td>
+                <td class="table-row-bold" colspan="3" align="right"><%# FormatCartItemCount() %></td>
                 <td class="table-row-bold" align="right"><%# SubTotal() %></td>
             </tr>
             </tbody>
@@ -76,7 +76,7 @@
         </ItemTemplate>
         <FooterTemplate>
             <tr>
-                <td class="table-row-bold" colspan="5" align="right">Subtotal (<%# GetCartItemCount() %>item(s)): </td>
+                <td class="table-row-bold" colspan="5" align="right"><%# FormatCartItemCount() %></td>
                 <td class="table-row-bold" align="right"><%# SubTotal() %></td>
             </tr>
             </tbody>
@@ -120,7 +120,7 @@
         </ItemTemplate>
         <FooterTemplate>
             <tr>
-                <td class="table-row-bold" colspan="4" align="right">Subtotal (<%# GetCartItemCount() %>item(s)): </td>
+                <td class="table-row-bold" colspan="4" align="right"><%# FormatCartItemCount() %></td>
                 <td class="table-row-bold" align="right"><%# SubTotal() %></td>
             </tr>
             </tbody>
@@ -139,22 +139,18 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">
                     &times;</button>
-                <h4 class="modal-title">Confirm Item delete.</h4>
+                <h4 class="modal-title"><asp:Label ID="lblConfirmDeleteHeader" Text="<%$ Resources:WebResources, lblConfirmDeleteHeader %>" runat="server"></asp:Label> </h4>
             </div>
             <div class="modal-body">
                 <div id="div1" role="alert" style="margin-top: 10px;" class="alert alert-success">
                     <div class="status-msg-text">
-                        <span class="control-label">Are you sure you want to delete this item?</span>
+                        <span class="control-label"><asp:Label ID="lblConfirmDeleteMessage"  Text="<%$ Resources:WebResources, lblConfirmDeleteMessage %>" runat="server"/></span>
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" id="btnYes" name="btnYes" onclick="removeItemsFromCart();"
-                    class="btn btn-primary" title="Yes" class="btn btn-default" data-dismiss="modal">
-                    Yes</button>
-                <button type="button" id="btnNo" name="btnNo" class="btn btn-primary" title="No"
-                    class="btn btn-default" data-dismiss="modal">
-                    No</button>
+            <div class="modal-footer">              
+                 <asp:Button type="button" ID="btnYes" runat="server" CssClass="btn btn-default" title="Yes" OnClientClick="removeItemsFromCart();" Text="<%$ Resources:WebResources, YesButton %>"></asp:Button>
+                            <asp:Button type="btnNo" ID="Button2" runat="server" CssClass="btn btn-default" title="No" OnClientClick="return false;" data-dismiss="modal" Text="<%$ Resources:WebResources, NoButton %>"></asp:Button>
             </div>
         </div>
     </div>

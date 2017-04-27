@@ -118,6 +118,13 @@ Public Class PaymentCartGrid
     Protected Function GetCartItemCount() As Integer
         Return BLL.SessionManager.ManageCart.Cart.Count
     End Function
+    Protected Function FormatCartItemCount() As String
+        If BLL.SessionManager.ManageCart.Cart.Count <= 1 Then
+            Return GetGlobalResourceObject("WebResources", "lblCartSubtotal").ToString() + " (" + GetCartItemCount().ToString() + " " + GetGlobalResourceObject("WebResources", "CartHeaderSingleItemCount").ToString() + "): "
+        Else
+            Return GetGlobalResourceObject("WebResources", "lblCartSubtotal").ToString() + " (" + GetCartItemCount().ToString() + " " + GetGlobalResourceObject("WebResources", "CartHeaderMultipleItemCount").ToString() + "): "
+        End If
+    End Function
     Protected Function SubTotal() As String
         Dim amount As Double = 0
         For Each cart As B2P.Cart.Cart In BLL.SessionManager.ManageCart.Cart

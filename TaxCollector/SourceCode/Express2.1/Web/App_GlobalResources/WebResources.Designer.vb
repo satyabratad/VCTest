@@ -299,6 +299,42 @@ Namespace Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to items.
+        '''</summary>
+        Friend Shared ReadOnly Property CartHeaderMultipleItemCount() As String
+            Get
+                Return ResourceManager.GetString("CartHeaderMultipleItemCount", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to item.
+        '''</summary>
+        Friend Shared ReadOnly Property CartHeaderSingleItemCount() As String
+            Get
+                Return ResourceManager.GetString("CartHeaderSingleItemCount", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Cart Subtotal.
+        '''</summary>
+        Friend Shared ReadOnly Property CartHeaderText() As String
+            Get
+                Return ResourceManager.GetString("CartHeaderText", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Added to Cart.
+        '''</summary>
+        Friend Shared ReadOnly Property CartHeaderText1() As String
+            Get
+                Return ResourceManager.GetString("CartHeaderText1", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to The routing and account numbers can be located by looking on your check, as illustrated below:.
         '''</summary>
         Friend Shared ReadOnly Property CheckHelpModalDescription() As String
@@ -848,11 +884,47 @@ Namespace Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Subtotal.
+        '''</summary>
+        Friend Shared ReadOnly Property lblCartSubtotal() As String
+            Get
+                Return ResourceManager.GetString("lblCartSubtotal", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Total Amount:.
+        '''</summary>
+        Friend Shared ReadOnly Property lblCartTotalAmount() As String
+            Get
+                Return ResourceManager.GetString("lblCartTotalAmount", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Confirmation Number.
         '''</summary>
         Friend Shared ReadOnly Property LblConfirmationNumber() As String
             Get
                 Return ResourceManager.GetString("LblConfirmationNumber", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Confirm Item delete.
+        '''</summary>
+        Friend Shared ReadOnly Property lblConfirmDeleteHeader() As String
+            Get
+                Return ResourceManager.GetString("lblConfirmDeleteHeader", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Are you sure you want to delete this item?.
+        '''</summary>
+        Friend Shared ReadOnly Property lblConfirmDeleteMessage() As String
+            Get
+                Return ResourceManager.GetString("lblConfirmDeleteMessage", resourceCulture)
             End Get
         End Property
         
