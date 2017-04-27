@@ -14,7 +14,7 @@ Imports Resources
 Public Class BreadCrumbMenu
     Inherits System.Web.UI.UserControl
 #Region "Properties"
-    ' Public IsContactInfoVisible As Boolean = False
+
     Private _isAccountPageVisible As Boolean = True
     Public Property IsAccountPageVisible() As Boolean
         Get
@@ -159,7 +159,7 @@ Public Class BreadCrumbMenu
             currentTab.IsVisited = True
             divBreadCrumb.InnerHtml = ""
 
-            If Not PageTagName.Equals(PageTabName.PaymentConfirm.ToString(), System.StringComparison.InvariantCultureIgnoreCase) Then
+            If Not PageTagName.Equals(PageTabName.PaymentConfirm.ToString(), System.StringComparison.InvariantCultureIgnoreCase) And currentTab.Index < PageTabName.PaymentConfirm Then
                 payConfirmTab = tabList.Where(Function(t As BreadCrumbTab) t.PageTag.Equals(PageTabName.PaymentConfirm.ToString(), System.StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault()
                 payConfirmTab.IsVisited = False
             End If
@@ -185,24 +185,23 @@ Public Class BreadCrumbMenu
                                     pageIndex = pageIndex + 1
                                 End If
                             Else
-                                If tab.IsPageVisible = True Then
-                                    htmlString.AppendFormat("<li class='active'><a href='{0}' class='' title='{1} {2}' ><span Class='badge badge-inverse'>", tab.PageName, menuNames(0), menuNames(1))
-                                    htmlString.AppendFormat("{0}</span> <span class='hidden-xs'>{1}</span> <span class='hidden-xs hidden-sm'>{2}</span></a></li>", pageIndex.ToString(), menuNames(0), menuNames(1))
+
+                            htmlString.AppendFormat("<li class='active'><a href='{0}' class='' title='{1} {2}' ><span Class='badge badge-inverse'>", tab.PageName, menuNames(0), menuNames(1))
+                            htmlString.AppendFormat("{0}</span> <span class='hidden-xs'>{1}</span> <span class='hidden-xs hidden-sm'>{2}</span></a></li>", pageIndex.ToString(), menuNames(0), menuNames(1))
                                     pageIndex = pageIndex + 1
-                                End If
-                            End If
+
+                        End If
                         Else
 
-                            If tab.PageTag.Equals(PageTabName.PaymentFaild.ToString(), System.StringComparison.InvariantCultureIgnoreCase) Then
-                                htmlString.AppendFormat("<li class='danger'><a href='#' class='' title='{0} {1}'><span Class='badge badge-inverse'>", menuNames(0), menuNames(1))
-                                htmlString.AppendFormat("{0}</span> <span class='hidden-xs'>{1}</span> <span class='hidden-xs hidden-sm'>{2}</span></a></li>", pageIndex.ToString(), menuNames(0), menuNames(1))
-                            Else
-                                If tab.IsPageVisible = True Then
-                                    htmlString.AppendFormat("<li class='active'><a href='#' class='' title='{0} {1}' ><span Class='badge badge-inverse'>", menuNames(0), menuNames(1))
-                                    htmlString.AppendFormat("{0}</span> <span class='hidden-xs'>{1}</span> <span class='hidden-xs hidden-sm'>{2}</span></a></li>", pageIndex.ToString(), menuNames(0), menuNames(1))
-                                End If
-                            End If
-                            pageIndex = pageIndex + 1
+                        If tab.PageTag.Equals(PageTabName.PaymentFaild.ToString(), System.StringComparison.InvariantCultureIgnoreCase) Then
+                            htmlString.AppendFormat("<li class='danger'><a href='#' class='' title='{0} {1}'><span Class='badge badge-inverse'>", menuNames(0), menuNames(1))
+                            htmlString.AppendFormat("{0}</span> <span class='hidden-xs'>{1}</span> <span class='hidden-xs hidden-sm'>{2}</span></a></li>", pageIndex.ToString(), menuNames(0), menuNames(1))
+                        Else
+
+                            htmlString.AppendFormat("<li class='active'><a href='#' class='' title='{0} {1}' ><span Class='badge badge-inverse'>", menuNames(0), menuNames(1))
+                            htmlString.AppendFormat("{0}</span> <span class='hidden-xs'>{1}</span> <span class='hidden-xs hidden-sm'>{2}</span></a></li>", pageIndex.ToString(), menuNames(0), menuNames(1))
+                        End If
+                        pageIndex = pageIndex + 1
                         End If
 
                     Else
