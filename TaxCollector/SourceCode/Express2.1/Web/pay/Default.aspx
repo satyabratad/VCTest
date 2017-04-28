@@ -316,7 +316,7 @@
         <script type="text/javascript">
 
             function validateForm() {
-                
+               
                 var doc = document;
                 var item = new ValidationItem();
 
@@ -374,8 +374,9 @@
                 }
                 <%End If%>
 
-                 <%If ctlPropertyAddress.Visible Then %>
+                 <%If ctlPropertyAddress.Visible And ctlPropertyAddress.AddressVisible Then %>
                 //Validate Zip
+               
                 if ($("#txtZip").val() != "") {
 
                     var optiongroup = $('#ddlState').find(":selected").attr("optiongroup");
