@@ -192,7 +192,10 @@ Namespace B2P.PaymentLanding.Express.Web
             Dim CurrentCategory As B2P.Objects.Product
             CurrentCategory = BLL.SessionManager.CurrentCategory
             litClientName.Text = BLL.SessionManager.Client.ClientName
-            litConfirmationNumber.Text = BLL.SessionManager.ConfirmationNumber
+            '' Remove all the leading zero from confirmation number [RS]
+            Dim confirmationNumber As String = BLL.SessionManager.ConfirmationNumber.TrimStart("0")
+            litConfirmationNumber.Text = confirmationNumber
+
 
             ' Set the payment date
             litPaymentDate.Text = BLL.SessionManager.PaymentDate
