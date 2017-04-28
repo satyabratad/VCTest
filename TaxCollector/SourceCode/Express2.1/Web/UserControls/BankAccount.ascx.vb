@@ -76,6 +76,15 @@ Namespace B2P.PaymentLanding.Express.Web
 
             If Not Me.IsPostBack Then
                 LoadAccountTypes()
+                'Persist Bank account details
+                If Not BLL.SessionManager.BankAccName Is Nothing Then
+                    txtNameonBankAccount.Text = BLL.SessionManager.BankAccName
+                End If
+                If Not BLL.SessionManager.BankAccType Is Nothing Then
+                    ddlBankAccountType.ClearSelection()
+                    ddlBankAccountType.Items.FindByValue(BLL.SessionManager.BankAccType).Selected = True
+                    ddlBankAccountType_SelectedIndexChanged(Nothing, Nothing)
+                End If
             End If
 
         End Sub

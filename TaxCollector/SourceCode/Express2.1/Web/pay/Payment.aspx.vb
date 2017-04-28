@@ -203,6 +203,10 @@ Namespace B2P.PaymentLanding.Express.Web
                         BLL.SessionManager.BankAccount = account
                         BLL.SessionManager.PaymentType = B2P.Common.Enumerations.PaymentTypes.BankAccount
 
+                        'Persist bank account name and type
+                        BLL.SessionManager.BankAccType = pbaEnterBankAccountInfo.BankAccountType
+                        BLL.SessionManager.BankAccName = IIf(account.Owner.FirstName = "NA", "", account.Owner.FirstName) + " " + IIf(account.Owner.LastName = "NA", "", account.Owner.LastName)
+
                         ' Send them to the confirmation page
                         Response.Redirect("/pay/Confirm.aspx", False)
                     End If

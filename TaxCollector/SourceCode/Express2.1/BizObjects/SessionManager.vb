@@ -83,6 +83,8 @@ Namespace B2P.PaymentLanding.Express.BLL
         Private Const _isConvenienceFeesApplicable As String = "_isConvenienceFeesApplicable"
         Private Const _creditcardOwnerName As String = "_creditcardOwnerName"
         Private Const _creditcardExpDate As String = "_creditcardExpDate"
+        Private Const _bankAccName As String = "_bankAccName"
+        Private Const _bankAccType As String = "_bankAccType"
 #End Region
 
 #Region " ::: Contructors ::: "
@@ -917,6 +919,34 @@ Namespace B2P.PaymentLanding.Express.BLL
                 HttpContext.Current.Session(_creditcardExpDate) = value
             End Set
         End Property
+        ''' <summary>
+        ''' credit card exp date
+        ''' </summary>
+        Public Shared Property BankAccName() As String
+            Get
+                If HttpContext.Current.Session(_bankAccName) Is Nothing Then
+                    Return Nothing
+                Else
+                    Return DirectCast(HttpContext.Current.Session(_bankAccName), String)
+                End If
+            End Get
+            Set(ByVal value As String)
+                HttpContext.Current.Session(_bankAccName) = value
+            End Set
+        End Property
+        Public Shared Property BankAccType() As String
+            Get
+                If HttpContext.Current.Session(_bankAccType) Is Nothing Then
+                    Return Nothing
+                Else
+                    Return DirectCast(HttpContext.Current.Session(_bankAccType), String)
+                End If
+            End Get
+            Set(ByVal value As String)
+                HttpContext.Current.Session(_bankAccType) = value
+            End Set
+        End Property
+
 
 #End Region
 
