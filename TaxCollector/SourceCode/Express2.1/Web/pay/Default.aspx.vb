@@ -361,7 +361,6 @@ Namespace B2P.PaymentLanding.Express.Web
         End Sub
 
         Private Sub ddlCategories_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlCategories.SelectedIndexChanged
-            'SelectedProduct = ddlCategories.SelectedValue
             ClearFields()
             getProductLookup()
         End Sub
@@ -378,7 +377,6 @@ Namespace B2P.PaymentLanding.Express.Web
             Dim errMsg As String = String.Empty
             Try
                 'Show/Hide Contact Info
-                'Dim z As New B2P.Objects.Product(BLL.SessionManager.ClientCode, IIf(SelectedProduct Is Nothing, ddlCategories.SelectedValue, SelectedProduct), B2P.Common.Enumerations.TransactionSources.Web)
                 Dim z As New B2P.Objects.Product(BLL.SessionManager.ClientCode, ddlCategories.SelectedValue, B2P.Common.Enumerations.TransactionSources.Web)
                 Utility.SetBreadCrumbContactInfo("BreadCrumbMenu")
                 'End Show/Hide Contact Info
@@ -451,19 +449,6 @@ Namespace B2P.PaymentLanding.Express.Web
 
 
         End Sub
-        '' setting Contact Info flag from bread crumb menu
-        '' If Demographics or HomePhone either are enabled, then customer will see this Contact Info page
-        '' If neither are enabled Contact Info page will not display
-        'Private Sub SetBreadCrumbContactInfo(z As Objects.Product)
-
-        '    If z.WebOptions.Demographics = Objects.WebConfiguration.OptionalFields.NotUsed And z.WebOptions.HomePhone = Objects.WebConfiguration.OptionalFields.NotUsed Then
-        '        BLL.SessionManager.IsContactInfoRequired = False
-        '    Else
-        '        BLL.SessionManager.IsContactInfoRequired = True
-        '    End If
-
-        'End Sub
-
         ''' <summary>
         ''' Adds client side javascript to the various server controls.
         ''' </summary>
