@@ -3,11 +3,13 @@ Imports B2P.PaymentLanding.Express
 Imports B2P.PaymentLanding.Express.Web
 Public Class CartDetails
     Inherits System.Web.UI.UserControl
-
+#Region "::: Control Event Handlers :::"
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         LoadContent()
         SetVisibility()
     End Sub
+#End Region
+#Region "::: Methods :::"
     Public Sub LoadContent()
         If BLL.SessionManager.ManageCart.Cart.Count = 0 Then
             tblCartDetails.Visible = False
@@ -34,4 +36,5 @@ Public Class CartDetails
         Next
         Return String.Format("{0:C}", amount)
     End Function
+#End Region
 End Class

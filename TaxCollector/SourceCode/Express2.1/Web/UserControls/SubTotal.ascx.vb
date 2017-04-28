@@ -6,7 +6,7 @@ Imports B2P.PaymentLanding.Express.Web
 ''' </summary>
 Public Class SubTotal
     Inherits System.Web.UI.UserControl
-
+#Region "::: Properties :::"
     ''' <summary>
     ''' This property used to hold subtotal
     ''' </summary>
@@ -19,13 +19,15 @@ Public Class SubTotal
             _subTotalAmount = value
         End Set
     End Property
+#End Region
+#Region "::: Control Event Handlers :::"
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Page.IsPostBack = False Then
             lblSubTotal.Text = CalculateSubTotal()
         End If
-
     End Sub
-
+#End Region
+#Region "::: Methods :::"
     ''' <summary>
     ''' This will calculate and display the sub total of item/service in shopping cart
     ''' </summary>
@@ -39,4 +41,5 @@ Public Class SubTotal
         End If
         Return String.Format("{0:C}", total)
     End Function
+#End Region
 End Class

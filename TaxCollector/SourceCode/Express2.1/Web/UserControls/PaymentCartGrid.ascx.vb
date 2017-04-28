@@ -6,9 +6,12 @@ Imports B2P
 
 Public Class PaymentCartGrid
     Inherits System.Web.UI.UserControl
+#Region "::: Control Event Handlers :::"
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
     End Sub
+#End Region
+#Region "::: Methods :::"
     Public Sub PopulateGrid(ctrlName As String)
         Dim page As Page = HttpContext.Current.Handler
         If BLL.SessionManager.ClientType = B2P.Cart.EClientType.NonLookup Then
@@ -147,4 +150,5 @@ Public Class PaymentCartGrid
             Return "table-alternateRow"
         End If
     End Function
+#End Region
 End Class

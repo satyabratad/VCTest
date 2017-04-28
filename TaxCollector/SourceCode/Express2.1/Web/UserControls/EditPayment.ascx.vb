@@ -3,7 +3,7 @@
 Namespace B2P.PaymentLanding.Express.Web
 
     Public Class EditPayment : Inherits System.Web.UI.UserControl
-
+#Region "::: Control Event Handlers :::"
         Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
             If Not IsPostBack Then
                 If Not BLL.SessionManager.CreditCard Is Nothing Then
@@ -51,6 +51,7 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected Sub lnkEdit_Click(sender As Object, e As EventArgs) Handles lnkEdit.Click
             Response.Redirect("/pay/Payment.aspx", False)
         End Sub
+#End Region
     End Class
 
 End Namespace

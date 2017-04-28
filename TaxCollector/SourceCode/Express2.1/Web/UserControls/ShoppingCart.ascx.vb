@@ -4,6 +4,7 @@ Imports B2P.PaymentLanding.Express
 Public Class ShoppingCart
     Inherits System.Web.UI.UserControl
 
+#Region "::: Control Event Handlers :::"
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         cartCount.InnerHtml = BLL.SessionManager.ManageCart.CartCount
     End Sub
@@ -22,6 +23,6 @@ Public Class ShoppingCart
             End If
         End If
     End Sub
-
+#End Region
 
 End Class

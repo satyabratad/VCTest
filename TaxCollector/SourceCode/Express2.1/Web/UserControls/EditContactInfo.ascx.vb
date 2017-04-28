@@ -3,6 +3,7 @@
 Namespace B2P.PaymentLanding.Express.Web
 
     Public Class EditContactInfo : Inherits System.Web.UI.UserControl
+#Region "::: Control Event Handlers :::"
         Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
             If Not BLL.SessionManager.IsContactInfoRequired Then
                 pnlEditContactInfo.Visible = False
@@ -15,6 +16,12 @@ Namespace B2P.PaymentLanding.Express.Web
                 End If
             End If
         End Sub
+        Protected Sub lnkEdit_Click(sender As Object, e As EventArgs) Handles lnkEdit.Click
+            Response.Redirect("/pay/ContactInfo.aspx", False)
+        End Sub
+#End Region
+
+#Region "::: Methods :::"
         Private Function GetContactAddress() As String
             Dim propertyAddress As StringBuilder = New StringBuilder()
             If Not BLL.SessionManager.ContactInfo Is Nothing Then
@@ -39,10 +46,8 @@ Namespace B2P.PaymentLanding.Express.Web
             End If
             Return propertyAddress.ToString().Trim().TrimEnd(",")
         End Function
+#End Region
 
-        Protected Sub lnkEdit_Click(sender As Object, e As EventArgs) Handles lnkEdit.Click
-            Response.Redirect("/pay/ContactInfo.aspx", False)
-        End Sub
     End Class
 
 End Namespace
