@@ -48,7 +48,7 @@
                         <label class="control-label" for="txtAmount" id="lblPropAmount">
                             <asp:Label ID="lblAmount" runat="server" Text="<%$ Resources:WebResources, AmountLabel %>"></asp:Label>
                         </label>
-                        <asp:TextBox runat="server" maxlength="10" required="true" ID="txtAmountEdit"
+                        <asp:TextBox runat="server" MaxLength="10" required="true" ID="txtAmountEdit"
                             class="form-control input-sm" onkeypress="return validateFloatKeyPress(this,event);"></asp:TextBox>
 
                     </div>
@@ -101,9 +101,13 @@
         return false;
     }
     function ValidateUpdateCartItem() {
-        
+
         <% If Not SelectedItem Is Nothing Then%>
         $('#pnlLookupAlert').modal('hide');
+
+        var amt = parseFloat($("#txtAmountEdit").val()).toFixed(2);
+        $("#txtAmountEdit").val(amt);
+
         var newValue = parseFloat($("#txtAmountEdit").val());
         var oldValue = parseFloat(<%= SelectedItem.AmountDue%>);
 
