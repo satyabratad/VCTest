@@ -639,25 +639,25 @@
                                 field: "txtCreditCardNumber",
                                 styleParent: true,
                                 errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgCreditCardNumber").ToString()%>",
-                        isValid: ($.payment.validateCardNumber(doc.getElementById("txtCreditCardNumber").value) && validCardPattern.test(cardType))
+                                isValid: ($.payment.validateCardNumber(doc.getElementById("txtCreditCardNumber").value) && validCardPattern.test(cardType))
+                            });
+
+                            validator.addValidationItem(item = {
+
+
+                                field: "txtExpireDate",
+                                styleParent: true,
+                                errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgCreditCardExpiry").ToString%>",
+                        isValid: (!!/^\d{2} \/ \d{2}$/.test(doc.getElementById("txtExpireDate").value) &&
+                                  $.payment.validateCardExpiry($.payment.cardExpiryVal(cardMonth.concat("/", cardYear))) &&
+                                  cardYear <= new Date().getFullYear() + 10)
                     });
 
+
                     validator.addValidationItem(item = {
-
-
-                        field: "txtExpireDate",
+                        field: "txtCCV",
                         styleParent: true,
-                        errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgCreditCardExpiry").ToString%>",
-                          isValid: (!!/^\d{2} \/ \d{2}$/.test(doc.getElementById("txtExpireDate").value) &&
-                                    $.payment.validateCardExpiry($.payment.cardExpiryVal(cardMonth.concat("/", cardYear))) &&
-                                    cardYear <= new Date().getFullYear() + 10)
-                      });
-
-
-                      validator.addValidationItem(item = {
-                          field: "txtCCV",
-                          styleParent: true,
-                          errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgCreditCardCVC").ToString()%>",
+                        errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgCreditCardCVC").ToString()%>",
                           isValid: ($.payment.validateCardCVC(doc.getElementById("txtCCV").value, cardType))
                       });
 
@@ -673,49 +673,50 @@
                       zip = doc.getElementById('txtBillingZip').value;
                             // Check to see if zip is required
                       if ($("#hdZipRequired").val() == 'Y') {
-
                           if (zip == '') {
                               validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
-
-                      }
-
-                  }
-
-
-
-                      if (zip !== '') {
-                              // Set the validator
-                              if (selectedCountry == "US")
-                                  validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeUnitedStates, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
+                            }
+                        }
+                            if (zip !== '') {
+                          // Set the validator
+                          if (selectedCountry == "US")
+                          validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeUnitedStates, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
                               if (selectedCountry == "CA")
                                   validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeCanada, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
                               if (selectedCountry == "OT")
-                                validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeInternational, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
-                        }
+                                  validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeInternational, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
+                          }
+                          // Existing   code
+                          //if (panel && doc.getElementById("rdAmount").checked) {
 
-                        if (panel && doc.getElementById("rdAmount").checked) {
-
-                            validator.addValidationItem(item = {
-                                field: "txtAmount",
-                                styleParent: true,
-                                errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString()%>",
+                             <%-- validator.addValidationItem(item = {
+                                  field: "txtAmount",
+                                  styleParent: true,
+                                  errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString()%>",
                                 isValid: (validatePaymentAmount(doc.getElementById("txtAmount").value, ccMinMaxAmounts))
-                            });
+                            });--%>
 
-
-                        }
+                         // }
+                         // Added [RS]
                         if (validatePaymentAmount(doc.getElementById("txtAmount").value, ccMinMaxAmounts) == false) {
 
                             $("#txtStatusMsg").text("<%=GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString()%>");
-                              $("#lblErrAmount").show();
-                          }
+                            $("#lblErrAmount").show();
+                            
+                            validator.addValidationItem(item = {
+                                  field: "txtAmount",
+                                  styleParent: true,
+                                  errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString()%>",
+                                isValid: (validatePaymentAmount(doc.getElementById("txtAmount").value, ccMinMaxAmounts))
+                            });
+                            
+
+                        }
 
 
+                        break;
 
-
-                          break;
-
-                      case "ACH":
+                    case "ACH":
                                 <% =B2P.PaymentLanding.Express.Web.Utility.BuildACHAmount()%>
                           validator.addValidationItem(new ValidationItem("txtNameonBankAccount", fieldTypes.Name, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgNameOnBankAccount").ToString()%>"));
                           validator.addValidationItem(new ValidationItem("ddlBankAccountType", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
@@ -725,8 +726,8 @@
                               field: "txtBankAccountNumber",
                               styleParent: true,
                               errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgBankAccount").ToString()%>",
-                                  isValid: (!!/^\d{1,17}$/.test(doc.getElementById("txtBankAccountNumber").value))
-                              });
+                              isValid: (!!/^\d{1,17}$/.test(doc.getElementById("txtBankAccountNumber").value))
+                          });
 
                           //validator.addValidationItem(item = {
                           //    field: "txtBankAccountNumber2",
@@ -735,92 +736,103 @@
                           //    isValid: (!!/^\d{1,17}$/.test(doc.getElementById("txtBankAccountNumber2").value) && !!(doc.getElementById("txtBankAccountNumber").value === doc.getElementById("txtBankAccountNumber2").value))
                           //});
 
-                          if (panel && doc.getElementById("rdAmount").checked) {
-                              validator.addValidationItem(item = {
+                        // Exixting code commented by RS
+                          //if (panel && doc.getElementById("rdAmount").checked) {
+                             <%-- validator.addValidationItem(item = {
                                   field: "txtAmount",
                                   styleParent: true,
                                   errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString()%>",
-                                      isValid: (validatePaymentAmount(doc.getElementById("txtAmount").value, achMinMaxAmounts))
-                                  });
+                                  isValid: (validatePaymentAmount(doc.getElementById("txtAmount").value, achMinMaxAmounts))
+                              });--%>
 
-                              }
+                          //}
 
+                        // Added By [RS]
                           if (validatePaymentAmount(doc.getElementById("txtAmount").value, achMinMaxAmounts) == false) {
 
-                                  $("#txtStatusMsg").text("<%=GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString()%>");
-                                  $("#lblErrAmount").show();
-                              }
+                              $("#txtStatusMsg").text("<%=GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString()%>");
+                              $("#lblErrAmount").show();
 
-                              break;
-                      }
+                             validator.addValidationItem(item = {
+                                  field: "txtAmount",
+                                  styleParent: true,
+                                  errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString()%>",
+                                  isValid: (validatePaymentAmount(doc.getElementById("txtAmount").value, achMinMaxAmounts))
+                              });
 
-                      return validator.validate();
-
+ 
+                          }
+                         
+                          break;
                   }
+                   
+                  return validator.validate();
+                  
+              }
 
-                  // Validate payment amount
-                  function validatePaymentAmount(field, pattern) {
+              // Validate payment amount
+              function validatePaymentAmount(field, pattern) {
 
-                      var amtParts = pattern.split("|");
-                      var min = amtParts[0].trim();
-                      var max = amtParts[1].trim();
+                  var amtParts = pattern.split("|");
+                  var min = amtParts[0].trim();
+                  var max = amtParts[1].trim();
 
-                      return parseFloat(field) >= parseFloat(min) && parseFloat(field) <= parseFloat(max);
+                  return parseFloat(field) >= parseFloat(min) && parseFloat(field) <= parseFloat(max);
+              }
+
+
+
+              // Remove any invalid CSS classes left after changing tabs
+              function clearValidationItems(formType) {
+                  switch (formType) {
+                      case "CC":
+                          // Remove any invalid CSS classes left after changing tabs
+                          $('#pnlTabAch').find("*").tooltip("destroy");
+                          $('#pnlTabAch').find("*").removeClass("has-error tooltip-danger");
+                          $('#pnlTabAch').find("*").removeAttr("data-original-title title");
+
+                          // Clear the ACH account form fields
+                          $('#ddlBankAccountType').val("");
+                          $('#txtBankRoutingNumber').val("");
+                          $('#txtBankAccountNumber').val("");
+                          $('#txtBankAccountNumber2').val("");
+
+                          // Hide the ACH error messages
+                          $('#pnlErrorMessage').hide();
+
+                          // Set focus to name field
+                          $('#txtAchFirstName').focus();
+
+                          break;
+
+                      case "ACH":
+                          // Remove any invalid CSS classes left after changing tabs
+                          $('#pnlTabCredit').find("*").tooltip("destroy");
+                          $('#pnlTabCredit').find("*").removeClass("has-error tooltip-danger");
+                          $('#pnlTabCredit').find("*").removeAttr("data-original-title title");
+
+                          // Clear the CC account form fields
+                          $('#txtCreditCardNumber').val("");
+                          $('#txtExpireDate').val("");
+                          $('#txtCCV').val("");
+
+                          //$('#ddlCountry').selectedIndex = 0;
+                          $('#txtBillingZip').val("");
+
+                          // Hide the CC error messages
+                          $('#pnlErrorMessage').hide();
+
+
+                          break;
                   }
+              }
 
 
-
-                  // Remove any invalid CSS classes left after changing tabs
-                  function clearValidationItems(formType) {
-                      switch (formType) {
-                          case "CC":
-                              // Remove any invalid CSS classes left after changing tabs
-                              $('#pnlTabAch').find("*").tooltip("destroy");
-                              $('#pnlTabAch').find("*").removeClass("has-error tooltip-danger");
-                              $('#pnlTabAch').find("*").removeAttr("data-original-title title");
-
-                              // Clear the ACH account form fields
-                              $('#ddlBankAccountType').val("");
-                              $('#txtBankRoutingNumber').val("");
-                              $('#txtBankAccountNumber').val("");
-                              $('#txtBankAccountNumber2').val("");
-
-                              // Hide the ACH error messages
-                              $('#pnlErrorMessage').hide();
-
-                              // Set focus to name field
-                              $('#txtAchFirstName').focus();
-
-                              break;
-
-                          case "ACH":
-                              // Remove any invalid CSS classes left after changing tabs
-                              $('#pnlTabCredit').find("*").tooltip("destroy");
-                              $('#pnlTabCredit').find("*").removeClass("has-error tooltip-danger");
-                              $('#pnlTabCredit').find("*").removeAttr("data-original-title title");
-
-                              // Clear the CC account form fields
-                              $('#txtCreditCardNumber').val("");
-                              $('#txtExpireDate').val("");
-                              $('#txtCCV').val("");
-
-                              //$('#ddlCountry').selectedIndex = 0;
-                              $('#txtBillingZip').val("");
-
-                              // Hide the CC error messages
-                              $('#pnlErrorMessage').hide();
-
-
-                              break;
-                      }
-                  }
-
-
-                  //Open cancel modal window
-                  function cancelModal() {
-                      $('#cancelModal').modal();
-                      return false;
-                  }
+              //Open cancel modal window
+              function cancelModal() {
+                  $('#cancelModal').modal();
+                  return false;
+              }
 
 
 
