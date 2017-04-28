@@ -81,6 +81,8 @@ Namespace B2P.PaymentLanding.Express.BLL
         Private Const _contactInfo As Object = "ContactInfo"
         Private Const _isContactInfoRequired As String = "IsContactInfoRequired"
         Private Const _isConvenienceFeesApplicable As String = "_isConvenienceFeesApplicable"
+        Private Const _creditcardOwnerName As String = "_creditcardOwnerName"
+        Private Const _creditcardExpDate As String = "_creditcardExpDate"
 #End Region
 
 #Region " ::: Contructors ::: "
@@ -885,6 +887,37 @@ Namespace B2P.PaymentLanding.Express.BLL
             End Set
         End Property
 
+        ''' <summary>
+        ''' credit card owner name
+        ''' </summary>
+        Public Shared Property CreditCardOwnerName() As String
+            Get
+                If HttpContext.Current.Session(_creditcardOwnerName) Is Nothing Then
+                    Return Nothing
+                Else
+                    Return DirectCast(HttpContext.Current.Session(_creditcardOwnerName), String)
+                End If
+            End Get
+            Set(ByVal value As String)
+                HttpContext.Current.Session(_creditcardOwnerName) = value
+            End Set
+        End Property
+        ''' <summary>
+        ''' credit card exp date
+        ''' </summary>
+        Public Shared Property CreditCardExpDate() As String
+            Get
+                If HttpContext.Current.Session(_creditcardExpDate) Is Nothing Then
+                    Return Nothing
+                Else
+                    Return DirectCast(HttpContext.Current.Session(_creditcardExpDate), String)
+                End If
+            End Get
+            Set(ByVal value As String)
+                HttpContext.Current.Session(_creditcardExpDate) = value
+            End Set
+        End Property
+
 #End Region
 
 #Region " ::: Methods ::: "
@@ -914,6 +947,7 @@ Namespace B2P.PaymentLanding.Express.BLL
             ContactInfo.Zip = ZipCode
             ContactInfo.HomePhone = HomePhone
         End Sub
+
 
 #End Region
 

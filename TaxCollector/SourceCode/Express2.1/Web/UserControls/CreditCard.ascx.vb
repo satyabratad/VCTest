@@ -98,6 +98,13 @@ Namespace B2P.PaymentLanding.Express.Web
                         End If
                     End If
                 End If
+                'Persist Credit card nuber and CVV
+                If Not BLL.SessionManager.CreditCardOwnerName Is Nothing Then
+                    txtNameonCard.Text = BLL.SessionManager.CreditCardOwnerName
+                End If
+                If Not BLL.SessionManager.CreditCardExpDate Is Nothing Then
+                    txtExpireDate.Text = BLL.SessionManager.CreditCardExpDate
+                End If
             End If
         End Sub
 

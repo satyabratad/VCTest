@@ -312,6 +312,10 @@ Namespace B2P.PaymentLanding.Express.Web
                         BLL.SessionManager.PaymentAmount = Math.Truncate(Utility.SafeEncode(txtAmount.Text) * 100) / 100
                     End If
 
+                    'Persist card owner name and exp date
+                    BLL.SessionManager.CreditCardExpDate = card.ExpirationMonth + " / " + card.ExpirationYear.Substring(card.ExpirationYear.Length - 2, 2)
+                    BLL.SessionManager.CreditCardOwnerName = IIf(card.Owner.FirstName = "NA", "", card.Owner.FirstName) + " " + IIf(card.Owner.FirstName = "NA", "", card.Owner.LastName)
+
                     ' Send them to the confirmation page
                     Response.Redirect("/pay/Confirm.aspx", False)
                 End If
