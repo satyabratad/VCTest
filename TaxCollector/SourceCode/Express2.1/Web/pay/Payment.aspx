@@ -227,11 +227,7 @@
 
                                         <b2p:SubTotal runat="server" ID="SubTotal" />
 
-                                        <div class="alert alert-danger" style="display: none" id="lblErrAmount" role="alert">
-                                            <div class="fa fa-exclamation-circle fa-2x status-msg-icon" id="imgStatusMsgIcon"></div>
-                                            <div class="status-msg-text" id="txtStatusMsg"></div>
-
-                                        </div>
+                                       
 
                                         <div id="pnlFormContents" role="form" runat="server">
                                             <br />
@@ -686,7 +682,7 @@
                               if (selectedCountry == "OT")
                                   validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeInternational, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
                           }
-                          // Existing   code
+                          //  commented By RS [functionality implemented in server side]
                           //if (panel && doc.getElementById("rdAmount").checked) {
 
                              <%-- validator.addValidationItem(item = {
@@ -697,21 +693,7 @@
                             });--%>
 
                          // }
-                         // Added [RS]
-                        if (validatePaymentAmount(doc.getElementById("txtAmount").value, ccMinMaxAmounts) == false) {
-
-                            $("#txtStatusMsg").text("<%=GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString()%>");
-                            $("#lblErrAmount").show();
-                            
-                            validator.addValidationItem(item = {
-                                  field: "txtAmount",
-                                  styleParent: true,
-                                  errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString()%>",
-                                isValid: (validatePaymentAmount(doc.getElementById("txtAmount").value, ccMinMaxAmounts))
-                            });
-                            
-
-                        }
+                       
 
 
                         break;
@@ -736,7 +718,7 @@
                           //    isValid: (!!/^\d{1,17}$/.test(doc.getElementById("txtBankAccountNumber2").value) && !!(doc.getElementById("txtBankAccountNumber").value === doc.getElementById("txtBankAccountNumber2").value))
                           //});
 
-                        // Exixting code commented by RS
+                        // commented By RS [functionality implemented in server side]
                           //if (panel && doc.getElementById("rdAmount").checked) {
                              <%-- validator.addValidationItem(item = {
                                   field: "txtAmount",
@@ -747,21 +729,7 @@
 
                           //}
 
-                        // Added By [RS]
-                          if (validatePaymentAmount(doc.getElementById("txtAmount").value, achMinMaxAmounts) == false) {
-
-                              $("#txtStatusMsg").text("<%=GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString()%>");
-                              $("#lblErrAmount").show();
-
-                             validator.addValidationItem(item = {
-                                  field: "txtAmount",
-                                  styleParent: true,
-                                  errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString()%>",
-                                  isValid: (validatePaymentAmount(doc.getElementById("txtAmount").value, achMinMaxAmounts))
-                              });
-
- 
-                          }
+                        
                          
                           break;
                   }

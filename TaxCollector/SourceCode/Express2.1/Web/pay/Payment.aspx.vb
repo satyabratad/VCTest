@@ -87,7 +87,11 @@ Namespace B2P.PaymentLanding.Express.Web
                 '::::::::::::::::::::::::::::::::::::::::::::
                 If ValidateForm("ACH") Then
                     account = New B2P.Common.Objects.BankAccount
-
+                    Dim paymentAmount As Decimal = Convert.ToDecimal(txtAmount.Text())
+                    If validatePaymentAmount(paymentAmount, BLL.SessionManager.CurrentCategory.PaymentInformation.ACH.MinimumAmount, BLL.SessionManager.CurrentCategory.PaymentInformation.ACH.MaximumAmount) = False Then
+                        psmErrorMessage.ToggleStatusMessage(GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString(), StatusMessageType.Danger, StatusMessageSize.Normal, True, True)
+                        Exit Sub
+                    End If
                     ' Set the bank account properties
                     names = pbaEnterBankAccountInfo.NameonBankAccount.Split(" ")
                     Select Case names.Length
@@ -109,6 +113,8 @@ Namespace B2P.PaymentLanding.Express.Web
                             Next
                             account.Owner.LastName = Truncate(rebuildLastName.Trim, 30)
                     End Select
+
+
                     account.Owner.Address1 = String.Empty
                     account.Owner.Address2 = String.Empty
                     account.Owner.City = String.Empty
@@ -220,6 +226,23 @@ Namespace B2P.PaymentLanding.Express.Web
             End Try
         End Sub
 
+        ''' <summary>
+        ''' This function will validate the payment amount with its maximum and minimum range
+        ''' </summary>
+        ''' <param name="amount"></param>
+        ''' <param name="pattern"></param>
+        ''' <returns></returns>
+        Protected Function validatePaymentAmount(amount As Decimal, min As Decimal, max As Decimal) As Boolean
+            Dim isValid As Boolean = False
+
+            If amount >= min And amount <= max Then
+                isValid = True
+            Else
+                isValid = False
+            End If
+            Return isValid
+        End Function
+
         Private Sub btnSubmitCredit_Click(sender As Object, e As EventArgs) Handles btnSubmitCredit.Click
             Dim card As B2P.Common.Objects.CreditCard = Nothing
             Dim dateParts As String()
@@ -255,70 +278,74 @@ Namespace B2P.PaymentLanding.Express.Web
                             Next
                             card.Owner.LastName = Truncate(rebuildLastName.Trim, 30)
                     End Select
-
+                    Dim paymentAmount As Decimal = Convert.ToDecimal(txtAmount.Text())
+                    If validatePaymentAmount(paymentAmount, BLL.SessionManager.CurrentCategory.PaymentInformation.Creditcard.MinimumAmount, BLL.SessionManager.CurrentCategory.PaymentInformation.Creditcard.MaximumAmount) = False Then
+                        psmErrorMessage.ToggleStatusMessage(GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString(), StatusMessageType.Danger, StatusMessageSize.Normal, True, True)
+                        Exit Sub
+                    End If
                     ':::::::::::::::::::::::::::::::::::::::::::::::::::::::
                     ' Removed CC address form fields per Ken Ponder
                     ' Some address info set to 'NA' so Vantiv will process.
                     ':::::::::::::::::::::::::::::::::::::::::::::::::::::::
                     card.Owner.Address1 = "NA"
-                    card.Owner.Address2 = "NA"
-                    card.Owner.City = "NA"
-                    ':::::::::::::::::::::::::::::::::::::::::::::::::
-                    '
-                    If Not String.IsNullOrEmpty(pccEnterCreditCardInfo.CreditCardCountry) Then
-                        card.Owner.CountryCode = pccEnterCreditCardInfo.CreditCardCountry
-                    Else
-                        card.Owner.CountryCode = "US"
+                        card.Owner.Address2 = "NA"
+                        card.Owner.City = "NA"
+                        ':::::::::::::::::::::::::::::::::::::::::::::::::
+                        '
+                        If Not String.IsNullOrEmpty(pccEnterCreditCardInfo.CreditCardCountry) Then
+                            card.Owner.CountryCode = pccEnterCreditCardInfo.CreditCardCountry
+                        Else
+                            card.Owner.CountryCode = "US"
+                        End If
+
+                        ' Set international info to FL and 11111 per Ken Ponder
+                        ' May want to visit this later and validate
+
+                        ''Seting the default state as per coutry setting 
+                        If card.Owner.CountryCode = "US" Or card.Owner.CountryCode = "OT" Then
+                            card.Owner.State = "FL"
+                        ElseIf card.Owner.CountryCode = "CA" Then
+                            card.Owner.State = "ON"
+                        End If
+
+                        If Not String.IsNullOrEmpty(pccEnterCreditCardInfo.CreditCardBillingZip) Then
+                            card.Owner.ZipCode = pccEnterCreditCardInfo.CreditCardBillingZip
+                        Else
+                            card.Owner.ZipCode = ""
+                        End If
+
+
+
+                        card.Owner.EMailAddress = String.Empty
+                        card.Owner.PhoneNumber = String.Empty
+
+                        card.CreditCardNumber = pccEnterCreditCardInfo.CreditCardNumber.Trim.Replace(" ", "")
+
+                        dateParts = pccEnterCreditCardInfo.ExpirationDate.Trim.Replace(" ", "").Split("/"c)
+                        card.ExpirationMonth = dateParts(0).Trim
+                        card.ExpirationYear = dateParts(1).Trim
+
+                        card.SecurityCode = pccEnterCreditCardInfo.CVV.Trim
+
+                        BLL.SessionManager.CreditCard = card
+                        BLL.SessionManager.PaymentType = B2P.Common.Enumerations.PaymentTypes.CreditCard
+
+                        ' Set the payment amount
+                        If rdCurrentCharges.Checked Then
+                            ' Equal to lookup amount
+                            BLL.SessionManager.PaymentAmount = BLL.SessionManager.LookupAmount
+                        Else
+                            ' User entered value
+                            BLL.SessionManager.PaymentAmount = Math.Truncate(Utility.SafeEncode(txtAmount.Text) * 100) / 100
+                        End If
+
+                        'Persist card owner name and exp date
+                        BLL.SessionManager.CreditCardExpDate = card.ExpirationMonth + " / " + card.ExpirationYear.Substring(card.ExpirationYear.Length - 2, 2)
+                        BLL.SessionManager.CreditCardOwnerName = IIf(card.Owner.FirstName = "NA", "", card.Owner.FirstName) + " " + IIf(card.Owner.LastName = "NA", "", card.Owner.LastName)
+
+                        ' Send them to the confirmation page
+                        Response.Redirect("/pay/Confirm.aspx", False)
                     End If
-
-                    ' Set international info to FL and 11111 per Ken Ponder
-                    ' May want to visit this later and validate
-
-                    ''Seting the default state as per coutry setting 
-                    If card.Owner.CountryCode = "US" Or card.Owner.CountryCode = "OT" Then
-                        card.Owner.State = "FL"
-                    ElseIf card.Owner.CountryCode = "CA" Then
-                        card.Owner.State = "ON"
-                    End If
-
-                    If Not String.IsNullOrEmpty(pccEnterCreditCardInfo.CreditCardBillingZip) Then
-                        card.Owner.ZipCode = pccEnterCreditCardInfo.CreditCardBillingZip
-                    Else
-                        card.Owner.ZipCode = ""
-                    End If
-
-
-
-                    card.Owner.EMailAddress = String.Empty
-                    card.Owner.PhoneNumber = String.Empty
-
-                    card.CreditCardNumber = pccEnterCreditCardInfo.CreditCardNumber.Trim.Replace(" ", "")
-
-                    dateParts = pccEnterCreditCardInfo.ExpirationDate.Trim.Replace(" ", "").Split("/"c)
-                    card.ExpirationMonth = dateParts(0).Trim
-                    card.ExpirationYear = dateParts(1).Trim
-
-                    card.SecurityCode = pccEnterCreditCardInfo.CVV.Trim
-
-                    BLL.SessionManager.CreditCard = card
-                    BLL.SessionManager.PaymentType = B2P.Common.Enumerations.PaymentTypes.CreditCard
-
-                    ' Set the payment amount
-                    If rdCurrentCharges.Checked Then
-                        ' Equal to lookup amount
-                        BLL.SessionManager.PaymentAmount = BLL.SessionManager.LookupAmount
-                    Else
-                        ' User entered value
-                        BLL.SessionManager.PaymentAmount = Math.Truncate(Utility.SafeEncode(txtAmount.Text) * 100) / 100
-                    End If
-
-                    'Persist card owner name and exp date
-                    BLL.SessionManager.CreditCardExpDate = card.ExpirationMonth + " / " + card.ExpirationYear.Substring(card.ExpirationYear.Length - 2, 2)
-                    BLL.SessionManager.CreditCardOwnerName = IIf(card.Owner.FirstName = "NA", "", card.Owner.FirstName) + " " + IIf(card.Owner.LastName = "NA", "", card.Owner.LastName)
-
-                    ' Send them to the confirmation page
-                    Response.Redirect("/pay/Confirm.aspx", False)
-                End If
 
             Catch ex As Exception
                 ' Build the error message
