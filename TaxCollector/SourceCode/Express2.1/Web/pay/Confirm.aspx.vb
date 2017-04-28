@@ -542,8 +542,12 @@ Namespace B2P.PaymentLanding.Express.Web
             End If
             For Each cart As B2P.Cart.Cart In BLL.SessionManager.ManageCart.Cart
                 Dim accfldVal1 As String = BLL.SessionManager.ManageCart.GetAccountFieldValue(cart, 0)
-                Dim accfldVal2 As String = BLL.SessionManager.ManageCart.GetAccountFieldValue(cart, 0)
-                Dim accfldVal3 As String = BLL.SessionManager.ManageCart.GetAccountFieldValue(cart, 0)
+                Dim accfldVal2 As String = BLL.SessionManager.ManageCart.GetAccountFieldValue(cart, 1)
+                Dim accfldVal3 As String = BLL.SessionManager.ManageCart.GetAccountFieldValue(cart, 2)
+
+                accfldVal1 = IIf(String.IsNullOrEmpty(accfldVal1), "", accfldVal1)
+                accfldVal2 = IIf(String.IsNullOrEmpty(accfldVal2), "", accfldVal2)
+                accfldVal3 = IIf(String.IsNullOrEmpty(accfldVal3), "", accfldVal3)
                 Dim index As Integer = 0
 
 

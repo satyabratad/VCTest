@@ -348,7 +348,7 @@
                     docprint.document.write('<div id="pageheader"> ');
                     docprint.document.write('<%=Session("CustTitle") %></div>');
                     docprint.document.write(content_vlue);
-                    docprint.document.write('</body><p style="padding-left:210px;"><a href="javascript:self.close();" class="Paragraph" >Close</a></p></html>');
+                   // docprint.document.write('</body><p style="padding-left:210px;"><a href="javascript:self.close();" class="Paragraph" >Close</a></p></html>');
                     docprint.document.close();
                     docprint.focus();
                    

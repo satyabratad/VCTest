@@ -36,8 +36,13 @@ Namespace B2P.PaymentLanding.Express.Web
                         pnlExpDate.Visible = True
                         lblExpDate.Text = BLL.SessionManager.CreditCard.ExpirationMonth + "/" + BLL.SessionManager.CreditCard.ExpirationYear.Substring(2)
                         'set zip code
-                        pnlZip.Visible = True
-                        lblBillZip.Text = BLL.SessionManager.CreditCard.Owner.ZipCode
+                        If BLL.SessionManager.CreditCard.Owner.ZipCode = "" Then
+                            pnlZip.Visible = False
+                        Else
+                            pnlZip.Visible = True
+                            lblBillZip.Text = BLL.SessionManager.CreditCard.Owner.ZipCode
+                        End If
+
                 End Select
 
             End If

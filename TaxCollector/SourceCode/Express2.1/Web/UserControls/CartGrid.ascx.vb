@@ -114,7 +114,7 @@ Public Class CartGrid
                 propertyAddress.AppendFormat("{0}, ", CartItem.PropertyAddress.State)
             End If
             If Not String.IsNullOrEmpty(CartItem.PropertyAddress.Zip) Then
-                propertyAddress.AppendFormat("{0}, ", CartItem.PropertyAddress.Zip)
+                propertyAddress.AppendFormat("{0},", CartItem.PropertyAddress.Zip)
             End If
         End If
         Return IIf(String.IsNullOrEmpty(propertyAddress.ToString().Trim().TrimEnd(",")), "Not Available", propertyAddress.ToString().Trim().TrimEnd(","))

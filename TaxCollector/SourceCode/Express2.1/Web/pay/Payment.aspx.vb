@@ -284,7 +284,7 @@ Namespace B2P.PaymentLanding.Express.Web
                     If Not String.IsNullOrEmpty(pccEnterCreditCardInfo.CreditCardBillingZip) Then
                         card.Owner.ZipCode = pccEnterCreditCardInfo.CreditCardBillingZip
                     Else
-                        card.Owner.ZipCode = "11111"
+                        card.Owner.ZipCode = ""
                     End If
 
 
@@ -314,7 +314,7 @@ Namespace B2P.PaymentLanding.Express.Web
 
                     'Persist card owner name and exp date
                     BLL.SessionManager.CreditCardExpDate = card.ExpirationMonth + " / " + card.ExpirationYear.Substring(card.ExpirationYear.Length - 2, 2)
-                    BLL.SessionManager.CreditCardOwnerName = IIf(card.Owner.FirstName = "NA", "", card.Owner.FirstName) + " " + IIf(card.Owner.FirstName = "NA", "", card.Owner.LastName)
+                    BLL.SessionManager.CreditCardOwnerName = IIf(card.Owner.FirstName = "NA", "", card.Owner.FirstName) + " " + IIf(card.Owner.LastName = "NA", "", card.Owner.LastName)
 
                     ' Send them to the confirmation page
                     Response.Redirect("/pay/Confirm.aspx", False)
