@@ -745,7 +745,7 @@
 
                               }
 
-                              if (validatePaymentAmount(doc.getElementById("txtAmount").value, ccMinMaxAmounts) == false) {
+                          if (validatePaymentAmount(doc.getElementById("txtAmount").value, achMinMaxAmounts) == false) {
 
                                   $("#txtStatusMsg").text("<%=GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString()%>");
                                   $("#lblErrAmount").show();
