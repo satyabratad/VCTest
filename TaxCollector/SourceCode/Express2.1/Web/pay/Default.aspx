@@ -334,9 +334,9 @@
                     // Set the validator
                     validator.addValidationItem(new ValidationItem("txtLookupAccount1", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
                 }
-                
+               
                 // Check to see if account 2 is required
-                if ($("#txtLookupAccount2").is('visible')) {
+                if ($("#txtLookupAccount2").css('visibility') == 'visible') {
                     acct2 = doc.getElementById('hdAccount2').value;
                     if (acct2 !== '') {
                         // Set the validator
@@ -345,7 +345,7 @@
                 }
 
                 // Check to see if account 3 is required
-                if ($("#txtLookupAccount3").is('visible')) {
+                if ($("#txtLookupAccount3").css('visibility') == 'visible') {
                     acct3 = doc.getElementById('hdAccount3').value;
                     if (acct3 !== '') {
                         // Set the validator
@@ -367,6 +367,10 @@
                     // Set the validator
                     validator.addValidationItem(new ValidationItem("txtAmount", fieldTypes.AmountDue, true, "Invalid Amount"));
                     return validator.validate();
+                }
+                else {
+                    var amt = parseFloat($("#txtAmount").val()).toFixed(2);
+                    $("#txtAmount").val(amt);
                 }
                 <%End If%>
 
@@ -393,7 +397,37 @@
             }
 
 
+            function validateFloatKeyPress(el, evt) {
+                var charCode = (evt.which) ? evt.which : event.keyCode;
+                var number = el.value.split('.');
+                if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+                    return false;
+                }
+                //just one dot
+                if (number.length > 1 && charCode == 46) {
+                    return false;
+                }
+                //get the carat position
+                var caratPos = getSelectionStart(el);
+                var dotPos = el.value.indexOf(".");
+                if (caratPos > dotPos && dotPos > -1 && (number[1].length > 1)) {
+                    return false;
+                }
+                return true;
+            }
 
+           
+            function getSelectionStart(o) {
+                try {
+                    if (o.createTextRange) {
+                        var r = document.selection.createRange().duplicate()
+                        r.moveEnd('character', o.value.length)
+                        if (r.text == '') return o.value.length
+                        return o.value.lastIndexOf(r.text)
+                    } else return o.selectionStart
+                }
+                catch (exp) { }
+            }
 
 
         </script>

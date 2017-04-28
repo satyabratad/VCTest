@@ -48,8 +48,8 @@
                         <label class="control-label" for="txtAmount" id="lblPropAmount">
                             <asp:Label ID="lblAmount" runat="server" Text="<%$ Resources:WebResources, AmountLabel %>"></asp:Label>
                         </label>
-                        <asp:TextBox runat="server" required="true" MaxLength="40" ID="txtAmountEdit"
-                            class="form-control input-sm" onkeypress="return isNumberKey(event);"></asp:TextBox>
+                        <asp:TextBox runat="server" maxlength="10" required="true" ID="txtAmountEdit"
+                            class="form-control input-sm" onkeypress="return validateFloatKeyPress(this,event);"></asp:TextBox>
 
                     </div>
                 </div>
