@@ -62,7 +62,7 @@
                     <%If IsEditIconVisible Then%>
                     <td class="<%# GetCssClass(Eval("Index")) %>" style="align-content: center; cursor: pointer;"><a onclick="editItems(<%# Eval("Index") %>);" title="Edit Item"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a></td>
                     <%Else %>
-                    <td class="<%# GetCssClass(Eval("Index")) %>" style="align-content: center; cursor: pointer;"></td>
+                    <td class="<%# GetCssClass(Eval("Index")) %>" style="align-content: center;"></td>
                     <%End If %>
                     
                     <td class="<%# GetCssClass(Eval("Index")) %>"><%# Eval("Item") %></td>
@@ -106,7 +106,7 @@
                     <%If IsEditIconVisible Then%>
                     <td class="<%# GetCssClass(Eval("Index")) %>" style="align-content: center; cursor: pointer;"><a onclick="editItems(<%# Eval("Index") %>);" title="Edit Item"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a></td>
                     <%Else %>
-                    <td class="<%# GetCssClass(Eval("Index")) %>" style="align-content: center; cursor: pointer;"></td>
+                    <td class="<%# GetCssClass(Eval("Index")) %>" style="align-content: center;"></td>
                     <%End If %>
                     
                     <td class="<%# GetCssClass(Eval("Index")) %>"><%# Eval("Item") %></td>

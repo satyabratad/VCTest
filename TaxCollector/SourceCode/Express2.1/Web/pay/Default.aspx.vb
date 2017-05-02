@@ -217,7 +217,8 @@ Namespace B2P.PaymentLanding.Express.Web
                                 BLL.SessionManager.AccountNumber1 = Utility.SafeEncode(txtLookupAccount1.Text)
                                 BLL.SessionManager.AccountNumber2 = Utility.SafeEncode(txtLookupAccount2.Text)
                                 BLL.SessionManager.AccountNumber3 = Utility.SafeEncode(txtLookupAccount3.Text)
-
+                                'Added By RS
+                                ctlPropertyAddress.Amount = y.AmountDue
                                 ' Show the modal
                                 Page.ClientScript.RegisterStartupScript(Me.GetType, "Show", "$(document).ready(function() { $('#pnlLookupResults').modal({show: 'true', backdrop: 'static', keyboard: false}); });", True)
 
@@ -263,6 +264,8 @@ Namespace B2P.PaymentLanding.Express.Web
                                 BLL.SessionManager.AccountNumber1 = Utility.SafeEncode(txtLookupAccount1.Text)
                                 BLL.SessionManager.AccountNumber2 = Utility.SafeEncode(txtLookupAccount2.Text)
                                 BLL.SessionManager.AccountNumber3 = Utility.SafeEncode(txtLookupAccount3.Text)
+                                'Added By RS
+                                ctlPropertyAddress.Amount = y.AmountDue
                                 ' Show the modal
                                 Page.ClientScript.RegisterStartupScript(Me.GetType, "Show", "$(document).ready(function() { $('#pnlLookupResults').modal({show: 'true', backdrop: 'static', keyboard: false}); });", True)
                         End Select
