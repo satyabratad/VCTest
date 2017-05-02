@@ -107,8 +107,12 @@ Public Class PropertyAddress
     ''' <returns>numeric</returns>
     Public Property Amount() As Decimal
         Get
-            Return Convert.ToDecimal(txtAmount.Text.Trim)
+            If Not String.IsNullOrEmpty(txtAmount.Text) Then
+                Return Convert.ToDecimal(txtAmount.Text.Trim)
+
+            End If
         End Get
+
         Set(ByVal value As Decimal)
             txtAmount.Text = value
         End Set
