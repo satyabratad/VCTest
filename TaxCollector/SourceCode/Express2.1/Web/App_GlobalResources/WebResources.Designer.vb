@@ -1253,6 +1253,24 @@ Namespace Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to My Account Details.
+        '''</summary>
+        Friend Shared ReadOnly Property MyAccountDetails() As String
+            Get
+                Return ResourceManager.GetString("MyAccountDetails", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to My Order Details.
+        '''</summary>
+        Friend Shared ReadOnly Property MyOrderDetails() As String
+            Get
+                Return ResourceManager.GetString("MyOrderDetails", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to No.
         '''</summary>
         Friend Shared ReadOnly Property NoButton() As String

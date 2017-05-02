@@ -574,4 +574,10 @@
   <data name="CartGridColumn_Item" xml:space="preserve">
     <value>Item</value>
   </data>
+  <data name="MyAccountDetails" xml:space="preserve">
+    <value>My Account Details</value>
+  </data>
+  <data name="MyOrderDetails" xml:space="preserve">
+    <value>My Order Details</value>
+  </data>
 </root>
