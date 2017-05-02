@@ -11,9 +11,9 @@ Option Strict On
 Option Explicit On
 
 Namespace B2P.PaymentLanding.Express.Web
-
+    
     Partial Public Class payment
-
+        
         '''<summary>
         '''docHead control.
         '''</summary>
@@ -22,7 +22,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents docHead As Global.System.Web.UI.HtmlControls.HtmlHead
-
+        
         '''<summary>
         '''lnkCSS control.
         '''</summary>
@@ -31,7 +31,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents lnkCSS As Global.System.Web.UI.HtmlControls.HtmlLink
-
+        
         '''<summary>
         '''frmDefault control.
         '''</summary>
@@ -40,7 +40,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents frmDefault As Global.System.Web.UI.HtmlControls.HtmlForm
-
+        
         '''<summary>
         '''phDefault control.
         '''</summary>
@@ -49,7 +49,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents phDefault As Global.B2P.PaymentLanding.Express.Web.Header
-
+        
         '''<summary>
         '''hdCCAmount control.
         '''</summary>
@@ -58,7 +58,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents hdCCAmount As Global.System.Web.UI.WebControls.HiddenField
-
+        
         '''<summary>
         '''pjsJavascript control.
         '''</summary>
@@ -67,7 +67,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pjsJavascript As Global.JavaScriptCheck
-
+        
         '''<summary>
         '''pnlNonSSOBreadcrumb control.
         '''</summary>
@@ -76,7 +76,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pnlNonSSOBreadcrumb As Global.System.Web.UI.WebControls.Panel
-
+        
         '''<summary>
         '''BreadCrumbMenu control.
         '''</summary>
@@ -85,7 +85,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents BreadCrumbMenu As Global.BreadCrumbMenu
-
+        
         '''<summary>
         '''pnlSSOBreadcrumb control.
         '''</summary>
@@ -94,7 +94,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pnlSSOBreadcrumb As Global.System.Web.UI.WebControls.Panel
-
+        
         '''<summary>
         '''BreadCrumbMenuSSO control.
         '''</summary>
@@ -103,7 +103,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents BreadCrumbMenuSSO As Global.BreadCrumbMenu
-
+        
         '''<summary>
         '''ShoppingCart control.
         '''</summary>
@@ -112,7 +112,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents ShoppingCart As Global.ShoppingCart
-
+        
         '''<summary>
         '''OrderDetails control.
         '''</summary>
@@ -121,7 +121,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents OrderDetails As Global.OrderDetails
-
+        
         '''<summary>
         '''pnlAccountDetails control.
         '''</summary>
@@ -130,7 +130,16 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pnlAccountDetails As Global.System.Web.UI.WebControls.Panel
-
+        
+        '''<summary>
+        '''litMyAccountDetails control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents litMyAccountDetails As Global.System.Web.UI.WebControls.Literal
+        
         '''<summary>
         '''pnlAccount1 control.
         '''</summary>
@@ -139,7 +148,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pnlAccount1 As Global.System.Web.UI.WebControls.Panel
-
+        
         '''<summary>
         '''litAccountNumber1 control.
         '''</summary>
@@ -148,7 +157,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litAccountNumber1 As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''litAccountNumber1Data control.
         '''</summary>
@@ -157,7 +166,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litAccountNumber1Data As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''pnlAccount2 control.
         '''</summary>
@@ -166,7 +175,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pnlAccount2 As Global.System.Web.UI.WebControls.Panel
-
+        
         '''<summary>
         '''litAccountNumber2 control.
         '''</summary>
@@ -175,7 +184,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litAccountNumber2 As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''litAccountNumber2Data control.
         '''</summary>
@@ -184,7 +193,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litAccountNumber2Data As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''pnlAccount3 control.
         '''</summary>
@@ -193,7 +202,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pnlAccount3 As Global.System.Web.UI.WebControls.Panel
-
+        
         '''<summary>
         '''litAccountNumber3 control.
         '''</summary>
@@ -202,7 +211,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litAccountNumber3 As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''litAccountNumber3Data control.
         '''</summary>
@@ -211,7 +220,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litAccountNumber3Data As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''pnlAddress control.
         '''</summary>
@@ -220,7 +229,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pnlAddress As Global.System.Web.UI.WebControls.Panel
-
+        
         '''<summary>
         '''litAddressLabel control.
         '''</summary>
@@ -229,7 +238,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litAddressLabel As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''litAddress control.
         '''</summary>
@@ -238,7 +247,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litAddress As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''pnlAmountDue control.
         '''</summary>
@@ -247,7 +256,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pnlAmountDue As Global.System.Web.UI.WebControls.Panel
-
+        
         '''<summary>
         '''litAmountDueLabel control.
         '''</summary>
@@ -256,7 +265,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litAmountDueLabel As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''litAmountDue control.
         '''</summary>
@@ -265,7 +274,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litAmountDue As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''pnlDueDate control.
         '''</summary>
@@ -274,7 +283,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pnlDueDate As Global.System.Web.UI.WebControls.Panel
-
+        
         '''<summary>
         '''litDueDateLabel control.
         '''</summary>
@@ -283,7 +292,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litDueDateLabel As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''litDueDate control.
         '''</summary>
@@ -292,7 +301,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litDueDate As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''pnlFee control.
         '''</summary>
@@ -301,7 +310,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pnlFee As Global.System.Web.UI.WebControls.Panel
-
+        
         '''<summary>
         '''litFeeLabel control.
         '''</summary>
@@ -310,7 +319,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litFeeLabel As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''litSelectAmount control.
         '''</summary>
@@ -319,7 +328,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litSelectAmount As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''pnlCurrentCharges control.
         '''</summary>
@@ -328,7 +337,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pnlCurrentCharges As Global.System.Web.UI.WebControls.Panel
-
+        
         '''<summary>
         '''rdCurrentCharges control.
         '''</summary>
@@ -337,7 +346,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents rdCurrentCharges As Global.System.Web.UI.WebControls.RadioButton
-
+        
         '''<summary>
         '''pnlOtherAmount control.
         '''</summary>
@@ -346,7 +355,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pnlOtherAmount As Global.System.Web.UI.WebControls.Panel
-
+        
         '''<summary>
         '''rdAmount control.
         '''</summary>
@@ -355,7 +364,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents rdAmount As Global.System.Web.UI.WebControls.RadioButton
-
+        
         '''<summary>
         '''txtAmount control.
         '''</summary>
@@ -364,7 +373,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents txtAmount As Global.System.Web.UI.WebControls.TextBox
-
+        
         '''<summary>
         '''SubTotal control.
         '''</summary>
@@ -373,7 +382,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents SubTotal As Global.SubTotal
-
+        
         '''<summary>
         '''pnlFormContents control.
         '''</summary>
@@ -382,7 +391,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pnlFormContents As Global.System.Web.UI.HtmlControls.HtmlGenericControl
-
+        
         '''<summary>
         '''litSelectPaymentMethod control.
         '''</summary>
@@ -391,7 +400,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litSelectPaymentMethod As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''btnFees control.
         '''</summary>
@@ -400,7 +409,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents btnFees As Global.System.Web.UI.WebControls.Button
-
+        
         '''<summary>
         '''psmErrorMessage control.
         '''</summary>
@@ -409,7 +418,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents psmErrorMessage As Global.B2P.PaymentLanding.Express.Web.StatusMessage
-
+        
         '''<summary>
         '''tabCredit control.
         '''</summary>
@@ -418,7 +427,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents tabCredit As Global.System.Web.UI.HtmlControls.HtmlGenericControl
-
+        
         '''<summary>
         '''litCreditCardTabName control.
         '''</summary>
@@ -427,7 +436,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litCreditCardTabName As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''tabAch control.
         '''</summary>
@@ -436,7 +445,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents tabAch As Global.System.Web.UI.HtmlControls.HtmlGenericControl
-
+        
         '''<summary>
         '''litBankAccountTabName control.
         '''</summary>
@@ -445,7 +454,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litBankAccountTabName As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''pnlTabCredit control.
         '''</summary>
@@ -454,7 +463,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pnlTabCredit As Global.System.Web.UI.WebControls.Panel
-
+        
         '''<summary>
         '''pccEnterCreditCardInfo control.
         '''</summary>
@@ -463,7 +472,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pccEnterCreditCardInfo As Global.B2P.PaymentLanding.Express.Web.CreditCard
-
+        
         '''<summary>
         '''btnCancelCredit control.
         '''</summary>
@@ -472,7 +481,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents btnCancelCredit As Global.System.Web.UI.WebControls.Button
-
+        
         '''<summary>
         '''btnAddMoreItemCredit control.
         '''</summary>
@@ -490,7 +499,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents btnSubmitCredit As Global.System.Web.UI.WebControls.Button
-
+        
         '''<summary>
         '''pnlTabAch control.
         '''</summary>
@@ -499,7 +508,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pnlTabAch As Global.System.Web.UI.WebControls.Panel
-
+        
         '''<summary>
         '''pbaEnterBankAccountInfo control.
         '''</summary>
@@ -508,7 +517,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pbaEnterBankAccountInfo As Global.B2P.PaymentLanding.Express.Web.BankAccount
-
+        
         '''<summary>
         '''btnCancelAch control.
         '''</summary>
@@ -517,7 +526,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents btnCancelAch As Global.System.Web.UI.WebControls.Button
-
+        
         '''<summary>
         '''btnAddMoreItemAch control.
         '''</summary>
@@ -535,7 +544,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents btnSubmitAch As Global.System.Web.UI.WebControls.Button
-
+        
         '''<summary>
         '''litPaymentAmountTitle control.
         '''</summary>
@@ -544,7 +553,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litPaymentAmountTitle As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''pnlBankAccountAmount control.
         '''</summary>
@@ -553,7 +562,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pnlBankAccountAmount As Global.System.Web.UI.WebControls.Panel
-
+        
         '''<summary>
         '''Literal2 control.
         '''</summary>
@@ -562,7 +571,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents Literal2 As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''litBankAccountMinMaxAmounts control.
         '''</summary>
@@ -571,7 +580,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litBankAccountMinMaxAmounts As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''pnlCreditCardAmount control.
         '''</summary>
@@ -580,7 +589,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pnlCreditCardAmount As Global.System.Web.UI.WebControls.Panel
-
+        
         '''<summary>
         '''Literal4 control.
         '''</summary>
@@ -589,7 +598,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents Literal4 As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''litCreditCardMinMaxAmounts control.
         '''</summary>
@@ -598,7 +607,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litCreditCardMinMaxAmounts As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''Button2 control.
         '''</summary>
@@ -607,7 +616,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents Button2 As Global.System.Web.UI.WebControls.Button
-
+        
         '''<summary>
         '''litCCVTitle control.
         '''</summary>
@@ -616,7 +625,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litCCVTitle As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''litCVVDesc control.
         '''</summary>
@@ -625,7 +634,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litCVVDesc As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''btnCloseCreditModal control.
         '''</summary>
@@ -634,7 +643,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents btnCloseCreditModal As Global.System.Web.UI.WebControls.Button
-
+        
         '''<summary>
         '''litCheckImageTitle control.
         '''</summary>
@@ -643,7 +652,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litCheckImageTitle As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''litCheckHelpText control.
         '''</summary>
@@ -652,7 +661,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litCheckHelpText As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''btnCloseCheckModal control.
         '''</summary>
@@ -661,7 +670,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents btnCloseCheckModal As Global.System.Web.UI.WebControls.Button
-
+        
         '''<summary>
         '''pnlAchInvalidModal control.
         '''</summary>
@@ -670,7 +679,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pnlAchInvalidModal As Global.System.Web.UI.WebControls.Panel
-
+        
         '''<summary>
         '''litACHInvalidHeader control.
         '''</summary>
@@ -679,7 +688,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litACHInvalidHeader As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''litAchInvalidMsg control.
         '''</summary>
@@ -688,7 +697,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litAchInvalidMsg As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''btnCloseFailedValidationModal control.
         '''</summary>
@@ -697,7 +706,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents btnCloseFailedValidationModal As Global.System.Web.UI.WebControls.Button
-
+        
         '''<summary>
         '''Literal1 control.
         '''</summary>
@@ -706,7 +715,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents Literal1 As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''pnlACHFee control.
         '''</summary>
@@ -715,7 +724,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pnlACHFee As Global.System.Web.UI.WebControls.Panel
-
+        
         '''<summary>
         '''litBankAccountPaymentsTitle control.
         '''</summary>
@@ -724,7 +733,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litBankAccountPaymentsTitle As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''litACHFee control.
         '''</summary>
@@ -733,7 +742,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litACHFee As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''pnlCCFee control.
         '''</summary>
@@ -742,7 +751,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pnlCCFee As Global.System.Web.UI.WebControls.Panel
-
+        
         '''<summary>
         '''litCreditCardPaymentsTitle control.
         '''</summary>
@@ -751,7 +760,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litCreditCardPaymentsTitle As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''litCCFee control.
         '''</summary>
@@ -760,7 +769,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litCCFee As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''Button1 control.
         '''</summary>
@@ -769,7 +778,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents Button1 As Global.System.Web.UI.WebControls.Button
-
+        
         '''<summary>
         '''litImportantMessage control.
         '''</summary>
@@ -778,7 +787,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litImportantMessage As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''lblPaymentMsg control.
         '''</summary>
@@ -787,7 +796,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents lblPaymentMsg As Global.System.Web.UI.WebControls.Label
-
+        
         '''<summary>
         '''Literal3 control.
         '''</summary>
@@ -796,7 +805,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents Literal3 As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''Literal5 control.
         '''</summary>
@@ -805,7 +814,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents Literal5 As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''btnYes control.
         '''</summary>
@@ -814,7 +823,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents btnYes As Global.System.Web.UI.WebControls.Button
-
+        
         '''<summary>
         '''btnNo control.
         '''</summary>
@@ -823,7 +832,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents btnNo As Global.System.Web.UI.WebControls.Button
-
+        
         '''<summary>
         '''hdfCollapseState control.
         '''</summary>
@@ -832,7 +841,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents hdfCollapseState As Global.System.Web.UI.WebControls.HiddenField
-
+        
         '''<summary>
         '''hdfTabName control.
         '''</summary>
@@ -841,7 +850,7 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents hdfTabName As Global.System.Web.UI.WebControls.HiddenField
-
+        
         '''<summary>
         '''pfDefault control.
         '''</summary>
