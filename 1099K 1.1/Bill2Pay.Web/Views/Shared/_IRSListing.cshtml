@@ -51,7 +51,7 @@
         var acno = JSON.parse(strAcnos);
 
         for (var i = 0; i < acno.length; i++) {
-            $("input[name='" + acno[i].AccountNo + "']").attr('checked', acno[i].IsChecked == 0 ? false : true)
+            $("input[name='" + acno[i].AccountNumber + "']").attr('checked', acno[i].IsChecked == 0 ? false : true)
         }
 
         strAcnos = JSON.stringify(acno);
