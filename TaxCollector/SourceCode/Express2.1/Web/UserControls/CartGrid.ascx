@@ -60,7 +60,7 @@
                 <tr id="trIndex" <%# Eval("Index") %>>
                     <td class="<%# GetCssClass(Eval("Index")) %>" style="align-content: center; cursor: pointer;"><a onclick="removeItems(<%# Eval("Index") %>);" title="Delete Item"><i class="fa fa-trash-o fa-lg" aria-hidden="true"></i></a></td>
                     
-                    <td class="<%# GetCssClass(Eval("Index")) %>" style="align-content: center;"><a style="<%# GetEditIconVisivility(Eval("Index")) %>" onclick="editItems(<%# Eval("Index") %>);" title="Edit Item"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a></td>
+                    <td class="<%# GetCssClass(Eval("Index")) %>" style="align-content: center;"><a style="<%# GetEditIconVisivility(Eval("Index")) %>;cursor:pointer;" onclick="editItems(<%# Eval("Index") %>);" title="Edit Item"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a></td>
                    
                     
                     <td class="<%# GetCssClass(Eval("Index")) %>"><%# Eval("Item") %></td>
@@ -102,7 +102,7 @@
             <tbody>
                 <tr id="trIndex" <%# Eval("Index") %>>
                   
-                    <td class="<%# GetCssClass(Eval("Index")) %>" style="align-content: center;"><a visible='<%# (Eval("IsEditIconVisible")) %>' style="cursor: pointer;"onclick="editItems(<%# Eval("Index") %>);" title="Edit Item"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a></td>
+                    <td class="<%# GetCssClass(Eval("Index")) %>" style="align-content: center;"><a  style="<%# GetEditIconVisivility(Eval("Index")) %>;cursor:pointer;" onclick="editItems(<%# Eval("Index") %>);" title="Edit Item"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a></td>
                   
                     
                     <td class="<%# GetCssClass(Eval("Index")) %>"><%# Eval("Item") %></td>

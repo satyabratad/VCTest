@@ -564,6 +564,14 @@ Namespace B2P.PaymentLanding.Express.Web
 
             cart.PropertyAddress = propAddr
 
+            'Set visibility of edit icon
+            Dim z As New B2P.Objects.Product(BLL.SessionManager.ClientCode, ddlCategories.SelectedValue, B2P.Common.Enumerations.TransactionSources.Web)
+            If z.AmountDueSource = B2P.Common.Enumerations.AmountDueSources.Lookup Or z.AmountDueSource = B2P.Common.Enumerations.AmountDueSources.Table Then
+                'Set visibility of delete icon for Lookup
+                cart.IsEditIconVisible = (BLL.SessionManager.PaymentStatusCode = ClientInterface.Manager.ClientInterfaceWS.PaymentStatusCodes.Allowed Or BLL.SessionManager.PaymentStatusCode = ClientInterface.Manager.ClientInterfaceWS.PaymentStatusCodes.MinimumPaymentRequired)
+                cart.PaymentStatusCodes = CType(BLL.SessionManager.PaymentStatusCode, B2P.Cart.Cart.EPaymentStatusCodes)
+            End If
+
 
             If BLL.SessionManager.ManageCart.AddToCart(cart) Then
                 BLL.SessionManager.ManageCart.ShowCart = True

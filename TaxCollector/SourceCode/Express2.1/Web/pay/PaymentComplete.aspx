@@ -199,7 +199,11 @@
                                 <!--END CONFIRM EMAIL AND PAYMENT DETAILS-->
                             </div>
                             <div id="print_content3">
+                                <div class="col-xs-12">
+                                            <div class="row">
                                 <b2p:PaymentStatusMessage ID="PostBackStatusMessage" runat="server" />
+                                                </div>
+                                    </div>
                             </div>
 
                         </div>

@@ -119,15 +119,15 @@
         validator.setInvalidCssClass("has-error");
         validator.setAlertBoxStatus(false);
 
-        <%  Select Case B2P.PaymentLanding.Express.BLL.SessionManager.PaymentStatusCode %>
-        <%Case B2P.ClientInterface.Manager.ClientInterfaceWS.PaymentStatusCodes.Allowed%>
+        <%  Select Case SelectedItem.PaymentStatusCodes %>
+        <%Case B2P.Cart.Cart.EPaymentStatusCodes.Allowed %>
         if ((!newValue > 0) || (newValue > oldValue)) {
             // Set the validator
             validator.addValidationItem(new ValidationItem("txtAmountEdit", fieldTypes.AmountDue, true, "Invalid Amount"));
             $("#txtAmountEdit").val(oldValue);
             return validator.validate();
         }
-        <%Case B2P.ClientInterface.Manager.ClientInterfaceWS.PaymentStatusCodes.MinimumPaymentRequired%>
+        <%Case B2P.Cart.Cart.EPaymentStatusCodes.MinimumPaymentRequired %>
         if ((!newValue > 0) || (newValue < oldValue)) {
             // Set the validator
             validator.addValidationItem(new ValidationItem("txtAmountEdit", fieldTypes.AmountDue, true, "Invalid Amount"));

@@ -44,5 +44,16 @@ Public Class Cart
     ''' Client Codde
     ''' </summary>
     Public Property ClientCode As String
+    ''' <summary>
+    ''' This will set payment status code Lookup/SSO
+    ''' </summary>
+    Public Enum EPaymentStatusCodes
+        Allowed = 0
+        NotAllowed = 1
+        NotEditable = 2
+        MinimumPaymentRequired = 3
+    End Enum
+    Public Property PaymentStatusCodes As EPaymentStatusCodes
 End Class
+
 
