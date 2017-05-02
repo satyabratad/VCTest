@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class OrderDetails
     
     '''<summary>
+    '''litMyOrderDetails control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents litMyOrderDetails As Global.System.Web.UI.WebControls.Literal
+    
+    '''<summary>
     '''rptOrder control.
     '''</summary>
     '''<remarks>
