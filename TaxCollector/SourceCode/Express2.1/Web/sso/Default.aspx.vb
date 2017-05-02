@@ -87,8 +87,6 @@ Namespace B2P.PaymentLanding.Express.Web
 
                                         Dim z As B2P.Objects.Client = B2P.Objects.Client.GetClient(BLL.SessionManager.ClientCode.ToString)
 
-
-
                                         'Determine SSO type
                                         Select Case z.SSODisplayType
                                             Case B2P.Objects.Client.SSODisplayTypes.ReadOnlyGrid
@@ -112,14 +110,17 @@ Namespace B2P.PaymentLanding.Express.Web
                                         Session.Clear()
                                         B2P.Common.Logging.LogError("B2P", Token & " - Token not found", B2P.Common.Logging.NotifySupport.No)
                                         psmErrorMessage.ToggleStatusMessage("Missing or invalid token.", StatusMessageType.Danger, True, True)
+                                        ShowErrorPanel()
                                         Exit Sub
                                     End If
                                 Else
                                     psmErrorMessage.ToggleStatusMessage("Missing or invalid token.", StatusMessageType.Danger, True, True)
+                                    ShowErrorPanel()
                                     Exit Sub
                                 End If
                             Else
                                 psmErrorMessage.ToggleStatusMessage("Missing or invalid token.", StatusMessageType.Danger, True, True)
+                                ShowErrorPanel()
                                 Exit Sub
                             End If
 
@@ -246,17 +247,20 @@ Namespace B2P.PaymentLanding.Express.Web
                         End Select
                     Case Else
                         psmErrorMessage.ToggleStatusMessage("Missing or invalid token.", StatusMessageType.Danger, True, True)
+                        ShowErrorPanel()
                         Exit Sub
                 End Select
+
+
+                If CurrentCategory.PaymentInformation.ACHAccepted = False AndAlso CurrentCategory.PaymentInformation.CreditCardAccepted = False Then
+                    psmErrorMessage.ToggleStatusMessage("We are not able to accept any online payments for this account. Please call Customer Service at " & BLL.SessionManager.Client.ContactPhone & ".", StatusMessageType.Danger, True, True)
+                    ShowErrorPanel()
+                    Exit Sub
+                End If
                 '' Add to Cart
                 Dim ci As SSOLookup.PaymentInformation.CartItem
                 ci = DirectCast(TokenInfo.CartItems(0), SSOLookup.PaymentInformation.CartItem)
                 AddToCart(z, CurrentCategory, ci)
-
-                If CurrentCategory.PaymentInformation.ACHAccepted = False AndAlso CurrentCategory.PaymentInformation.CreditCardAccepted = False Then
-                    psmErrorMessage.ToggleStatusMessage("We are not able to accept any online payments for this account. Please call Customer Service at " & BLL.SessionManager.Client.ContactPhone & ".", StatusMessageType.Danger, True, True)
-                    Exit Sub
-                End If
                 Dim a As New B2P.Payment.FeeDesciptions(BLL.SessionManager.ClientCode.ToString, BLL.SessionManager.LookupProduct, B2P.Common.Enumerations.TransactionSources.Web)
 
                 BLL.SessionManager.CreditFeeDescription = a.CreditCardFeeDescription
@@ -301,11 +305,13 @@ Namespace B2P.PaymentLanding.Express.Web
                 Else
                     If BLL.SessionManager.TokenInfo.AllowCreditCard = False And BLL.SessionManager.TokenInfo.AllowECheck = False Then
                         psmErrorMessage.ToggleStatusMessage("We are not able to accept any online payments for this account. Please call Customer Service at " & BLL.SessionManager.Client.ContactPhone & ".", StatusMessageType.Danger, True, True)
+                        ShowErrorPanel()
                         Exit Sub
                     Else
                         If bk.IsAccountBlocked Then
                             If bk.ACHBlocked = True AndAlso bk.CreditCardBlocked = True Then
                                 psmErrorMessage.ToggleStatusMessage("We are not able to accept any online payments for this account. Please call Customer Service at " & BLL.SessionManager.Client.ContactPhone & ".", StatusMessageType.Danger, True, True)
+                                ShowErrorPanel()
                                 Exit Sub
                             Else
                                 BLL.SessionManager.IsInitialized = True
@@ -351,6 +357,12 @@ Namespace B2P.PaymentLanding.Express.Web
 
         End Sub
 
+        Private Sub ShowErrorPanel()
+            pnlError.Visible = True
+            pnlCart.Visible = False
+            BreadCrumbMenu.Visible = False
+            ShoppingCart.Visible = False
+        End Sub
 
         Private Sub loadDataGrid(ByVal TokenInfo As B2P.SSOLookup.PaymentInformation, ByVal Token As String)
             Dim errMsg As String = String.Empty
@@ -378,6 +390,7 @@ Namespace B2P.PaymentLanding.Express.Web
 
                 If (BLL.SessionManager.TokenInfo.AllowCreditCard = False And BLL.SessionManager.TokenInfo.AllowECheck = False) Or TokenInfo.IsCartValid = False Then
                     psmErrorMessage.ToggleStatusMessage("We are not able to accept any online payments for this account. Please call Customer Service at " & BLL.SessionManager.Client.ContactPhone & ".", StatusMessageType.Danger, True, True)
+                    ShowErrorPanel()
                     Exit Sub
                 Else
                     Dim bk As New B2P.Common.BlockedAccounts.BlockedAccountResults
@@ -390,6 +403,7 @@ Namespace B2P.PaymentLanding.Express.Web
                         If bk.IsAccountBlocked Then
                             If bk.ACHBlocked = True AndAlso bk.CreditCardBlocked = True Then
                                 psmErrorMessage.ToggleStatusMessage("We are not able to accept any online payments for this account. Please call Customer Service at " & BLL.SessionManager.Client.ContactPhone & ".", StatusMessageType.Danger, True, True)
+                                ShowErrorPanel()
                                 Exit Sub
                             End If
                             If bk.ACHBlocked = True Then
@@ -405,6 +419,7 @@ Namespace B2P.PaymentLanding.Express.Web
                     Next
                     If BLL.SessionManager.BlockedCC And BLL.SessionManager.BlockedACH Then
                         psmErrorMessage.ToggleStatusMessage("We are not able to accept any online payments for this account. Please call Customer Service at " & BLL.SessionManager.Client.ContactPhone & ".", StatusMessageType.Danger, True, True)
+                        ShowErrorPanel()
                         Exit Sub
                     Else
 
@@ -475,6 +490,7 @@ Namespace B2P.PaymentLanding.Express.Web
 
                 If (BLL.SessionManager.TokenInfo.AllowCreditCard = False And BLL.SessionManager.TokenInfo.AllowECheck = False) Or TokenInfo.IsCartValid = False Then
                     psmErrorMessage.ToggleStatusMessage("We are not able to accept any online payments for this account. Please call Customer Service at " & BLL.SessionManager.Client.ContactPhone & ".", StatusMessageType.Danger, True, True)
+                    ShowErrorPanel()
                     Exit Sub
                 Else
                     Dim bk As New B2P.Common.BlockedAccounts.BlockedAccountResults
@@ -487,6 +503,7 @@ Namespace B2P.PaymentLanding.Express.Web
                         If bk.IsAccountBlocked Then
                             If bk.ACHBlocked = True AndAlso bk.CreditCardBlocked = True Then
                                 psmErrorMessage.ToggleStatusMessage("We are not able to accept any online payments for this account. Please call Customer Service at " & BLL.SessionManager.Client.ContactPhone & ".", StatusMessageType.Danger, True, True)
+                                ShowErrorPanel()
                                 Exit Sub
                             End If
                             If bk.ACHBlocked = True Then
@@ -504,6 +521,7 @@ Namespace B2P.PaymentLanding.Express.Web
 
                     If BLL.SessionManager.BlockedCC And BLL.SessionManager.BlockedACH Then
                         psmErrorMessage.ToggleStatusMessage("We are not able to accept any online payments for this account. Please call Customer Service at " & BLL.SessionManager.Client.ContactPhone & ".", StatusMessageType.Danger, True, True)
+                        ShowErrorPanel()
                         Exit Sub
                     Else
                         BLL.SessionManager.IsInitialized = True
