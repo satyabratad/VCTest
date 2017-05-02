@@ -559,10 +559,19 @@
   <data name="lblConfirmDeleteMessage" xml:space="preserve">
     <value>Are you sure you want to delete this item?</value>
   </data>
-  <data name="MyAccountDetails" xml:space="preserve">
-    <value>My Account Details</value>
+  <data name="CartGridCaption_PropAddress" xml:space="preserve">
+    <value>Property Address:</value>
   </data>
-  <data name="MyOrderDetails" xml:space="preserve">
-    <value>My Order Details</value>
+  <data name="CartGridColumn_Amount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="CartGridColumn_Amountdue" xml:space="preserve">
+    <value>Amount Due</value>
+  </data>
+  <data name="CartGridColumn_Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="CartGridColumn_Item" xml:space="preserve">
+    <value>Item</value>
   </data>
 </root>

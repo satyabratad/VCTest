@@ -299,6 +299,51 @@ Namespace Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Property Address:.
+        '''</summary>
+        Friend Shared ReadOnly Property CartGridCaption_PropAddress() As String
+            Get
+                Return ResourceManager.GetString("CartGridCaption_PropAddress", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Amount.
+        '''</summary>
+        Friend Shared ReadOnly Property CartGridColumn_Amount() As String
+            Get
+                Return ResourceManager.GetString("CartGridColumn_Amount", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Amount Due.
+        '''</summary>
+        Friend Shared ReadOnly Property CartGridColumn_Amountdue() As String
+            Get
+                Return ResourceManager.GetString("CartGridColumn_Amountdue", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Details.
+        '''</summary>
+        Friend Shared ReadOnly Property CartGridColumn_Details() As String
+            Get
+                Return ResourceManager.GetString("CartGridColumn_Details", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Item.
+        '''</summary>
+        Friend Shared ReadOnly Property CartGridColumn_Item() As String
+            Get
+                Return ResourceManager.GetString("CartGridColumn_Item", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to items.
         '''</summary>
         Friend Shared ReadOnly Property CartHeaderMultipleItemCount() As String
@@ -1204,24 +1249,6 @@ Namespace Resources
         Friend Shared ReadOnly Property ModalCancelConfirmationText() As String
             Get
                 Return ResourceManager.GetString("ModalCancelConfirmationText", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized string similar to My Account Details.
-        '''</summary>
-        Friend Shared ReadOnly Property MyAccountDetails() As String
-            Get
-                Return ResourceManager.GetString("MyAccountDetails", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized string similar to My Order Details.
-        '''</summary>
-        Friend Shared ReadOnly Property MyOrderDetails() As String
-            Get
-                Return ResourceManager.GetString("MyOrderDetails", resourceCulture)
             End Get
         End Property
         
