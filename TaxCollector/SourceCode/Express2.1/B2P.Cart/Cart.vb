@@ -36,5 +36,13 @@ Public Class Cart
     ''' This is a boolean property to check if Property address need to be stored
     ''' </summary>
     Public Property CollectPropertyAddress As Boolean
+    ''' <summary>
+    ''' This is a boolean property to set visibility of edit icon
+    ''' </summary>
+    Public Property IsEditIconVisible As Boolean
+    ''' <summary>
+    ''' Client Codde
+    ''' </summary>
+    Public Property ClientCode As String
 End Class
 

@@ -6,8 +6,8 @@ Imports B2P
 
 Public Class CartGrid
     Inherits System.Web.UI.UserControl
-#Region "::: Properties :::"
-    Protected Property IsEditIconVisible As Boolean = True
+#Region "::: Property :::"
+    Protected IsEditIconVisibleList As List(Of Boolean)
 #End Region
 #Region "::: Control Event Handlers :::"
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -51,20 +51,31 @@ Public Class CartGrid
         End If
 
 
-
-        If BLL.SessionManager.ClientType = Cart.EClientType.SSO Then
-            'Set visibility of edit icon for SSO
-            Dim z As B2P.Objects.Client = B2P.Objects.Client.GetClient(BLL.SessionManager.ClientCode.ToString)
-            IsEditIconVisible = Not z.SSODisplayType = Objects.Client.SSODisplayTypes.ReadOnlyGrid
-        ElseIf BLL.SessionManager.ClientType = Cart.EClientType.Lookup Then
-            'Set visibility of delete icon for Lookup
-            IsEditIconVisible = (BLL.SessionManager.PaymentStatusCode = ClientInterface.Manager.ClientInterfaceWS.PaymentStatusCodes.Allowed Or BLL.SessionManager.PaymentStatusCode = ClientInterface.Manager.ClientInterfaceWS.PaymentStatusCodes.MinimumPaymentRequired)
-        End If
+        'Set Edit Icon Visibility
+        SetEditIconVisivility()
 
 
     End Sub
 #End Region
 #Region "::: Methods :::"
+    Private Sub SetEditIconVisivility()
+        Dim itemIndex As Integer = 0
+        For Each cart As B2P.Cart.Cart In BLL.SessionManager.ManageCart.Cart
+            If BLL.SessionManager.ClientCode.ToString().Trim() = cart.ClientCode Then
+                If BLL.SessionManager.ClientType = B2P.Cart.EClientType.SSO Then
+                    'Set visibility of edit icon for SSO
+                    Dim z As B2P.Objects.Client = B2P.Objects.Client.GetClient(BLL.SessionManager.ClientCode.ToString())
+                    cart.IsEditIconVisible = Not z.SSODisplayType = Objects.Client.SSODisplayTypes.ReadOnlyGrid
+                ElseIf BLL.SessionManager.ClientType = B2P.Cart.EClientType.Lookup Then
+                    'Set visibility of delete icon for Lookup
+                    cart.IsEditIconVisible = (BLL.SessionManager.PaymentStatusCode = ClientInterface.Manager.ClientInterfaceWS.PaymentStatusCodes.Allowed Or BLL.SessionManager.PaymentStatusCode = ClientInterface.Manager.ClientInterfaceWS.PaymentStatusCodes.MinimumPaymentRequired)
+                End If
+            End If
+        Next
+    End Sub
+    Protected Function GetEditIconVisivility(Index As Integer) As String
+        Return IIf(BLL.SessionManager.ManageCart.Cart(Index).IsEditIconVisible, "display:block;", "display:none;")
+    End Function
     Public Sub PopulateGrid(ctrlName As String)
         Dim page As Page = HttpContext.Current.Handler
         If BLL.SessionManager.ClientType = B2P.Cart.EClientType.NonLookup Then

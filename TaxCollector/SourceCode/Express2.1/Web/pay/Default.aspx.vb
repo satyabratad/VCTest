@@ -549,7 +549,7 @@ Namespace B2P.PaymentLanding.Express.Web
             End If
 
 
-
+            cart.ClientCode = BLL.SessionManager.ClientCode.ToString()
             cart.Amount = ctlPropertyAddress.Amount
             cart.AmountDue = ctlPropertyAddress.Amount
             Dim propAddr As New B2P.Cart.PropertyAddress
@@ -563,6 +563,7 @@ Namespace B2P.PaymentLanding.Express.Web
             propAddr.Zip = Utility.SafeEncode(ctlPropertyAddress.Zip)
 
             cart.PropertyAddress = propAddr
+
 
             If BLL.SessionManager.ManageCart.AddToCart(cart) Then
                 BLL.SessionManager.ManageCart.ShowCart = True
