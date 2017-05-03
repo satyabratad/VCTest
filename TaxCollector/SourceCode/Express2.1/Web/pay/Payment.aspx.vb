@@ -511,8 +511,9 @@ Namespace B2P.PaymentLanding.Express.Web
         ''' Builds the allowable payment methods.
         ''' </summary>
         Private Sub BuildPaymentTypes()
-
-            If BLL.SessionManager.CurrentCategory.PaymentInformation.ACHAccepted = True AndAlso BLL.SessionManager.BlockedACH = False Then
+            'Commented by RS
+            'If BLL.SessionManager.CurrentCategory.PaymentInformation.ACHAccepted = True AndAlso BLL.SessionManager.BlockedACH = False Then
+            If BLL.SessionManager.ManageCart.IsPaymentForBankVisible() Then
                 If BLL.SessionManager.IsSSOProduct Then
                     If BLL.SessionManager.TokenInfo.AllowECheck Then
                         tabAch.Visible = True
@@ -535,7 +536,9 @@ Namespace B2P.PaymentLanding.Express.Web
                 pnlACHFee.Visible = False
             End If
 
-            If BLL.SessionManager.CurrentCategory.PaymentInformation.CreditCardAccepted = True AndAlso BLL.SessionManager.BlockedCC = False Then
+            'Commented by RS
+            'If BLL.SessionManager.CurrentCategory.PaymentInformation.CreditCardAccepted = True AndAlso BLL.SessionManager.BlockedCC = False Then
+            If BLL.SessionManager.ManageCart.IsPaymentForCreditCardVisible() Then
                 If BLL.SessionManager.IsSSOProduct Then
                     If BLL.SessionManager.TokenInfo.AllowCreditCard Then
                         tabCredit.Visible = True

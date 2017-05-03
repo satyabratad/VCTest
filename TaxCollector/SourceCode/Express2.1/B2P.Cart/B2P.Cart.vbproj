@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountIdField.vb" />
+    <Compile Include="PaymentInformation.vb" />
     <Compile Include="Cart.vb" />
     <Compile Include="ContactInfo.vb" />
     <Compile Include="Enums.vb" />

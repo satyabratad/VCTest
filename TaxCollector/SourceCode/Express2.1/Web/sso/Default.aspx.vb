@@ -199,6 +199,11 @@ Namespace B2P.PaymentLanding.Express.Web
 
                 Select Case y.SearchResult
                     Case B2P.ClientInterface.Manager.ClientInterfaceWS.StatusCodes.Success
+                        'Added by RS
+                        'set AllowCreditCardPayment
+                        BLL.SessionManager.AllowCreditCardPayment = y.AllowCreditCardPayment
+                        'set AllowECheckPayment
+                        BLL.SessionManager.AllowECheckPayment = y.AllowECheckPayment
 
                         BLL.SessionManager.ServiceAddress = Utility.SafeEncode(y.Demographics.Address1.Value)
                         BLL.SessionManager.NameOnLookupAccount = Utility.SafeEncode(y.Demographics.FirstName.Value & " " & y.Demographics.LastName.Value)
@@ -392,6 +397,14 @@ Namespace B2P.PaymentLanding.Express.Web
                 BLL.SessionManager.LookupAmount = TokenInfo.CartTotal
                 BLL.SessionManager.TokenInfo = TokenInfo
 
+                'Added by RS
+                Dim y As New B2P.ClientInterface.Manager.ClientInterfaceWS.SearchResults
+                y = B2P.ClientInterface.Manager.ClientInterface.GetClientData(Token)
+                'set AllowCreditCardPayment
+                BLL.SessionManager.AllowCreditCardPayment = y.AllowCreditCardPayment
+                'set AllowECheckPayment
+                BLL.SessionManager.AllowECheckPayment = y.AllowECheckPayment
+
                 Dim CurrentCategory As New B2P.Objects.Product(BLL.SessionManager.ClientCode.ToString, BLL.SessionManager.LookupProduct, B2P.Common.Enumerations.TransactionSources.Web)
                 Dim a As New B2P.Payment.FeeDesciptions(BLL.SessionManager.ClientCode.ToString, BLL.SessionManager.LookupProduct, B2P.Common.Enumerations.TransactionSources.Web)
 
@@ -406,6 +419,7 @@ Namespace B2P.PaymentLanding.Express.Web
                     Exit Sub
                 Else
                     Dim bk As New B2P.Common.BlockedAccounts.BlockedAccountResults
+
                     BLL.SessionManager.BlockedACH = False
                     BLL.SessionManager.BlockedCC = False
 
@@ -491,6 +505,12 @@ Namespace B2P.PaymentLanding.Express.Web
                 y = B2P.ClientInterface.Manager.ClientInterface.GetClientData(Token)
                 ' BLL.SessionManager.LookupProduct = y.ProductName
                 BLL.SessionManager.LookupData = y
+
+                'Added by RS
+                'set AllowCreditCardPayment
+                BLL.SessionManager.AllowCreditCardPayment = y.AllowCreditCardPayment
+                'set AllowECheckPayment
+                BLL.SessionManager.AllowECheckPayment = y.AllowECheckPayment
 
                 Dim p As New B2P.Objects.Product(BLL.SessionManager.ClientCode, TokenInfo.CartItems(0).ProductName, B2P.Common.Enumerations.TransactionSources.Web)
                 Utility.SetBreadCrumbContactInfo("BreadCrumbMenu")
@@ -594,12 +614,23 @@ Namespace B2P.PaymentLanding.Express.Web
             cart.PropertyAddress.Zip = z.ZipCode
 
             'Set visibility of edit icon
+            cart.PaymentInfo = New B2P.Cart.PaymentInformation()
             Dim client As B2P.Objects.Client = B2P.Objects.Client.GetClient(BLL.SessionManager.ClientCode.ToString())
-            cart.IsEditIconVisible = Not client.SSODisplayType = Objects.Client.SSODisplayTypes.ReadOnlyGrid
+            cart.PaymentInfo.IsEditIconVisible = Not client.SSODisplayType = Objects.Client.SSODisplayTypes.ReadOnlyGrid
 
             If BLL.SessionManager.ManageCart.AddToCart(cart) Then
                 BLL.SessionManager.ManageCart.ShowCart = True
             End If
+            'Set CC/bank visibility
+
+            cart.PaymentInfo.CreditCardAccepted = CurrentCategory.PaymentInformation.CreditCardAccepted
+            cart.PaymentInfo.ACHAccepted = CurrentCategory.PaymentInformation.ACHAccepted
+
+            cart.PaymentInfo.BlockedCC = BLL.SessionManager.BlockedCC
+            cart.PaymentInfo.AllowCreditCardPayment = BLL.SessionManager.AllowCreditCardPayment
+
+            cart.PaymentInfo.BlockedACH = BLL.SessionManager.BlockedACH
+            cart.PaymentInfo.AllowECheckPayment = BLL.SessionManager.AllowECheckPayment
 
             Return cart
         End Function

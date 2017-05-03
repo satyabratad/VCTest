@@ -97,6 +97,12 @@ Namespace B2P.PaymentLanding.Express.Web
 
                 Select Case y.SearchResult
                     Case B2P.ClientInterface.Manager.ClientInterfaceWS.StatusCodes.Success
+                        'Added by RS
+                        'set AllowCreditCardPayment
+                        BLL.SessionManager.AllowCreditCardPayment = y.AllowCreditCardPayment
+                        'set AllowECheckPayment
+                        BLL.SessionManager.AllowECheckPayment = y.AllowECheckPayment
+
                         divLookupAlert.Visible = True
 
                         BLL.SessionManager.LookupData = y
@@ -564,13 +570,27 @@ Namespace B2P.PaymentLanding.Express.Web
 
             cart.PropertyAddress = propAddr
 
+            cart.PaymentInfo = New B2P.Cart.PaymentInformation()
             'Set visibility of edit icon
             Dim z As New B2P.Objects.Product(BLL.SessionManager.ClientCode, ddlCategories.SelectedValue, B2P.Common.Enumerations.TransactionSources.Web)
+
             If z.AmountDueSource = B2P.Common.Enumerations.AmountDueSources.Lookup Or z.AmountDueSource = B2P.Common.Enumerations.AmountDueSources.Table Then
                 'Set visibility of delete icon for Lookup
-                cart.IsEditIconVisible = (BLL.SessionManager.PaymentStatusCode = ClientInterface.Manager.ClientInterfaceWS.PaymentStatusCodes.Allowed Or BLL.SessionManager.PaymentStatusCode = ClientInterface.Manager.ClientInterfaceWS.PaymentStatusCodes.MinimumPaymentRequired)
-                cart.PaymentStatusCodes = CType(BLL.SessionManager.PaymentStatusCode, B2P.Cart.Cart.EPaymentStatusCodes)
+                cart.PaymentInfo.IsEditIconVisible = (BLL.SessionManager.PaymentStatusCode = ClientInterface.Manager.ClientInterfaceWS.PaymentStatusCodes.Allowed Or BLL.SessionManager.PaymentStatusCode = ClientInterface.Manager.ClientInterfaceWS.PaymentStatusCodes.MinimumPaymentRequired)
+                cart.PaymentInfo.PaymentStatusCodes = CType(BLL.SessionManager.PaymentStatusCode, B2P.Cart.PaymentInformation.EPaymentStatusCodes)
             End If
+
+            'Set CC/bank visibility
+
+            Dim CurrentCategory As New B2P.Objects.Product(BLL.SessionManager.ClientCode.ToString, ddlCategories.SelectedValue, B2P.Common.Enumerations.TransactionSources.Web)
+                cart.PaymentInfo.CreditCardAccepted = CurrentCategory.PaymentInformation.CreditCardAccepted
+                cart.PaymentInfo.ACHAccepted = CurrentCategory.PaymentInformation.ACHAccepted
+
+            cart.PaymentInfo.BlockedCC = BLL.SessionManager.BlockedCC
+            cart.PaymentInfo.AllowCreditCardPayment = BLL.SessionManager.AllowCreditCardPayment
+
+            cart.PaymentInfo.BlockedACH = BLL.SessionManager.BlockedACH
+            cart.PaymentInfo.AllowECheckPayment = BLL.SessionManager.AllowECheckPayment
 
 
             If BLL.SessionManager.ManageCart.AddToCart(cart) Then

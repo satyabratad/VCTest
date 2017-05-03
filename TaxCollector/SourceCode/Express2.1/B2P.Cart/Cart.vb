@@ -36,24 +36,15 @@ Public Class Cart
     ''' This is a boolean property to check if Property address need to be stored
     ''' </summary>
     Public Property CollectPropertyAddress As Boolean
-    ''' <summary>
-    ''' This is a boolean property to set visibility of edit icon
-    ''' </summary>
-    Public Property IsEditIconVisible As Boolean
+
     ''' <summary>
     ''' Client Codde
     ''' </summary>
     Public Property ClientCode As String
     ''' <summary>
-    ''' This will set payment status code Lookup/SSO
+    ''' Payment Details
     ''' </summary>
-    Public Enum EPaymentStatusCodes
-        Allowed = 0
-        NotAllowed = 1
-        NotEditable = 2
-        MinimumPaymentRequired = 3
-    End Enum
-    Public Property PaymentStatusCodes As EPaymentStatusCodes
+    Public Property PaymentInfo As PaymentInformation
 End Class
 
 

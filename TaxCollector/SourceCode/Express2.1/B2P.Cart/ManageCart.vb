@@ -207,6 +207,36 @@ Public Class ManageCart
         End If
         Return Nothing
     End Function
+    ''' <summary>
+    ''' IsPaymentForCreditCardVisible - visibility of credit card tab
+    ''' </summary>
+    Public Function IsPaymentForCreditCardVisible() As Boolean
+        For Each cart As Cart In Me.Cart
+            If Not cart.PaymentInfo Is Nothing Then
+                If cart.PaymentInfo.AllowCreditCardPayment And cart.PaymentInfo.CreditCardAccepted And Not cart.PaymentInfo.BlockedCC Then
+                    Return True
+                End If
+            End If
+        Next
+        'commented for now
+        'Return False
+        Return True
+    End Function
+    ''' <summary>
+    ''' IsPaymentForBankVisible - visibility of bank tab
+    ''' </summary>
+    Public Function IsPaymentForBankVisible() As Boolean
+        For Each cart As Cart In Me.Cart
+            If Not cart.PaymentInfo Is Nothing Then
+                If cart.PaymentInfo.AllowECheckPayment And cart.PaymentInfo.ACHAccepted And Not cart.PaymentInfo.BlockedACH Then
+                    Return True
+                End If
+            End If
+        Next
+        'commented for now
+        'Return False
+        Return True
+    End Function
 End Class
 
 

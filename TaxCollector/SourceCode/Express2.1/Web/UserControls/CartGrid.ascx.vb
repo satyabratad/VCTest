@@ -51,7 +51,7 @@ Public Class CartGrid
 #End Region
 #Region "::: Methods :::"
     Protected Function GetEditIconVisivility(Index As Integer) As String
-        Return IIf(BLL.SessionManager.ManageCart.Cart(Index).IsEditIconVisible, "display:block;", "display:none;")
+        Return IIf(BLL.SessionManager.ManageCart.Cart(Index).PaymentInfo.IsEditIconVisible, "display:block;", "display:none;")
     End Function
     Public Sub PopulateGrid(ctrlName As String)
         Dim page As Page = HttpContext.Current.Handler

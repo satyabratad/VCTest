@@ -85,6 +85,8 @@ Namespace B2P.PaymentLanding.Express.BLL
         Private Const _creditcardExpDate As String = "_creditcardExpDate"
         Private Const _bankAccName As String = "_bankAccName"
         Private Const _bankAccType As String = "_bankAccType"
+        Private Const _allowCreditCardPayment As String = "_allowCreditCardPayment"
+        Private Const _allowECheckPayment As String = "_allowECheckPayment"
 #End Region
 
 #Region " ::: Contructors ::: "
@@ -946,7 +948,36 @@ Namespace B2P.PaymentLanding.Express.BLL
                 HttpContext.Current.Session(_bankAccType) = value
             End Set
         End Property
-
+        ''' <summary>
+        ''' Allow ECheck Payment
+        ''' </summary>
+        Public Shared Property AllowECheckPayment() As Boolean
+            Get
+                If HttpContext.Current.Session(_allowECheckPayment) Is Nothing Then
+                    Return False
+                Else
+                    Return DirectCast(HttpContext.Current.Session(_allowECheckPayment), Boolean)
+                End If
+            End Get
+            Set(ByVal value As Boolean)
+                HttpContext.Current.Session(_allowECheckPayment) = value
+            End Set
+        End Property
+        ''' <summary>
+        ''' Allow CreditCard Payment
+        ''' </summary>
+        Public Shared Property AllowCreditCardPayment() As Boolean
+            Get
+                If HttpContext.Current.Session(_allowCreditCardPayment) Is Nothing Then
+                    Return False
+                Else
+                    Return DirectCast(HttpContext.Current.Session(_allowCreditCardPayment), Boolean)
+                End If
+            End Get
+            Set(ByVal value As Boolean)
+                HttpContext.Current.Session(_allowCreditCardPayment) = value
+            End Set
+        End Property
 
 #End Region
 
