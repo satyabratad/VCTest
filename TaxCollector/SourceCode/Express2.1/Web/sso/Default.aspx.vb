@@ -594,12 +594,8 @@ Namespace B2P.PaymentLanding.Express.Web
             cart.PropertyAddress.Zip = z.ZipCode
 
             'Set visibility of edit icon
-            If BLL.SessionManager.ClientType = B2P.Cart.EClientType.SSO Then
-                        'Set visibility of edit icon for SSO
-                        Dim obj As B2P.Objects.Client = B2P.Objects.Client.GetClient(BLL.SessionManager.ClientCode.ToString())
-                cart.IsEditIconVisible = Not obj.SSODisplayType = Objects.Client.SSODisplayTypes.ReadOnlyGrid
-            End If
-
+            Dim client As B2P.Objects.Client = B2P.Objects.Client.GetClient(BLL.SessionManager.ClientCode.ToString())
+            cart.IsEditIconVisible = Not client.SSODisplayType = Objects.Client.SSODisplayTypes.ReadOnlyGrid
 
             If BLL.SessionManager.ManageCart.AddToCart(cart) Then
                 BLL.SessionManager.ManageCart.ShowCart = True
