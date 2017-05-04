@@ -219,10 +219,23 @@ Namespace B2P.PaymentLanding.Express.Web
             litSystemMessage.Text = BLL.SessionManager.Client.ClientName & " thanks you for your business."
 
             ' Determine visibility of create profile button
-            Dim productSource As New B2P.Objects.Product(BLL.SessionManager.ClientCode, BLL.SessionManager.ProductName)
-            pnlCreateProfile.Visible = productSource.Sources.Portal
-
+            'Commented By RS
+            'Dim productSource As New B2P.Objects.Product(BLL.SessionManager.ClientCode, BLL.SessionManager.ProductName)
+            'pnlCreateProfile.Visible = productSource.Sources.Portal
+            pnlCreateProfile.Visible = IsCreateProfileVisible()
         End Sub
+        ''' <summary>
+        ''' Builds the payment method information panels.
+        ''' </summary>
+        Private Function IsCreateProfileVisible() As Boolean
+            For Each cart As B2P.Cart.Cart In BLL.SessionManager.ManageCart.Cart
+                Dim productSource As New B2P.Objects.Product(BLL.SessionManager.ClientCode, cart.Item)
+                If productSource.Sources.Portal Then
+                    Return True
+                End If
+            Next
+            Return False
+        End Function
         ''' <summary>
         ''' Builds the payment method information panels.
         ''' </summary>
