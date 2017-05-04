@@ -579,16 +579,27 @@ Namespace B2P.PaymentLanding.Express.Web
         ''' <param name="ci">Cart item</param>
         ''' <returns></returns>
         Private Shared Function AddToCart(z As Objects.Client, CurrentCategory As Objects.Product, ci As SSOLookup.PaymentInformation.CartItem, TokenInfo As SSOLookup.PaymentInformation)
+
             Dim cart As New B2P.Cart.Cart
+
+
 
             cart.Item = ci.ProductName
             Dim acc1 As New B2P.Cart.AccountIdField(CurrentCategory.WebOptions.AccountIDField1.Label, Utility.SafeEncode(ci.AccountNumber1))
             Dim acc2 As New B2P.Cart.AccountIdField(CurrentCategory.WebOptions.AccountIDField2.Label, Utility.SafeEncode(ci.AccountNumber2))
             Dim acc3 As New B2P.Cart.AccountIdField(CurrentCategory.WebOptions.AccountIDField3.Label, Utility.SafeEncode(ci.AccountNumber3))
+
             cart.AccountIdFields = New List(Of B2P.Cart.AccountIdField)
-            cart.AccountIdFields.Add(acc1)
-            cart.AccountIdFields.Add(acc2)
-            cart.AccountIdFields.Add(acc3)
+            If Not (String.IsNullOrEmpty(acc1.Label) Or String.IsNullOrEmpty(acc1.Value)) Then
+                cart.AccountIdFields.Add(acc1)
+            End If
+            If Not (String.IsNullOrEmpty(acc2.Label) Or String.IsNullOrEmpty(acc2.Value)) Then
+                cart.AccountIdFields.Add(acc2)
+            End If
+            If Not (String.IsNullOrEmpty(acc3.Label) Or String.IsNullOrEmpty(acc3.Value)) Then
+                cart.AccountIdFields.Add(acc3)
+            End If
+
             cart.Amount = ci.Amount
             cart.AmountDue = ci.Amount
 
