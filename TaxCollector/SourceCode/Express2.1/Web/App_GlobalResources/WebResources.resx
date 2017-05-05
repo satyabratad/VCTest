@@ -580,4 +580,8 @@
   <data name="MyOrderDetails" xml:space="preserve">
     <value>My Order Details</value>
   </data>
+  <data name="ErrMsgPaymentNotAllowed" xml:space="preserve">
+    <value>Payment not allowed. Please contact customer service for details.</value>
+    <comment>when payment with Credit Card or bank is not allowed</comment>
+  </data>
 </root>

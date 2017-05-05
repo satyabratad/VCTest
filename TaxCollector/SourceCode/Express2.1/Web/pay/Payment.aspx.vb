@@ -567,6 +567,15 @@ Namespace B2P.PaymentLanding.Express.Web
                 btnCancelAch.Visible = False
             End If
 
+            '' Add by RS    
+            '' If Credit card and Bank both payment are not allowed then display bellow message
+            If tabCredit.Visible = False And tabAch.Visible = False Then
+                psmErrorMessage.ToggleStatusMessage(GetGlobalResourceObject("WebResources", "ErrMsgPaymentNotAllowed").ToString(), StatusMessageType.Danger, StatusMessageSize.Normal, True, True)
+
+            End If
+
+
+
         End Sub
         Private Sub pbaEnterBankAccountInfo_ShowCommercialAccountMessage(message As String, showMessage As Boolean) Handles pbaEnterBankAccountInfo.ShowCommercialAccountMessage
             psmErrorMessage.ToggleStatusMessage(message, StatusMessageType.Danger, showMessage, showMessage)

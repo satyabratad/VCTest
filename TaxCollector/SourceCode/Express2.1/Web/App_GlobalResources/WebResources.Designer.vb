@@ -731,6 +731,15 @@ Namespace Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Payment not allowed. Please contact customer service for details..
+        '''</summary>
+        Friend Shared ReadOnly Property ErrMsgPaymentNotAllowed() As String
+            Get
+                Return ResourceManager.GetString("ErrMsgPaymentNotAllowed", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Required..
         '''</summary>
         Friend Shared ReadOnly Property ErrMsgRequired() As String
