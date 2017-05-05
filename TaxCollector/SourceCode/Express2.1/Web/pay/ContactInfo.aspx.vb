@@ -28,6 +28,8 @@ Namespace B2P.PaymentLanding.Express.Web
             Dim avsCheckTypes As B2P.Objects.Client.AVSCheckTypes = B2P.Objects.Client.GetAVSSetting(BLL.SessionManager.ClientCode, B2P.Common.Enumerations.TransactionSources.Web)
             hdZipRequired.Value = IIf(avsCheckTypes = Objects.Client.AVSCheckTypes.CheckZipOnly Or avsCheckTypes = Objects.Client.AVSCheckTypes.CheckBoth, "Y", "N")
 
+            'Set visibility of Add More Item button
+            btnAddMoreItems.Visible = Not BLL.SessionManager.ClientType = Cart.EClientType.SSO
 
         End Sub
         Protected Sub ddlContactCountry_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlContactCountry.SelectedIndexChanged
