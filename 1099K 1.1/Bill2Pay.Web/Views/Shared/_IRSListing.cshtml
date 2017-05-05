@@ -1,42 +1,32 @@
 ﻿@model IEnumerable<Bill2Pay.Model.MerchantListVM>
 <script>
+    var AllowRedirect = false;
 
-    function SetSelecAllMerchant() {
-        $('.tblchk').prop('checked', $('#chkSelectAll').is(":checked"));
+    function SetSelecAllMerchant(oBj) {
         var strAcnos = $('#checkedAccountNo').val();
         var acno = JSON.parse(strAcnos);
 
         for (var i = 0; i < acno.length; i++) {
-
-            if ($('#chkSelectAll').is(":checked")) {
-                acno[i].IsChecked = '1';
-            }
-            else {
-                acno[i].IsChecked = '0';
-            }
+            acno[i].IsChecked = (oBj.checked) ? '1' : '0';
         }
         strAcnos = JSON.stringify(acno);
         $('#checkedAccountNo').val(strAcnos);
+        CheckItems();
     }
 
     function GetSelectedMerchant(accno) {
-
         var strAcnos = $('#checkedAccountNo').val();
         var acno = JSON.parse(strAcnos);
         for (var i = 0; i < acno.length; i++) {
             if (acno[i].AccountNumber == accno) {
-
-                if (acno[i].IsChecked == '0') {
-                    acno[i].IsChecked = '1';
-                }
-                else {
-                    acno[i].IsChecked = '0';
-                }
+                acno[i].IsChecked = (acno[i].IsChecked == '0') ? "1" : "0";
+                break;
             }
         }
         strAcnos = JSON.stringify(acno);
-
         $('#checkedAccountNo').val(strAcnos);
+
+        ValidatCheckAll();
     }
 
     function submitForm(statusId) {
@@ -51,21 +41,107 @@
         var acno = JSON.parse(strAcnos);
 
         for (var i = 0; i < acno.length; i++) {
-            $("input[name='" + acno[i].AccountNumber + "']").attr('checked', acno[i].IsChecked == 0 ? false : true)
+            acno[i].IsChecked = "0"; // Unselecting all checkboxes
+            $("input[name='" + acno[i].AccountNumber + "']").attr('checked', (acno[i].IsChecked == "1"));
         }
 
         strAcnos = JSON.stringify(acno);
         $('#checkedAccountNo').val(strAcnos);
+
+        $('#dataTable')
+            .on('order.dt', function () { return CheckItems(); })
+            .on('search.dt', function () { return CheckItems(); })
+            .on('page.dt', function () { return setTimeout(CheckItems, 200); })
+            .DataTable({
+                "columnDefs": [
+                  { "orderable": false, "targets": [0, 1, 7, 8] }
+                ],
+                order: [[2, 'asc']],
+            });
+
+        $('select[name=dataTable_length]').change(function () {
+            CheckItems();
+        });
+
     });
 
-    $(document).ready(function () {
-        $('#dataTable').DataTable({
-            "columnDefs": [
-              { "orderable": false, "targets": [0, 1, 7, 8] }
-            ],
-            order: [[4, 'asc']],
-        });
-    });
+    function CheckItems() {
+        var strAcnos = $('#checkedAccountNo').val();
+        var acno = JSON.parse(strAcnos);
+        for (var i = 0; i < acno.length; i++) {
+            $('#chkAccountNo_' + acno[i].AccountNumber).prop('checked', acno[i].IsChecked == '1');
+        }
+    }
+
+    function ValidatCheckAll() {
+        var strAcnos = $('#checkedAccountNo').val();
+        var acno = JSON.parse(strAcnos);
+        var isAllCheck = true;
+        for (var i = 0; i < acno.length; i++) {
+            if (acno[i].IsChecked == '0') {
+                isAllCheck = false;
+                break;
+            }
+        }
+
+        $('#chkSelectAll').prop('checked', isAllCheck);
+    }
+
+    function InitPageReload() {
+        var cookieName = "_FileDownloaded";
+        AllowRedirect = false;
+        eraseCookie(cookieName);
+        ReloadPage(cookieName);
+        return true;
+    }
+
+    function ReloadPage(name) {
+        var cookieValue = getCookie(name);
+        if (cookieValue == "DONE") {
+            AllowRedirect = true;
+        }
+
+        if (AllowRedirect) {
+            window.location.href = window.location.href;
+        }
+        else {
+            setTimeout(ReloadPage, 200, name);
+        }
+    }
+
+    function getCookie(name) {
+        var parts = document.cookie.split(name + "=");
+        if (parts.length == 2) return parts.pop().split(";").shift();
+    }
+
+    function expireCookie(cName) {
+        document.cookie =
+            encodeURIComponent(cName) + "=deleted; expires=" + new Date(0).toUTCString();
+    }
+    function createCookie(name, value, days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + value + expires + "; path=/";
+    }
+
+    function readCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+
+    function eraseCookie(name) {
+        createCookie(name, "", -1);
+    }
 </script>
 
 <div class="row">
@@ -85,10 +161,10 @@
                 {
 
 
-                    <button class="btn  btn-primary" type="submit" name="tinmatching" value="TIN Matching Input">TIN Matching Input</button>
-                    <button class="btn  btn-primary" type="submit" name="irstest" value="IRS FIRE Test Input">IRS FIRE Test Input</button>
-                    <button class="btn  btn-primary" type="submit" name="irs" value="IRS FIRE Input">IRS FIRE Input </button>
-                    <button class="btn  btn-primary" type="submit" name="irscorrection" value="IRS FIRE Correction Input">IRS FIRE Correction Input</button>
+                    <button class="btn  btn-primary" type="submit" name="tinmatching" value="TIN Matching Input" onclick="return InitPageReload();">TIN Matching Input</button>
+                    <button class="btn  btn-primary" type="submit" name="irstest" value="IRS FIRE Test Input" onclick="return InitPageReload();">IRS FIRE Test Input</button>
+                    <button class="btn  btn-primary" type="submit" name="irs" value="IRS FIRE Input" onclick="return InitPageReload();">IRS FIRE Input </button>
+                    <button class="btn  btn-primary" type="submit" name="irscorrection" value="IRS FIRE Correction Input" onclick="return InitPageReload();">IRS FIRE Correction Input</button>
                     <div class="dropdown" style="float:right">
                         <button class="btn btn-success dropdown-toggle" type="submit" data-toggle="dropdown">
                             Change Status
@@ -102,7 +178,7 @@
 
                         </ul>
                     </div>
-                                <button class="btn  btn-primary" type="submit" name="generatepdf" value="Generate PDF File">Generate PDF File </button>
+                    <button class="btn  btn-primary" type="submit" name="generatepdf" value="Generate PDF File" onclick="return InitPageReload();">Generate PDF File </button>
                 }
 
             }
@@ -115,9 +191,9 @@
                     <tr>
                         @if (User.IsInRole("Admin"))
                         {
-                            <th><input id="chkSelectAll" onclick="SetSelecAllMerchant();" title="Select All" type="checkbox" style="margin-left:-8px;" /></th>
+                            <th><input id="chkSelectAll" onclick="SetSelecAllMerchant(this);" title="Select All" type="checkbox" style="margin-left:-8px;" /></th>
                         }
-                        <th align="center"><span style="margin-left:16px;">1099-K</span></th>
+                        <th align="center"><span style="margin-left:16px;white-space: nowrap;">1099-K</span></th>
                         <th align="left">Client Code</th>
                         <th align="left">TIN</th>
                         <th align="left">Merchant Name</th>
@@ -153,10 +229,11 @@
                                 foreach (var item in Model)
                                 {
                                     <tr>
-                                        @if (User.IsInRole("Admin")){
-                                        <td>
-                                            <input id="chkAccountNo" class="tblchk" onclick="GetSelectedMerchant('@item.ImportDetails.AccountNumber');" type="checkbox" name="@item.ImportDetails.AccountNumber" />&nbsp;
-                                        </td>
+                                        @if (User.IsInRole("Admin"))
+                                        {
+                                            <td>
+                                                <input id="chkAccountNo_@item.ImportDetails.AccountNumber" class="tblchk" onclick="GetSelectedMerchant('@item.ImportDetails.AccountNumber');" type="checkbox" name="@item.ImportDetails.AccountNumber" />&nbsp;
+                                            </td>
                                         }
                                         <td style="width:100px" align="center">
 
@@ -270,11 +347,11 @@
             @{
                 if (Request.IsAuthenticated && User.IsInRole("Admin"))
                 {
-                    <button class="btn  btn-primary" type="submit" name="tinmatching" value="TIN Matching Input">TIN Matching Input</button>
-                    <button class="btn  btn-primary" type="submit" name="irstest" value="IRS FIRE Test Input">IRS FIRE Test Input</button>
-                    <button class="btn  btn-primary" type="submit" name="irs" value="IRS FIRE Input">IRS FIRE Input </button>
-                    <button class="btn  btn-primary" type="submit" name="irscorrection" value="IRS FIRE Correction Input">IRS FIRE Correction Input</button>
-                    
+                    <button class="btn  btn-primary" type="submit" name="tinmatching" value="TIN Matching Input" onclick="return InitPageReload();">TIN Matching Input</button>
+                    <button class="btn  btn-primary" type="submit" name="irstest" value="IRS FIRE Test Input" onclick="return InitPageReload();">IRS FIRE Test Input</button>
+                    <button class="btn  btn-primary" type="submit" name="irs" value="IRS FIRE Input" onclick="return InitPageReload();">IRS FIRE Input </button>
+                    <button class="btn  btn-primary" type="submit" name="irscorrection" value="IRS FIRE Correction Input" onclick="return InitPageReload();">IRS FIRE Correction Input</button>
+
                     <div class="dropup" style="float:right">
                         <button class="btn btn-success dropdown-toggle" type="submit" data-toggle="dropdown">
                             Change Status
@@ -288,7 +365,7 @@
 
                         </ul>
                     </div>
-                    <button class="btn  btn-primary" type="submit" name="generatepdf" value="Generate PDF File">Generate PDF File </button>
+                    <button class="btn  btn-primary" type="submit" name="generatepdf" value="Generate PDF File" onclick="return InitPageReload();">Generate PDF File </button>
                 }
 
             }

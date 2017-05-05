@@ -8,8 +8,8 @@ using System.Web.Mvc;
 using Bill2Pay.GenerateIRSFile;
 using System.Web.Hosting;
 using Microsoft.AspNet.Identity;
-
-
+using System.Web;
+using System.Configuration;
 
 namespace Bill2Pay.Web.Controllers
 {
@@ -61,7 +61,7 @@ namespace Bill2Pay.Web.Controllers
 
             merchantlst = (dbContext.ImportDetails
                                .Include("ImportSummary")
-                               .GroupJoin(dbContext.SubmissionStatus.Where(s => s.IsActive == true && s.PaymentYear==Id),
+                               .GroupJoin(dbContext.SubmissionStatus.Where(s => s.IsActive == true && s.PaymentYear == Id),
                                imp => imp.AccountNumber,
                                stat => stat.AccountNumber,
                                (imp, stat) => new MerchantListVM() { ImportDetails = imp, SubmissionStatus = stat.FirstOrDefault() })
@@ -95,20 +95,20 @@ namespace Bill2Pay.Web.Controllers
         /// <param name="Id">int?</param>
         /// <param name="payer">int?</param>
         /// <returns>ActionResult</returns>
-        public ActionResult Details(string Id,int? year)
+        public ActionResult Details(string Id, int? year)
         {
 
-            MerchantListVM detail = dbContext.ImportDetails 
+            MerchantListVM detail = dbContext.ImportDetails
                 .Include("Merchant")
-                .GroupJoin(dbContext.SubmissionStatus.Where(s => s.IsActive == true && s.PaymentYear== year),
-                    imp=> imp.AccountNumber,
+                .GroupJoin(dbContext.SubmissionStatus.Where(s => s.IsActive == true && s.PaymentYear == year),
+                    imp => imp.AccountNumber,
                     stat => stat.AccountNumber,
-                    (imp, stat)=> new MerchantListVM() { ImportDetails = imp, SubmissionStatus = stat.FirstOrDefault() }) 
+                    (imp, stat) => new MerchantListVM() { ImportDetails = imp, SubmissionStatus = stat.FirstOrDefault() })
                 .OrderByDescending(p => p.ImportDetails.ImportSummaryId)
                 .FirstOrDefault(p => p.ImportDetails.AccountNumber.Equals(Id, StringComparison.OrdinalIgnoreCase) && p.ImportDetails.ImportSummary.PaymentYear == year && p.ImportDetails.IsActive == true);
 
 
-            var data=(ImportDetail) detail.ImportDetails ;
+            var data = (ImportDetail)detail.ImportDetails;
             if (detail.SubmissionStatus == null || detail.SubmissionStatus.Status.Id <= 2)
                 data.SubmissionSummaryId = null;
 
@@ -156,7 +156,7 @@ namespace Bill2Pay.Web.Controllers
                     return RedirectToAction("Index");
                 }
                 return RedirectToAction("TINMatchingInput", "TINProcess");
-                
+
             }
             else if (!string.IsNullOrEmpty(Request.Form["irstest"]))
             {
@@ -174,7 +174,7 @@ namespace Bill2Pay.Web.Controllers
             {
                 return RedirectToAction("ChangeStatus");
             }
-            else if(!string.IsNullOrEmpty(Request.Form["generatepdf"]))
+            else if (!string.IsNullOrEmpty(Request.Form["generatepdf"]))
             {
                 return RedirectToAction("GenerateBatchpdf");
             }
@@ -193,40 +193,53 @@ namespace Bill2Pay.Web.Controllers
         {
             string errMsg = string.Empty;
             string strMsg = string.Empty;
-            List<string>list=(List<string>)TempData.Peek("CheckedMerchantList");
-            int year=(int)TempData.Peek("SelectedYear") ;
-            int selectedPayer= (int)TempData.Peek("SelectedPayer") ;
+            List<string> list = (List<string>)TempData.Peek("CheckedMerchantList");
+            int year = (int)TempData.Peek("SelectedYear");
+            int selectedPayer = (int)TempData.Peek("SelectedPayer");
 
-            var substatusList = dbContext.SubmissionStatus.Where(s=>s.IsActive == true && (s.StatusId ==(int)RecordStatus.Submitted  ||s.StatusId==(int) RecordStatus.ReSubmitted)
-                                                              && s.PaymentYear == year).Select(p=>p.AccountNumber).ToList();
-            var printableList= list.Where(l => substatusList.Contains(l)).ToList();
-            TempData["PrintableMerchantList"]= printableList;
+            var substatusList = dbContext.SubmissionStatus.Where(s => s.IsActive == true && (s.StatusId == (int)RecordStatus.Submitted || s.StatusId == (int)RecordStatus.ReSubmitted)
+                                                              && s.PaymentYear == year).Select(p => p.AccountNumber).ToList();
+            var printableList = list.Where(l => substatusList.Contains(l)).ToList();
+            TempData["PrintableMerchantList"] = printableList;
 
             var exceptList = list.Where(l => !substatusList.Contains(l)).ToList();
-            if (exceptList != null && exceptList.Count>0)
+
+            var downloadPath = ConfigurationManager.AppSettings["DownloaRootPath"];
+            if (string.IsNullOrEmpty(downloadPath))
             {
-                var invalideAccounts = exceptList.Aggregate((i, j) => i + ", " + j);
-                errMsg = "Unable to Generate PDF for " + invalideAccounts + ".";
+                downloadPath = "~/App_Data/Download/k1099/";
             }
-            
-            if (printableList.Count()>0)
+            var rootpath = Server.MapPath(downloadPath);
+
+            if (printableList.Count > 0)
             {
-                strMsg = "This will initiate a background process to 'Generate PDF file', once completed will be stored into server location.";
-                TempData["successMessage"] = strMsg;
-                TempData["errorMessage"] = errMsg;
-                return RedirectToAction("PrintAllCopies", "Print");
+                if (exceptList.Count == 0) //all items are in submit/resubmit state
+                {
+                    TempData["successMessage"] = string.Format("A background process is initiated to generate the PDF files. Once completed, the files will be stored under the {0} folder in the application server.", rootpath);
+                    TempData["errorMessage"] = "";
+                    return RedirectToAction("PrintAllCopies", "Print");
+                }
+                else
+                {
+                    if (exceptList.Count == 1)//one of the Items is not in changeable state, and rest of the item is changeable state
+                    {
+                        TempData["successMessage"] = string.Format("For rest of the Clients, a background process is initiated to generate the PDF files. Once completed, the files will be stored under the {0} folder in the application server.", rootpath);
+                        TempData["errorMessage"] = "Unable to Generate PDF for one of the Client as it does not satisfy the PDF generation criteria.";
+                    }
+                    else //ii.	If some of the items are not in submit/resubmit state
+                    {
+                        TempData["successMessage"] = string.Format("For rest of the Clients, a background process is initiated to generate the PDF files. Once completed, the files will be stored under the {0} folder in the application server.", rootpath);
+                        TempData["errorMessage"] = "Unable to Generate PDF for some of the Clients as they do not satisfy the PDF generation criteria.";
+                    }
+                    return RedirectToAction("PrintAllCopies", "Print");
+                }
             }
-            else
+            else//  None of  the item is in printable state
             {
-                strMsg = string.Empty;
-                TempData["successMessage"] = strMsg;
-                TempData["errorMessage"] = errMsg;
+                TempData["successMessage"] = "";
+                TempData["errorMessage"] = "Unable to Generate PDF for the Clients as they do not satisfy the PDF generation criteria.";
                 return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
             }
-            
-            
-            
-           
         }
 
         /// <summary>
@@ -256,6 +269,10 @@ namespace Bill2Pay.Web.Controllers
             {
                 return HttpNotFound();
             }
+
+            HttpCookie cookie = new HttpCookie("_FileDownloaded");
+            cookie.Value = "DONE";
+            this.ControllerContext.HttpContext.Response.Cookies.Add(cookie);
 
             return File(path, "text", "IRSInputFile_Test.txt");
         }
@@ -293,7 +310,7 @@ namespace Bill2Pay.Web.Controllers
                 .Include("ImportSummary")
                 .Join(ApplicationDbContext.Instence.SubmissionStatus, d => d.AccountNumber, s => s.AccountNumber, (d, s) => new { details = d, status = s })
                 .Where(x => selectedMerchants.Contains(x.details.AccountNumber) && x.details.IsActive == true && x.status.IsActive == true &&
-                doNotSubmit.Contains(x.status.StatusId.ToString()) && x.details.ImportSummary.PaymentYear== year && x.status.PaymentYear==year).ToList();
+                doNotSubmit.Contains(x.status.StatusId.ToString()) && x.details.ImportSummary.PaymentYear == year && x.status.PaymentYear == year).ToList();
 
             if (alreadySubmitted.Count != 0)
             {
@@ -312,6 +329,10 @@ namespace Bill2Pay.Web.Controllers
             {
                 return HttpNotFound();
             }
+
+            HttpCookie cookie = new HttpCookie("_FileDownloaded");
+            cookie.Value = "DONE";
+            this.ControllerContext.HttpContext.Response.Cookies.Add(cookie);
 
             return File(path, "text", "IRSInputFile.txt");
         }
@@ -348,7 +369,7 @@ namespace Bill2Pay.Web.Controllers
                 .Include("ImportSummary")
                 .Join(ApplicationDbContext.Instence.SubmissionStatus, d => d.AccountNumber, s => s.AccountNumber, (d, s) => new { details = d, status = s })
                 .Where(x => selectedMerchants.Contains(x.details.AccountNumber) && x.details.IsActive == true && x.status.IsActive == true &&
-                doNotSubmit.Contains(x.status.StatusId.ToString()) && x.details.ImportSummary.PaymentYear==year && x.status.PaymentYear==year).ToList();
+                doNotSubmit.Contains(x.status.StatusId.ToString()) && x.details.ImportSummary.PaymentYear == year && x.status.PaymentYear == year).ToList();
 
             if (alreadySubmitted.Count != 0)
             {
@@ -356,7 +377,7 @@ namespace Bill2Pay.Web.Controllers
                 return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
             }
 
-            IRSFileUtility taxFile = new IRSFileUtility(false, year, User.Identity.GetUserId<long>(), selectedMerchants, correction:true);
+            IRSFileUtility taxFile = new IRSFileUtility(false, year, User.Identity.GetUserId<long>(), selectedMerchants, correction: true);
 
             taxFile.ReadFromSchemaFile();
             ViewBag.fileName = "IRSCorrectionInputFile.txt";
@@ -367,6 +388,10 @@ namespace Bill2Pay.Web.Controllers
             {
                 return HttpNotFound();
             }
+
+            HttpCookie cookie = new HttpCookie("_FileDownloaded");
+            cookie.Value = "DONE";
+            this.ControllerContext.HttpContext.Response.Cookies.Add(cookie);
 
             return File(path, "text", "IRSCorrectionInputFile.txt");
         }
@@ -413,55 +438,88 @@ namespace Bill2Pay.Web.Controllers
                 return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
             }
 
+            int errorcount = 0;
+
             foreach (var item in selectedMerchants)
             {
                 var previousData = dbContext.SubmissionStatus.Where(x => x.AccountNumber.Equals(item) && x.PaymentYear.Equals(year) && x.IsActive == true).ToList();
-
+                bool IsValid = true;
                 if (previousData.Count > 0)
                 {
                     foreach (var data in previousData)
                     {
                         if (statusId == (int)RecordStatus.Submitted && (data.StatusId != (int)RecordStatus.FileGenerated && data.StatusId != (int)RecordStatus.OneTransactionCorrection && data.StatusId != (int)RecordStatus.TwoTransactionCorrection))
                         {
-                            TempData["errorMessage"] = "Specified status cannot be updated for : " + data.AccountNumber;
-                            return RedirectToAction("Index", "Home");
+                            IsValid = false;
                         }
                         else if (statusId == (int)RecordStatus.OneTransactionCorrection && data.StatusId != (int)RecordStatus.Submitted && data.StatusId != (int)RecordStatus.ReSubmitted)
                         {
-                            return DisplayStatusChangeError(data.AccountNumber);
+                            IsValid = false;
                         }
-                        else if (statusId == (int)RecordStatus.TwoTransactionCorrection && data.StatusId != (int)RecordStatus.Submitted && data.StatusId!= (int)RecordStatus.ReSubmitted)
+                        else if (statusId == (int)RecordStatus.TwoTransactionCorrection && data.StatusId != (int)RecordStatus.Submitted && data.StatusId != (int)RecordStatus.ReSubmitted)
                         {
-                            return DisplayStatusChangeError(data.AccountNumber);
+                            IsValid = false;
                         }
-                        else if (statusId == (int)RecordStatus.NotSubmitted && data.StatusId != (int)RecordStatus.Submitted && data.StatusId!= (int)RecordStatus.ReSubmitted)
+                        else if (statusId == (int)RecordStatus.NotSubmitted && data.StatusId != (int)RecordStatus.Submitted && data.StatusId != (int)RecordStatus.ReSubmitted)
                         {
-                            return DisplayStatusChangeError(data.AccountNumber);
+                            IsValid = false;
                         }
 
-                        data.IsActive = false;
+                        if (IsValid)
+                        {
+                            data.IsActive = false;
+                        }
                     }
                 }
                 else
                 {
-                    TempData["errorMessage"] = "Specified status cannot be updated for : " + item;
-                    return RedirectToAction("Index", "Home");
+                    IsValid = false;
                 }
 
-                var submissionStatus = new SubmissionStatus();
+                if (IsValid)
+                {
+                    var submissionStatus = new SubmissionStatus();
 
-                submissionStatus.PaymentYear = year;
-                submissionStatus.AccountNumber = item;
-                submissionStatus.ProcessingDate = DateTime.Now;
-                submissionStatus.StatusId = statusId;
-                submissionStatus.DateAdded = DateTime.Now;
-                submissionStatus.IsActive = true;
+                    submissionStatus.PaymentYear = year;
+                    submissionStatus.AccountNumber = item;
+                    submissionStatus.ProcessingDate = DateTime.Now;
+                    submissionStatus.StatusId = statusId;
+                    submissionStatus.DateAdded = DateTime.Now;
+                    submissionStatus.IsActive = true;
 
-                dbContext.SubmissionStatus.Add(submissionStatus);
-                dbContext.SaveChanges();
+                    dbContext.SubmissionStatus.Add(submissionStatus);
+                    dbContext.SaveChanges();
+                }
+                else
+                {
+                    errorcount++;
+                }
             }
 
-            TempData["successMessage"] = "Submission status updated successfully.";
+            if (errorcount > 0)
+            {
+                if (selectedMerchants.Count == errorcount) //i.	none of the item is in changeable state
+                {
+                    TempData["errorMessage"] = "No record(s) updated as they are not satisfying the status update criteria.";
+                }
+                else // Mixed Mode
+                {
+                    if (errorcount == 1) //one of the Items is not in changeable state and rest of the item is changeable state
+                    {
+                        TempData["errorMessage"] = "Specified status cannot be updated for one of the Client as it is not satisfying the status update criteria.";
+                        TempData["successMessage"] = "Status for rest of the Clients have been updated successfully.";
+                    }
+                    else
+                    {
+                        TempData["errorMessage"] = "Specified status cannot be updated for some of the Clients as they do not satisfy the status update criteria.";
+                        TempData["successMessage"] = "Status for rest of the Clients has been updated successfully.";
+                    }
+                }
+            }
+            else
+            {
+                TempData["successMessage"] = "Specified status for the selected Clients have been updated successfully.";
+            }
 
             return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
         }

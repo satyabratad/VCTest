@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Bill2Pay.Web.Controllers
@@ -63,7 +64,8 @@ namespace Bill2Pay.Web.Controllers
 
                     foreach (var itm in lstTin)
                     {
-                        var payeeName = Regex.Replace(itm.FirstPayeeName, "[^0-9A-Za-z-& ]+", "");
+                        var payeeName = string.Format("{0} {1}", itm.FirstPayeeName, itm.SecondPayeeName);
+                        payeeName = Regex.Replace(payeeName, "[^0-9A-Za-z-& ]+", "");
                         if(payeeName.Length > 40)
                         {
                             payeeName = payeeName.Substring(0, 40);
@@ -82,6 +84,11 @@ namespace Bill2Pay.Web.Controllers
             {
                 throw ex;
             }
+
+            HttpCookie cookie = new HttpCookie("_FileDownloaded");
+            cookie.Value = "DONE";
+            this.ControllerContext.HttpContext.Response.Cookies.Add(cookie);
+
             return File(new System.Text.UTF8Encoding().GetBytes(strFileline), "text/csv", "TinMatch.txt");
         }
     }
