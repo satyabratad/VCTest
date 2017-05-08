@@ -61,8 +61,8 @@
 
                     <!--// START MIDDLE CONTENT //-->
                     <div class="content">
-                        <div class="container" style="min-height: 50%;">
-                            <div class="row">
+                       <div class="row">
+                            
                                 <!--// START BREADCRUMBS //-->
                                 <b2p:BreadCrumbMenu runat="server" ID="BreadCrumbMenu" PageTagName="Home" />
                                 <!--// END BREADCRUMBS //-->
@@ -103,11 +103,13 @@
                                 </div>
 
                             </asp:Panel>
-                        </div>
+                       
                     </div>
                     <%-- <div class="col-sm-1"></div>--%>
                 </div>
             </div>
+            <br />
+            <br />
         </div>
         <!--// END MIDDLE CONTENT //-->
 
