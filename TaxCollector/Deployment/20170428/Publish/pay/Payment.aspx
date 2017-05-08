@@ -96,7 +96,7 @@
                                         <b2p:OrderDetails runat="server" ID="OrderDetails" />
                                         <asp:Panel ID="pnlAccountDetails" runat="server" Visible="false">
                                             <br />
-                                            <p><strong>My Account Details</strong></p>
+                                            <p><strong><asp:Literal ID="litMyAccountDetails" runat="server" Text="<%$ Resources:WebResources, MyAccountDetails %>" /></strong></p>
                                             <hr />
 
                                             <div class="table-responsive" style="padding: 0;">
@@ -226,7 +226,7 @@
 
 
                                         <b2p:SubTotal runat="server" ID="SubTotal" />
-
+                                        
 
 
                                         <div id="pnlFormContents" role="form" runat="server">

@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="PaymentCartGrid.ascx.vb" Inherits=".PaymentCartGrid" %>
 <%@ Import Namespace="B2P.PaymentLanding.Express" %>
 <%@ Import Namespace="B2P.PaymentLanding.Express.Web" %>
-<div id="cartGrid" style="display: block;">
+<div id="cartGrid" style="display: block;" class="table-responsive">
     <!--Non-Lookup----------------------------------------------------------------------------------------->
 
     <asp:Repeater ID="rptNonLookup" runat="server">
@@ -10,9 +10,9 @@
                 <thead>
                     <tr>
                         <td class="table-header" width="5%"></td>
-                        <td class="table-header" width="30%">Item</td>
-                        <td class="table-header" width="55%">Details</td>
-                        <td class="table-header" width="10%" align="right">Amount</td>
+                        <td class="table-header" width="30%"><asp:Literal runat="server" Text="<%$ Resources:WebResources, CartGridColumn_Item %>"></asp:Literal></td>
+                        <td class="table-header" width="55%"><asp:Literal runat="server" Text="<%$ Resources:WebResources, CartGridColumn_Details %>"></asp:Literal></td>
+                        <td class="table-header" width="10%" align="right"><asp:Literal runat="server" Text="<%$ Resources:WebResources, CartGridColumn_Details %>"></asp:Literal></td>
                     </tr>
                 </thead>
         </HeaderTemplate>
@@ -22,7 +22,7 @@
                     <td class="<%# GetCssClass(Eval("Index")) %>" style="align-content: center;"><%#CType(Eval("Index"), Integer) + 1%></td>
                     <td class="<%# GetCssClass(Eval("Index")) %>"><%# Eval("Item") %></td>
                     <td class="<%# GetCssClass(Eval("Index")) %>"><%# GetAccountInformation(Eval("Index")) %><br>
-                        <strong>Property Address:</strong><br>
+                        <strong><asp:Literal runat="server" Text="<%$ Resources:WebResources, CartGridCaption_PropAddress %>"></asp:Literal></strong><br>
                         <%# GetPropertyAddress(Eval("Index")) %>
                     </td>
                     <td class="<%# GetCssClass(Eval("Index")) %>" align="right"><%# FormatAmount(Eval("Amount")) %></td>
@@ -62,10 +62,10 @@
                 <thead>
                     <tr>
                         <td class="table-header" width="5%"></td>
-                        <td class="table-header" width="20%">Item</td>
-                        <td class="table-header" width="55%">Details</td>
-                        <td class="table-header" width="10%" align="right">Amount Due</td>
-                        <td class="table-header" width="10%" align="right">Amount</td>
+                        <td class="table-header" width="20%"><asp:Literal runat="server" Text="<%$ Resources:WebResources, CartGridColumn_Item %>"></asp:Literal></td>
+                        <td class="table-header" width="55%"><asp:Literal runat="server" Text="<%$ Resources:WebResources, CartGridColumn_Details %>"></asp:Literal></td>
+                        <td class="table-header" width="10%" align="right"><asp:Literal runat="server" Text="<%$ Resources:WebResources, CartGridColumn_Amountdue %>"></asp:Literal></td>
+                        <td class="table-header" width="10%" align="right"><asp:Literal runat="server" Text="<%$ Resources:WebResources, CartGridColumn_Amount %>"></asp:Literal></td>
                     </tr>
                 </thead>
         </HeaderTemplate>
@@ -75,7 +75,7 @@
                     <td class="<%# GetCssClass(Eval("Index")) %>" style="align-content: center;"><%# ctype(Eval("Index"), Integer) + 1%></td>
                     <td class="<%# GetCssClass(Eval("Index")) %>"><%# Eval("Item") %></td>
                     <td class="<%# GetCssClass(Eval("Index")) %>"><%# GetAccountInformation(Eval("Index")) %><br>
-                        <strong>Property Address:</strong><br>
+                        <strong><asp:Literal runat="server" Text="<%$ Resources:WebResources, CartGridCaption_PropAddress %>"></asp:Literal></strong><br>
                         <%# GetPropertyAddress(Eval("Index")) %>
                     </td>
                     <td class="<%# GetCssClass(Eval("Index")) %>" align="right"><%# FormatAmount(Eval("AmountDue")) %></td>
@@ -116,10 +116,10 @@
                 <thead>
                     <tr>
                         <td class="table-header" width="5%"></td>
-                        <td class="table-header" width="20%">Item</td>
-                        <td class="table-header" width="55%">Details</td>
-                        <td class="table-header" width="10%" align="right">Amount Due</td>
-                        <td class="table-header" width="10%" align="right">Amount</td>
+                        <td class="table-header" width="20%"><asp:Literal runat="server" Text="<%$ Resources:WebResources, CartGridColumn_Item %>"></asp:Literal></td>
+                        <td class="table-header" width="55%"><asp:Literal runat="server" Text="<%$ Resources:WebResources, CartGridColumn_Details %>"></asp:Literal></td>
+                        <td class="table-header" width="10%" align="right"><asp:Literal runat="server" Text="<%$ Resources:WebResources, CartGridColumn_Amountdue %>"></asp:Literal></td>
+                        <td class="table-header" width="10%" align="right"><asp:Literal runat="server" Text="<%$ Resources:WebResources, CartGridColumn_Amount %>"></asp:Literal></td>
                     </tr>
                 </thead>
         </HeaderTemplate>
@@ -129,7 +129,7 @@
                     <td class="<%# GetCssClass(Eval("Index")) %>" style="align-content: center;"><%# ctype(Eval("Index"), Integer) + 1%></td>
                     <td class="<%# GetCssClass(Eval("Index")) %>"><%# Eval("Item") %></td>
                     <td class="<%# GetCssClass(Eval("Index")) %>"><%# GetAccountInformation(Eval("Index")) %><br>
-                        <strong>Property Address:</strong><br>
+                        <strong><asp:Literal runat="server" Text="<%$ Resources:WebResources, CartGridCaption_PropAddress %>"></asp:Literal></strong><br>
                         <%# GetPropertyAddress(Eval("Index")) %>
                     </td>
                     <td class="<%# GetCssClass(Eval("Index")) %>" align="right"><%# FormatAmount(Eval("AmountDue")) %></td>

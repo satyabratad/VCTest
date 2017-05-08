@@ -104,255 +104,271 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        </div>
-                                        <div id="divLeftConfirmationPanel">
-                                            <div id="leftSideButtons" class="col-xs-12 col-sm-6" style="display: block;">
-                                                <div class="col-xs-12">
-                                                    <asp:Panel ID="pnlCreateProfile" runat="server">
-                                                        <div id="pnlEmailInfo" class="form-group form-group-sm">
-                                                            <button type="button" class="btn btn-primary btn-sm btn-block" title="Create Profile" data-toggle="modal" data-target="#createProfileModal">
-                                                                <asp:Literal runat="server" Text=" <%$ Resources:WebResources, btnCreateProfile%> " /></button>
-                                                        </div>
-                                                        <div class="form-group form-group-sm">
-                                                            <span><i>
-                                                                <asp:Literal ID="litCreateProfile" runat="server" Text="<%$ Resources:WebResources, lblCreateProfile %>"></asp:Literal></i></span>
-                                                        </div>
-                                                    </asp:Panel>
-                                                    <asp:Panel ID="Panel1" runat="server">
-                                                        <div class="row">
-                                                            <div class="col-xs-12">
-                                                                <button type="button" class="btn" style="white-space: normal;" title="Print" onclick="javascript:Clickheretoprint();">
-                                                                    <asp:Literal runat="server" Text="<%$ Resources:WebResources, btnPrint%>" /></button>
-                                                                <asp:Button runat="server" ID="btnAddNew" CssClass="btn btn-primary btn-sm pull-right" Text="<%$ Resources:WebResources, btnNewPayment %>" ToolTip="<%$ Resources:WebResources, btnNewPayment %>" />
-                                                            </div>
-                                                            <br />
-                                                            <br />
-                                                            <div class="col-xs-12 text-muted">
-                                                                <small>
-                                                                    <asp:Literal ID="litClientMessage" runat="server" Text="<%$ Resources:WebResources, lblCreateProfile %>"></asp:Literal></small>
-                                                            </div>
-
-                                                        </div>
-                                                    </asp:Panel>
-                                                </div>
-                                            </div>
-                                             <div id="print_content2">
-                                            <div class="col-xs-12 col-sm-6">
-                                                <!--PAYMENT DETAILS-->
-                                                <div class="col-xs-12">
+                                    </div>
+                                    <div id="divLeftConfirmationPanel">
+                                        <div id="leftSideButtons" class="col-xs-12 col-sm-6" style="display: block;">
+                                            <div class="col-xs-12">
+                                                <asp:Panel ID="pnlCreateProfile" runat="server">
+                                                    <div id="pnlEmailInfo" class="form-group form-group-sm">
+                                                        <button type="button" class="btn btn-primary btn-sm btn-block" title="Create Profile" data-toggle="modal" data-target="#createProfileModal">
+                                                            <asp:Literal runat="server" Text=" <%$ Resources:WebResources, btnCreateProfile%> " /></button>
+                                                    </div>
+                                                    <div class="form-group form-group-sm">
+                                                        <span><i>
+                                                            <asp:Literal ID="litCreateProfile" runat="server" Text="<%$ Resources:WebResources, lblCreateProfile %>"></asp:Literal></i></span>
+                                                    </div>
+                                                </asp:Panel>
+                                                <asp:Panel ID="Panel1" runat="server">
                                                     <div class="row">
-                                                        <div class="col-xs-6 contentHeadingBlack13 ">
-                                                            <asp:Literal ID="litPaymentDateText" runat="server" Text="<%$ Resources:WebResources, LblPaymentDate %>" />:
-                                                        </div>
-                                                        <div class="contentHeadingBlack13">
-                                                            <span id="paymentDate">
-                                                                <asp:Literal ID="litPaymentDate" runat="server" /></span>
-                                                        </div>
-                                                    </div>
+                                                        <div class="col-xs-12">
+                                                            <div class="row">
+                                                                <div class="col-sm-8 col-xs-12">
+                                                                    <asp:Button runat="server" type="button" Width="100%" class="btn btn-sm" title="Print" OnClientClick="javascript:Clickheretoprint();" Text="<%$ Resources:WebResources, btnPrint%>" />
 
-                                                    <div class="row">
-                                                        <div class="col-xs-6 contentHeadingBlack13">
-                                                            <asp:Literal ID="litPaymentMethodText" runat="server" Text="<%$ Resources:WebResources, LblPaymentMethod %>" />:
-                                                        </div>
-                                                        <span class="contentHeadingBlack13" id="paymentMethod">
-                                                            <asp:Literal ID="litPaymentMethod" runat="server" /></span>
-                                                    </div>
-                                                    <asp:Panel ID="pnlEmailAddress" runat="server" Visible="false">
-
-                                                        <div class="row">
-                                                            <div class="col-xs-6 contentHeadingBlack13">
-                                                                <asp:Literal ID="litEmailAddressText" runat="server" Text="<%$ Resources:WebResources, LblEmailAddressText %>" />:
+                                                                </div>
+                                                                <div class="col-sm-4 col-xs-12">
+                                                                    <asp:Button runat="server" ID="btnAddNew" Width="100%" CssClass="btn btn-primary btn-sm pull-right" Text="<%$ Resources:WebResources, btnNewPayment %>" ToolTip="<%$ Resources:WebResources, btnNewPayment %>" />
+                                                                </div>
                                                             </div>
-                                                            <span class="contentHeadingBlack13" id="confirmMail">
-                                                                <asp:Literal ID="litEmailAddress" runat="server" /></span>
-                                                        </div>
 
-                                                    </asp:Panel>
-                                                </div>
-                                                <div class="col-xs-12">
-                                                    <br>
-                                                    <br>
-                                                    <br>
-                                                </div>
-                                                <div class="col-xs-12">
-                                                    <div class="row pull-right ">
-                                                        <i>
-                                                            <asp:Literal ID="litSystemMessage" runat="server" /></i>
-                                                    </div>
-                                                </div>
-                                                <!--END PAYMENT DETAILS-->
+
+                                                        </div>
+                                            <br />
+                                            <br />
+                                            <div class="col-xs-12 text-muted">
+                                                <small>
+                                                    <asp:Literal ID="litClientMessage" runat="server" Text="<%$ Resources:WebResources, lblCreateProfile %>"></asp:Literal></small>
                                             </div>
-                                                 </div>
-                                            <!--END CONTACT INFORMATION-->
-                                            <!--END CONFIRM EMAIL AND PAYMENT DETAILS-->
+
                                         </div>
-                                     <div id="print_content3">
-                                        <b2p:PaymentStatusMessage ID="PostBackStatusMessage" runat="server" />
-                                         </div>
-                                    
+                                        </asp:Panel>
+                                    </div>
                                 </div>
+                                <div id="print_content2">
+                                    <div class="col-xs-12 col-sm-6">
+                                        <!--PAYMENT DETAILS-->
+                                        <div class="col-xs-12">
+                                            <div class="row">
+                                                <div class="col-xs-6 contentHeadingBlack13 ">
+                                                    <asp:Literal ID="litPaymentDateText" runat="server" Text="<%$ Resources:WebResources, LblPaymentDate %>" />:
+                                                </div>
+                                                <div class="col-xs-6 contentHeadingBlack13">
+                                                    <span id="paymentDate">
+                                                        <asp:Literal ID="litPaymentDate" runat="server" /></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-xs-6 contentHeadingBlack13">
+                                                    <asp:Literal ID="litPaymentMethodText" runat="server" Text="<%$ Resources:WebResources, LblPaymentMethod %>" />:
+                                                </div>
+                                                <div class="col-xs-6 contentHeadingBlack13">
+                                                    <span class="contentHeadingBlack13" id="paymentMethod">
+                                                        <asp:Literal ID="litPaymentMethod" runat="server" /></span>
+                                                </div>
+                                            </div>
+                                            <asp:Panel ID="pnlEmailAddress" runat="server" Visible="false">
+
+                                                <div class="row">
+                                                    <div class="col-xs-6 contentHeadingBlack13">
+                                                        <asp:Literal ID="litEmailAddressText" runat="server" Text="<%$ Resources:WebResources, LblEmailAddressText %>" />:
+                                                    </div>
+                                                     <div class="col-xs-6 contentHeadingBlack13">
+                                                    <span class="contentHeadingBlack13" id="confirmMail">
+                                                        <asp:Literal ID="litEmailAddress" runat="server" /></span>
+                                                         </div>
+                                                </div>
+
+                                            </asp:Panel>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <br>
+                                            <br>
+                                            <br>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <div class="row pull-right ">
+                                                <i>
+                                                    <asp:Literal ID="litSystemMessage" runat="server" /></i>
+                                            </div>
+                                        </div>
+                                        <!--END PAYMENT DETAILS-->
+                                    </div>
+                                </div>
+                                <!--END CONTACT INFORMATION-->
+                                <!--END CONFIRM EMAIL AND PAYMENT DETAILS-->
                             </div>
+                            <div id="print_content3">
+                                <div class="col-xs-12">
+                                            <div class="row">
+                                <b2p:PaymentStatusMessage ID="PostBackStatusMessage" runat="server" />
+                                                </div>
+                                    </div>
+                            </div>
+
                         </div>
                     </div>
-                    <!--// END MIDDLE CONTENT //-->
                 </div>
-                <br />
-                <br />
             </div>
+            <!--// END MIDDLE CONTENT //-->
+        </div>
+        <br />
+        <br />
+        </div>
 
 
 
             <!--// START CREATE PROFILE MODAL //-->
 
-            <div class="modal fade" id="createProfileModal" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
+        <div class="modal fade" id="createProfileModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
 
-                            <h4>
-                                <asp:Literal ID="litFeesTitle" Text="<%$ Resources:WebResources, CreateProfileTitle %>" runat="server" />
-                            </h4>
-                        </div>
-                        <div class="modal-body">
-                            <p>
-                                <asp:Literal ID="litCreateProfileInstructions" runat="server" />
-                            </p>
+                        <h4>
+                            <asp:Literal ID="litFeesTitle" Text="<%$ Resources:WebResources, CreateProfileTitle %>" runat="server" />
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            <asp:Literal ID="litCreateProfileInstructions" runat="server" />
+                        </p>
 
-                            <b2p:PaymentStatusMessage ID="psmErrorMessage" runat="server" />
-                            <asp:Panel ID="pnlCreateProfileForm" runat="server">
+                        <b2p:PaymentStatusMessage ID="psmErrorMessage" runat="server" />
+                        <asp:Panel ID="pnlCreateProfileForm" runat="server">
 
-                                <div class="form-group form-group-sm">
-                                    <label class="control-label" for="txtUserID">
-                                        <asp:Literal ID="litUserID" runat="server" Text="<%$ Resources:WebResources, lblUserID %>" />:</label>
-                                    <asp:TextBox ID="txtUserID" CssClass="form-control input-sm" placeholder="<%$ Resources:WebResources, lblUserID %>" MaxLength="30" runat="server" />
-                                </div>
-                                <div class="form-group form-group-sm">
-                                    <label class="control-label" for="txtPassword1">
-                                        <asp:Literal ID="litPassword1" runat="server" Text="<%$ Resources:WebResources, lblPassword1 %>" />:                            
+                            <div class="form-group form-group-sm">
+                                <label class="control-label" for="txtUserID">
+                                    <asp:Literal ID="litUserID" runat="server" Text="<%$ Resources:WebResources, lblUserID %>" />:</label>
+                                <asp:TextBox ID="txtUserID" CssClass="form-control input-sm" placeholder="<%$ Resources:WebResources, lblUserID %>" MaxLength="30" runat="server" />
+                            </div>
+                            <div class="form-group form-group-sm">
+                                <label class="control-label" for="txtPassword1">
+                                    <asp:Literal ID="litPassword1" runat="server" Text="<%$ Resources:WebResources, lblPassword1 %>" />:                            
                             
                                 <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree" tabindex="-1">
                                     <small>
                                         <asp:Literal ID="litPasswordRequirements" Text="<%$ Resources:WebResources, lblPasswordRequirements %>" runat="server" /></small>
                                 </a>
 
+                                </label>
+                                <div id="collapseThree" class="panel-collapse collapse alert-info" role="tabpanel">
+                                    <asp:Literal ID="Literal1" Text="<%$ Resources:WebResources, lblPasswordRequirementsIntro %>" runat="server" />
+                                    <ul>
+                                        <li>
+                                            <asp:Literal ID="litPasswordBullet1" Text="<%$ Resources:WebResources, PasswordRequirementBullet1 %>" runat="server" />
+                                        </li>
+                                        <li>
+                                            <asp:Literal ID="litPasswordBullet2" Text="<%$ Resources:WebResources, PasswordRequirementBullet2 %>" runat="server" />
+                                        </li>
+                                        <li>
+                                            <asp:Literal ID="litPasswordBullet3" Text="<%$ Resources:WebResources, PasswordRequirementBullet3 %>" runat="server" />
+                                        </li>
+                                        <li>
+                                            <asp:Literal ID="litPasswordBullet4" Text="<%$ Resources:WebResources, PasswordRequirementBullet4 %>" runat="server" />
+                                        </li>
+                                    </ul>
+                                </div>
+
+
+                                <asp:TextBox ID="txtPassword1" TextMode="Password" CssClass="form-control input-sm" placeholder="<%$ Resources:WebResources, lblPassword1 %>" MaxLength="100" runat="server" />
+                            </div>
+                            <div class="form-group form-group-sm">
+                                <label class="control-label" for="txtPassword2">
+                                    <asp:Literal ID="litPassword2" runat="server" Text="<%$ Resources:WebResources, lblPassword2 %>" />:</label>
+                                <asp:TextBox ID="txtPassword2" TextMode="Password" CssClass="form-control input-sm" placeholder="Re-type Password" MaxLength="100" runat="server" />
+                            </div>
+                            <div class="form-group form-group-sm">
+                                <label class="control-label" for="txtProfileEmailAddress">
+                                    <asp:Literal ID="litProfileEmailAddress" runat="server" Text="<%$ Resources:WebResources, lblEmailAddress %>" />:</label>
+                                <asp:TextBox ID="txtProfileEmailAddress" CssClass="form-control input-sm" placeholder="Email Address" MaxLength="100" runat="server" />
+                            </div>
+
+
+                            <asp:Panel ID="pnlCreditCardSuppInfo" runat="server">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label" for="ddlCreditCountry">
+                                        <asp:Literal ID="litCountry" runat="server" Text="<%$ Resources:WebResources, lblCountry %>" />:</label>
+                                    <asp:DropDownList ID="ddlCreditCountry"
+                                        CssClass="form-control input-sm"
+                                        AutoPostBack="true"
+                                        runat="server" />
+                                </div>
+
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label" for="txtBillingZip">
+                                        <asp:Literal ID="litBillingZip" Text="<%$ Resources:WebResources, lblBillingZip %>" runat="server" />:
                                     </label>
-                                    <div id="collapseThree" class="panel-collapse collapse alert-info" role="tabpanel">
-                                        <asp:Literal ID="Literal1" Text="<%$ Resources:WebResources, lblPasswordRequirementsIntro %>" runat="server" />
-                                        <ul>
-                                            <li>
-                                                <asp:Literal ID="litPasswordBullet1" Text="<%$ Resources:WebResources, PasswordRequirementBullet1 %>" runat="server" />
-                                            </li>
-                                            <li>
-                                                <asp:Literal ID="litPasswordBullet2" Text="<%$ Resources:WebResources, PasswordRequirementBullet2 %>" runat="server" />
-                                            </li>
-                                            <li>
-                                                <asp:Literal ID="litPasswordBullet3" Text="<%$ Resources:WebResources, PasswordRequirementBullet3 %>" runat="server" />
-                                            </li>
-                                            <li>
-                                                <asp:Literal ID="litPasswordBullet4" Text="<%$ Resources:WebResources, PasswordRequirementBullet4 %>" runat="server" />
-                                            </li>
-                                        </ul>
-                                    </div>
-
-
-                                    <asp:TextBox ID="txtPassword1" TextMode="Password" CssClass="form-control input-sm" placeholder="<%$ Resources:WebResources, lblPassword1 %>" MaxLength="100" runat="server" />
+                                    <asp:TextBox ID="txtBillingZip" class="form-control input-sm" placeholder="<%$ Resources:WebResources, lblBillingZip %>" MaxLength="6" runat="server" />
                                 </div>
-                                <div class="form-group form-group-sm">
-                                    <label class="control-label" for="txtPassword2">
-                                        <asp:Literal ID="litPassword2" runat="server" Text="<%$ Resources:WebResources, lblPassword2 %>" />:</label>
-                                    <asp:TextBox ID="txtPassword2" TextMode="Password" CssClass="form-control input-sm" placeholder="Re-type Password" MaxLength="100" runat="server" />
-                                </div>
-                                <div class="form-group form-group-sm">
-                                    <label class="control-label" for="txtProfileEmailAddress">
-                                        <asp:Literal ID="litProfileEmailAddress" runat="server" Text="<%$ Resources:WebResources, lblEmailAddress %>" />:</label>
-                                    <asp:TextBox ID="txtProfileEmailAddress" CssClass="form-control input-sm" placeholder="Email Address" MaxLength="100" runat="server" />
-                                </div>
-
-
-                                <asp:Panel ID="pnlCreditCardSuppInfo" runat="server">
-                                    <div class="form-group form-group-sm">
-                                        <label class="control-label" for="ddlCreditCountry">
-                                            <asp:Literal ID="litCountry" runat="server" Text="<%$ Resources:WebResources, lblCountry %>" />:</label>
-                                        <asp:DropDownList ID="ddlCreditCountry"
-                                            CssClass="form-control input-sm"
-                                            AutoPostBack="true"
-                                            runat="server" />
-                                    </div>
-
-                                    <div class="form-group form-group-sm">
-                                        <label class="control-label" for="txtBillingZip">
-                                            <asp:Literal ID="litBillingZip" Text="<%$ Resources:WebResources, lblBillingZip %>" runat="server" />:
-                                        </label>
-                                        <asp:TextBox ID="txtBillingZip" class="form-control input-sm" placeholder="<%$ Resources:WebResources, lblBillingZip %>" MaxLength="6" runat="server" />
-                                    </div>
-
-                                </asp:Panel>
 
                             </asp:Panel>
-                        </div>
-                        <div class="modal-footer">
-                            <asp:Button ID="btnCancelCreateProfile"
-                                Text="<%$ Resources:WebResources, ButtonCancel %>"
-                                CssClass="btn btn-link"
-                                data-dismiss="modal"
-                                runat="server" />
-                            <asp:Button ID="btnCreateProfile"
-                                Text="<%$ Resources:WebResources, ButtonCreateProfile %>"
-                                CssClass="btn btn-primary btn-sm"
-                                OnClick="btnCreateProfile_Click"
-                                UseSubmitBehavior="true"
-                                runat="server" />
-                        </div>
 
-
+                        </asp:Panel>
                     </div>
+                    <div class="modal-footer">
+                        <asp:Button ID="btnCancelCreateProfile"
+                            Text="<%$ Resources:WebResources, ButtonCancel %>"
+                            CssClass="btn btn-link"
+                            data-dismiss="modal"
+                            runat="server" />
+                        <asp:Button ID="btnCreateProfile"
+                            Text="<%$ Resources:WebResources, ButtonCreateProfile %>"
+                            CssClass="btn btn-primary btn-sm"
+                            OnClick="btnCreateProfile_Click"
+                            UseSubmitBehavior="true"
+                            runat="server" />
+                    </div>
+
+
                 </div>
             </div>
+        </div>
 
-            <!--// END CREATE PROFILE MODAL //-->
+        <!--// END CREATE PROFILE MODAL //-->
 
 
 
-            <!-- JavaScript -->
-            <script src="/Js/jquery-1.11.1.min.js"></script>
-            <script src="/Js/bootstrap.min.js"></script>
-            <script src="/Js/jquery.payment.1.4.4.min.js"></script>
+        <!-- JavaScript -->
+        <script src="/Js/jquery-1.11.1.min.js"></script>
+        <script src="/Js/bootstrap.min.js"></script>
+        <script src="/Js/jquery.payment.1.4.4.min.js"></script>
 
-            <!--[if lt IE 9]><script src="/Js/B2P.Enums.IE8.js"></script><![endif]-->
-            <!--[if (gte IE 9)|!(IE)]><!-->
-            <script src="/Js/B2P.Enums.js"></script>
-            <!--<![endif]-->
-            <script src="/Js/B2P.Utility.js"></script>
-            <script src="/Js/B2P.FormValidator.js"></script>
-            <script src="/Js/B2P.ValidationType.js"></script>
+        <!--[if lt IE 9]><script src="/Js/B2P.Enums.IE8.js"></script><![endif]-->
+        <!--[if (gte IE 9)|!(IE)]><!-->
+        <script src="/Js/B2P.Enums.js"></script>
+        <!--<![endif]-->
+        <script src="/Js/B2P.Utility.js"></script>
+        <script src="/Js/B2P.FormValidator.js"></script>
+        <script src="/Js/B2P.ValidationType.js"></script>
 
-            <script type="text/javascript">
-                function Clickheretoprint() {
-                    var disp_setting = "toolbar=yes,location=no,directories=yes,menubar=yes,";
-                    disp_setting += "scrollbars=yes,width=650, height=600, left=100, top=25";
-                  
-                    var content_vlue = "";
-                    var print_content1 =   $("#print_content1").clone().html();
-                    var print_content2 =   $("#print_content2").clone().html();
-                    var print_content3 =   $("#print_content3").clone().html();
-                    content_vlue = print_content1 + print_content2 + print_content3
+        <script type="text/javascript">
+            function Clickheretoprint() {
+                var disp_setting = "toolbar=yes,location=no,directories=yes,menubar=yes,";
+                disp_setting += "scrollbars=yes,width=650, height=600, left=100, top=25";
 
-                    var docprint = window.open("", "", disp_setting);
-                    docprint.document.open();
-                    docprint.document.write('<html><head><title>Payment Receipt</title>');
+                var content_vlue = "";
+                var print_content1 = $("#print_content1").clone().html();
+                var print_content2 = $("#print_content2").clone().html();
+                var print_content3 = $("#print_content3").clone().html();
+                content_vlue = print_content1 + print_content2 + print_content3
 
-                    docprint.document.write('<link rel="stylesheet" href="../css/bootstrap.min.css">');
-                    docprint.document.write('<link rel="stylesheet" href="../css/print.css">');
+                var docprint = window.open("", "", disp_setting);
+                docprint.document.open();
+                docprint.document.write('<html><head><title>Payment Receipt</title>');
 
-                    docprint.document.write('</head><body onLoad="self.print()">');
-                    docprint.document.write('<div id="pageheader"> ');
-                    docprint.document.write('<%=Session("CustTitle") %></div>');
+                docprint.document.write('<link rel="stylesheet" href="../css/bootstrap.min.css">');
+                docprint.document.write('<link rel="stylesheet" href="../css/print.css">');
+
+                docprint.document.write('</head><body onLoad="self.print()">');
+                docprint.document.write('<div id="pageheader"> ');
+                docprint.document.write('<%=Session("CustTitle") %></div>');
                     docprint.document.write(content_vlue);
                     // docprint.document.write('</body><p style="padding-left:210px;"><a href="javascript:self.close();" class="Paragraph" >Close</a></p></html>');
                     docprint.document.write('</body></html>');
                     docprint.document.close();
                     docprint.focus();
-                   
+                    return false;
                 }
 
                 function validateForm(paymentType) {
@@ -367,19 +383,19 @@
 
                     // Add validation items to validator            
                     validator.addValidationItem(new ValidationItem("txtUserID", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
-                validator.addValidationItem(new ValidationItem("txtProfileEmailAddress", fieldTypes.Email, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgEmailAddress").ToString()%>"));
+                    validator.addValidationItem(new ValidationItem("txtProfileEmailAddress", fieldTypes.Email, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgEmailAddress").ToString()%>"));
 
                     validator.addValidationItem(item = {
                         field: "txtPassword1",
                         styleParent: true,
                         errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrPassword").ToString()%>",
-                    isValid: (!!/(?=^.{8,100}$)((?=.*\d)(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[^A-Za-z0-9])(?=.*[a-z])|(?=.*[^A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[A-Z])(?=.*[^A-Za-z0-9]))^.*$/.test(doc.getElementById("txtPassword1").value))
-                });
+                        isValid: (!!/(?=^.{8,100}$)((?=.*\d)(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[^A-Za-z0-9])(?=.*[a-z])|(?=.*[^A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[A-Z])(?=.*[^A-Za-z0-9]))^.*$/.test(doc.getElementById("txtPassword1").value))
+                    });
 
-                validator.addValidationItem(item = {
-                    field: "txtPassword2",
-                    styleParent: true,
-                    errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrPassword").ToString()%>",
+                    validator.addValidationItem(item = {
+                        field: "txtPassword2",
+                        styleParent: true,
+                        errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrPassword").ToString()%>",
                     isValid: (!!/(?=^.{8,100}$)((?=.*\d)(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[^A-Za-z0-9])(?=.*[a-z])|(?=.*[^A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[A-Z])(?=.*[^A-Za-z0-9]))^.*$/.test(doc.getElementById("txtPassword2").value) && !!(doc.getElementById("txtPassword1").value === doc.getElementById("txtPassword2").value))
                 });
 
@@ -423,7 +439,7 @@
             }
 
 
-            </script>
+        </script>
 
         </div>
         <!--// START FOOTER CONTENT //-->

@@ -7,7 +7,7 @@
 <div>
     <p>
         <strong>
-            My Order Details
+            <asp:Literal ID="litMyOrderDetails" runat="server" Text="<%$ Resources:WebResources, MyOrderDetails %>" />
         </strong>
     </p>
     <hr />
