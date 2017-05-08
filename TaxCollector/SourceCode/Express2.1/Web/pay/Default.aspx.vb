@@ -441,6 +441,16 @@ Namespace B2P.PaymentLanding.Express.Web
                         pnlCart.Visible = False
                         pnlContent.Visible = True
                         pnlEditLookupItem.Visible = False
+                        'Clear account details for lookup
+                        'If BLL.SessionManager.ClientType = Cart.EClientType.Lookup Then
+                        '    txtLookupAccount1.Text = ""
+                        '    txtLookupAccount2.Text = ""
+                        '    txtLookupAccount3.Text = ""
+                        '    grdLookup.DataSource = Nothing
+                        '    btnLookup.Visible = True
+                        '    lblLookupHeader.Text = ""
+                        '    divLookupAlert.Visible = False
+                        'End If
                     End If
                 End If
 
