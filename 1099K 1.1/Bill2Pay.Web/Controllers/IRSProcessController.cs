@@ -223,13 +223,13 @@ namespace Bill2Pay.Web.Controllers
                 {
                     if (exceptList.Count == 1)//one of the Items is not in changeable state, and rest of the item is changeable state
                     {
-                        TempData["successMessage"] = string.Format("For rest of the Clients, a background process is initiated to generate the PDF files. Once completed, the files will be stored under the {0} folder in the application server.", rootpath);
-                        TempData["errorMessage"] = "Unable to Generate PDF for one of the Client as it does not satisfy the PDF generation criteria.";
+                        TempData["successMessage"] = string.Format("For rest of the Client(s), a background process is initiated to generate the PDF files. Once completed, the files will be stored under the {0} folder in the application server.", rootpath);
+                        TempData["errorMessage"] = "Unable to generate PDF for one of the Client as it does not satisfy the PDF generation criteria.";
                     }
                     else //ii.	If some of the items are not in submit/resubmit state
                     {
-                        TempData["successMessage"] = string.Format("For rest of the Clients, a background process is initiated to generate the PDF files. Once completed, the files will be stored under the {0} folder in the application server.", rootpath);
-                        TempData["errorMessage"] = "Unable to Generate PDF for some of the Clients as they do not satisfy the PDF generation criteria.";
+                        TempData["successMessage"] = string.Format("For rest of the Client(s), a background process is initiated to generate the PDF files. Once completed, the files will be stored under the {0} folder in the application server.", rootpath);
+                        TempData["errorMessage"] = "Unable to generate PDF for some of the Clients as they do not satisfy the PDF generation criteria.";
                     }
                     return RedirectToAction("PrintAllCopies", "Print");
                 }
@@ -237,7 +237,7 @@ namespace Bill2Pay.Web.Controllers
             else//  None of  the item is in printable state
             {
                 TempData["successMessage"] = "";
-                TempData["errorMessage"] = "Unable to Generate PDF for the Clients as they do not satisfy the PDF generation criteria.";
+                TempData["errorMessage"] = "Unable to generate PDF for the Clients as they do not satisfy the PDF generation criteria.";
                 return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
             }
         }
@@ -305,7 +305,7 @@ namespace Bill2Pay.Web.Controllers
             }
 
             //var alreadySubmitted = tinCheckedPayeeList.Where(x => x.detail.SubmissionSummaryId != null).ToList();
-            string doNotSubmit = "3,5,6";
+            string doNotSubmit = "3,5,6,7";
             var alreadySubmitted = ApplicationDbContext.Instence.ImportDetails
                 .Include("ImportSummary")
                 .Join(ApplicationDbContext.Instence.SubmissionStatus, d => d.AccountNumber, s => s.AccountNumber, (d, s) => new { details = d, status = s })
@@ -364,7 +364,7 @@ namespace Bill2Pay.Web.Controllers
             }
 
             //var alreadySubmitted = tinCheckedPayeeList.Where(x => x.detail.SubmissionSummaryId != null).ToList();
-            string doNotSubmit = "1,2,3,5,6,7";
+            string doNotSubmit = "2,3,5,6,7";
             var alreadySubmitted = ApplicationDbContext.Instence.ImportDetails
                 .Include("ImportSummary")
                 .Join(ApplicationDbContext.Instence.SubmissionStatus, d => d.AccountNumber, s => s.AccountNumber, (d, s) => new { details = d, status = s })
@@ -374,6 +374,19 @@ namespace Bill2Pay.Web.Controllers
             if (alreadySubmitted.Count != 0)
             {
                 TempData["errorMessage"] = "Some of the merchant file already submitted. IRS file cannot be generated for this selection.";
+                return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
+            }
+
+            doNotSubmit = "1";
+            alreadySubmitted = ApplicationDbContext.Instence.ImportDetails
+                .Include("ImportSummary")
+                .Join(ApplicationDbContext.Instence.SubmissionStatus, d => d.AccountNumber, s => s.AccountNumber, (d, s) => new { details = d, status = s })
+                .Where(x => selectedMerchants.Contains(x.details.AccountNumber) && x.details.IsActive == true && x.status.IsActive == true &&
+                doNotSubmit.Contains(x.status.StatusId.ToString()) && x.details.ImportSummary.PaymentYear == year && x.status.PaymentYear == year).ToList();
+
+            if (alreadySubmitted.Count != 0)
+            {
+                TempData["errorMessage"] = "IRS file cannot be generated for this selection.";
                 return RedirectToAction("Index", new { Id = year, payer = selectedPayer });
             }
 
@@ -507,12 +520,12 @@ namespace Bill2Pay.Web.Controllers
                     if (errorcount == 1) //one of the Items is not in changeable state and rest of the item is changeable state
                     {
                         TempData["errorMessage"] = "Specified status cannot be updated for one of the Client as it is not satisfying the status update criteria.";
-                        TempData["successMessage"] = "Status for rest of the Clients have been updated successfully.";
+                        TempData["successMessage"] = "Status for rest of the Client(s) have been updated successfully.";
                     }
                     else
                     {
                         TempData["errorMessage"] = "Specified status cannot be updated for some of the Clients as they do not satisfy the status update criteria.";
-                        TempData["successMessage"] = "Status for rest of the Clients has been updated successfully.";
+                        TempData["successMessage"] = "Status for rest of the Client(s) has been updated successfully.";
                     }
                 }
             }

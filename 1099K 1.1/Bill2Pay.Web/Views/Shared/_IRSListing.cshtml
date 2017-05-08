@@ -142,6 +142,10 @@
     function eraseCookie(name) {
         createCookie(name, "", -1);
     }
+
+    function RedirectPage(url){
+        window.location.href = url;
+    }
 </script>
 
 <div class="row">
@@ -243,29 +247,53 @@
 
 
                                         </td>
-                                        <td>
-                                            @{
-                                                if (@item.SubmissionStatus != null)
-                                                {
+                                        @{
+                                            if (@item.SubmissionStatus != null)
+                                            {
 
-                                                    if (@item.SubmissionStatus.StatusId == 7 && User.IsInRole("Admin"))
+                                                if (@item.SubmissionStatus.StatusId == 7 && User.IsInRole("Admin"))
+                                                {
+                                                    <td style="color: #337ab7;cursor: pointer;" title="Edit" onclick="RedirectPage('@Url.Action("Edit", "Merchant", new { Id = item.ImportDetails.AccountNumber,year=ViewBag.SelectedYear })')">
+                                                        @item.ImportDetails.AccountNumber
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        @item.ImportDetails.AccountNumber
+                                                    </td>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <td>
+                                                    @item.ImportDetails.AccountNumber
+                                                </td>
+                                            }
+                                        }
+                                        @*<td>
+                                                @{
+                                                    if (@item.SubmissionStatus != null)
                                                     {
-                                                        <a href="@Url.Action("Edit", "Merchant", new { Id = item.ImportDetails.AccountNumber,year=ViewBag.SelectedYear })" title="Edit">
+
+                                                        if (@item.SubmissionStatus.StatusId == 7 && User.IsInRole("Admin"))
+                                                        {
+                                                            <a href="@Url.Action("Edit", "Merchant", new { Id = item.ImportDetails.AccountNumber,year=ViewBag.SelectedYear })" title="Edit">
+                                                                @item.ImportDetails.AccountNumber
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
                                                             @item.ImportDetails.AccountNumber
-                                                        </a>
+                                                        }
                                                     }
                                                     else
                                                     {
                                                         @item.ImportDetails.AccountNumber
                                                     }
                                                 }
-                                                else
-                                                {
-                                                    @item.ImportDetails.AccountNumber
-                                                }
-                                            }
 
-                                        </td>
+                                            </td>*@
                                         <td>@item.ImportDetails.TIN </td>
                                         <td>@item.ImportDetails.FirstPayeeName  </td>
                                         <td>@item.ImportDetails.PayeeMailingAddress </td>
