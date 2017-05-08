@@ -70,7 +70,7 @@ Public Class PaymentCartGrid
                 cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, BLL.SessionManager.CurrentCategory.Name, B2P.Common.Enumerations.TransactionSources.Web, cardType, SubTotal())
 
         End Select
-        BLL.SessionManager.IsConvenienceFeesApplicable = BLL.SessionManager.Client.ConfirmFees And cf.ConvenienceFee > 0
+        BLL.SessionManager.IsConvenienceFeesApplicable = cf.ConvenienceFee > 0
         Return BLL.SessionManager.IsConvenienceFeesApplicable
     End Function
     Protected Function GetConvenienceFee() As String
