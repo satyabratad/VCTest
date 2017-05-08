@@ -58,18 +58,17 @@
 
 
             <div class="row" style="background-color: white; padding-bottom: 10px;">
-                <br />
+               
 
                 <div class="col-sm-12">
                     <!--// START MIDDLE CONTENT //-->
-
-                    <div class="row" style="background-color: white;">
+                     <div class="content">
+                    <div class="row">
                         <!--// START NO SCRIPT CHECK //-->
                         <b2p:JavaScriptCheck ID="pjsJavascript" runat="server" />
                         <!--// END NO SCRIPT CHECK //-->
-
-                        <div class="content">
-                            <div class="container" style="min-height: 50%;">
+                        <br />
+                       
                                 <!--// START BREADCRUMBS //-->
                                 <b2p:BreadCrumbMenu runat="server" ID="BreadCrumbMenu" PageTagName="Home" />
                                 <!--// END BREADCRUMBS //-->
@@ -145,6 +144,7 @@
                                         </p>
                                     </div>
                                 </asp:Panel>
+
                                 <asp:Panel ID="pnlCart" runat="server" Visible="false">
                                     <div class="col-xs-12 col-sm-12">
                                         <b2p:CartGrid runat="server" ID="ctlCartGrid" />
@@ -158,13 +158,9 @@
                                 <asp:Panel runat="server" ID="pnlEditLookupItem">
                                     <b2p:EditLookupItem runat="server" ID="ctlEditLookupItem" />
                                 </asp:Panel>
-                            </div>
-                        </div>
-
-
-                    </div>
+                         </div>
                 </div>
-
+                    </div>
                 <!--// END MIDDLE CONTENT //-->
 
             </div>
