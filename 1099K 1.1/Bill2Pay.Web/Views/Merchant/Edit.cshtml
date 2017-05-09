@@ -126,7 +126,7 @@
 
         <div class="row">
             <div class="col-md-6">
-                @Html.ActionLink("Cancel", "Index", "Merchant", new { @class = "btn btn-default pull-right" })
+                <a class="btn btn-default pull-right" href="@HttpContext.Current.Request.UrlReferrer">Cancel</a>
             </div>
             <div class="col-md-6">
                 <input type="submit" value="Save" class="btn btn-primary " />
