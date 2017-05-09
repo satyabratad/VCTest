@@ -305,7 +305,7 @@ namespace Bill2Pay.Web.Controllers
             }
 
             //var alreadySubmitted = tinCheckedPayeeList.Where(x => x.detail.SubmissionSummaryId != null).ToList();
-            string doNotSubmit = "3,5,6,7";
+            string doNotSubmit = "3,5,6,7,4,8";
             var alreadySubmitted = ApplicationDbContext.Instence.ImportDetails
                 .Include("ImportSummary")
                 .Join(ApplicationDbContext.Instence.SubmissionStatus, d => d.AccountNumber, s => s.AccountNumber, (d, s) => new { details = d, status = s })
