@@ -1,0 +1,371 @@
+﻿@model IEnumerable<Bill2Pay.Model.ImportDetail>
+
+@{
+    ViewBag.Title = "IRS 1099-K Submission Report";
+}
+
+<h2>IRS 1099-K Submission Report</h2>
+
+@Html.Partial("_SelectYear", new Bill2Pay.Web.YearSelection() { AllowPostback = true, IsVisible = true })
+
+<div style="float:right;margin-top:-80px;">
+    <button id="export" type="submit" class="btn btn-primary btn-lg " title="Export to CSV">
+        <span class="fa fa-file-excel-o fa-lg"></span>
+    </button>
+    <button id="exportpdf" type="submit" class="btn btn-primary btn-lg " title="Export to PDF">
+        <span class="fa fa-file-pdf-o fa-lg"></span>
+    </button>
+</div>
+<div class="table-responsive">
+
+    <table class="table" id="T1099K_HTML">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.AccountNumber)
+                </th>
+                <th align="right">
+                    @Html.DisplayNameFor(model => model.JanuaryAmount)
+                </th>
+                <th align="right">
+                    @Html.DisplayNameFor(model => model.FebruaryAmount)
+                </th>
+                <th align="right">
+                    @Html.DisplayNameFor(model => model.MarchAmount)
+                </th>
+                <th align="right">
+                    @Html.DisplayNameFor(model => model.AprilAmount)
+                </th>
+                <th align="right">
+                    @Html.DisplayNameFor(model => model.MayAmount)
+                </th>
+                <th align="right">
+                    @Html.DisplayNameFor(model => model.JuneAmount)
+                </th>
+                <th align="right">
+                    @Html.DisplayNameFor(model => model.JulyAmount)
+                </th>
+                <th align="right">
+                    @Html.DisplayNameFor(model => model.AugustAmount)
+                </th>
+                <th align="right">
+                    @Html.DisplayNameFor(model => model.SeptemberAmount)
+                </th>
+                <th align="right">
+                    @Html.DisplayNameFor(model => model.OctoberAmount)
+                </th>
+                <th align="right">
+                    @Html.DisplayNameFor(model => model.NovemberAmount)
+                </th>
+                <th align="right">
+                    @Html.DisplayNameFor(model => model.DecemberAmount)
+                </th>
+                <th align="right">
+                    @Html.DisplayNameFor(model => model.GrossAmount)
+                </th>
+                <th align="right">
+                    @Html.DisplayNameFor(model => model.CNPTransactionAmount)
+                </th>
+                <th align="right">
+                    @Html.DisplayNameFor(model => model.TransactionCount)
+                </th>
+                <th>
+                    Status
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AccountNumber)
+                    </td>
+                    <td align="right">
+                        @Bill2Pay.Web.SubmissionType.FormatAmount(item.JanuaryAmount)
+                    </td>
+                    <td align="right">
+                        @Bill2Pay.Web.SubmissionType.FormatAmount(item.FebruaryAmount)
+                    </td>
+                    <td align="right">
+                        @Bill2Pay.Web.SubmissionType.FormatAmount(item.MarchAmount)
+                    </td>
+                    <td align="right">
+                        @Bill2Pay.Web.SubmissionType.FormatAmount(item.AprilAmount)
+                    </td>
+                    <td align="right">
+                        @Bill2Pay.Web.SubmissionType.FormatAmount(item.MayAmount)
+                    </td>
+                    <td align="right">
+                        @Bill2Pay.Web.SubmissionType.FormatAmount(item.JuneAmount)
+                    </td>
+                    <td align="right">
+                        @Bill2Pay.Web.SubmissionType.FormatAmount(item.JulyAmount)
+                    </td>
+                    <td align="right">
+                        @Bill2Pay.Web.SubmissionType.FormatAmount(item.AugustAmount)
+                    </td>
+                    <td align="right">
+                        @Bill2Pay.Web.SubmissionType.FormatAmount(item.SeptemberAmount)
+                    </td>
+                    <td align="right">
+                        @Bill2Pay.Web.SubmissionType.FormatAmount(item.OctoberAmount)
+                    </td>
+                    <td align="right">
+                        @Bill2Pay.Web.SubmissionType.FormatAmount(item.NovemberAmount)
+                    </td>
+                    <td align="right">
+                        @Bill2Pay.Web.SubmissionType.FormatAmount(item.DecemberAmount)
+                    </td>
+                    <td align="right">
+                        @Bill2Pay.Web.SubmissionType.FormatAmount(item.GrossAmount)
+                    </td>
+                    <td align="right">
+                        @Bill2Pay.Web.SubmissionType.FormatAmount(item.CNPTransactionAmount)
+                    </td>
+                    <td align="right">
+                        @Html.DisplayFor(modelItem => item.TransactionCount)
+                    </td>
+                    <td>
+
+                        @{
+                            var status = 0;
+                            SubmissionStatus submission = null;
+                            if (item.SubmissionSummary != null)
+                            {
+                                submission = ApplicationDbContext.Instence.SubmissionStatus.FirstOrDefault(p => p.AccountNumber.Equals(item.AccountNumber, StringComparison.OrdinalIgnoreCase)
+                                && p.PaymentYear == item.SubmissionSummary.PaymentYear
+                                && p.IsActive == true);
+                            }
+
+                            if (submission != null)
+                            {
+                                status = submission.StatusId;
+                            }
+                        }
+                        @Bill2Pay.Web.SubmissionType.GetName(status)
+                    </td>
+                </tr>
+                            }
+        </tbody>
+
+    </table>
+</div>
+<div style="visibility:hidden;display:none">
+    <table class="table" id="T1099K">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.AccountNumber)
+                </th>
+                <th align="right">
+                    @Html.DisplayNameFor(model => model.JanuaryAmount)
+                </th>
+                <th align="right">
+                    @Html.DisplayNameFor(model => model.FebruaryAmount)
+                </th>
+                <th align="right">
+                    @Html.DisplayNameFor(model => model.MarchAmount)
+                </th>
+                <th align="right">
+                    @Html.DisplayNameFor(model => model.AprilAmount)
+                </th>
+                <th align="right">
+                    @Html.DisplayNameFor(model => model.MayAmount)
+                </th>
+                <th align="right">
+                    @Html.DisplayNameFor(model => model.JuneAmount)
+                </th>
+                <th align="right">
+                    @Html.DisplayNameFor(model => model.JulyAmount)
+                </th>
+                <th align="right">
+                    @Html.DisplayNameFor(model => model.AugustAmount)
+                </th>
+                <th align="right">
+                    @Html.DisplayNameFor(model => model.SeptemberAmount)
+                </th>
+                <th align="right">
+                    @Html.DisplayNameFor(model => model.OctoberAmount)
+                </th>
+                <th align="right">
+                    @Html.DisplayNameFor(model => model.NovemberAmount)
+                </th>
+                <th align="right">
+                    @Html.DisplayNameFor(model => model.DecemberAmount)
+                </th>
+                <th align="right">
+                    @Html.DisplayNameFor(model => model.GrossAmount)
+                </th>
+                <th align="right">
+                    @Html.DisplayNameFor(model => model.CNPTransactionAmount)
+                </th>
+                <th align="right">
+                    @Html.DisplayNameFor(model => model.TransactionCount)
+                </th>
+                <th>
+                    Status
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AccountNumber)
+                </td>
+                <td align="right">
+                    @Bill2Pay.Web.SubmissionType.FormatAmount(item.JanuaryAmount)
+                </td>
+                <td align="right">
+                    @Bill2Pay.Web.SubmissionType.FormatAmount(item.FebruaryAmount)
+                </td>
+                <td align="right">
+                    @Bill2Pay.Web.SubmissionType.FormatAmount(item.MarchAmount)
+                </td>
+                <td align="right">
+                    @Bill2Pay.Web.SubmissionType.FormatAmount(item.AprilAmount)
+                </td>
+                <td align="right">
+                    @Bill2Pay.Web.SubmissionType.FormatAmount(item.MayAmount)
+                </td>
+                <td align="right">
+                    @Bill2Pay.Web.SubmissionType.FormatAmount(item.JuneAmount)
+                </td>
+                <td align="right">
+                    @Bill2Pay.Web.SubmissionType.FormatAmount(item.JulyAmount)
+                </td>
+                <td align="right">
+                    @Bill2Pay.Web.SubmissionType.FormatAmount(item.AugustAmount)
+                </td>
+                <td align="right">
+                    @Bill2Pay.Web.SubmissionType.FormatAmount(item.SeptemberAmount)
+                </td>
+                <td align="right">
+                    @Bill2Pay.Web.SubmissionType.FormatAmount(item.OctoberAmount)
+                </td>
+                <td align="right">
+                    @Bill2Pay.Web.SubmissionType.FormatAmount(item.NovemberAmount)
+                </td>
+                <td align="right">
+                    @Bill2Pay.Web.SubmissionType.FormatAmount(item.DecemberAmount)
+                </td>
+                <td align="right">
+                    @Bill2Pay.Web.SubmissionType.FormatAmount(item.GrossAmount)
+                </td>
+                <td align="right">
+                    @Bill2Pay.Web.SubmissionType.FormatAmount(item.CNPTransactionAmount)
+                </td>
+                <td align="right">
+                    @Html.DisplayFor(modelItem => item.TransactionCount)
+                </td>
+                <td>
+
+                    @{
+                            var status = 0;
+                            SubmissionStatus submission = null;
+                            if (item.SubmissionSummary != null)
+                            {
+                                submission = ApplicationDbContext.Instence.SubmissionStatus.FirstOrDefault(p => p.AccountNumber.Equals(item.AccountNumber, StringComparison.OrdinalIgnoreCase)
+                                && p.PaymentYear == item.SubmissionSummary.PaymentYear
+                                && p.IsActive == true);
+                            }
+
+                            if (submission != null)
+                            {
+                                status = submission.StatusId;
+                            }
+                    }
+                    @Bill2Pay.Web.SubmissionType.GetName(status)
+                </td>
+            </tr>
+                            }
+        </tbody>
+    </table>
+</div>
+<script>
+    $("#export").click(function () {
+        $("#T1099K").tableToCSV("1099K_");
+    });
+
+    $("#exportpdf").click(function () {
+        var doc = new jsPDF('l', 'mm', [420, 297]);
+
+        var elem = document.getElementById("T1099K");
+        var res = doc.autoTableHtmlToJson(elem);
+        doc.autoTable(res.columns, res.data, {
+            startY: 10,
+            tableWidth: 'auto',
+            columnWidth: 'auto',
+            styles: {
+                overflow: 'linebreak'
+            },
+            createdHeaderCell: function (cell, data) {
+                var col = data.column.index;
+                if (col != 0 && col != 16) {
+                    cell.styles.halign = 'right';
+                }
+            },
+            createdCell: function (cell, data) {
+                var col = data.column.index;
+                if (col != 0 && col != 16) {
+                    cell.styles.halign = 'right';
+                }
+            }
+        });
+
+        var d = new Date();
+        var curr_date = d.getDate();
+        var curr_month = d.getMonth() + 1; //Months are zero based
+        var curr_year = d.getFullYear();
+
+        var ts = curr_month + '_' + curr_date + "_" + curr_year;
+        var name = 'TIN_' + ts + '.pdf';
+
+        doc.save(name)
+    });
+
+
+    $(document).ready(function () {
+        $('#T1099K_HTML').DataTable({
+            order: [[0, 'asc']],
+        });
+    });
+</script>
+<link rel="stylesheet" type="text/css" href="~/Content/DataTables/datatables.min.css" />
+
+<style>
+    input[type="checkbox"] {
+        height: 18px;
+        width: 18px;
+    }
+
+    .dataTable thead .sorting:after, .dataTable thead .sorting_asc:after {
+        content: '';
+    }
+
+    .dataTable thead .sorting:before {
+        content: '';
+        margin-top: -2px;
+        color: #999;
+    }
+
+    .dataTable thead .sorting_desc:after {
+        content: '';
+    }
+
+    .dataTables_filter > label:after {
+        content: "";
+        font-family: icomoon;
+        font-size: 12px;
+        display: inline-block;
+        position: absolute;
+        top: 50%;
+        right: 12px;
+        margin-top: -6px;
+        color: #999;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+    }
+</style>

@@ -1,0 +1,587 @@
+﻿@using Bill2Pay.Model
+
+@model ImportDetail
+
+@{
+    ViewBag.Title = "1099 K Details";
+}
+
+@{
+    SubmissionStatus status = null;
+
+    if (Model.SubmissionSummaryId != null)
+    {
+        status = ApplicationDbContext.Instence.SubmissionStatus
+                        .FirstOrDefault(p => p.AccountNumber.Equals(Model.AccountNumber, StringComparison.OrdinalIgnoreCase) && p.PaymentYear == Model.ImportSummary.PaymentYear && p.IsActive == true);
+    }
+}
+<style>
+
+  
+   
+    .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+  color: #fff;
+  background-color: #337ab7;
+  border-color:#2e6da4;
+  
+}
+   
+    /* hover tab color */
+.nav-tabs>li>a:hover { 
+  background-color: #e1e1e1 ;
+  border-color:#d3d1d1;
+}
+
+
+</style>
+<div class="row">
+    <div ng-app="tabPanel" ng-controller="tabPanelCtrl as ctrl" ng-click="tabChange($event)">
+        <div class="col-md-12">
+            <ul class="nav nav-tabs page-tabs" style="border-bottom:2px solid #337ab7">
+                <li ng-class="{'active':ctrl.tabSelected=='#copy-a'}"><a href="#copy-a">Copy A</a></li>
+                <li ng-class="{'active':ctrl.tabSelected=='#copy-1'}"><a href="#copy-1">Copy 1</a></li>
+                <li ng-class="{'active':ctrl.tabSelected=='#copy-b'}"><a href="#copy-b">Copy B</a></li>
+                <li ng-class="{'active':ctrl.tabSelected=='#copy-2'}"><a href="#copy-2">Copy 2</a></li>
+                <li ng-class="{'active':ctrl.tabSelected=='#copy-c'}"><a href="#copy-c">Copy C</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-12" >
+            <br />
+            <div id="copy-a"  class="ng-hide" ng-show="ctrl.tabSelected=='#copy-a'">
+
+                @{ 
+                    
+                    if (status != null && (status.StatusId == 6 || status.StatusId == 5))
+                    {
+                        using (Html.BeginForm("CopyA", "Print", new { ReturnUrl = ViewBag.ReturnUrl, Id = Model.AccountNumber, year = ViewBag.SelectedYear }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                                    @Html.AntiForgeryToken()
+                                    <button style="float:right;" type="submit" class="btn btn-primary btn-lg " title="Print to PDF">
+                            <span class="fa fa-print fa-lg"></span>
+                        </button>
+                            }
+                        }
+                    }
+                <div class="copy-a">
+                    <div>
+                        <span style="position:absolute; left:226px; top:20px"><b>@((status != null && status.StatusId == 6) ? "x" : "")</b></span>
+                        <span style="position:absolute; left:314px; top:20px"><b>@((status != null && (status.StatusId == 8 || status.StatusId == 4 || status.StatusId == 5)) ? "x" : "")</b></span>
+                    </div>
+                    <div>
+                        <span style="position:absolute; left:25px; top:65px"> @string.Format("{0} {1}",Model.Merchant.Payer.Transmitter.CompanyName, Model.Merchant.Payer.Transmitter.CompanyNameContinued) </span>
+                        <span style="position:absolute; left:25px; top:90px"> @Model.Merchant.Payer.Transmitter.CompanyMailingAddress </span>
+                        <span style="position:absolute; left:25px; top:110px">@Model.Merchant.Payer.Transmitter.CompanyCity</span>
+                        <span style="position:absolute; left:25px; top:130px">@Model.Merchant.Payer.Transmitter.CompanyState</span>
+                        <span style="position:absolute; left:25px; top:150px">@Model.Merchant.Payer.Transmitter.CompanyZIP</span>
+                    </div>
+                    <div>
+                        @{
+                                        if (@Model.FillerIndicatorType == "1")
+                                        {
+                                <span style="position:absolute; left:185px; top:213px"><b>x</b></span>
+                                        }
+                                        else if (@Model.FillerIndicatorType == "2")
+                                        {
+                                <span style="position:absolute; left:185px; top:238px"><b>x</b></span>
+                                        }
+
+                                        if (@Model.PaymentIndicatorType == "1")
+                                        {
+
+                                <span style="position:absolute; left:372px; top:213px"><b>x</b></span>
+                                        }
+                                        else if (@Model.PaymentIndicatorType == "2")
+                                        {
+                                <span style="position:absolute; left:372px; top:238px"><b>x</b></span>
+                                        }
+
+
+                                    }
+
+                    </div>
+
+                    <div>
+                        <span style="position:absolute; left:395px; top:50px"> </span>
+                        <span style="position:absolute; left:395px; top:90px">@Model.TIN</span>
+                        <span style="position:absolute; left:410px; top:150px; text-align:right;width:120px;">@Model.GrossAmount</span>
+                    </div>
+                    <div>
+                        <span style="position:absolute; left:25px; top:270px">@Model.FirstPayeeName &nbsp; @Model.SecondPayeeName</span>
+                        <span style="position:absolute; left:25px; top:325px">@Model.PayeeMailingAddress</span>
+                        <span style="position:absolute; left:25px; top:400px">@Model.PayeeCity, @Model.PayeeState, @Model.PayeeZipCode </span>
+                    </div>
+                    <div>
+                        <span style="position:absolute; left:25px; top:440px">@string.Format("{0} {1}", Model.Merchant.Payer.Transmitter.CompanyName, Model.Merchant.Payer.Transmitter.CompanyNameContinued)  </span>
+                        <span style="position:absolute; left:25px; top:460px">@Model.Merchant.Payer.Transmitter.ContactTelephoneNumber </span>
+                        <span style="position:absolute; left:25px; top:500px">@Model.AccountNumber</span>
+                        @{
+                                        if (@Model.SecondTINNoticed != null)
+                                        {
+                                <span style="position:absolute; left:350px; top:500px"><b>x</b></span>
+                                        }
+                                    }
+
+
+                    </div>
+                    <div>
+                        <span style="position:absolute; left:410px; top:195px;text-align:right;width:120px;">@Model.CNPTransactionAmount</span>
+                        <span style="position:absolute; left:550px; top:195px">@Model.MerchantCategoryCode</span>
+                        <span style="position:absolute; left:410px; top:235px;text-align:right;width:120px;">@Model.TransactionCount</span>
+                        <span style="position:absolute; left:560px; top:240px;text-align:right;width:120px;">@Model.FederalWithHoldingAmount</span>
+                        <span style="position:absolute; left:410px; top:278px;text-align:right;width:120px;">@Model.JanuaryAmount</span>
+                        <span style="position:absolute; left:560px; top:278px;text-align:right;width:120px;">@Model.FebruaryAmount</span>
+                        <span style="position:absolute; left:410px; top:312px;text-align:right;width:120px;">@Model.MarchAmount</span>
+                        <span style="position:absolute; left:560px; top:312px;text-align:right;width:120px;">@Model.AprilAmount</span>
+                        <span style="position:absolute; left:410px; top:350px;text-align:right;width:120px;">@Model.MayAmount</span>
+                        <span style="position:absolute; left:560px; top:350px;text-align:right;width:120px;">@Model.JuneAmount</span>
+                        <span style="position:absolute; left:410px; top:387px;text-align:right;width:120px;">@Model.JulyAmount</span>
+                        <span style="position:absolute; left:560px; top:387px;text-align:right;width:120px;">@Model.AugustAmount</span>
+                        <span style="position:absolute; left:410px; top:425px;text-align:right;width:120px;">@Model.SeptemberAmount</span>
+                        <span style="position:absolute; left:560px; top:425px;text-align:right;width:120px;">@Model.OctoberAmount</span>
+                        <span style="position:absolute; left:410px; top:460px;text-align:right;width:120px;">@Model.NovemberAmount</span>
+                        <span style="position:absolute; left:560px; top:460px;text-align:right;width:120px;">@Model.DecemberAmount</span>
+                    </div>
+
+                    <div>
+                        <span style="position:absolute; left:410px; top:490px">@Model.PayeeState</span>
+                        <span style="position:absolute; left:560px; top:490px"></span>
+                        <span style="position:absolute; left:715px; top:497px">@Model.StateWithHolding</span>
+                        <span style="color:red ;font-family:Arial Black;font-size:29px;font-weight:bold; position:absolute; left:516px; top:78px;text-align:right;width:120px;">@((Model.ImportSummary.PaymentYear + 1) % 100)</span>
+                    </div>
+                </div>
+            </div>
+            <div id="copy-1" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-1'">
+                @if (status != null && (status.StatusId == 6 || status.StatusId == 5))
+                {
+                    using (Html.BeginForm("Copy1", "Print", new { ReturnUrl = ViewBag.ReturnUrl, Id = Model.AccountNumber, year = ViewBag.SelectedYear }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <button style="float:right;" type="submit" class="btn btn-primary btn-lg " title="Print to PDF">
+                            <span class="fa fa-print fa-lg"></span>
+                        </button>
+                    }
+                        }
+                <div class="copy-1">
+                    <div>
+
+                        <div>
+                            <span style="position:absolute; left:226px; top:18px"><b>@((status != null && status.StatusId == 6) ? "x" : "")</b></span>
+                            <span style="position:absolute; left:314px; top:18px"><b>@((status != null && (status.StatusId == 8 || status.StatusId == 4 || status.StatusId == 5)) ? "x" : "")</b></span>
+                        </div>
+
+
+                    </div>
+                    <div>
+                        <span style="position:absolute; left:25px; top:65px"> @string.Format("{0} {1}",Model.Merchant.Payer.Transmitter.CompanyName, Model.Merchant.Payer.Transmitter.CompanyNameContinued) </span>
+                        <span style="position:absolute; left:25px; top:90px"> @Model.Merchant.Payer.Transmitter.CompanyMailingAddress </span>
+                        <span style="position:absolute; left:25px; top:110px">@Model.Merchant.Payer.Transmitter.CompanyCity</span>
+                        <span style="position:absolute; left:25px; top:130px">@Model.Merchant.Payer.Transmitter.CompanyState</span>
+                        <span style="position:absolute; left:25px; top:150px">@Model.Merchant.Payer.Transmitter.CompanyZIP</span>
+                    </div>
+                    <div>
+                        @{
+                            if (@Model.FillerIndicatorType == "1")
+                            {
+                                <span style="position:absolute; left:186px; top:211px"><b>x</b></span>
+                            }
+                            else if (@Model.FillerIndicatorType == "2")
+                            {
+                                <span style="position:absolute; left:185px; top:238px"><b>x</b></span>
+                            }
+
+                            if (@Model.PaymentIndicatorType == "1")
+                            {
+
+                                <span style="position:absolute; left:372px; top:211px"><b>x</b></span>
+                            }
+                            else if (@Model.PaymentIndicatorType == "2")
+                            {
+                                <span style="position:absolute; left:370px; top:238px"><b>x</b></span>
+                            }
+
+
+                        }
+
+                    </div>
+
+                    <div>
+                        <span style="position:absolute; left:395px; top:50px"> </span>
+                        <span style="position:absolute; left:395px; top:90px">@Model.TIN</span>
+                        <span style="position:absolute; left:410px; top:150px; text-align:right;width:120px;">@Model.GrossAmount</span>
+                    </div>
+                    <div>
+                        <span style="position:absolute; left:25px; top:270px">@Model.FirstPayeeName &nbsp; @Model.SecondPayeeName</span>
+                        <span style="position:absolute; left:25px; top:325px">@Model.PayeeMailingAddress</span>
+                        <span style="position:absolute; left:25px; top:400px">@Model.PayeeCity, @Model.PayeeState, @Model.PayeeZipCode</span>
+                    </div>
+                    <div>
+                        <span style="position:absolute; left:25px; top:440px">@string.Format("{0} {1}", Model.Merchant.Payer.Transmitter.CompanyName, Model.Merchant.Payer.Transmitter.CompanyNameContinued)  </span>
+                        <span style="position:absolute; left:25px; top:460px">@Model.Merchant.Payer.Transmitter.ContactTelephoneNumber </span>
+                        <span style="position:absolute; left:25px; top:500px">@Model.AccountNumber</span>
+
+
+
+                    </div>
+                    <div>
+                        <span style="position:absolute; left:410px; top:195px;text-align:right;width:120px;">@Model.CNPTransactionAmount</span>
+                        <span style="position:absolute; left:550px; top:195px">@Model.MerchantCategoryCode</span>
+                        <span style="position:absolute; left:410px; top:235px;text-align:right;width:120px;">@Model.TransactionCount</span>
+                        <span style="position:absolute; left:560px; top:240px;text-align:right;width:120px;">@Model.FederalWithHoldingAmount</span>
+                        <span style="position:absolute; left:410px; top:278px;text-align:right;width:120px;">@Model.JanuaryAmount</span>
+                        <span style="position:absolute; left:560px; top:278px;text-align:right;width:120px;">@Model.FebruaryAmount</span>
+                        <span style="position:absolute; left:410px; top:312px;text-align:right;width:120px;">@Model.MarchAmount</span>
+                        <span style="position:absolute; left:560px; top:312px;text-align:right;width:120px;">@Model.AprilAmount</span>
+                        <span style="position:absolute; left:410px; top:350px;text-align:right;width:120px;">@Model.MayAmount</span>
+                        <span style="position:absolute; left:560px; top:350px;text-align:right;width:120px;">@Model.JuneAmount</span>
+                        <span style="position:absolute; left:410px; top:387px;text-align:right;width:120px;">@Model.JulyAmount</span>
+                        <span style="position:absolute; left:560px; top:387px;text-align:right;width:120px;">@Model.AugustAmount</span>
+                        <span style="position:absolute; left:410px; top:425px;text-align:right;width:120px;">@Model.SeptemberAmount</span>
+                        <span style="position:absolute; left:560px; top:425px;text-align:right;width:120px;">@Model.OctoberAmount</span>
+                        <span style="position:absolute; left:410px; top:460px;text-align:right;width:120px;">@Model.NovemberAmount</span>
+                        <span style="position:absolute; left:560px; top:460px;text-align:right;width:120px;">@Model.DecemberAmount</span>
+                    </div>
+
+                    <div>
+                        <span style="position:absolute; left:410px; top:490px">@Model.PayeeState</span>
+                        <span style="position:absolute; left:560px; top:490px">  </span>
+                        <span style="position:absolute; left:715px; top:497px">@Model.StateWithHolding</span>
+                        <span style="color:black ;font-family:Arial Black;font-size:29px;font-weight:bold; position:absolute; left:516px; top:76px;text-align:right;width:120px;">@((Model.ImportSummary.PaymentYear + 1) % 100)</span>
+                    </div>
+
+                </div>
+            </div>
+            <div id="copy-b" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-b'">
+                @if (status != null && (status.StatusId == 6 || status.StatusId == 5))
+                {
+                    using (Html.BeginForm("CopyB", "Print", new { ReturnUrl = ViewBag.ReturnUrl, Id = Model.AccountNumber, year = ViewBag.SelectedYear }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <button style="float:right;" type="submit" class="btn btn-primary btn-lg " title="Print to PDF">
+                            <span class="fa fa-print fa-lg"></span>
+                        </button>
+                    }
+                }
+                <div class="copy-b">
+
+                    <div>
+                        <div>
+                            <span style="position:absolute; left:314px; top:20px"><b>@((status != null && (status.StatusId == 8 || status.StatusId == 4 || status.StatusId == 5)) ? "x" : "")</b></span>
+                        </div>
+                    </div>
+                    <div>
+                        <span style="position:absolute; left:25px; top:65px"> @string.Format("{0} {1}", Model.Merchant.Payer.Transmitter.CompanyName, Model.Merchant.Payer.Transmitter.CompanyNameContinued) </span>
+                        <span style="position:absolute; left:25px; top:90px"> @Model.Merchant.Payer.Transmitter.CompanyMailingAddress </span>
+                        <span style="position:absolute; left:25px; top:110px">@Model.Merchant.Payer.Transmitter.CompanyCity</span>
+                        <span style="position:absolute; left:25px; top:130px">@Model.Merchant.Payer.Transmitter.CompanyState</span>
+                        <span style="position:absolute; left:25px; top:150px">@Model.Merchant.Payer.Transmitter.CompanyZIP</span>
+
+                    </div>
+                    <div>
+                        @{
+                            if (@Model.FillerIndicatorType == "1")
+                            {
+                                <span style="position:absolute; left:187px; top:213px"><b>x</b></span>
+                            }
+                            else if (@Model.FillerIndicatorType == "2")
+                            {
+                                <span style="position:absolute; left:185px; top:238px"><b>x</b></span>
+                            }
+
+                            if (@Model.PaymentIndicatorType == "1")
+                            {
+
+                                <span style="position:absolute; left:372px; top:213px"><b>x</b></span>
+                            }
+                            else if (@Model.PaymentIndicatorType == "2")
+                            {
+                                <span style="position:absolute; left:370px; top:238px"><b>x</b></span>
+                            }
+
+
+                        }
+
+                    </div>
+
+                    <div>
+                        <span style="position:absolute; left:395px; top:50px"> </span>
+                        <span style="position:absolute; left:395px; top:90px">@Model.TIN</span>
+                        <span style="position:absolute; left:410px; top:150px; text-align:right;width:120px;">@Model.GrossAmount</span>
+                    </div>
+                    <div>
+                        <span style="position:absolute; left:25px; top:270px">@Model.FirstPayeeName &nbsp; @Model.SecondPayeeName</span>
+                        <span style="position:absolute; left:25px; top:325px">@Model.PayeeMailingAddress</span>
+                        <span style="position:absolute; left:25px; top:400px">@Model.PayeeCity, @Model.PayeeState, @Model.PayeeZipCode</span>
+                    </div>
+                    <div>
+                        <span style="position:absolute; left:25px; top:440px">@string.Format("{0} {1}", Model.Merchant.Payer.Transmitter.CompanyName, Model.Merchant.Payer.Transmitter.CompanyNameContinued)  </span>
+                        <span style="position:absolute; left:25px; top:460px">@Model.Merchant.Payer.Transmitter.ContactTelephoneNumber </span>
+                        <span style="position:absolute; left:25px; top:500px">@Model.AccountNumber</span>
+
+
+                    </div>
+                    <div>
+                        <span style="position:absolute; left:410px; top:195px;text-align:right;width:120px;">@Model.CNPTransactionAmount</span>
+                        <span style="position:absolute; left:550px; top:195px">@Model.MerchantCategoryCode</span>
+                        <span style="position:absolute; left:410px; top:235px;text-align:right;width:120px;">@Model.TransactionCount</span>
+                        <span style="position:absolute; left:560px; top:240px;text-align:right;width:120px;">@Model.FederalWithHoldingAmount</span>
+                        <span style="position:absolute; left:410px; top:278px;text-align:right;width:120px;">@Model.JanuaryAmount</span>
+                        <span style="position:absolute; left:560px; top:278px;text-align:right;width:120px;">@Model.FebruaryAmount</span>
+                        <span style="position:absolute; left:410px; top:312px;text-align:right;width:120px;">@Model.MarchAmount</span>
+                        <span style="position:absolute; left:560px; top:312px;text-align:right;width:120px;">@Model.AprilAmount</span>
+                        <span style="position:absolute; left:410px; top:350px;text-align:right;width:120px;">@Model.MayAmount</span>
+                        <span style="position:absolute; left:560px; top:350px;text-align:right;width:120px;">@Model.JuneAmount</span>
+                        <span style="position:absolute; left:410px; top:387px;text-align:right;width:120px;">@Model.JulyAmount</span>
+                        <span style="position:absolute; left:560px; top:387px;text-align:right;width:120px;">@Model.AugustAmount</span>
+                        <span style="position:absolute; left:410px; top:425px;text-align:right;width:120px;">@Model.SeptemberAmount</span>
+                        <span style="position:absolute; left:560px; top:425px;text-align:right;width:120px;">@Model.OctoberAmount</span>
+                        <span style="position:absolute; left:410px; top:460px;text-align:right;width:120px;">@Model.NovemberAmount</span>
+                        <span style="position:absolute; left:560px; top:460px;text-align:right;width:120px;">@Model.DecemberAmount</span>
+                    </div>
+
+                    <div>
+                        <span style="position:absolute; left:410px; top:490px">@Model.PayeeState</span>
+                        <span style="position:absolute; left:560px; top:490px">  </span>
+                        <span style="position:absolute; left:715px; top:497px">@Model.StateWithHolding</span>
+                        <span style="color:black ;font-family:Arial Black;font-size:29px;font-weight:bold; position:absolute; left:516px; top:76px;text-align:right;width:120px;">@((Model.ImportSummary.PaymentYear + 1) % 100)</span>
+                    </div>
+
+                </div>
+                <br />
+                <br />
+                <div class="copy-b-extra"></div>
+            </div>
+            <div id="copy-2" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-2'">
+                @if (status != null && (status.StatusId == 6 || status.StatusId == 5))
+                {
+                    using (Html.BeginForm("Copy2", "Print", new { ReturnUrl = ViewBag.ReturnUrl, Id = Model.AccountNumber, year = ViewBag.SelectedYear }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <button style="float:right;" type="submit" class="btn btn-primary btn-lg " title="Print to PDF">
+                            <span class="fa fa-print fa-lg"></span>
+                        </button>
+                    }
+                }
+                <div class="copy-2">
+
+                    <div>
+
+
+                        <div>
+
+                            <span style="position:absolute; left:314px; top:20px"><b>@((status != null && (status.StatusId == 8 || status.StatusId == 4 || status.StatusId == 5)) ? "x" : "")</b></span>
+                        </div>
+
+
+                    </div>
+                    <div>
+                        <span style="position:absolute; left:25px; top:65px"> @string.Format("{0} {1}", Model.Merchant.Payer.Transmitter.CompanyName, Model.Merchant.Payer.Transmitter.CompanyNameContinued) </span>
+                        <span style="position:absolute; left:25px; top:90px"> @Model.Merchant.Payer.Transmitter.CompanyMailingAddress </span>
+                        <span style="position:absolute; left:25px; top:110px">@Model.Merchant.Payer.Transmitter.CompanyCity</span>
+                        <span style="position:absolute; left:25px; top:130px">@Model.Merchant.Payer.Transmitter.CompanyState</span>
+                        <span style="position:absolute; left:25px; top:150px">@Model.Merchant.Payer.Transmitter.CompanyZIP</span>
+                        @* <span style="position:absolute; left:25px; top:170px"> [FILER's Phone]</span>*@
+                    </div>
+                    <div>
+                        @{
+                            if (@Model.FillerIndicatorType == "1")
+                            {
+                                <span style="position:absolute; left:187px; top:212px"><b>x</b></span>
+                            }
+                            else if (@Model.FillerIndicatorType == "2")
+                            {
+                                <span style="position:absolute; left:187px; top:237px"><b>x</b></span>
+                            }
+
+                            if (@Model.PaymentIndicatorType == "1")
+                            {
+
+                                <span style="position:absolute; left:372px; top:212px"><b>x</b></span>
+                            }
+                            else if (@Model.PaymentIndicatorType == "2")
+                            {
+                                <span style="position:absolute; left:372px; top:237px"><b>x</b></span>
+                            }
+
+                        }
+
+                    </div>
+
+                    <div>
+                        <span style="position:absolute; left:395px; top:50px"> </span>
+                        <span style="position:absolute; left:395px; top:90px">@Model.TIN</span>
+                        <span style="position:absolute; left:410px; top:150px; text-align:right;width:120px;">@Model.GrossAmount</span>
+                    </div>
+                    <div>
+                        <span style="position:absolute; left:25px; top:270px">@Model.FirstPayeeName &nbsp; @Model.SecondPayeeName</span>
+                        <span style="position:absolute; left:25px; top:325px">@Model.PayeeMailingAddress</span>
+                        <span style="position:absolute; left:25px; top:400px">@Model.PayeeCity, @Model.PayeeState, @Model.PayeeZipCode</span>
+                    </div>
+                    <div>
+                        <span style="position:absolute; left:25px; top:440px">@string.Format("{0} {1}", Model.Merchant.Payer.Transmitter.CompanyName, Model.Merchant.Payer.Transmitter.CompanyNameContinued)  </span>
+                        <span style="position:absolute; left:25px; top:460px">@Model.Merchant.Payer.Transmitter.ContactTelephoneNumber </span>
+                        <span style="position:absolute; left:25px; top:500px">@Model.AccountNumber</span>
+
+
+
+                    </div>
+                    <div>
+                        <span style="position:absolute; left:410px; top:195px;text-align:right;width:120px;">@Model.CNPTransactionAmount</span>
+                        <span style="position:absolute; left:550px; top:195px">@Model.MerchantCategoryCode</span>
+                        <span style="position:absolute; left:410px; top:235px;text-align:right;width:120px;">@Model.TransactionCount</span>
+                        <span style="position:absolute; left:560px; top:240px;text-align:right;width:120px;">@Model.FederalWithHoldingAmount</span>
+                        <span style="position:absolute; left:410px; top:278px;text-align:right;width:120px;">@Model.JanuaryAmount</span>
+                        <span style="position:absolute; left:560px; top:278px;text-align:right;width:120px;">@Model.FebruaryAmount</span>
+                        <span style="position:absolute; left:410px; top:312px;text-align:right;width:120px;">@Model.MarchAmount</span>
+                        <span style="position:absolute; left:560px; top:312px;text-align:right;width:120px;">@Model.AprilAmount</span>
+                        <span style="position:absolute; left:410px; top:350px;text-align:right;width:120px;">@Model.MayAmount</span>
+                        <span style="position:absolute; left:560px; top:350px;text-align:right;width:120px;">@Model.JuneAmount</span>
+                        <span style="position:absolute; left:410px; top:387px;text-align:right;width:120px;">@Model.JulyAmount</span>
+                        <span style="position:absolute; left:560px; top:387px;text-align:right;width:120px;">@Model.AugustAmount</span>
+                        <span style="position:absolute; left:410px; top:425px;text-align:right;width:120px;">@Model.SeptemberAmount</span>
+                        <span style="position:absolute; left:560px; top:425px;text-align:right;width:120px;">@Model.OctoberAmount</span>
+                        <span style="position:absolute; left:410px; top:460px;text-align:right;width:120px;">@Model.NovemberAmount</span>
+                        <span style="position:absolute; left:560px; top:460px;text-align:right;width:120px;">@Model.DecemberAmount</span>
+                    </div>
+
+                    <div>
+                        <span style="position:absolute; left:410px; top:490px">@Model.PayeeState</span>
+                        <span style="position:absolute; left:560px; top:490px">  </span>
+                        <span style="position:absolute; left:715px; top:497px">@Model.StateWithHolding</span>
+                        <span style="color:black ;font-family:Arial Black;font-size:29px;font-weight:bold; position:absolute; left:516px; top:76px;text-align:right;width:120px;">@((Model.ImportSummary.PaymentYear + 1) % 100)</span>
+                    </div>
+
+                </div>
+            </div>
+            <div id="copy-c" class="ng-hide" ng-show="ctrl.tabSelected=='#copy-c'">
+                @if (status != null && (status.StatusId == 6 || status.StatusId == 5))
+                {
+                    using (Html.BeginForm("CopyC", "Print", new { ReturnUrl = ViewBag.ReturnUrl, Id = Model.AccountNumber, year = ViewBag.SelectedYear }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <button style="float:right;" type="submit" class="btn btn-primary btn-lg " title="Print to PDF">
+                            <span class="fa fa-print fa-lg"></span>
+                        </button>
+                    }
+                }
+                <div class="copy-c">
+                    <div>
+
+
+                        <div>
+                            <span style="position:absolute; left:226px; top:18px"><b>@((status != null && status.StatusId == 6) ? "x" : "")</b></span>
+                            <span style="position:absolute; left:314px; top:18px"><b>@((status != null && (status.StatusId == 8 || status.StatusId == 4 || status.StatusId == 5)) ? "x" : "")</b></span>
+                        </div>
+
+
+
+                    </div>
+                    <div>
+                        <span style="position:absolute; left:25px; top:65px"> @string.Format("{0} {1}", Model.Merchant.Payer.Transmitter.CompanyName, Model.Merchant.Payer.Transmitter.CompanyNameContinued) </span>
+                        <span style="position:absolute; left:25px; top:90px"> @Model.Merchant.Payer.Transmitter.CompanyMailingAddress </span>
+                        <span style="position:absolute; left:25px; top:110px">@Model.Merchant.Payer.Transmitter.CompanyCity</span>
+                        <span style="position:absolute; left:25px; top:130px">@Model.Merchant.Payer.Transmitter.CompanyState</span>
+                        <span style="position:absolute; left:25px; top:150px">@Model.Merchant.Payer.Transmitter.CompanyZIP</span>
+
+                    </div>
+                    <div>
+                        @{
+                            if (@Model.FillerIndicatorType == "1")
+                            {
+                                <span style="position:absolute; left:187px; top:212px"><b>x</b></span>
+                            }
+                            else if (@Model.FillerIndicatorType == "2")
+                            {
+                                <span style="position:absolute; left:187px; top:237px"><b>x</b></span>
+                            }
+
+                            if (@Model.PaymentIndicatorType == "1")
+                            {
+
+                                <span style="position:absolute; left:372px; top:212px"><b>x</b></span>
+                            }
+                            else if (@Model.PaymentIndicatorType == "2")
+                            {
+                                <span style="position:absolute; left:372px; top:237px"><b>x</b></span>
+                            }
+
+                        }
+
+                    </div>
+
+                    <div>
+                        <span style="position:absolute; left:395px; top:50px"> </span>
+                        <span style="position:absolute; left:395px; top:90px">@Model.TIN</span>
+                        <span style="position:absolute; left:410px; top:150px; text-align:right;width:120px;">@Model.GrossAmount</span>
+                    </div>
+                    <div>
+                        <span style="position:absolute; left:25px; top:270px">@Model.FirstPayeeName &nbsp; @Model.SecondPayeeName</span>
+                        <span style="position:absolute; left:25px; top:325px">@Model.PayeeMailingAddress</span>
+                        <span style="position:absolute; left:25px; top:400px">@Model.PayeeCity, @Model.PayeeState, @Model.PayeeZipCode</span>
+                    </div>
+                    <div>
+                        <span style="position:absolute; left:25px; top:440px">@string.Format("{0} {1}", Model.Merchant.Payer.Transmitter.CompanyName, Model.Merchant.Payer.Transmitter.CompanyNameContinued)  </span>
+                        <span style="position:absolute; left:25px; top:460px">@Model.Merchant.Payer.Transmitter.ContactTelephoneNumber </span>
+                        <span style="position:absolute; left:25px; top:500px">@Model.AccountNumber</span>
+                        @{
+                            if (@Model.SecondTINNoticed != null)
+                            {
+                                <span style="position:absolute; left:350px; top:500px"><b>x</b></span>
+                            }
+
+
+                        }
+
+
+                    </div>
+                    <div>
+                        <span style="position:absolute; left:410px; top:195px;text-align:right;width:120px;">@Model.CNPTransactionAmount</span>
+                        <span style="position:absolute; left:550px; top:195px">@Model.MerchantCategoryCode</span>
+                        <span style="position:absolute; left:410px; top:235px;text-align:right;width:120px;">@Model.TransactionCount</span>
+                        <span style="position:absolute; left:560px; top:240px;text-align:right;width:120px;">@Model.FederalWithHoldingAmount</span>
+                        <span style="position:absolute; left:410px; top:278px;text-align:right;width:120px;">@Model.JanuaryAmount</span>
+                        <span style="position:absolute; left:560px; top:278px;text-align:right;width:120px;">@Model.FebruaryAmount</span>
+                        <span style="position:absolute; left:410px; top:312px;text-align:right;width:120px;">@Model.MarchAmount</span>
+                        <span style="position:absolute; left:560px; top:312px;text-align:right;width:120px;">@Model.AprilAmount</span>
+                        <span style="position:absolute; left:410px; top:350px;text-align:right;width:120px;">@Model.MayAmount</span>
+                        <span style="position:absolute; left:560px; top:350px;text-align:right;width:120px;">@Model.JuneAmount</span>
+                        <span style="position:absolute; left:410px; top:387px;text-align:right;width:120px;">@Model.JulyAmount</span>
+                        <span style="position:absolute; left:560px; top:387px;text-align:right;width:120px;">@Model.AugustAmount</span>
+                        <span style="position:absolute; left:410px; top:425px;text-align:right;width:120px;">@Model.SeptemberAmount</span>
+                        <span style="position:absolute; left:560px; top:425px;text-align:right;width:120px;">@Model.OctoberAmount</span>
+                        <span style="position:absolute; left:410px; top:460px;text-align:right;width:120px;">@Model.NovemberAmount</span>
+                        <span style="position:absolute; left:560px; top:460px;text-align:right;width:120px;">@Model.DecemberAmount</span>
+                    </div>
+
+                    <div>
+                        <span style="position:absolute; left:410px; top:490px">@Model.PayeeState</span>
+                        <span style="position:absolute; left:560px; top:490px">  </span>
+                        <span style="position:absolute; left:715px; top:497px">@Model.StateWithHolding</span>
+                        <span style="color:black ;font-family:Arial Black;font-size:29px;font-weight:bold; position:absolute; left:516px; top:76px;text-align:right;width:120px;">@((Model.ImportSummary.PaymentYear + 1) % 100)</span>
+                    </div>
+
+                </div>
+                <br />
+                <br />
+                <div class="copy-c-extra"></div>
+            </div>
+            <br />
+        </div>
+
+        
+    </div>
+</div>
+
+<script>
+    var app = angular.module("tabPanel", []);
+    app.controller("tabPanelCtrl", function ($scope) {
+        var self = this;
+        self.tabSelected = "#copy-a";
+        $scope.tabChange = function (e) {
+            if (e.target.nodeName === 'A') {
+                self.tabSelected = e.target.getAttribute("href");
+                e.preventDefault();
+            }
+        }
+    })
+</script>

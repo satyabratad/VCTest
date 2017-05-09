@@ -1,0 +1,1836 @@
+﻿[
+
+  {
+    "RecordType": "T",
+    "Fields": [
+      {
+        "Name": "Record Type",
+        "Position": "1",
+        "Length": 1,
+        "Default": "T",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left",
+        "Table": ""
+      },
+      {
+        "Name": "Payment Year",
+        "Position": "2-5",
+        "Length": 4,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "PaymentYear",
+        "Alignment": "Left",
+        "Table": "ImportSummaries"
+      },
+      {
+        "Name": "Prior Year Data Indicator",
+        "Position": "6",
+        "Length": 1,
+        "Default": " ",
+        "Alternate": "P",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left",
+        "Table": ""
+      },
+      {
+        "Name": "Transmitter’s TIN",
+        "Position": "7-15",
+        "Length": 9,
+        "Default": "471471912",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "TransmitterTIN",
+        "Alignment": "Left",
+        "Table": "TransmitterDetails"
+      },
+      {
+        "Name": "Transmitter Control Code",
+        "Position": "16-20",
+        "Length": 5,
+        "Default": "90T19",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "TransmitterControlCode",
+        "Alignment": "Left",
+        "Table": "TransmitterDetails"
+      },
+      {
+        "Name": "Blank",
+        "Position": "21-27",
+        "Length": 7,
+        "Default": "       ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left",
+        "Table": ""
+      },
+      {
+        "Name": "Test File Indicator",
+        "Position": "28",
+        "Length": 1,
+        "Default": "T",
+        "Alternate": " ",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left",
+        "Table": ""
+      },
+      {
+        "Name": "Foreign Entity Indicator",
+        "Position": "29",
+        "Length": 1,
+        "Default": " ",
+        "Alternate": "1",
+        "Type": "Alphanumeric",
+        "Data": "TransmitterForeignEntityIndicator",
+        "Alignment": "Left",
+        "Table": "TransmitterDetails"
+      },
+      {
+        "Name": "Transmitter Name",
+        "Position": "30-69",
+        "Length": 40,
+        "Default": "Bill2Pay, LLC",
+        "Alternate": " ",
+        "Type": "Alphanumeric",
+        "Data": "TransmitterName",
+        "Alignment": "Left",
+        "Table": "TransmitterDetails"
+      },
+      {
+        "Name": "Transmitter Name (Continuation)",
+        "Position": "70-109",
+        "Length": 40,
+        "Default": " ",
+        "Alternate": " ",
+        "Type": "Alphanumeric",
+        "Data": "TransmitterNameContinued",
+        "Alignment": "Left",
+        "Table": "TransmitterDetails"
+      },
+      {
+        "Name": "Company Name",
+        "Position": "110-149",
+        "Length": 40,
+        "Default": "Bill2Pay, LLC",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "CompanyName",
+        "Alignment": "Left",
+        "Table": "TransmitterDetails"
+      },
+      {
+        "Name": "Company Name (Continuation)",
+        "Position": "150-189",
+        "Length": 40,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "CompanyNameContinued",
+        "Alignment": "Left",
+        "Table": "TransmitterDetails"
+      },
+      {
+        "Name": "Company Mailing Address",
+        "Position": "190-229",
+        "Length": 40,
+        "Default": "9428 Baymeadows Road, #600",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "CompanyMailingAddress",
+        "Alignment": "Left",
+        "Table": "TransmitterDetails"
+      },
+      {
+        "Name": "Company City",
+        "Position": "230-269",
+        "Length": 40,
+        "Default": "Jacksonville",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "CompanyCity",
+        "Alignment": "Left",
+        "Table": "TransmitterDetails"
+      },
+      {
+        "Name": "Company State",
+        "Position": "270-271",
+        "Length": 2,
+        "Default": "FL",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "CompanyState",
+        "Alignment": "Left",
+        "Table": "TransmitterDetails"
+      },
+      {
+        "Name": "Company ZIP Code",
+        "Position": "272-280",
+        "Length": 9,
+        "Default": "111111111",
+        "Alternate": " ",
+        "Type": "Alphanumeric",
+        "Data": "CompanyZIP",
+        "Alignment": "Left",
+        "Table": "TransmitterDetails"
+      },
+      {
+        "Name": "Blank",
+        "Position": "281-295",
+        "Length": 15,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left",
+        "Table": "TransmitterDetails"
+      },
+      {
+        "Name": "Total Number of Payees",
+        "Position": "296-303",
+        "Length": 8,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right",
+        "Table": ""
+      },
+      {
+        "Name": "Contact Name",
+        "Position": "304-343",
+        "Length": 40,
+        "Default": "Contact Name",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "ContactName",
+        "Alignment": "Left",
+        "Table": "TransmitterDetails"
+      },
+      {
+        "Name": "Contact Telephone Number & Extension",
+        "Position": "344-358",
+        "Length": 15,
+        "Default": "123456789098765",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "ContactTelephoneNumber",
+        "Alignment": "Left",
+        "Table": "TransmitterDetails"
+      },
+      {
+        "Name": "Contact Email Address",
+        "Position": "359-408",
+        "Length": 50,
+        "Default": "test@test.com",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "ContactEmailAddress",
+        "Alignment": "Left",
+        "Table": "TransmitterDetails"
+      },
+      {
+        "Name": "Blank",
+        "Position": "409-499",
+        "Length": 91,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left",
+        "Table": ""
+      },
+      {
+        "Name": "Record Sequence Number",
+        "Position": "500-507",
+        "Length": 8,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right",
+        "Table": ""
+      },
+      {
+        "Name": "Blank",
+        "Position": "508-517",
+        "Length": 10,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left",
+        "Table": ""
+      },
+      {
+        "Name": "Vendor Indicator",
+        "Position": "518",
+        "Length": 1,
+        "Default": "I",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "VendorIndicator",
+        "Alignment": "Left",
+        "Table": "TransmitterDetails"
+      },
+      {
+        "Name": "Vendor Name",
+        "Position": "519-558",
+        "Length": 40,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "VendorName",
+        "Alignment": "Left",
+        "Table": "TransmitterDetails"
+      },
+      {
+        "Name": "Vendor Mailing Address",
+        "Position": "559-598",
+        "Length": 40,
+        "Default": " ",
+        "Alternate": " ",
+        "Type": "Alphanumeric",
+        "Data": "VendorMailingAddress",
+        "Alignment": "Left",
+        "Table": "TransmitterDetails"
+      },
+      {
+        "Name": "Vendor City",
+        "Position": "599-638",
+        "Length": 40,
+        "Default": " ",
+        "Alternate": " ",
+        "Type": "Alphanumeric",
+        "Data": "VendorCity",
+        "Alignment": "Left",
+        "Table": "TransmitterDetails"
+      },
+      {
+        "Name": "Vendor State",
+        "Position": "639-640",
+        "Length": 2,
+        "Default": " ",
+        "Alternate": " ",
+        "Type": "Alphanumeric",
+        "Data": "VendorState",
+        "Alignment": "Left",
+        "Table": "TransmitterDetails"
+      },
+      {
+        "Name": "Vendor ZIP Code",
+        "Position": "641-649",
+        "Length": 9,
+        "Default": " ",
+        "Alternate": " ",
+        "Type": "Alphanumeric",
+        "Data": "VendorZIP",
+        "Alignment": "Left",
+        "Table": "TransmitterDetails"
+      },
+      {
+        "Name": "Vendor Contact Name",
+        "Position": "650-689",
+        "Length": 40,
+        "Default": " ",
+        "Alternate": " ",
+        "Type": "Alphanumeric",
+        "Data": "VendorContactName",
+        "Alignment": "Left",
+        "Table": "TransmitterDetails"
+      },
+      {
+        "Name": "Vendor Contact Telephone Number & Extension",
+        "Position": "690-704",
+        "Length": 15,
+        "Default": " ",
+        "Alternate": " ",
+        "Type": "Alphanumeric",
+        "Data": "VendorContactTelephoneNumber",
+        "Alignment": "Left",
+        "Table": "TransmitterDetails"
+      },
+      {
+        "Name": "Blank",
+        "Position": "705-739",
+        "Length": 35,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left",
+        "Table": ""
+      },
+      {
+        "Name": "Vendor Foreign Entity Indicator",
+        "Position": "740",
+        "Length": 1,
+        "Default": " ",
+        "Alternate": " ",
+        "Type": "Alphanumeric",
+        "Data": "VendorForeignEntityIndicator",
+        "Alignment": "Left",
+        "Table": "TransmitterDetails"
+      },
+      {
+        "Name": "Blank",
+        "Position": "741-748",
+        "Length": 8,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left",
+        "Table": ""
+      },
+      {
+        "Name": "Blank",
+        "Position": "749-750",
+        "Length": 2,
+        "Default": "\n",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left",
+        "Table": ""
+      }
+    ]
+  },
+  {
+    "RecordType": "A",
+    "Fields": [
+      {
+        "Name": "Record Type",
+        "Position": "1",
+        "Length": 1,
+        "Default": "A",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left",
+        "Table": ""
+      },
+      {
+        "Name": "Payment Year",
+        "Position": "2-5",
+        "Length": 4,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "PaymentYear",
+        "Alignment": "Left",
+        "Table": "ImportSummaries"
+      },
+      {
+        "Name": "Combined Federal/State Filing Program",
+        "Position": "6",
+        "Length": 1,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "CFSF",
+        "Alignment": "Left",
+        "Table": "PayerDetails"
+      },
+      {
+        "Name": "Blank",
+        "Position": "7-11",
+        "Length": 5,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left",
+        "Table": "PayerDetails"
+      },
+      {
+        "Name": "Payer’s Taxpayer Identification Number (TIN)",
+        "Position": "12-20",
+        "Length": 9,
+        "Default": "471471912",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "PayerTIN",
+        "Alignment": "Left",
+        "Table": "PayerDetails"
+      },
+      {
+        "Name": "Payer Name Control",
+        "Position": "21-24",
+        "Length": 4,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "PayerNameControl",
+        "Alignment": "Left",
+        "Table": "PayerDetails"
+      },
+      {
+        "Name": "Last Filing Indicator",
+        "Position": "25",
+        "Length": 1,
+        "Default": " ",
+        "Alternate": "1",
+        "Type": "Alphanumeric",
+        "Data": "LastFilingIndicator",
+        "Alignment": "Left",
+        "Table": "PayerDetails"
+      },
+      {
+        "Name": "Type of Return",
+        "Position": "26-27",
+        "Length": 2,
+        "Default": "MC",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "ReturnType",
+        "Alignment": "Left",
+        "Table": "PayerDetails"
+      },
+      {
+        "Name": "Amount Codes",
+        "Position": "28-43",
+        "Length": 16,
+        "Default": "12456789ABCDEFG",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "AmountCodes",
+        "Alignment": "Left",
+        "Table": "PayerDetails"
+      },
+      {
+        "Name": "Blank",
+        "Position": "44-51",
+        "Length": 8,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left",
+        "Table": ""
+      },
+      {
+        "Name": "Foreign Entity Indicator",
+        "Position": "52",
+        "Length": 1,
+        "Default": " ",
+        "Alternate": "1",
+        "Type": "Alphanumeric",
+        "Data": "PayerForeignEntityIndicator",
+        "Alignment": "Left",
+        "Table": "PayerDetails"
+      },
+      {
+        "Name": "First Payer Name Line",
+        "Position": "53-92",
+        "Length": 40,
+        "Default": "Bill2Pay, LLC",
+        "Alternate": " ",
+        "Type": "Alphanumeric",
+        "Data": "FirstPayerName",
+        "Alignment": "Left",
+        "Table": "PayerDetails"
+      },
+      {
+        "Name": "Second Payer Name Line",
+        "Position": "93-132",
+        "Length": 40,
+        "Default": " ",
+        "Alternate": " ",
+        "Type": "Alphanumeric",
+        "Data": "SecondPayerName",
+        "Alignment": "Left",
+        "Table": "PayerDetails"
+      },
+      {
+        "Name": "Transfer Agent Indicator",
+        "Position": "133",
+        "Length": 1,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "TransferAgentIndicator",
+        "Alignment": "Left",
+        "Table": "PayerDetails"
+      },
+      {
+        "Name": "Payer Shipping Address",
+        "Position": "134-173",
+        "Length": 40,
+        "Default": "9428 Baymeadows Road, #600",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "PayerShippingAddress",
+        "Alignment": "Left",
+        "Table": "PayerDetails"
+      },
+      {
+        "Name": "Payer City",
+        "Position": "174-213",
+        "Length": 40,
+        "Default": "Jacksonville",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "PayerCity",
+        "Alignment": "Left",
+        "Table": "PayerDetails"
+      },
+      {
+        "Name": "Payer State",
+        "Position": "214-215",
+        "Length": 2,
+        "Default": "FL",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "PayerState",
+        "Alignment": "Left",
+        "Table": "PayerDetails"
+      },
+      {
+        "Name": "Payer ZIP Code",
+        "Position": "216-224",
+        "Length": 9,
+        "Default": "999999999",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "PayerZIP",
+        "Alignment": "Left",
+        "Table": "PayerDetails"
+      },
+      {
+        "Name": "Payer’s Telephone Number and Extension",
+        "Position": "225-239",
+        "Length": 15,
+        "Default": "9044214100",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "PayerTelephoneNumber",
+        "Alignment": "Left",
+        "Table": "PayerDetails"
+      },
+      {
+        "Name": "Blank",
+        "Position": "240-499",
+        "Length": 260,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left",
+        "Table": ""
+      },
+      {
+        "Name": "Record Sequence Number",
+        "Position": "500-507",
+        "Length": 8,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right",
+        "Table": ""
+      },
+      {
+        "Name": "Blank",
+        "Position": "508-748",
+        "Length": 241,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left",
+        "Table": ""
+      },
+      {
+        "Name": "Blank",
+        "Position": "749-750",
+        "Length": 2,
+        "Default": "\n",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left",
+        "Table": ""
+      }
+    ]
+  },
+  {
+    "RecordType": "B",
+    "Fields": [
+      {
+        "Name": "Record Type",
+        "Position": "1",
+        "Length": 1,
+        "Default": "B",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left",
+        "Table" : ""
+      },
+      {
+        "Name": "Payment Year",
+        "Position": "2-5",
+        "Length": 4,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "PaymentYear",
+        "Alignment": "Left",
+        "Table" : "ImportSummaries"
+      },
+      {
+        "Name": "Corrected Return Indicator",
+        "Position": "6",
+        "Length": 1,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left",
+        "Table" : ""
+      },
+      {
+        "Name": "Name Control",
+        "Position": "7-10",
+        "Length": 4,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "NameControl",
+        "Alignment": "Left",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Type of TIN",
+        "Position": "11",
+        "Length": 1,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "TINType",
+        "Alignment": "Left",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Payee’s Taxpayer Identification Number (TIN)",
+        "Position": "12-20",
+        "Length": 9,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "TIN",
+        "Alignment": "Left",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Payer’s Account Number For Payee",
+        "Position": "21-40",
+        "Length": 20,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "AccountNumber",
+        "Alignment": "Right",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Payer’s Office Code",
+        "Position": "41-44",
+        "Length": 4,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "PayerOfficeCode",
+        "Alignment": "Left",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Blank",
+        "Position": "45-54",
+        "Length": 10,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left",
+        "Table" : ""
+      },
+      {
+        "Name": "Payment Amount 1",
+        "Position": "55-66",
+        "Length": 12,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "GrossAmount",
+        "Alignment": "Right",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Payment Amount 2",
+        "Position": "67-78",
+        "Length": 12,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "CNPTransactionAmount",
+        "Alignment": "Right",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Payment Amount 3",
+        "Position": "79-90",
+        "Length": 12,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "AlphaNumeric",
+        "Data": "",
+        "Alignment": "Right",
+        "Table" : "ImportDetails"
+      },
+
+      {
+        "Name": "Payment Amount 4",
+        "Position": "79-90",
+        "Length": 12,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "FederalWithHoldingAmount",
+        "Alignment": "Right",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Payment Amount 5",
+        "Position": "91-102",
+        "Length": 12,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "JanuaryAmount",
+        "Alignment": "Right",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Payment Amount 6",
+        "Position": "103-114",
+        "Length": 12,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "FebruaryAmount",
+        "Alignment": "Right",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Payment Amount 7",
+        "Position": "115-126",
+        "Length": 12,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "MarchAmount",
+        "Alignment": "Right",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Payment Amount 8",
+        "Position": "127-138",
+        "Length": 12,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "AprilAmount",
+        "Alignment": "Right",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Payment Amount 9",
+        "Position": "139-150",
+        "Length": 12,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "MayAmount",
+        "Alignment": "Right",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Payment Amount A",
+        "Position": "151-162",
+        "Length": 12,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "JuneAmount",
+        "Alignment": "Right",
+        "Table": "ImportDetails"
+      },
+      {
+        "Name": "Payment Amount B",
+        "Position": "163-174",
+        "Length": 12,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "JulyAmount",
+        "Alignment": "Right",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Payment Amount C",
+        "Position": "175-186",
+        "Length": 12,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "AugustAmount",
+        "Alignment": "Right",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Payment Amount D",
+        "Position": "187-198",
+        "Length": 12,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "SeptemberAmount",
+        "Alignment": "Right",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Payment Amount E",
+        "Position": "199-210",
+        "Length": 12,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "OctoberAmount",
+        "Alignment": "Right",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Payment Amount F",
+        "Position": "211-222",
+        "Length": 12,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "NovemberAmount",
+        "Alignment": "Right",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Payment Amount G",
+        "Position": "223-234",
+        "Length": 12,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "DecemberAmount",
+        "Alignment": "Right",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Foreign Country Indicator",
+        "Position": "247",
+        "Length": 1,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "ForeignCountryIndicator",
+        "Alignment": "Left",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "First Payee Name Line",
+        "Position": "248-287",
+        "Length": 40,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "FirstPayeeName",
+        "Alignment": "Left",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Second Payee Name Line",
+        "Position": "288-327",
+        "Length": 40,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "SecondPayeeName",
+        "Alignment": "Left",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Blank",
+        "Position": "328-367",
+        "Length": 40,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left",
+        "Table" : ""
+      },
+      {
+        "Name": "Payee Mailing Address",
+        "Position": "368-407",
+        "Length": 40,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "PayeeMailingAddress",
+        "Alignment": "Left",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Blank",
+        "Position": "408-447",
+        "Length": 40,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left",
+        "Table" : ""
+      },
+      {
+        "Name": "Payee City",
+        "Position": "448-487",
+        "Length": 40,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "PayeeCity",
+        "Alignment": "Left",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Payee State",
+        "Position": "488-489",
+        "Length": 2,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "PayeeState",
+        "Alignment": "Left",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Payee ZIP Code",
+        "Position": "490-498",
+        "Length": 9,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "PayeeZipCode",
+        "Alignment": "Left",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Blank",
+        "Position": "499",
+        "Length": 1,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left",
+        "Table" : ""
+      },
+      {
+        "Name": "Record Sequence Number",
+        "Position": "500-507",
+        "Length": 8,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right",
+        "Table" : ""
+      },
+      {
+        "Name": "Blank",
+        "Position": "508-543",
+        "Length": 36,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left",
+        "Table" : ""
+      },
+      {
+        "Name": "Second TIN Notice (Optional)",
+        "Position": "544",
+        "Length": 1,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "SecondTINNoticed",
+        "Alignment": "Left",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Blank",
+        "Position": "545-546",
+        "Length": 2,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left",
+        "Table" : ""
+      },
+      {
+        "Name": "Type of Filer Indicator",
+        "Position": "547",
+        "Length": 1,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "FillerIndicatorType",
+        "Alignment": "Left",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Type of Payment Indicator",
+        "Position": "548",
+        "Length": 1,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "PaymentIndicatorType",
+        "Alignment": "Left",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Number of Payment  Transactions",
+        "Position": "549-561",
+        "Length": 13,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "TransactionCount",
+        "Alignment": "Right",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Blank",
+        "Position": "562-564",
+        "Length": 3,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left",
+        "Table" : ""
+      },
+      {
+        "Name": "Payment Settlement Entity’s Name and Phone Number",
+        "Position": "565-604",
+        "Length": 40,
+        "Default": "Bill2Pay, LLC. 904.421.4100",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Merchant Category Code (MCC)",
+        "Position": "605-608",
+        "Length": 4,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "MerchantCategoryCode",
+        "Alignment": "Right",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Blank",
+        "Position": "609-662",
+        "Length": 54,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left",
+        "Table" : ""
+      },
+      {
+        "Name": "Special Data Entries",
+        "Position": "663-722",
+        "Length": 60,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "SpecialDataEntry",
+        "Alignment": "Left",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "State Income Tax Withheld",
+        "Position": "723-734",
+        "Length": 12,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "StateWithHolding",
+        "Alignment": "Right",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Local Income Tax Withheld",
+        "Position": "735-746",
+        "Length": 12,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "LocalWithHolding",
+        "Alignment": "Right",
+        "Table" : "ImportDetails"
+      },
+      {
+        "Name": "Combined Federal/State Code",
+        "Position": "747-748",
+        "Length": 2,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left",
+        "Table" : ""
+      },
+      {
+        "Name": "Blank",
+        "Position": "749-750",
+        "Length": 2,
+        "Default": "\n",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left",
+        "Table" : ""
+      }
+
+    ]
+  },
+  {
+    "RecordType": "C",
+    "Fields": [
+      {
+        "Name": "Record Type",
+        "Position": "1",
+        "Length": 1,
+        "Default": "C",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left"
+      },
+      {
+        "Name": "Number of Payees",
+        "Position": "2-9",
+        "Length": 8,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Blank",
+        "Position": "10-15",
+        "Length": 6,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left"
+      },
+      {
+        "Name": "Control Total 1",
+        "Position": "16-33",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Control Total 2",
+        "Position": "34-51",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Control Total 3",
+        "Position": "34-51",
+        "Length": 18,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "AlphaNumeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Control Total 4",
+        "Position": "70-87",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Control Total 5",
+        "Position": "88-105",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Control Total 6",
+        "Position": "106-123",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Control Total 7",
+        "Position": "124-141",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Control Total 8",
+        "Position": "142-159",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Control Total 9",
+        "Position": "160-177",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Control Total A",
+        "Position": "178-195",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Control Total B",
+        "Position": "196-213",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Control Total C",
+        "Position": "214-231",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Control Total D",
+        "Position": "232-249",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Control Total E",
+        "Position": "250-267",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Control Total F",
+        "Position": "268-285",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Control Total G",
+        "Position": "286-303",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Blank",
+        "Position": "304-499",
+        "Length": 196,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left"
+      },
+      {
+        "Name": "Record Sequence Number",
+        "Position": "500-507",
+        "Length": 8,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Blank",
+        "Position": "508-748",
+        "Length": 241,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left"
+      },
+      {
+        "Name": "Blank",
+        "Position": "749-750",
+        "Length": 2,
+        "Default": "\n",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left"
+      }
+    ]
+  },
+  {
+    "RecordType": "K",
+    "Fields": [
+      {
+        "Name": "Record Type",
+        "Position": "1",
+        "Length": 1,
+        "Default": "K",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left"
+      },
+      {
+        "Name": "Number of Payees",
+        "Position": "2-9",
+        "Length": 8,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Blank",
+        "Position": "10-15",
+        "Length": 6,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left"
+      },
+      {
+        "Name": "Control Total 1",
+        "Position": "16-33",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Control Total 2",
+        "Position": "34-51",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Control Total 3",
+        "Position": "34-51",
+        "Length": 18,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "AlphaNumeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Control Total 4",
+        "Position": "70-87",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Control Total 5",
+        "Position": "88-105",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Control Total 6",
+        "Position": "106-123",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Control Total 7",
+        "Position": "124-141",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Control Total 8",
+        "Position": "142-159",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Control Total 9",
+        "Position": "160-177",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Control Total A",
+        "Position": "178-195",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Control Total B",
+        "Position": "196-213",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Control Total C",
+        "Position": "214-231",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Control Total D",
+        "Position": "232-249",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Control Total E",
+        "Position": "250-267",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Control Total F",
+        "Position": "268-285",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Control Total G",
+        "Position": "286-303",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Blank",
+        "Position": "304-499",
+        "Length": 196,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left"
+      },
+      {
+        "Name": "Record Sequence Number",
+        "Position": "500-507",
+        "Length": 8,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Blank",
+        "Position": "508-706",
+        "Length": 199,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left"
+      },
+      {
+        "Name": "State Income Tax Withheld Total",
+        "Position": "707-724",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Local Income Tax Withheld Total",
+        "Position": "725-742",
+        "Length": 18,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Blank",
+        "Position": "743-746",
+        "Length": 4,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left"
+      },
+      {
+        "Name": "Combined Federal/State Code",
+        "Position": "747-748",
+        "Length": 2,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left"
+      },
+      {
+        "Name": "Blank",
+        "Position": "749-750",
+        "Length": 2,
+        "Default": "\n",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left"
+      }
+    ]
+  },
+  {
+    "RecordType": "F",
+    "Fields": [
+      {
+        "Name": "Record Type",
+        "Position": "1",
+        "Length": 1,
+        "Default": "F",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left"
+      },
+      {
+        "Name": "Number of “A” Records",
+        "Position": "2-9",
+        "Length": 8,
+        "Default": "",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Zero",
+        "Position": "10-30",
+        "Length": 21,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Blank",
+        "Position": "50-57",
+        "Length": 19,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left"
+      },
+      {
+        "Name": "Total Number of Payees",
+        "Position": "50-57",
+        "Length": 8,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Blank",
+        "Position": "58-499",
+        "Length": 442,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left"
+      },
+      {
+        "Name": "Record Sequence Number",
+        "Position": "500-507",
+        "Length": 8,
+        "Default": "0",
+        "Alternate": "",
+        "Type": "Numeric",
+        "Data": "",
+        "Alignment": "Right"
+      },
+      {
+        "Name": "Blank",
+        "Position": "508-748",
+        "Length": 241,
+        "Default": " ",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left"
+      },
+      {
+        "Name": "Blank",
+        "Position": "749-750",
+        "Length": 2,
+        "Default": "\n",
+        "Alternate": "",
+        "Type": "Alphanumeric",
+        "Data": "",
+        "Alignment": "Left"
+      }
+    ]
+  }
+
+]
