@@ -149,7 +149,7 @@ Namespace B2P.PaymentLanding.Express.Web
                                     BLL.SessionManager.BlockedACH = False
                                 End If
 
-                                lblLookupHeader.Text = "Account found. Please see information below."
+                                lblLookupHeader.Text = "Account found. Please verify the information below."
                                 divLookupAlert.Attributes.Add("class", "alert alert-success")
                                 BLL.SessionManager.LookupAmount = y.AmountDue
                                 ctlPropertyAddress.Amount = y.AmountDue
@@ -167,7 +167,7 @@ Namespace B2P.PaymentLanding.Express.Web
 
                             Case B2P.ClientInterface.Manager.ClientInterfaceWS.PaymentStatusCodes.NotAllowed
                                 divLookupAlert.Visible = True
-                                lblLookupHeader.Text = "Account found. Please see information below."
+                                lblLookupHeader.Text = "Account found. Please verify the information below."
                                 divLookupAlert.Attributes.Add("class", "alert alert-success")
                                 lblLookupHeader.Text = y.ClientMessage
                                 grdLookup.DataSource = y.SupplementalInformation.ClientInfo
@@ -212,7 +212,7 @@ Namespace B2P.PaymentLanding.Express.Web
                                     BLL.SessionManager.BlockedCC = False
                                     BLL.SessionManager.BlockedACH = False
                                 End If
-                                lblLookupHeader.Text = "Account found. Please see information below."
+                                lblLookupHeader.Text = "Account found. Please verify the information below."
                                 divLookupAlert.Attributes.Add("class", "alert alert-success")
                                 BLL.SessionManager.LookupAmount = y.AmountDue
                                 BLL.SessionManager.LookupAmountMinimum = True
@@ -259,7 +259,7 @@ Namespace B2P.PaymentLanding.Express.Web
                                     BLL.SessionManager.BlockedCC = False
                                     BLL.SessionManager.BlockedACH = False
                                 End If
-                                lblLookupHeader.Text = "Account found. Please see information below."
+                                lblLookupHeader.Text = "Account found. Please verify the information below."
                                 divLookupAlert.Attributes.Add("class", "alert alert-success")
                                 BLL.SessionManager.LookupAmountEditable = False
                                 BLL.SessionManager.LookupAmount = y.AmountDue
@@ -617,6 +617,7 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected Sub btnAddMoreItem_Click(sender As Object, e As EventArgs) Handles btnAddMoreItem.Click
             BLL.SessionManager.ManageCart.ShowCart = False
             BLL.SessionManager.ManageCart.EditItemIndex = -1
+
 
             Response.Redirect("~/pay/")
         End Sub
