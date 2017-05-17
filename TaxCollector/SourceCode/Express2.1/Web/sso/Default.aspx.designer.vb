@@ -96,6 +96,15 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected WithEvents pnlCart As Global.System.Web.UI.WebControls.Panel
         
         '''<summary>
+        '''pnlCartGrid control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents pnlCartGrid As Global.System.Web.UI.WebControls.Panel
+        
+        '''<summary>
         '''ctlCartGrid control.
         '''</summary>
         '''<remarks>
@@ -112,6 +121,24 @@ Namespace B2P.PaymentLanding.Express.Web
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents btnSubmit As Global.System.Web.UI.WebControls.Button
+        
+        '''<summary>
+        '''pnlCartEmpty control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents pnlCartEmpty As Global.System.Web.UI.WebControls.Panel
+        
+        '''<summary>
+        '''lilEmptyMsg control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents lilEmptyMsg As Global.System.Web.UI.WebControls.Literal
         
         '''<summary>
         '''pnlEdit control.

@@ -148,8 +148,12 @@ Namespace B2P.PaymentLanding.Express.Web
                 'Else
                 '    BLL.SessionManager.ClientType = B2P.Cart.EClientType.NonLookup
                 'End If
-
-                ctlCartGrid.PopulateGrid("ctlCartGrid")
+                If BLL.SessionManager.ManageCart.CartCount > 0 Then
+                    ctlCartGrid.PopulateGrid("ctlCartGrid")
+                ElseIf BLL.SessionManager.ManageCart.CartCount = 0 Then
+                    pnlCartGrid.Visible = False
+                    pnlCartEmpty.Visible = True
+                End If
             End If
         End Sub
         Private Sub btnSubmit_Click(sender As Object, e As EventArgs) Handles btnSubmit.Click
