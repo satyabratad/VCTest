@@ -584,4 +584,13 @@
     <value>Payment not allowed. Please contact customer service for details.</value>
     <comment>when payment with Credit Card or bank is not allowed</comment>
   </data>
+  <data name="lblEmptyCartMsg" xml:space="preserve">
+    <value>Your shopping cart is empty</value>
+  </data>
+  <data name="ButtonAddItems" xml:space="preserve">
+    <value>Add Items</value>
+  </data>
+  <data name="lblSsoEmptyCartMsg" xml:space="preserve">
+    <value>Your shopping cart is empty. Please contact customer service for details.</value>
+  </data>
 </root>

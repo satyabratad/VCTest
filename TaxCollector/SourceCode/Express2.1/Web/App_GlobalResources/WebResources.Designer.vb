@@ -164,6 +164,15 @@ Namespace Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Add Items.
+        '''</summary>
+        Friend Shared ReadOnly Property ButtonAddItems() As String
+            Get
+                Return ResourceManager.GetString("ButtonAddItems", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Continue.
         '''</summary>
         Friend Shared ReadOnly Property ButtonAddToCartContinue() As String
@@ -1064,6 +1073,15 @@ Namespace Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Your shopping cart is empty.
+        '''</summary>
+        Friend Shared ReadOnly Property lblEmptyCartMsg() As String
+            Get
+                Return ResourceManager.GetString("lblEmptyCartMsg", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Expiration Date.
         '''</summary>
         Friend Shared ReadOnly Property lblExpirationDate() As String
@@ -1213,6 +1231,15 @@ Namespace Resources
         Friend Shared ReadOnly Property LblServiceAddressText() As String
             Get
                 Return ResourceManager.GetString("LblServiceAddressText", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Your shopping cart is empty. Please contact customer service for details..
+        '''</summary>
+        Friend Shared ReadOnly Property lblSsoEmptyCartMsg() As String
+            Get
+                Return ResourceManager.GetString("lblSsoEmptyCartMsg", resourceCulture)
             End Get
         End Property
         
