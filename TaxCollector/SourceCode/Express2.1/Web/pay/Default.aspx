@@ -147,12 +147,24 @@
                                 </asp:Panel>
                                 <asp:Panel ID="pnlCart" runat="server" Visible="false">
                                     <div class="col-xs-12 col-sm-12">
-                                        <b2p:CartGrid runat="server" ID="ctlCartGrid" />
-                                        <br />
-                                        <div class="pull-right">
-                                            <asp:Button ID="btnAddMoreItem" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, AddMoreItemsButton %>" ToolTip="<%$ Resources:WebResources, AddMoreItemsButton %>" runat="server" />
-                                            <asp:Button ID="btnSubmit" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, ButtonContinue %>" ToolTip="<%$ Resources:WebResources, ButtonContinue %>" runat="server" />
-                                        </div>
+                                        <asp:Panel ID="pnlCartGrid" runat="server" Visible="true">
+                                            <b2p:CartGrid runat="server" ID="ctlCartGrid" />
+                                            <br />
+                                            <div class="pull-right">
+                                                <asp:Button ID="btnAddMoreItem" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, AddMoreItemsButton %>" ToolTip="<%$ Resources:WebResources, AddMoreItemsButton %>" runat="server" />
+                                                <asp:Button ID="btnSubmit" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, ButtonContinue %>" ToolTip="<%$ Resources:WebResources, ButtonContinue %>" runat="server" />
+                                            </div>
+                                        </asp:Panel>
+                                        <asp:Panel ID="pnlCartEmpty" runat="server" Visible="false">
+                                            <div class="col-xs-12  bg-primarydark" style="text-align:center">
+                                            
+                                                <asp:Literal ID="lilEmptyMsg" runat="server"  Text="<%$ Resources:WebResources, lblEmptyCartMsg %>" />
+                                            </div> 
+                                            <br /><br />
+                                            <div class="pull-right">
+                                                <asp:Button ID="btnAddItem" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, ButtonAddItems %>" ToolTip="<%$ Resources:WebResources, ButtonAddItems %>" runat="server" />
+                                            </div>
+                                        </asp:Panel>
                                     </div>
                                 </asp:Panel>
                                 <asp:Panel runat="server" ID="pnlEditLookupItem">
@@ -315,6 +327,13 @@
 
         <script type="text/javascript">
 
+            $(document).ready(function () {                
+                $('#pnlLookupResults').keydown(function (event) {
+                    if ((event.keyCode == 13)) {
+                           return false;
+                    }
+                });
+            });
             function validateForm() {
                
                 var doc = document;

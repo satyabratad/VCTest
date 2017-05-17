@@ -10,10 +10,10 @@ Public Class ShoppingCart
     End Sub
 
     Protected Sub btnCart_Click(sender As Object, e As EventArgs) Handles btnCart.Click
-        If BLL.SessionManager.ManageCart.CartCount > 0 Then
+        'If BLL.SessionManager.ManageCart.CartCount > 0 Then
 
 
-            BLL.SessionManager.ManageCart.ShowCart = True
+        BLL.SessionManager.ManageCart.ShowCart = True
             BLL.SessionManager.ManageCart.EditItemIndex = -1
 
             If BLL.SessionManager.ClientType = B2P.Cart.EClientType.SSO Then
@@ -21,7 +21,7 @@ Public Class ShoppingCart
             Else
                 Response.Redirect("~/pay/")
             End If
-        End If
+        'End If
     End Sub
 #End Region
 

@@ -419,17 +419,22 @@ Namespace B2P.PaymentLanding.Express.Web
 
                 If BLL.SessionManager.ManageCart.ShowCart = True Then
                     pnlCart.Visible = True
-                    pnlContent.Visible = False
-                    pnlEditLookupItem.Visible = False
-                    If z.AmountDueSource = B2P.Common.Enumerations.AmountDueSources.Lookup Or z.AmountDueSource = B2P.Common.Enumerations.AmountDueSources.Table Then
-                        BLL.SessionManager.ClientType = B2P.Cart.EClientType.Lookup
-                    Else
-                        BLL.SessionManager.ClientType = B2P.Cart.EClientType.NonLookup
-                    End If
 
-                    ctlCartGrid.PopulateGrid("ctlCartGrid")
+                    pnlContent.Visible = False
+                        pnlEditLookupItem.Visible = False
+                        If z.AmountDueSource = B2P.Common.Enumerations.AmountDueSources.Lookup Or z.AmountDueSource = B2P.Common.Enumerations.AmountDueSources.Table Then
+                            BLL.SessionManager.ClientType = B2P.Cart.EClientType.Lookup
+                        Else
+                            BLL.SessionManager.ClientType = B2P.Cart.EClientType.NonLookup
+                        End If
+                    If BLL.SessionManager.ManageCart.CartCount > 0 Then
+                        ctlCartGrid.PopulateGrid("ctlCartGrid")
+                    ElseIf BLL.SessionManager.ManageCart.CartCount = 0 Then
+                        pnlCartGrid.Visible = False
+                        pnlCartEmpty.Visible = True
+                    End If
                 Else
-                    If BLL.SessionManager.ManageCart.EditItemIndex > -1 Then
+                        If BLL.SessionManager.ManageCart.EditItemIndex > -1 Then
                         pnlCart.Visible = False
                         pnlContent.Visible = False
                         pnlEditLookupItem.Visible = True
@@ -622,5 +627,12 @@ Namespace B2P.PaymentLanding.Express.Web
             Response.Redirect("~/pay/")
         End Sub
 
+        Protected Sub btnAddItem_Click(sender As Object, e As EventArgs) Handles btnAddItem.Click
+            BLL.SessionManager.ManageCart.ShowCart = False
+            BLL.SessionManager.ManageCart.EditItemIndex = -1
+
+
+            Response.Redirect("~/pay/")
+        End Sub
     End Class
 End Namespace
