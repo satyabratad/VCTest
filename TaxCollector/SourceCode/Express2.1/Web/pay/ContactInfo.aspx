@@ -171,7 +171,7 @@
 
                                                     <br />
                                                     <div class="pull-right">
-                                                        <asp:Button ID="btnAddMoreItems" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, AddMoreItemsButton %>" ToolTip="<%$ Resources:WebResources, AddMoreItemsButton %>" runat="server" Visible="true" />
+                                                        <asp:Button ID="btnAddMoreItems" UseSubmitBehavior="false"  CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, AddMoreItemsButton %>" ToolTip="<%$ Resources:WebResources, AddMoreItemsButton %>" runat="server" Visible="true" />
                                                        
                                                         <asp:Button ID="btnContinue" runat="server" Text="<%$ Resources:WebResources, ButtonContinue %>" ToolTip="<%$ Resources:WebResources, ButtonContinue %>" CssClass="btn btn-primary btn-sm"/>
                                                     </div>
