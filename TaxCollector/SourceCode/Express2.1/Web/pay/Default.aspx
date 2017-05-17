@@ -276,6 +276,7 @@
                             CssClass="btn btn-sm btn-primary btn-sm"
                             ToolTip="<%$ Resources:WebResources, ButtonClose %>"
                             data-dismiss="modal"
+                            UseSubmitBehavior="false"
                             runat="server" />
                     </div>
                 </div>
@@ -326,14 +327,14 @@
 
 
         <script type="text/javascript">
-
-            $(document).ready(function () {                
-                $('#pnlLookupResults').keydown(function (event) {
-                    if ((event.keyCode == 13)) {
-                           return false;
-                    }
-                });
+            $("#pnlLookupResults").on('shown.bs.modal', function () {
+                $('#btnLookupGo').focus();
             });
+            $("#pnlLookupError").on('shown.bs.modal', function () {
+                $('#btnCloseLookupErrorDialog').focus();
+            });
+
+           
             function validateForm() {
                
                 var doc = document;

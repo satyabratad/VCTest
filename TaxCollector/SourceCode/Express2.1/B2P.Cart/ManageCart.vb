@@ -117,18 +117,23 @@ Public Class ManageCart
 
         For Each c As Cart In Cart
             IsExists = True
-            For Each entity As AccountIdField In c.AccountIdFields
-                IsExists = cartItem.AccountIdFields _
-                    .Exists(Function(p)
-                                Return (p.Label.Equals(entity.Label, StringComparison.OrdinalIgnoreCase) _
-                                                                       And p.Value.Equals(entity.Value, StringComparison.OrdinalIgnoreCase))
-                            End Function)
+            If (cartItem.Item.Equals(c.Item, StringComparison.OrdinalIgnoreCase)) Then
 
-                If Not IsExists Then
-                    Exit For
-                End If
+                For Each entity As AccountIdField In c.AccountIdFields
+                    IsExists = cartItem.AccountIdFields _
+                        .Exists(Function(p)
+                                    Return (p.Label.Equals(entity.Label, StringComparison.OrdinalIgnoreCase) _
+                                                                           And p.Value.Equals(entity.Value, StringComparison.OrdinalIgnoreCase) And Not String.IsNullOrEmpty(p.Label))
+                                End Function)
 
-            Next
+                    If Not IsExists Then
+                        Exit For
+                    End If
+
+                Next
+            Else
+                IsExists = False
+            End If
             If IsExists Then
                 Exit For
             End If

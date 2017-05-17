@@ -459,6 +459,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close"><span aria-hidden="true">&times;</span></button>
+                            
                             <h4>
                                 <asp:Literal ID="Literal1" Text="<%$ Resources:WebResources, FeeInfoModalTitle %>" runat="server" />
                             </h4>
@@ -493,6 +494,7 @@
                                 Text="<%$ Resources:WebResources, ButtonClose %>"
                                 CssClass="btn btn-primary btn-sm"
                                 data-dismiss="modal"
+                                UseSubmitBehavior="true" 
                                 runat="server" />
                         </div>
                     </div>
@@ -571,8 +573,11 @@
 
 
             <script type="text/javascript">
+                $("#feeInfoModal").on('shown.bs.modal', function () {
+                    $('#Button1').focus();
+                });
 
-
+               
                 jQuery(function ($) {
                     var firstTab = $('a[data-toggle="tab"]:first');
                     var tabName = null;
