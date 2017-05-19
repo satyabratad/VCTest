@@ -392,13 +392,16 @@ Namespace B2P.PaymentLanding.Express.Web
 
                 If z.AmountDueSource = B2P.Common.Enumerations.AmountDueSources.Lookup Or z.AmountDueSource = B2P.Common.Enumerations.AmountDueSources.Table Then
                     'pnlLookupAccount.Visible = True
+                    BLL.SessionManager.ClientType = B2P.Cart.EClientType.Lookup
                     BuildForm()
                     btnLookup.Enabled = True
                     btnLookup.Visible = True
                     btnAddtoCart.Visible = False
                     txtLookupAccount1.Focus()
                     ctlPropertyAddress.Visible = False
+
                 Else
+                    BLL.SessionManager.ClientType = B2P.Cart.EClientType.NonLookup
                     btnAddtoCart.Visible = True
                     btnLookup.Visible = False
                     BLL.SessionManager.LookupData = Nothing
@@ -414,6 +417,7 @@ Namespace B2P.PaymentLanding.Express.Web
                     End If
                     grdLookup.DataSource = Nothing
                     BuildForm()
+
                 End If
 
 
@@ -421,12 +425,12 @@ Namespace B2P.PaymentLanding.Express.Web
                     pnlCart.Visible = True
 
                     pnlContent.Visible = False
-                        pnlEditLookupItem.Visible = False
-                        If z.AmountDueSource = B2P.Common.Enumerations.AmountDueSources.Lookup Or z.AmountDueSource = B2P.Common.Enumerations.AmountDueSources.Table Then
-                            BLL.SessionManager.ClientType = B2P.Cart.EClientType.Lookup
-                        Else
-                            BLL.SessionManager.ClientType = B2P.Cart.EClientType.NonLookup
-                        End If
+                    pnlEditLookupItem.Visible = False
+                    If z.AmountDueSource = B2P.Common.Enumerations.AmountDueSources.Lookup Or z.AmountDueSource = B2P.Common.Enumerations.AmountDueSources.Table Then
+                        BLL.SessionManager.ClientType = B2P.Cart.EClientType.Lookup
+                    Else
+                        BLL.SessionManager.ClientType = B2P.Cart.EClientType.NonLookup
+                    End If
                     If BLL.SessionManager.ManageCart.CartCount > 0 Then
                         ctlCartGrid.PopulateGrid("ctlCartGrid")
                     ElseIf BLL.SessionManager.ManageCart.CartCount = 0 Then
@@ -434,7 +438,7 @@ Namespace B2P.PaymentLanding.Express.Web
                         pnlCartEmpty.Visible = True
                     End If
                 Else
-                        If BLL.SessionManager.ManageCart.EditItemIndex > -1 Then
+                    If BLL.SessionManager.ManageCart.EditItemIndex > -1 Then
                         pnlCart.Visible = False
                         pnlContent.Visible = False
                         pnlEditLookupItem.Visible = True
@@ -600,8 +604,8 @@ Namespace B2P.PaymentLanding.Express.Web
             'Set CC/bank visibility
 
             Dim CurrentCategory As New B2P.Objects.Product(BLL.SessionManager.ClientCode.ToString, ddlCategories.SelectedValue, B2P.Common.Enumerations.TransactionSources.Web)
-                cart.PaymentInfo.CreditCardAccepted = CurrentCategory.PaymentInformation.CreditCardAccepted
-                cart.PaymentInfo.ACHAccepted = CurrentCategory.PaymentInformation.ACHAccepted
+            cart.PaymentInfo.CreditCardAccepted = CurrentCategory.PaymentInformation.CreditCardAccepted
+            cart.PaymentInfo.ACHAccepted = CurrentCategory.PaymentInformation.ACHAccepted
 
             cart.PaymentInfo.BlockedCC = BLL.SessionManager.BlockedCC
             cart.PaymentInfo.AllowCreditCardPayment = BLL.SessionManager.AllowCreditCardPayment

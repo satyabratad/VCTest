@@ -114,11 +114,23 @@
         return false;
     }
     function ValidateUpdateCartItem() {
-
+        
         <% If Not SelectedItem Is Nothing Then%>
         $('#pnlLookupAlert').modal('hide');
+        
+        // Create instance of the form validator
+        var validator = new FormValidator();
+        validator.setErrorMessageHeader("Please review the following errors and resubmit the form:\n\n")
+        validator.setInvalidCssClass("has-error");
+        validator.setAlertBoxStatus(false);
 
         var amt = parseFloat($("#txtAmountEdit").val()).toFixed(2);
+
+        if (isNaN(amt)) {
+            validator.addValidationItem(new ValidationItem("txtAmountEdit", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
+            return validator.validate();
+        }
+
         $("#txtAmountEdit").val(amt);
 
         var newValue = parseFloat($("#txtAmountEdit").val());
@@ -126,11 +138,7 @@
 
         var item = new ValidationItem();
 
-        // Create instance of the form validator
-        var validator = new FormValidator();
-        validator.setErrorMessageHeader("Please review the following errors and resubmit the form:\n\n")
-        validator.setInvalidCssClass("has-error");
-        validator.setAlertBoxStatus(false);
+        
 
         <%  Select Case SelectedItem.PaymentInfo.PaymentStatusCodes %>
         <%Case B2P.Cart.PaymentInformation.EPaymentStatusCodes.Allowed %>
