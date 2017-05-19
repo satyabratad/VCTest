@@ -173,4 +173,6 @@
     function updateCartCount(count) {
         $("#cartCount").html(count);
     }
+    
+    
 </script>

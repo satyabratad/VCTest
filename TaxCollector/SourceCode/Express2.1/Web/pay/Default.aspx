@@ -153,6 +153,9 @@
                                             <div class="pull-right">
                                                 <asp:Button ID="btnAddMoreItem" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, AddMoreItemsButton %>" ToolTip="<%$ Resources:WebResources, AddMoreItemsButton %>" runat="server" />
                                                 <asp:Button ID="btnSubmit" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, ButtonContinue %>" ToolTip="<%$ Resources:WebResources, ButtonContinue %>" runat="server" />
+                                                <script type="text/javascript">
+                                                    document.getElementById('<%=btnSubmit.ClientID%>').focus();
+                                                </script>
                                             </div>
                                         </asp:Panel>
                                         <asp:Panel ID="pnlCartEmpty" runat="server" Visible="false">
