@@ -125,6 +125,7 @@
         validator.setAlertBoxStatus(false);
 
         var amt = parseFloat($("#txtAmountEdit").val()).toFixed(2);
+        validator.removeValidationItem("txtAmountEdit");
 
         if (isNaN(amt)) {
             validator.addValidationItem(new ValidationItem("txtAmountEdit", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
@@ -146,6 +147,7 @@
         var maxValue = parseFloat(<%= MaximumAmountRequired%>);
         if (newValue < minValue || newValue > maxValue) {
             // Set the validator
+
             validator.addValidationItem(new ValidationItem("txtAmountEdit", fieldTypes.AmountDue, true, "Invalid Amount"));
             $("#txtAmountEdit").val(oldValue);
             return validator.validate();
