@@ -57,6 +57,13 @@
         </div>
 
         <div class="pull-right">
+            <asp:Button ID="btnCancel"
+                    runat="server"
+                    Text="<%$ Resources:WebResources, ButtonCancel %>"
+                    CssClass="btn btn-link btn-sm"
+                    ToolTip="<%$ Resources:WebResources, ButtonCancel %>"
+                    data-dismiss="modal"
+                    UseSubmitBehavior="false" />
             <asp:Button ID="Button1" OnClientClick="return AlertEditItem();" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, ButtonUpdateCart %>" ToolTip="<%$ Resources:WebResources, ButtonUpdateCart %>" runat="server" />
         </div>
         <br />
@@ -96,8 +103,14 @@
 </asp:Panel>
 
 <script type="text/javascript">
+   
     function AlertEditItem() {
         $('#pnlLookupAlert').modal({ show: 'true', backdrop: 'static', keyboard: false });
+
+        $("#pnlLookupAlert").on('shown.bs.modal', function () {
+            $('#btnUpdateItem').focus();
+        });
+
         return false;
     }
     function ValidateUpdateCartItem() {
@@ -121,14 +134,19 @@
 
         <%  Select Case SelectedItem.PaymentInfo.PaymentStatusCodes %>
         <%Case B2P.Cart.PaymentInformation.EPaymentStatusCodes.Allowed %>
-        if ((!newValue > 0) || (newValue > oldValue)) {
+        var minValue = parseFloat(<%= MinimumAmountRequired%>);
+        var maxValue = parseFloat(<%= MaximumAmountRequired%>);
+        if (newValue < minValue || newValue > maxValue) {
             // Set the validator
             validator.addValidationItem(new ValidationItem("txtAmountEdit", fieldTypes.AmountDue, true, "Invalid Amount"));
             $("#txtAmountEdit").val(oldValue);
             return validator.validate();
         }
+        
         <%Case B2P.Cart.PaymentInformation.EPaymentStatusCodes.MinimumPaymentRequired %>
-        if ((!newValue > 0) || (newValue < oldValue)) {
+        var minValue = oldValue;
+        var maxValue = parseFloat(<%= MaximumAmountRequired%>);
+        if (newValue < minValue || newValue > maxValue) {
             // Set the validator
             validator.addValidationItem(new ValidationItem("txtAmountEdit", fieldTypes.AmountDue, true, "Invalid Amount"));
             $("#txtAmountEdit").val(oldValue);
@@ -147,5 +165,7 @@
 
 
     }
+
+    
 
 </script>

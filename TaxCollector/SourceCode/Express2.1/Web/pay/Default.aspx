@@ -333,7 +333,10 @@
             $("#pnlLookupError").on('shown.bs.modal', function () {
                 $('#btnCloseLookupErrorDialog').focus();
             });
-
+            $("#pnlValidationDuplicate").on('shown.bs.modal', function () {
+                $('#btnYes').focus();
+            });
+            
            
             function validateForm() {
                
