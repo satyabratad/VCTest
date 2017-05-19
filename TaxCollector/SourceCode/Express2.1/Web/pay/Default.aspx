@@ -351,13 +351,15 @@
 
                 // Add validation items to validator
 
-                // Check to see if account 1 is present
-                acct1 = doc.getElementById('hdAccount1').value;
-                if (acct1 !== '') {
-                    // Set the validator
-                    validator.addValidationItem(new ValidationItem("txtLookupAccount1", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
+                if ($("#txtLookupAccount1").css('visibility') == 'visible') {
+                    // Check to see if account 1 is present
+                    acct1 = doc.getElementById('hdAccount1').value;
+                    if (acct1 !== '') {
+                        // Set the validator
+                        validator.addValidationItem(new ValidationItem("txtLookupAccount1", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
+                    }
                 }
-               
+
                 // Check to see if account 2 is required
                 if ($("#txtLookupAccount2").css('visibility') == 'visible') {
                     acct2 = doc.getElementById('hdAccount2').value;
