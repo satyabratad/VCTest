@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<role>
+  <role name="User" value="1" />
+  <role name="Admin" value="1" />
+</role>

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Items>
+  <Item Text="ACH Returns by Date" Value="1" Selected="true" />
+  <Item Text="ACH Transactions by Date" Value="2" />
+  <Item Text="Daily Reconciliation" Value="3"  />
+  <Item Text="Credit Card Transactions by Date" Value="4" />
+  <Item Text="Credits by Date" Value="5" />
+
+</Items>

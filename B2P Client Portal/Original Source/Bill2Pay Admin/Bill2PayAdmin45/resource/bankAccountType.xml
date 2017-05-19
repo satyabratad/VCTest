@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<client>
+  <account name="Personal Checking" value="Checking" />
+  <account name="Personal Savings" value="Savings" />
+  <account name="Commercial Checking" value="CommChecking" />
+  <account name="Commercial Savings" value="CommSavings" />
+</client>

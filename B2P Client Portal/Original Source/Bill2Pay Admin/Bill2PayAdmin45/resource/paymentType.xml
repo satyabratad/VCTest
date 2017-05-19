@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<type>
+  <type name="All" value="AT" />
+  <type name="eCheck" value="ba" />
+  <type name="Debit/Credit Card" value="cc" />
+  <type name="MasterCard" value="m" />
+  <type name="Visa" value="v" />
+  <type name="Amex" value="a" />
+  <type name="Discover" value="d" />
+  <type name="Declined Debit/Credit Card" value="declined" />
+  <type name="Void" value="void" />
+  <type name="Pay Near Me" value="n" />
+</type>

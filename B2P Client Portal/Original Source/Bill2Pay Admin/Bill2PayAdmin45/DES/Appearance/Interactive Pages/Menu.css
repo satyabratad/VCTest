@@ -1,0 +1,189 @@
+/*------------------------------------------------------------------
+Supports the Context Menu control, including when it is used
+in various Date and Time controls. QuickDateMenu uses it also.
+
+NOTE: By default, DES compresses this file to remove comments.
+You can also have it remove most whitespace or omit compression with this key
+in the <appSettings> section of web.config:
+<add key="DES_StyleSheetCompression" value="none|full" />
+
+An easy way to determine what to change is to run the page. 
+Browsers include some powerful development tools. FireFox offers FireBug.
+Internet Explorer 9+, Safari, Chrome, and Opera all have similar tools.
+Use them to point to an HTML element. They reveal all styles applied
+and tell you which style sheet file supplied the class.
+However, DES normally combines those style sheets into a single file 
+called "GetFiles.axd". It helps to show the actual style sheet files.
+So add this key in the <appSettings> section of web.config before
+working in the developer tools.
+<add key="DES_StyleSheetCompression" value="Separate" />
+-------------------------------------------------------------------*/
+
+/* Property: CssClass
+Affects its overall appearance including border, main font, and background color.
+*/
+.DESMenu
+{
+   background-color: white;
+	color: black;
+   font-size: 8pt;
+   font-family: Arial;
+   line-height:normal;  /* added in DES 5.0 */
+   border-right: #a9a9a9 1px solid; /* dark grey */
+   border-top: #a9a9a9 1px solid;
+   border-left: #a9a9a9 1px solid;
+   border-bottom: #a9a9a9 1px solid;
+	padding-top: 2px;
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-bottom: 2px;
+}
+
+/* Property: CommandRowCssClass
+Appearance of the menu command row.
+Consider height, padding, font and background attributes.*/
+.DESMenuCommand
+{
+	height:20px;
+	padding-top:4px;
+}
+
+
+/* Property: CommandLabelCssClass
+Appearance of the menu command label*/
+.DESMenuLabel
+{
+	text-align: left;
+/* float and position here allow varying width labels to be complimented by
+varying width keystrokes. If these two elements overlap, consider changing
+the overall width of the control in its Width property. */	
+	float:left;
+	position:relative;
+	left:16px;
+}
+
+/* Property: CommandKeyCssClass
+Appearance of the menu command keystroke*/
+.DESMenuKey
+{
+	text-align: right;
+/* float and position here allow varying width labels to be complimented by
+varying width keystrokes. If these two elements overlap, consider changing
+the overall width of the control in its Width property. */	
+	float:right;
+	position:relative;
+	left:-16px;
+}
+
+/* Property: SeparatorCssClass
+Appearance of a separator. This gives the overall space given to the row.
+The .Line class below defines the actual line */
+.DESMenuSeparator
+{
+	height:6px;
+	font-size:2pt;
+}
+
+/* The actual separator line appearance. */
+.DESMenuSeparator .Line
+{
+	border-top: #a9a9a9 1px solid;
+	width: 100%;
+	height: 1px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+/* Property: CommandHintCssClass
+The appearance of hint rows.
+Consider background, font, and border attributes.
+*/
+.DESMenuHint
+{
+	color: #666666;   /* was #a52a2a in DES 4 */
+	background-color: #FFF8DF; /* was #ffff99 in DES 4 */
+	border-right: #d3d3d3 thin solid; /* was inset in DES 4 */
+	border-top: #d3d3d3 thin solid;
+	border-left: #d3d3d3 thin solid;
+	border-bottom: #d3d3d3 thin solid;
+	padding-top: 4px; /* was 2px in DES 4 */
+	padding-left: 5px; /* was 2px in DES 4 */
+	padding-right: 5px; /* was 2px in DES 4 */
+	padding-bottom: 2px;
+	margin-left: 0px; /* was 2px in DES 4 */
+	margin-right: 0px; /* was 2px in DES 4 */
+}
+
+/* Property: MouseOverCssClass
+Creates the mouse over effect on command rows.
+It merges with the existing style of the row.
+*/
+.DESMenuMouseOver
+{
+	background-color: #3366cc;
+	color: White;
+}
+
+ /* DESMenuPopup the rest are added in DES 5.0 */
+.DESMenuPopup    /* added in DES 5.0 */
+{
+   white-space:nowrap;
+   text-align:center;
+}
+
+/* Mouse pressed effect for elements using DESMenuPopup.
+This will be merged with DESMenuPopup 
+and override only the attributes specified */
+.DESMenuPopupPressed   /* added in DES 5.0 */
+{
+   color: #00008b;  /* darkblue */
+}
+
+/* Mouse over effect for elements using DESMenuPopup.
+This will be merged with DESMenuPopup 
+and override only the attributes specified */
+.DESMenuPopupMouseOver   /* added in DES 5.0 */
+{
+   color: blue;
+}
+
+.DESMenuPopup a   /* added in DES 5.0 */
+{
+   text-decoration: none;
+   color : black;
+}
+
+.DESMenuPopupPressed a   /* added in DES 5.0 */
+{
+   text-decoration: none;
+   color: #00008b;  /* darkblue */
+}
+
+.DESMenuPopupMouseOver a   /* added in DES 5.0 */
+{
+   text-decoration: none;
+   color: blue;
+}
+
+
+.DESMenuPopup img   /* added in DES 5.0 */
+{
+   background-color:transparent; 
+   margin-left: 0px; 
+   margin-top: 0px; 
+   margin-bottom:0px; 
+   margin-right:0px;
+   border: 0pt none;
+}
+
+/* When the mouse is pressed, this will be merged with DESMenuPopup img
+and override only the attributes specified */
+.DESMenuPopupPressed img   /* added in DES 5.0 */
+{
+}
+
+/* When the mouse is over, this will be merged with DESMenuPopup img
+and override only the attributes specified */
+.DESMenuPopupMouseOver img   /* added in DES 5.0 */
+{
+}

@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<type>
+  <type name="All" value="" />
+  <type name="Active" value="A" />
+  <type name="Inactive" value="I" />
+</type>

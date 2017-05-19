@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<type>
+  <type name="Source" value="source" />
+  <type name="Product" value="product" />
+  <type name="Office" value="office" />
+  <type name="User" value="user" />
+  <type name="Payment Type" value="payment" />
+</type>

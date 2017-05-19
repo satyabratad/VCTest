@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<source>
+  <source name="All" value="" />
+  <source name="API" value="6" />
+  <source name="Autopay" value="10" />
+  <source name="Call Center" value="8" />
+  <source name="Counter" value="7" />
+  <source name="IVR" value="1" />
+  <source name="Recurring" value="3" />
+  <source name="Scheduled" value="4" />
+  <source name="Text Pay" value="9" />  
+  <source name="Web" value="2" />
+</source>
