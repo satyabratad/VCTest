@@ -340,7 +340,10 @@
                 $('#btnYes').focus();
             });
             
-           
+            $("#myModal").on('shown.bs.modal', function () {
+                $('#Button2').focus();
+            });
+
             function validateForm() {
                
                 var doc = document;
