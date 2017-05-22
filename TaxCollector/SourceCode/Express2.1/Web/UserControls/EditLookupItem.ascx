@@ -94,8 +94,7 @@
                     CssClass="btn btn-link btn-sm"
                     ToolTip="<%$ Resources:WebResources, ButtonCancel %>"
                     data-dismiss="modal"
-                    UseSubmitBehavior="false" />
-
+                    UseSubmitBehavior="true" OnClientClick="return false;" />
                 <asp:Button ID="btnUpdateItem" OnClientClick="return ValidateUpdateCartItem()" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, ButtonLookupGo %>" ToolTip="<%$ Resources:WebResources, ButtonLookupGo %>" runat="server" />
             </div>
         </div>
