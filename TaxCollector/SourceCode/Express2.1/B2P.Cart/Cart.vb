@@ -29,6 +29,11 @@ Public Class Cart
     ''' </summary>
     Public Property AmountDue As Double
     ''' <summary>
+    ''' Set Convenience Fee
+    ''' </summary>
+    Public Property ConvenienceFee As Double
+
+    ''' <summary>
     ''' Set PropertyAddress
     ''' </summary>
     Public Property PropertyAddress As PropertyAddress

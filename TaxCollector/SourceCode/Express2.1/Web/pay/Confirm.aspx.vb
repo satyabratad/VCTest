@@ -526,7 +526,6 @@ Namespace B2P.PaymentLanding.Express.Web
         End Sub
 
         Private Sub MapCart(Of T)(ByRef Param As T)
-            Dim ConvenienceFee As Double = IIf(BLL.SessionManager.IsConvenienceFeesApplicable, BLL.SessionManager.ConvenienceFee, 0)
             Dim TransactionFee As Double = BLL.SessionManager.TransactionFee
             Dim instance = Nothing
             If GetType(T) Is GetType(B2P.Payment.CreditCardPayment) Then
@@ -537,7 +536,6 @@ Namespace B2P.PaymentLanding.Express.Web
             End If
             If GetType(T) Is GetType(B2P.Payment.PaymentBase.TransactionItems) Then
                 instance = CType(CType(Param, Object), B2P.Payment.PaymentBase.TransactionItems)
-                ConvenienceFee = 0
                 TransactionFee = 0
             End If
             For Each cart As B2P.Cart.Cart In BLL.SessionManager.ManageCart.Cart
@@ -551,12 +549,11 @@ Namespace B2P.PaymentLanding.Express.Web
                 Dim index As Integer = 0
 
 
-                instance.Items.Add(accfldVal1, accfldVal2, accfldVal3, BLL.SessionManager.CurrentCategory.Name.ToString, CDec(cart.Amount), ConvenienceFee, TransactionFee)
-                    If BLL.SessionManager.ManageCart.Cart.Count > 0 Then
-                        ConvenienceFee = 0
-                        TransactionFee = 0
-                    End If
-                Next
+                instance.Items.Add(accfldVal1, accfldVal2, accfldVal3, BLL.SessionManager.CurrentCategory.Name.ToString, CDec(cart.Amount), cart.ConvenienceFee, TransactionFee)
+                If BLL.SessionManager.ManageCart.Cart.Count > 0 Then
+                    TransactionFee = 0
+                End If
+            Next
         End Sub
         Private Sub SetUserData(Of T)(ByRef Param As T)
             Dim instance = Nothing

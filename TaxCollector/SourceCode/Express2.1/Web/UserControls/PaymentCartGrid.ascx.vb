@@ -45,32 +45,16 @@ Public Class PaymentCartGrid
         Dim cf As B2P.Payment.FeeCalculation.CalculatedFee = Nothing
         Select Case BLL.SessionManager.PaymentType
             Case Common.Enumerations.PaymentTypes.BankAccount
-                cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, BLL.SessionManager.CurrentCategory.Name, B2P.Common.Enumerations.TransactionSources.Web, B2P.Payment.FeeCalculation.PaymentTypes.BankAccount, SubTotal())
-                BLL.SessionManager.ConvenienceFee = cf.ConvenienceFee
-                BLL.SessionManager.TransactionFee = cf.TransactionFee
                 pnlACHFee.Visible = True
                 litACHFee.Text = BLL.SessionManager.AchFeeDescription
             Case Common.Enumerations.PaymentTypes.CreditCard
-                Dim cardType As B2P.Payment.FeeCalculation.PaymentTypes = B2P.Payment.FeeCalculation.GetCardType(BLL.SessionManager.CreditCard.InternalCreditCardNumber)
-                cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, BLL.SessionManager.CurrentCategory.Name, B2P.Common.Enumerations.TransactionSources.Web, cardType, SubTotal())
-                BLL.SessionManager.ConvenienceFee = cf.ConvenienceFee
-                BLL.SessionManager.TransactionFee = cf.TransactionFee
                 pnlCCFee.Visible = True
                 litCCFee.Text = BLL.SessionManager.CreditFeeDescription
         End Select
     End Sub
     Protected Function IsConvenienceFeesApplicable() As Boolean
-        Dim cf As B2P.Payment.FeeCalculation.CalculatedFee = Nothing
-        Select Case BLL.SessionManager.PaymentType
-            Case Common.Enumerations.PaymentTypes.BankAccount
-                cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, BLL.SessionManager.CurrentCategory.Name, B2P.Common.Enumerations.TransactionSources.Web, B2P.Payment.FeeCalculation.PaymentTypes.BankAccount, SubTotal())
-
-            Case Common.Enumerations.PaymentTypes.CreditCard
-                Dim cardType As B2P.Payment.FeeCalculation.PaymentTypes = B2P.Payment.FeeCalculation.GetCardType(BLL.SessionManager.CreditCard.InternalCreditCardNumber)
-                cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, BLL.SessionManager.CurrentCategory.Name, B2P.Common.Enumerations.TransactionSources.Web, cardType, SubTotal())
-
-        End Select
-        BLL.SessionManager.IsConvenienceFeesApplicable = cf.ConvenienceFee > 0
+        CalculateFees()
+        BLL.SessionManager.IsConvenienceFeesApplicable = BLL.SessionManager.ConvenienceFee > 0
         Return BLL.SessionManager.IsConvenienceFeesApplicable
     End Function
     Protected Function GetConvenienceFee() As String
@@ -82,6 +66,7 @@ Public Class PaymentCartGrid
             Return 0
         End If
     End Function
+
     Protected Function GetPropertyAddress(Index As Integer) As String
         Dim CartItem As B2P.Cart.Cart = BLL.SessionManager.ManageCart.Cart(Index)
         Dim propertyAddress As StringBuilder = New StringBuilder()
@@ -135,6 +120,39 @@ Public Class PaymentCartGrid
         Next
         Return String.Format("{0:C}", amount)
     End Function
+    Protected Sub CalculateFees()
+        Dim cf As B2P.Payment.FeeCalculation.CalculatedFee = Nothing
+        Dim cftrans As B2P.Payment.FeeCalculation.CalculatedFee = Nothing
+        Dim convFees As Double = 0
+
+        For Each cart As B2P.Cart.Cart In BLL.SessionManager.ManageCart.Cart
+            Select Case BLL.SessionManager.PaymentType
+                Case Common.Enumerations.PaymentTypes.BankAccount
+                    cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, cart.Item, B2P.Common.Enumerations.TransactionSources.Web, B2P.Payment.FeeCalculation.PaymentTypes.BankAccount, cart.Amount)
+                    cart.ConvenienceFee = cf.ConvenienceFee
+                    convFees += cart.ConvenienceFee
+                Case Common.Enumerations.PaymentTypes.CreditCard
+                    Dim cardType As B2P.Payment.FeeCalculation.PaymentTypes = B2P.Payment.FeeCalculation.GetCardType(BLL.SessionManager.CreditCard.InternalCreditCardNumber)
+                    cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, cart.Item, B2P.Common.Enumerations.TransactionSources.Web, cardType, cart.Amount)
+                    cart.ConvenienceFee = cf.ConvenienceFee
+                    convFees += cart.ConvenienceFee
+            End Select
+        Next
+        BLL.SessionManager.ConvenienceFee = convFees
+
+        'Calculate Transaction Fees
+        Select Case BLL.SessionManager.PaymentType
+            Case Common.Enumerations.PaymentTypes.BankAccount
+                cftrans = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, BLL.SessionManager.CurrentCategory.Name, B2P.Common.Enumerations.TransactionSources.Web, B2P.Payment.FeeCalculation.PaymentTypes.BankAccount, SubTotal())
+                BLL.SessionManager.TransactionFee = cftrans.TransactionFee
+            Case Common.Enumerations.PaymentTypes.CreditCard
+                Dim cardType As B2P.Payment.FeeCalculation.PaymentTypes = B2P.Payment.FeeCalculation.GetCardType(BLL.SessionManager.CreditCard.InternalCreditCardNumber)
+                cftrans = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, BLL.SessionManager.CurrentCategory.Name, B2P.Common.Enumerations.TransactionSources.Web, cardType, SubTotal())
+                BLL.SessionManager.TransactionFee = cftrans.TransactionFee
+        End Select
+
+    End Sub
+
     Protected Function Total() As String
         Dim totalAmount As Double = CType(SubTotal(), Double)
         If IsConvenienceFeesApplicable() Then

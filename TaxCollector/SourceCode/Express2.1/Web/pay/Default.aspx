@@ -331,7 +331,10 @@
 
         <script type="text/javascript">
             $("#pnlLookupResults").on('shown.bs.modal', function () {
-                $('#btnLookupGo').focus();
+                if ($('#btnLookupGo').is(':visible'))
+                    $('#btnLookupGo').focus();
+                else if ($('#btnLookupOK').is(':visible'))
+                    $('#btnLookupOK').focus();
             });
             $("#pnlLookupError").on('shown.bs.modal', function () {
                 $('#btnCloseLookupErrorDialog').focus();

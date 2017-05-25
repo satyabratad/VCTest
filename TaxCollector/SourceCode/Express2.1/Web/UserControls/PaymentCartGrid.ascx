@@ -12,7 +12,7 @@
                         <td class="table-header" width="5%"></td>
                         <td class="table-header" width="30%"><asp:Literal runat="server" Text="<%$ Resources:WebResources, CartGridColumn_Item %>"></asp:Literal></td>
                         <td class="table-header" width="55%"><asp:Literal runat="server" Text="<%$ Resources:WebResources, CartGridColumn_Details %>"></asp:Literal></td>
-                        <td class="table-header" width="10%" align="right"><asp:Literal runat="server" Text="<%$ Resources:WebResources, CartGridColumn_Details %>"></asp:Literal></td>
+                        <td class="table-header" width="10%" align="right"><asp:Literal runat="server" Text="<%$ Resources:WebResources, CartGridColumn_Amount %>"></asp:Literal></td>
                     </tr>
                 </thead>
         </HeaderTemplate>
