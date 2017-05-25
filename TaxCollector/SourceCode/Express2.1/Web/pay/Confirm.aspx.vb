@@ -50,20 +50,23 @@ Namespace B2P.PaymentLanding.Express.Web
             Dim errMsg As String = String.Empty
 
             Try
-                Select Case BLL.SessionManager.PaymentType
-                    Case Common.Enumerations.PaymentTypes.BankAccount
-                        cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, BLL.SessionManager.CurrentCategory.Name, B2P.Common.Enumerations.TransactionSources.Web, B2P.Payment.FeeCalculation.PaymentTypes.BankAccount, BLL.SessionManager.PaymentAmount)
-                        total = BLL.SessionManager.PaymentAmount + cf.ConvenienceFee
-                        sb.Append("I hereby authorize " & BLL.SessionManager.Client.ClientName & " to deduct my bank account via ACH " & total.ToString("C2") & " on " & Date.Today & " for payment to " & BLL.SessionManager.Client.ClientName & ". ")
+                For Each cart As B2P.Cart.Cart In BLL.SessionManager.ManageCart.Cart
+                    If cart.Amount > 0 Then
+                        Select Case BLL.SessionManager.PaymentType
+                            Case Common.Enumerations.PaymentTypes.BankAccount
+                                cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, cart.Item, B2P.Common.Enumerations.TransactionSources.Web, B2P.Payment.FeeCalculation.PaymentTypes.BankAccount, cart.Amount)
+                                total = BLL.SessionManager.PaymentAmount + cf.ConvenienceFee
+                                sb.Append("I hereby authorize " & BLL.SessionManager.Client.ClientName & " to deduct my bank account via ACH " & total.ToString("C2") & " on " & Date.Today & " for payment to " & BLL.SessionManager.Client.ClientName & ". ")
 
-                    Case Common.Enumerations.PaymentTypes.CreditCard
-                        Dim cardType As B2P.Payment.FeeCalculation.PaymentTypes = B2P.Payment.FeeCalculation.GetCardType(BLL.SessionManager.CreditCard.InternalCreditCardNumber)
-                        cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, BLL.SessionManager.CurrentCategory.Name, B2P.Common.Enumerations.TransactionSources.Web, cardType, BLL.SessionManager.PaymentAmount)
-                        total = BLL.SessionManager.PaymentAmount + cf.ConvenienceFee
-                        sb.Append("I hereby authorize " & BLL.SessionManager.Client.ClientName & " to deduct from my credit/debit card " & total.ToString("C2") & " on " & Date.Today & " for payment to " & BLL.SessionManager.Client.ClientName & ". ")
+                            Case Common.Enumerations.PaymentTypes.CreditCard
+                                Dim cardType As B2P.Payment.FeeCalculation.PaymentTypes = B2P.Payment.FeeCalculation.GetCardType(BLL.SessionManager.CreditCard.InternalCreditCardNumber)
+                                cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, cart.Item, B2P.Common.Enumerations.TransactionSources.Web, cardType, cart.Amount)
+                                total = BLL.SessionManager.PaymentAmount + cf.ConvenienceFee
+                                sb.Append("I hereby authorize " & BLL.SessionManager.Client.ClientName & " to deduct from my credit/debit card " & total.ToString("C2") & " on " & Date.Today & " for payment to " & BLL.SessionManager.Client.ClientName & ". ")
 
-                End Select
-
+                        End Select
+                    End If
+                Next
                 sb.Append("I understand this is a transaction performed over the WEB and I will not be able to issue a Stop Payment on this transaction." & Environment.NewLine & Environment.NewLine)
                 sb.Append("Please note that, in the event we are unable to secure funds for this transaction for any reason, including but not limited to, insufficient funds in your account or insufficient or inaccurate information provided by you when you submitted your electronic payment, further collection action may be undertaken by " & BLL.SessionManager.Client.ClientName & ", including application of returned check fees to the extent permitted by law. ")
                 sb.Append(Environment.NewLine & Environment.NewLine & "I understand that I may obtain a paper copy of the terms of this authorization form and of the ")

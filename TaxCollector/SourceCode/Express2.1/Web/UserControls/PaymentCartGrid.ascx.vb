@@ -126,17 +126,19 @@ Public Class PaymentCartGrid
         Dim convFees As Double = 0
 
         For Each cart As B2P.Cart.Cart In BLL.SessionManager.ManageCart.Cart
-            Select Case BLL.SessionManager.PaymentType
-                Case Common.Enumerations.PaymentTypes.BankAccount
-                    cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, cart.Item, B2P.Common.Enumerations.TransactionSources.Web, B2P.Payment.FeeCalculation.PaymentTypes.BankAccount, cart.Amount)
-                    cart.ConvenienceFee = cf.ConvenienceFee
-                    convFees += cart.ConvenienceFee
-                Case Common.Enumerations.PaymentTypes.CreditCard
-                    Dim cardType As B2P.Payment.FeeCalculation.PaymentTypes = B2P.Payment.FeeCalculation.GetCardType(BLL.SessionManager.CreditCard.InternalCreditCardNumber)
-                    cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, cart.Item, B2P.Common.Enumerations.TransactionSources.Web, cardType, cart.Amount)
-                    cart.ConvenienceFee = cf.ConvenienceFee
-                    convFees += cart.ConvenienceFee
-            End Select
+            If cart.Amount > 0 Then
+                Select Case BLL.SessionManager.PaymentType
+                    Case Common.Enumerations.PaymentTypes.BankAccount
+                        cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, cart.Item, B2P.Common.Enumerations.TransactionSources.Web, B2P.Payment.FeeCalculation.PaymentTypes.BankAccount, cart.Amount)
+                        cart.ConvenienceFee = cf.ConvenienceFee
+                        convFees += cart.ConvenienceFee
+                    Case Common.Enumerations.PaymentTypes.CreditCard
+                        Dim cardType As B2P.Payment.FeeCalculation.PaymentTypes = B2P.Payment.FeeCalculation.GetCardType(BLL.SessionManager.CreditCard.InternalCreditCardNumber)
+                        cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, cart.Item, B2P.Common.Enumerations.TransactionSources.Web, cardType, cart.Amount)
+                        cart.ConvenienceFee = cf.ConvenienceFee
+                        convFees += cart.ConvenienceFee
+                End Select
+            End If
         Next
         BLL.SessionManager.ConvenienceFee = convFees
 
