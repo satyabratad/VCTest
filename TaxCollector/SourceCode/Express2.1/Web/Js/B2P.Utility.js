@@ -79,7 +79,7 @@ function reformatInput(item, restrictionType) {
                 break;
 
             case restrictionTypes.AlphaNumericAndExtraChars:
-                item.value = item.value.replace(/[^a-z0-9\s\.\-\,\']/gi, '');
+                item.value = item.value.replace(/[^a-z0-9\s\.\-\,\'\/]/gi, '');
                 break;
 
             case restrictionTypes.Date:
@@ -158,7 +158,7 @@ function restrictInput(e, restrictionType) {
             break;
 
         case restrictionTypes.AlphaNumericAndExtraChars:
-            return !!/[a-z0-9\s\.\-\,\']/i.test(input);
+            return !!/[a-z0-9\s\.\-\,\'\/]/i.test(input);
             break;
 
         case restrictionTypes.Currency:
