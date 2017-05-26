@@ -149,6 +149,12 @@
                                     <div class="col-xs-12 col-sm-12">
                                         <asp:Panel ID="pnlCartGrid" runat="server" Visible="true">
                                             <b2p:CartGrid runat="server" ID="ctlCartGrid" />
+                                            <asp:PlaceHolder runat="server" ID="pnlStatusMessage" Visible="false">
+                                                <div class="alert alert-danger" role="alert">
+                                                    <div id="imgZeroMessage" class="fa fa-exclamation-circle fa-2x status-msg-icon"></div>
+                                                    <asp:Label ID="lblZeroMessage" runat="server" class="status-msg-text" Text="<%$ Resources:WebResources,lblZeroMessage %>"></asp:Label>
+                                                </div>
+                                            </asp:PlaceHolder>
                                             <br />
                                             <div class="pull-right">
                                                 <asp:Button ID="btnAddMoreItem" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, AddMoreItemsButton %>" ToolTip="<%$ Resources:WebResources, AddMoreItemsButton %>" runat="server" />
@@ -159,11 +165,12 @@
                                             </div>
                                         </asp:Panel>
                                         <asp:Panel ID="pnlCartEmpty" runat="server" Visible="false">
-                                            <div class="col-xs-12  bg-primarydark" style="text-align:center">
-                                            
-                                                <asp:Literal ID="lilEmptyMsg" runat="server"  Text="<%$ Resources:WebResources, lblEmptyCartMsg %>" />
-                                            </div> 
-                                            <br /><br />
+                                            <div class="col-xs-12  bg-primarydark" style="text-align: center">
+
+                                                <asp:Literal ID="lilEmptyMsg" runat="server" Text="<%$ Resources:WebResources, lblEmptyCartMsg %>" />
+                                            </div>
+                                            <br />
+                                            <br />
                                             <div class="pull-right">
                                                 <asp:Button ID="btnAddItem" CssClass="btn btn-primary btn-sm" Text="<%$ Resources:WebResources, ButtonAddItems %>" ToolTip="<%$ Resources:WebResources, ButtonAddItems %>" runat="server" />
                                             </div>
@@ -342,13 +349,13 @@
             $("#pnlValidationDuplicate").on('shown.bs.modal', function () {
                 $('#btnYes').focus();
             });
-            
+
             $("#myModal").on('shown.bs.modal', function () {
                 $('#Button2').focus();
             });
 
             function validateForm() {
-               
+
                 var doc = document;
                 var item = new ValidationItem();
 
@@ -386,7 +393,7 @@
                         validator.addValidationItem(new ValidationItem("txtLookupAccount3", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
                     }
                 }
-               
+
                 <% If B2P.PaymentLanding.Express.BLL.SessionManager.ClientType = B2P.Cart.EClientType.NonLookup Then%>
                 // Check to see if amount is required
                 // Set the validator
@@ -410,7 +417,7 @@
 
                  <%If ctlPropertyAddress.Visible And ctlPropertyAddress.AddressVisible Then %>
                 //Validate Zip
-               
+
                 if ($("#txtZip").val() != "") {
 
                     var optiongroup = $('#ddlState').find(":selected").attr("optiongroup");
@@ -451,7 +458,7 @@
                 return true;
             }
 
-           
+
             function getSelectionStart(o) {
                 try {
                     if (o.createTextRange) {

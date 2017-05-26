@@ -979,6 +979,15 @@ Namespace B2P.PaymentLanding.Express.BLL
             End Set
         End Property
 
+        ''' <summary>
+        ''' True if cart item  has atlist one item with zero amount
+        ''' </summary>
+        ''' <returns></returns>
+        Public Shared ReadOnly Property HasZeroItem() As Boolean
+            Get
+                Return ManageCart.Cart.Exists(Function(x) x.Amount = 0)
+            End Get
+        End Property
 #End Region
 
 #Region " ::: Methods ::: "

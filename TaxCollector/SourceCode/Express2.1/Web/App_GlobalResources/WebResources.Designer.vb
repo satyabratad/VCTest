@@ -1262,6 +1262,15 @@ Namespace Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to You have item(s) priced as $0.00 in the cart. Please edit the amount or delete the item(s) in order to continue..
+        '''</summary>
+        Friend Shared ReadOnly Property lblZeroMessage() As String
+            Get
+                Return ResourceManager.GetString("lblZeroMessage", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Missing or Invalid Client Information.
         '''</summary>
         Friend Shared ReadOnly Property MissingClientHeading() As String

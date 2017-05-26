@@ -593,4 +593,7 @@
   <data name="lblSsoEmptyCartMsg" xml:space="preserve">
     <value>Your shopping cart is empty. Please contact customer service for details.</value>
   </data>
+  <data name="lblZeroMessage" xml:space="preserve">
+    <value>You have item(s) priced as $0.00 in the cart. Please edit the amount or delete the item(s) in order to continue.</value>
+  </data>
 </root>

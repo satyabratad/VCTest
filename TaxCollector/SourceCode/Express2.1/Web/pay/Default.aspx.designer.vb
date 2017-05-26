@@ -294,6 +294,24 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected WithEvents ctlCartGrid As Global.CartGrid
         
         '''<summary>
+        '''pnlStatusMessage control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents pnlStatusMessage As Global.System.Web.UI.WebControls.PlaceHolder
+        
+        '''<summary>
+        '''lblZeroMessage control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents lblZeroMessage As Global.System.Web.UI.WebControls.Label
+        
+        '''<summary>
         '''btnAddMoreItem control.
         '''</summary>
         '''<remarks>
