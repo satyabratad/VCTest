@@ -434,7 +434,7 @@ Namespace B2P.PaymentLanding.Express.Web
                     End If
                     If BLL.SessionManager.ManageCart.CartCount > 0 Then
                         ctlCartGrid.PopulateGrid("ctlCartGrid")
-                        If BLL.SessionManager.HasZeroItem Then
+                        If BLL.SessionManager.HasZeroAmountItem Then
                             pnlStatusMessage.Visible = True
                             btnSubmit.Enabled = False
                         Else

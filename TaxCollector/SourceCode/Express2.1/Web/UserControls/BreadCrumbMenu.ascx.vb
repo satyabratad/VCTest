@@ -190,6 +190,42 @@ Public Class BreadCrumbMenu
 
                 End If
             End If
+
+            If SessionManager.HasZeroAmountItem Then
+                For Each tab As BreadCrumbTab In tabList
+                    If tab.Index > 1 Then
+                        tab.PageName = "#"
+                    End If
+                Next
+            Else
+                For Each tab As BreadCrumbTab In tabList
+                    If tab.Index > 1 And tab.PageName = "#" Then
+                        If tab.Index = 2 Then
+                            tab.PageName = ResolveUrl("~/pay/ContactInfo.aspx")
+                        End If
+
+                        If tab.Index = 3 Then
+                            tab.PageName = ResolveUrl("~/pay/Payment.aspx")
+                        End If
+
+                        If tab.Index = 4 Then
+                            tab.PageName = ResolveUrl("~/pay/Confirm.aspx")
+                        End If
+
+                        If tab.Index = 5 Then
+                            tab.PageName = ResolveUrl("~/pay/PaymentComplete.aspx")
+                        End If
+
+                        If tab.Index = 6 Then
+                            tab.PageName = ResolveUrl("~/pay/PaymentFailure.aspx")
+                        End If
+                    End If
+                Next
+
+
+
+            End If
+
             pageIndex = 1
             For Each tab As BreadCrumbTab In tabList
 
@@ -258,6 +294,8 @@ Public Class BreadCrumbMenu
             htmlString.AppendFormat("</ul>")
 
             divBreadCrumb.InnerHtml = htmlString.ToString()
+
+
 
             SessionManager.BreadCrumbMenuTab = tabList
         End If
