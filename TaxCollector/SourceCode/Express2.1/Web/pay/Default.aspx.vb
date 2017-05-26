@@ -372,6 +372,7 @@ Namespace B2P.PaymentLanding.Express.Web
         Private Sub ddlCategories_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlCategories.SelectedIndexChanged
             ClearFields()
             getProductLookup()
+            BLL.SessionManager.ProductName = ddlCategories.SelectedValue
         End Sub
         Private Sub ClearFields()
             lblAccountNumber1.Text = String.Empty
