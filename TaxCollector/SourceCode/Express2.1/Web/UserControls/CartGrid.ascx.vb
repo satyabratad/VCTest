@@ -23,17 +23,17 @@ Public Class CartGrid
 
                 Utility.SetBreadCrumbContactInfo("BreadCrumbMenu")
 
-
                 'End Show/Hide Contact Info
             End If
             If BLL.SessionManager.ManageCart.Cart.Count = 0 Then
                 BLL.SessionManager.ManageCart.ShowCart = False
                 BLL.SessionManager.ManageCart.EditItemIndex = -1
-                If BLL.SessionManager.ClientType = B2P.Cart.EClientType.SSO Then
-                    Response.Redirect("~/sso/")
-                Else
-                    Response.Redirect("~/pay/")
-                End If
+            End If
+
+            If BLL.SessionManager.ClientType = B2P.Cart.EClientType.SSO Then
+                Response.Redirect("~/sso/")
+            Else
+                Response.Redirect("~/pay/")
             End If
         End If
         'Edit cart
