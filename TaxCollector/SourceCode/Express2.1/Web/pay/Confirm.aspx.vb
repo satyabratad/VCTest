@@ -50,23 +50,28 @@ Namespace B2P.PaymentLanding.Express.Web
             Dim errMsg As String = String.Empty
 
             Try
-                For Each cart As B2P.Cart.Cart In BLL.SessionManager.ManageCart.Cart
-                    If cart.Amount > 0 Then
-                        Select Case BLL.SessionManager.PaymentType
-                            Case Common.Enumerations.PaymentTypes.BankAccount
-                                cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, cart.Item, B2P.Common.Enumerations.TransactionSources.Web, B2P.Payment.FeeCalculation.PaymentTypes.BankAccount, cart.Amount)
-                                total = BLL.SessionManager.PaymentAmount + cf.ConvenienceFee
-                                sb.Append("I hereby authorize " & BLL.SessionManager.Client.ClientName & " to deduct my bank account via ACH " & total.ToString("C2") & " on " & Date.Today & " for payment to " & BLL.SessionManager.Client.ClientName & ". ")
+                BLL.SessionManager.CalculateFee()
 
-                            Case Common.Enumerations.PaymentTypes.CreditCard
-                                Dim cardType As B2P.Payment.FeeCalculation.PaymentTypes = B2P.Payment.FeeCalculation.GetCardType(BLL.SessionManager.CreditCard.InternalCreditCardNumber)
-                                cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, cart.Item, B2P.Common.Enumerations.TransactionSources.Web, cardType, cart.Amount)
-                                total = BLL.SessionManager.PaymentAmount + cf.ConvenienceFee
-                                sb.Append("I hereby authorize " & BLL.SessionManager.Client.ClientName & " to deduct from my credit/debit card " & total.ToString("C2") & " on " & Date.Today & " for payment to " & BLL.SessionManager.Client.ClientName & ". ")
+                Select Case BLL.SessionManager.PaymentType
+                    Case Common.Enumerations.PaymentTypes.BankAccount
+                        total = BLL.SessionManager.PaymentAmount + BLL.SessionManager.ShoppingCartInfo.ECheckFee
+                        BLL.SessionManager.ConvenienceFee = BLL.SessionManager.ShoppingCartInfo.ECheckFee
+                        sb.Append("I hereby authorize " & BLL.SessionManager.Client.ClientName & " to deduct my bank account via ACH " & total.ToString("C2") & " on " & Date.Today & " for payment to " & BLL.SessionManager.Client.ClientName & ". ")
 
-                        End Select
-                    End If
-                Next
+                    Case Common.Enumerations.PaymentTypes.CreditCard
+                        Dim cardType As B2P.Payment.FeeCalculation.PaymentTypes = B2P.Payment.FeeCalculation.GetCardType(BLL.SessionManager.CreditCard.InternalCreditCardNumber)
+                        If cardType = B2P.Payment.FeeCalculation.PaymentTypes.DebitCard Then
+                            total = BLL.SessionManager.PaymentAmount + BLL.SessionManager.ShoppingCartInfo.DebitFee
+                            BLL.SessionManager.ConvenienceFee = BLL.SessionManager.ShoppingCartInfo.DebitFee
+                        ElseIf cardType = B2P.Payment.FeeCalculation.PaymentTypes.CreditCard Then
+                            total = BLL.SessionManager.PaymentAmount + BLL.SessionManager.ShoppingCartInfo.CreditCardFee
+                            BLL.SessionManager.ConvenienceFee = BLL.SessionManager.ShoppingCartInfo.CreditCardFee
+                        End If
+
+                        sb.Append("I hereby authorize " & BLL.SessionManager.Client.ClientName & " to deduct from my credit/debit card " & total.ToString("C2") & " on " & Date.Today & " for payment to " & BLL.SessionManager.Client.ClientName & ". ")
+
+                End Select
+
                 sb.Append("I understand this is a transaction performed over the WEB and I will not be able to issue a Stop Payment on this transaction." & Environment.NewLine & Environment.NewLine)
                 sb.Append("Please note that, in the event we are unable to secure funds for this transaction for any reason, including but not limited to, insufficient funds in your account or insufficient or inaccurate information provided by you when you submitted your electronic payment, further collection action may be undertaken by " & BLL.SessionManager.Client.ClientName & ", including application of returned check fees to the extent permitted by law. ")
                 sb.Append(Environment.NewLine & Environment.NewLine & "I understand that I may obtain a paper copy of the terms of this authorization form and of the ")
@@ -87,7 +92,7 @@ Namespace B2P.PaymentLanding.Express.Web
                 End If
 
                 ' Display the fee conditions checkbox based on client flag
-                If BLL.SessionManager.Client.ConfirmFees And cf.ConvenienceFee > 0 Then
+                If BLL.SessionManager.Client.ConfirmFees And BLL.SessionManager.ConvenienceFee > 0 Then
                     pnlFeeAgreement.Visible = True
                 Else
                     pnlFeeAgreement.Visible = False
@@ -441,6 +446,10 @@ Namespace B2P.PaymentLanding.Express.Web
                         'x.UserData.Address1 = BLL.SessionManager.ServiceAddress
                         SetUserData(Of B2P.Payment.CreditCardPayment)(x)
 
+
+
+                        ''====================================================
+
                         If BLL.SessionManager.IsSSOProduct Then
                             x.VendorReferenceCode = BLL.SessionManager.TokenInfo.VendorReferenceCode
                         End If
@@ -527,6 +536,8 @@ Namespace B2P.PaymentLanding.Express.Web
 
             End Try
         End Sub
+
+
 
         Private Sub MapCart(Of T)(ByRef Param As T)
             Dim TransactionFee As Double = BLL.SessionManager.TransactionFee

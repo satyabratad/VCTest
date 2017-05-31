@@ -87,6 +87,8 @@ Namespace B2P.PaymentLanding.Express.BLL
         Private Const _bankAccType As String = "_bankAccType"
         Private Const _allowCreditCardPayment As String = "_allowCreditCardPayment"
         Private Const _allowECheckPayment As String = "_allowECheckPayment"
+        Private Const _shoppingCartInfo As String = "_ShoppingCartInfo"
+
 #End Region
 
 #Region " ::: Contructors ::: "
@@ -988,6 +990,22 @@ Namespace B2P.PaymentLanding.Express.BLL
                 Return ManageCart.Cart.Exists(Function(x) x.Amount = 0)
             End Get
         End Property
+
+        ''' <summary>
+        ''' The ShoppingCartInfo property will provide a single instance of B2P.ShoppingCart.Cart object
+        ''' </summary>
+        ''' 
+        Public Shared Property ShoppingCartInfo() As B2P.ShoppingCart.Cart
+            Get
+                If HttpContext.Current.Session(_shoppingCartInfo) Is Nothing Then
+                    HttpContext.Current.Session(_shoppingCartInfo) = New B2P.ShoppingCart.Cart
+                End If
+                Return DirectCast(HttpContext.Current.Session(_shoppingCartInfo), B2P.ShoppingCart.Cart)
+            End Get
+            Set(ByVal value As B2P.ShoppingCart.Cart)
+                HttpContext.Current.Session(_shoppingCartInfo) = value
+            End Set
+        End Property
 #End Region
 
 #Region " ::: Methods ::: "
@@ -1017,7 +1035,44 @@ Namespace B2P.PaymentLanding.Express.BLL
             ContactInfo.Zip = ZipCode
             ContactInfo.HomePhone = HomePhone
         End Sub
+        '' This method will calculate convenince fees on cart items and store  into a B2P.ShoppingCart.Cart object
+        Public Shared Sub CalculateFee()
 
+            Dim lstItem As New B2P.Payment.PaymentBase.TransactionItems
+            Dim Account1 As String
+            Dim Account2 As String
+            Dim Account3 As String
+            Dim Amount As Decimal = 0
+            Dim ctr As Int32 = 0
+
+            Dim sc As B2P.ShoppingCart.Cart
+            For Each CartItem As B2P.Cart.Cart In BLL.SessionManager.ManageCart.Cart
+                If CartItem.Amount > 0 Then
+                    ctr = 0
+                    Account1 = String.Empty
+                    Account2 = String.Empty
+                    Account3 = String.Empty
+                    For Each fields In CartItem.AccountIdFields
+
+                        If Not String.IsNullOrEmpty(fields.Value) Then
+                            If ctr = 0 Then
+                                Account1 = fields.Value
+                            ElseIf ctr = 1 Then
+                                Account2 = fields.Value
+                            ElseIf ctr = 2 Then
+                                Account3 = fields.Value
+                            End If
+                        End If
+                    Next
+                    Amount = Convert.ToDecimal(CartItem.Amount)
+                    lstItem.Add(Account1, Account2, Account3, CartItem.Item, Amount, 0, 0)
+                End If
+            Next
+
+
+            sc = New B2P.ShoppingCart.Cart(BLL.SessionManager.ClientCode, B2P.Common.Enumerations.TransactionSources.Web, lstItem)
+            ShoppingCartInfo = sc
+        End Sub
 
 #End Region
 

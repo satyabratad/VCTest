@@ -125,22 +125,6 @@ Public Class PaymentCartGrid
         Dim cftrans As B2P.Payment.FeeCalculation.CalculatedFee = Nothing
         Dim convFees As Double = 0
 
-        For Each cart As B2P.Cart.Cart In BLL.SessionManager.ManageCart.Cart
-            If cart.Amount > 0 Then
-                Select Case BLL.SessionManager.PaymentType
-                    Case Common.Enumerations.PaymentTypes.BankAccount
-                        cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, cart.Item, B2P.Common.Enumerations.TransactionSources.Web, B2P.Payment.FeeCalculation.PaymentTypes.BankAccount, cart.Amount)
-                        cart.ConvenienceFee = cf.ConvenienceFee
-                        convFees += cart.ConvenienceFee
-                    Case Common.Enumerations.PaymentTypes.CreditCard
-                        Dim cardType As B2P.Payment.FeeCalculation.PaymentTypes = B2P.Payment.FeeCalculation.GetCardType(BLL.SessionManager.CreditCard.InternalCreditCardNumber)
-                        cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, cart.Item, B2P.Common.Enumerations.TransactionSources.Web, cardType, cart.Amount)
-                        cart.ConvenienceFee = cf.ConvenienceFee
-                        convFees += cart.ConvenienceFee
-                End Select
-            End If
-        Next
-        BLL.SessionManager.ConvenienceFee = convFees
 
         'Calculate Transaction Fees
         Select Case BLL.SessionManager.PaymentType
@@ -158,7 +142,7 @@ Public Class PaymentCartGrid
     Protected Function Total() As String
         Dim totalAmount As Double = CType(SubTotal(), Double)
         If IsConvenienceFeesApplicable() Then
-            totalAmount += CType(GetConvenienceFee(), Double)
+            totalAmount = totalAmount + BLL.SessionManager.ConvenienceFee
         End If
         Return String.Format("{0:C}", totalAmount)
     End Function
