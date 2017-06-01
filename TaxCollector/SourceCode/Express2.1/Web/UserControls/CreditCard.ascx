@@ -48,7 +48,7 @@
     <div class="form-group form-group-sm">
          <asp:HiddenField ID="hdZipRequired" runat="server" Value="required" />
       <label class="control-label" for="txtBillingZip"><asp:Literal ID="litBillingZip" runat="server" text="<%$ Resources:WebResources, lblBillingZip %>" /></label>
-      <asp:TextBox id="txtBillingZip" type="tel" cssclass="form-control input-sm txtBillingZip " placeholder="Billing Zip"  autocomplete="off" runat="server"
+      <asp:TextBox id="txtBillingZip" type="tel" cssclass="form-control input-sm txtBillingZip " MaxLength="10" placeholder="Billing Zip"  autocomplete="off" runat="server"
            onkeypress="return restrictInput(event, restrictionTypes.ZipCode)" onpaste="return reformatInput(this, restrictionTypes.ZipCode)"></asp:TextBox>
     </div>
   </div>
