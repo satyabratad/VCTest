@@ -50,7 +50,8 @@ Namespace B2P.PaymentLanding.Express.Web
             Dim errMsg As String = String.Empty
 
             Try
-                BLL.SessionManager.CalculateFee()
+
+                Utility.CalculateFee()
 
                 Select Case BLL.SessionManager.PaymentType
                     Case Common.Enumerations.PaymentTypes.BankAccount

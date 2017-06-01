@@ -481,6 +481,46 @@ Namespace B2P.PaymentLanding.Express.Web
                 Return BLL.SessionManager.IsContactInfoRequired
         End Function
 
+        '' This method will calculate convenince fees on cart items and store  into a B2P.ShoppingCart.Cart object
+        Public Shared Sub CalculateFee()
+
+            Dim lstItem As New B2P.Payment.PaymentBase.TransactionItems
+            Dim Account1 As String
+            Dim Account2 As String
+            Dim Account3 As String
+            Dim Amount As Decimal = 0
+            Dim ctr As Int32 = 0
+
+            Dim sc As B2P.ShoppingCart.Cart
+            For Each CartItem As B2P.Cart.Cart In BLL.SessionManager.ManageCart.Cart
+                If CartItem.Amount > 0 Then
+                    ctr = 0
+                    Account1 = String.Empty
+                    Account2 = String.Empty
+                    Account3 = String.Empty
+                    For Each fields In CartItem.AccountIdFields
+
+                        If Not String.IsNullOrEmpty(fields.Value) Then
+                            If ctr = 0 Then
+                                Account1 = fields.Value
+                            ElseIf ctr = 1 Then
+                                Account2 = fields.Value
+                            ElseIf ctr = 2 Then
+                                Account3 = fields.Value
+                            End If
+                        End If
+                    Next
+                    Amount = Convert.ToDecimal(CartItem.Amount)
+                    lstItem.Add(Account1, Account2, Account3, CartItem.Item, Amount, 0, 0)
+                End If
+            Next
+
+
+            sc = New B2P.ShoppingCart.Cart(BLL.SessionManager.ClientCode, B2P.Common.Enumerations.TransactionSources.Web, lstItem)
+            BLL.SessionManager.ShoppingCartInfo = sc
+        End Sub
+
+
 #End Region
 
     End Class
