@@ -294,16 +294,14 @@ Namespace B2P.PaymentLanding.Express.Web
 
                 End Select
 
-                Dim z As New B2P.Objects.Product(BLL.SessionManager.ClientCode, ddlCategories.SelectedValue, B2P.Common.Enumerations.TransactionSources.Web)
+                Dim _Product As New B2P.Objects.Product(BLL.SessionManager.ClientCode, ddlCategories.SelectedValue, B2P.Common.Enumerations.TransactionSources.Web)
 
-                If z.CollectAddress Then
-                    Dim _client As B2P.Objects.Client = B2P.Objects.Client.GetClient(BLL.SessionManager.ClientCode.ToString)
-
-                    ctlPropertyAddress.Address1 = _client.Address1
-                    ctlPropertyAddress.Address2 = _client.Address2
-                    ctlPropertyAddress.City = _client.City
-                    ctlPropertyAddress.StateValue = _client.State
-                    ctlPropertyAddress.Zip = _client.ZipCode
+                If _Product.CollectAddress Then
+                    ctlPropertyAddress.Address1 = y.Demographics.Address1.Value.Trim
+                    ctlPropertyAddress.Address2 = y.Demographics.Address2.Value.Trim
+                    ctlPropertyAddress.City = y.Demographics.City.Value.Trim
+                    ctlPropertyAddress.StateValue = y.Demographics.State.Value.Trim
+                    ctlPropertyAddress.Zip = y.Demographics.ZipCode.Value.Trim
                 End If
 
             Catch ex As Exception

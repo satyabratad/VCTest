@@ -607,13 +607,14 @@ Namespace B2P.PaymentLanding.Express.Web
             cart.Amount = ci.Amount
             cart.AmountDue = ci.Amount
 
+
             cart.PropertyAddress = New Cart.PropertyAddress
 
-            cart.PropertyAddress.Address1 = z.Address1
-            cart.PropertyAddress.Address2 = z.Address2
-            cart.PropertyAddress.City = z.City
-            cart.PropertyAddress.State = z.State
-            cart.PropertyAddress.Zip = z.ZipCode
+            cart.PropertyAddress.Address1 = TokenInfo.Address1.Trim
+            cart.PropertyAddress.Address2 = TokenInfo.Address2.Trim
+            cart.PropertyAddress.City = TokenInfo.City.Trim
+            cart.PropertyAddress.State = TokenInfo.State.Trim
+            cart.PropertyAddress.Zip = TokenInfo.ZipCode.Trim
 
             'Set visibility of edit icon
             cart.PaymentInfo = New B2P.Cart.PaymentInformation()
