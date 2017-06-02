@@ -87,6 +87,15 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected WithEvents txtCCV As Global.System.Web.UI.WebControls.TextBox
         
         '''<summary>
+        '''avsCheckCtrls control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents avsCheckCtrls As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+        
+        '''<summary>
         '''litCountry control.
         '''</summary>
         '''<remarks>

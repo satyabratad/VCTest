@@ -409,7 +409,9 @@ Namespace B2P.PaymentLanding.Express.Web
                 BLL.SessionManager.AchFeeDescription = a.BankAccountFeeDescription
                 BLL.SessionManager.CurrentCategory = CurrentCategory
 
-                If (BLL.SessionManager.TokenInfo.AllowCreditCard = False And BLL.SessionManager.TokenInfo.AllowECheck = False) Or TokenInfo.IsCartValid = False Then
+                'Commented by RS as per client suggestion on 06/02/17
+                ' If (BLL.SessionManager.TokenInfo.AllowCreditCard = False And BLL.SessionManager.TokenInfo.AllowECheck = False) Or TokenInfo.IsCartValid = False Then
+                If (BLL.SessionManager.TokenInfo.AllowCreditCard = False And BLL.SessionManager.TokenInfo.AllowECheck = False) Then
                     psmErrorMessage.ToggleStatusMessage("We are not able to accept any online payments for this account. Please call Customer Service at " & BLL.SessionManager.Client.ContactPhone & ".", StatusMessageType.Danger, True, True)
                     ' Added By RS
                     ShowErrorPanel()
@@ -513,7 +515,9 @@ Namespace B2P.PaymentLanding.Express.Web
                 BLL.SessionManager.AchFeeDescription = a.BankAccountFeeDescription
                 BLL.SessionManager.CurrentCategory = CurrentCategory
 
-                If (BLL.SessionManager.TokenInfo.AllowCreditCard = False And BLL.SessionManager.TokenInfo.AllowECheck = False) Or TokenInfo.IsCartValid = False Then
+                'Commented by RS as per client suggestion on 06/02/17
+                'If (BLL.SessionManager.TokenInfo.AllowCreditCard = False And BLL.SessionManager.TokenInfo.AllowECheck = False) Or TokenInfo.IsCartValid = False Then
+                If (BLL.SessionManager.TokenInfo.AllowCreditCard = False And BLL.SessionManager.TokenInfo.AllowECheck = False) Then
                     psmErrorMessage.ToggleStatusMessage("We are not able to accept any online payments for this account. Please call Customer Service at " & BLL.SessionManager.Client.ContactPhone & ".", StatusMessageType.Danger, True, True)
                     ' Added By RS
                     ShowErrorPanel()

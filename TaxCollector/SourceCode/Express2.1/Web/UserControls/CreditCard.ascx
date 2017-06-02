@@ -35,7 +35,7 @@
     </div>
   </div>
 </div>
-<div class="row">
+<div class="row" runat="server" id="avsCheckCtrls">
   <div class="col-xs-12 col-sm-8">
     <div class="form-group form-group-sm">
       <label class="control-label" for="txtCountry"><asp:Literal ID="litCountry" runat="server" text="<%$ Resources:WebResources, lblCountry %>" />:</label>
