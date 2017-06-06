@@ -553,6 +553,7 @@ Namespace B2P.PaymentLanding.Express.Web
                 instance = CType(CType(Param, Object), B2P.Payment.PaymentBase.TransactionItems)
                 TransactionFee = 0
             End If
+
             For Each cart As B2P.Cart.Cart In BLL.SessionManager.ManageCart.Cart
                 Dim accfldVal1 As String = BLL.SessionManager.ManageCart.GetAccountFieldValue(cart, 0)
                 Dim accfldVal2 As String = BLL.SessionManager.ManageCart.GetAccountFieldValue(cart, 1)

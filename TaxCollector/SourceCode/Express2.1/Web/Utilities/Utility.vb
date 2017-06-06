@@ -512,43 +512,6 @@ Namespace B2P.PaymentLanding.Express.Web
                         End If
                     Next
                     Amount = Convert.ToDecimal(CartItem.Amount)
-                    'Select Case BLL.SessionManager.PaymentType
-                    '    Case Common.Enumerations.PaymentTypes.BankAccount
-                    '        cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, CartItem.Item, B2P.Common.Enumerations.TransactionSources.Web, B2P.Payment.FeeCalculation.PaymentTypes.BankAccount, CartItem.Amount)
-                    '        CartItem.ConvenienceFee = cf.ConvenienceFee
-
-
-                    '    Case Common.Enumerations.PaymentTypes.CreditCard
-                    '        Dim cardType As B2P.Payment.FeeCalculation.PaymentTypes = B2P.Payment.FeeCalculation.GetCardType(BLL.SessionManager.CreditCard.InternalCreditCardNumber)
-                    '        cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, CartItem.Item, B2P.Common.Enumerations.TransactionSources.Web, cardType, CartItem.Amount)
-                    '        CartItem.ConvenienceFee = cf.ConvenienceFee
-
-                    'End Select
-
-                    Dim templstItem As New B2P.Payment.PaymentBase.TransactionItems
-                    templstItem.Add(Account1, Account2, Account3, CartItem.Item, Amount, 0, 0)
-
-                    Dim tempsc As B2P.ShoppingCart.Cart
-                    tempsc = New B2P.ShoppingCart.Cart(BLL.SessionManager.ClientCode, B2P.Common.Enumerations.TransactionSources.Web, templstItem)
-
-                    '' Update session value with conveniance fee
-                    Select Case BLL.SessionManager.PaymentType
-                        Case Common.Enumerations.PaymentTypes.BankAccount
-                            CartItem.ConvenienceFee = tempsc.ECheckFee
-                        Case Common.Enumerations.PaymentTypes.CreditCard
-                            Dim cardType As B2P.Payment.FeeCalculation.PaymentTypes = B2P.Payment.FeeCalculation.GetCardType(BLL.SessionManager.CreditCard.InternalCreditCardNumber)
-                            If cardType = B2P.Payment.FeeCalculation.PaymentTypes.DebitCard Then
-                                CartItem.ConvenienceFee = tempsc.DebitFee
-                            ElseIf cardType = B2P.Payment.FeeCalculation.PaymentTypes.CreditCard Then
-                                CartItem.ConvenienceFee = tempsc.CreditCardFee
-                            End If
-
-                    End Select
-
-
-
-
-
 
                     lstItem.Add(Account1, Account2, Account3, CartItem.Item, Amount, CartItem.ConvenienceFee, 0)
                 End If
