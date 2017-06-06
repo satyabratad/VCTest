@@ -514,7 +514,7 @@ Namespace B2P.PaymentLanding.Express.Web
                     Amount = Convert.ToDecimal(CartItem.Amount)
                     Select Case BLL.SessionManager.PaymentType
                         Case Common.Enumerations.PaymentTypes.BankAccount
-                            cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, CartItem.Item, B2P.Common.Enumerations.TransactionSources.Web, B2P.Payment.FeeCalculation.PaymentTypes.BankAccount, Cart.Amount)
+                            cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, CartItem.Item, B2P.Common.Enumerations.TransactionSources.Web, B2P.Payment.FeeCalculation.PaymentTypes.BankAccount, CartItem.Amount)
                             CartItem.ConvenienceFee = cf.ConvenienceFee
 
 
