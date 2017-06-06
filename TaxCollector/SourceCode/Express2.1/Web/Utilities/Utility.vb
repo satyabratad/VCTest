@@ -485,6 +485,7 @@ Namespace B2P.PaymentLanding.Express.Web
         Public Shared Sub CalculateFee()
 
             Dim lstItem As New B2P.Payment.PaymentBase.TransactionItems
+            Dim cf As B2P.Payment.FeeCalculation.CalculatedFee = Nothing
             Dim Account1 As String
             Dim Account2 As String
             Dim Account3 As String
@@ -511,7 +512,20 @@ Namespace B2P.PaymentLanding.Express.Web
                         End If
                     Next
                     Amount = Convert.ToDecimal(CartItem.Amount)
-                    lstItem.Add(Account1, Account2, Account3, CartItem.Item, Amount, 0, 0)
+                    Select Case BLL.SessionManager.PaymentType
+                        Case Common.Enumerations.PaymentTypes.BankAccount
+                            cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, CartItem.Item, B2P.Common.Enumerations.TransactionSources.Web, B2P.Payment.FeeCalculation.PaymentTypes.BankAccount, Cart.Amount)
+                            CartItem.ConvenienceFee = cf.ConvenienceFee
+
+
+                        Case Common.Enumerations.PaymentTypes.CreditCard
+                            Dim cardType As B2P.Payment.FeeCalculation.PaymentTypes = B2P.Payment.FeeCalculation.GetCardType(BLL.SessionManager.CreditCard.InternalCreditCardNumber)
+                            cf = B2P.Payment.FeeCalculation.CalculateFee(BLL.SessionManager.ClientCode, CartItem.Item, B2P.Common.Enumerations.TransactionSources.Web, cardType, CartItem.Amount)
+                            CartItem.ConvenienceFee = cf.ConvenienceFee
+
+                    End Select
+
+                    lstItem.Add(Account1, Account2, Account3, CartItem.Item, Amount, CartItem.ConvenienceFee, 0)
                 End If
             Next
 
