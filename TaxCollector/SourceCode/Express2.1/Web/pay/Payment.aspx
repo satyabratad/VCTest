@@ -661,45 +661,48 @@
                                 styleParent: true,
                                 errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgCreditCardCVC").ToString()%>",
                         isValid: ($.payment.validateCardCVC(doc.getElementById("txtCCV").value, cardType))
-                    });
-
+                            });
+                           
                             // setting default country as US if nothing is selected
-                    var selectedCountry = '';
+                            var selectedCountry = '';
+                   if ($("#ddlCountry").val()!=undefined ) {
+                               
                     if ($("#ddlCountry").val() == '') {
                         selectedCountry = "US";
                     }
                     else {
                         selectedCountry = $("#ddlCountry").val();
                     }
-
+                    
                     zip = doc.getElementById('txtBillingZip').value;
-                            // Check to see if zip is required
-                    if ($("#hdZipRequired").val() == 'Y') {
-                        if (zip == '') {
-                            validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
-                      }
-                  }
-                  if (zip !== '') {
-                      // Set the validator
-                      if (selectedCountry == "US")
-                          validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeUnitedStates, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
-                          if (selectedCountry == "CA")
-                              validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeCanada, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
-                              if (selectedCountry == "OT")
-                                  validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeInternational, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
-                          }
-                            //  commented By RS [functionality implemented in server side]
-                            //if (panel && doc.getElementById("rdAmount").checked) {
+                    
+                        // Check to see if zip is required
+                        if ($("#hdZipRequired").val() == 'Y') {
+                            if (zip == '') {
+                                validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
+                            }
+                        }
+                        if (zip !== '') {
+                            // Set the validator
+                            if (selectedCountry == "US")
+                                validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeUnitedStates, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
+                            if (selectedCountry == "CA")
+                                validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeCanada, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
+                            if (selectedCountry == "OT")
+                                validator.addValidationItem(new ValidationItem("txtBillingZip", fieldTypes.ZipCodeInternational, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgBillingZip").ToString()%>"));
+                        }
+                        //  commented By RS [functionality implemented in server side]
+                        //if (panel && doc.getElementById("rdAmount").checked) {
 
-                             <%-- validator.addValidationItem(item = {
+                        <%-- validator.addValidationItem(item = {
                                   field: "txtAmount",
                                   styleParent: true,
                                   errorMessage: "<%=GetGlobalResourceObject("WebResources", "ErrMsgAmount").ToString()%>",
                                 isValid: (validatePaymentAmount(doc.getElementById("txtAmount").value, ccMinMaxAmounts))
                             });--%>
 
-                            // }
-
+                        // }
+                    }
 
 
                             break;
