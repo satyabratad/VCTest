@@ -470,15 +470,15 @@ Namespace B2P.PaymentLanding.Express.Web
 
             For Each productName In BLL.SessionManager.CategoryList
 
-                    z = New B2P.Objects.Product(BLL.SessionManager.ClientCode, productName, B2P.Common.Enumerations.TransactionSources.Web)
-                    If Not z.WebOptions.Demographics = Objects.WebConfiguration.OptionalFields.NotUsed Then
+                z = New B2P.Objects.Product(BLL.SessionManager.ClientCode, productName, B2P.Common.Enumerations.TransactionSources.Web)
+                If Not z.WebOptions.Demographics = Objects.WebConfiguration.OptionalFields.NotUsed Then
 
-                        BLL.SessionManager.IsContactInfoRequired = True
-                        Exit For
-                    End If
+                    BLL.SessionManager.IsContactInfoRequired = True
+                    Exit For
+                End If
 
-                Next
-                Return BLL.SessionManager.IsContactInfoRequired
+            Next
+            Return BLL.SessionManager.IsContactInfoRequired
         End Function
 
         '' This method will calculate convenince fees on cart items and store  into a B2P.ShoppingCart.Cart object
@@ -510,6 +510,7 @@ Namespace B2P.PaymentLanding.Express.Web
                                 Account3 = fields.Value
                             End If
                         End If
+                        ctr = ctr + 1
                     Next
                     Amount = Convert.ToDecimal(CartItem.Amount)
 

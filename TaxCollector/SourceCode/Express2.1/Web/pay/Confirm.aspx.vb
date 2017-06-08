@@ -347,15 +347,41 @@ Namespace B2P.PaymentLanding.Express.Web
                         'x.Items.Add(BLL.SessionManager.AccountNumber1, BLL.SessionManager.AccountNumber2, BLL.SessionManager.AccountNumber3, BLL.SessionManager.CurrentCategory.Name.ToString, CDec(BLL.SessionManager.PaymentAmount), BLL.SessionManager.ConvenienceFee, BLL.SessionManager.TransactionFee)
                         MapCart(Of B2P.Payment.BankAccountPayment)(x)
 
+                        '****Code commented by RS*****
+                        'Dim bapr As B2P.Payment.BankAccountPayment.BankAccountPaymentResults
+                        'bapr = x.PayByBankAccount(ba)
+                        '*************************************
                         Dim bapr As B2P.Payment.BankAccountPayment.BankAccountPaymentResults
-                        bapr = x.PayByBankAccount(ba)
+                        Dim sc As B2P.ShoppingCart.Cart
+                        Dim ConfirmationNumber As String = String.Empty
+                        Dim flagcheck As Boolean
 
+                        sc = BLL.SessionManager.ShoppingCartInfo
 
-                        If bapr.Result = B2P.Payment.BankAccountPayment.BankAccountPaymentResults.Results.Success Then
-                            'Added by Rs
-                            SavePropertyAddress(bapr.ConfirmationNumber)
+                        If sc.ContainsTaxItems Then
+                            B2P.Common.Logging.LogError("Express Payment --> " & Request.Url.AbsoluteUri & ".", “Unexpected tax fee payment attempted ”, B2P.Common.Logging.NotifySupport.Yes)
+                            flagcheck = False
+                        End If
 
-                            BLL.SessionManager.ConfirmationNumber = Utility.SafeEncode(bapr.ConfirmationNumber)
+                        If sc.ContainsNonTaxItems Then
+                            x.Items = sc.GetCartItems(B2P.Payment.FeeCalculation.PaymentTypes.BankAccount, B2P.ShoppingCart.Cart.CartItemsTypes.Nontax)
+                            bapr = x.PayByBankAccount(ba)
+                            If bapr.Result = B2P.Payment.CreditCardPayment.CreditCardPaymentResults.Results.Success Then
+                                ConfirmationNumber = bapr.ConfirmationNumber
+                                flagcheck = True
+                            Else
+                                flagcheck = False
+                            End If
+                        End If
+
+                        'Commented by RS
+                        'If bapr.Result = B2P.Payment.BankAccountPayment.BankAccountPaymentResults.Results.Success Then
+
+                        'Added by Rs
+                        If flagcheck Then
+                            SavePropertyAddress(ConfirmationNumber)
+
+                            BLL.SessionManager.ConfirmationNumber = Utility.SafeEncode(ConfirmationNumber)
                             BLL.SessionManager.PaymentDate = B2P.Payment.Utility.GetClientTime(BLL.SessionManager.ClientCode)
                             Dim b As New B2P.ClientInterface.Manager.ClientInterface.ServiceInformation
                             b = B2P.ClientInterface.Manager.ClientInterface.GetServiceURL(BLL.SessionManager.ClientCode, BLL.SessionManager.LookupProduct)
@@ -371,7 +397,7 @@ Namespace B2P.PaymentLanding.Express.Web
                                 c.AccountNumber1 = BLL.SessionManager.AccountNumber1
                                 c.AccountNumber2 = BLL.SessionManager.AccountNumber2
                                 c.AccountNumber3 = BLL.SessionManager.AccountNumber3
-                                c.ConfirmationNumber = bapr.ConfirmationNumber
+                                c.ConfirmationNumber = ConfirmationNumber
                                 c.Amount = BLL.SessionManager.PaymentAmount
                                 c.AuthorizationCode = ""
                                 c.PaymentType = B2P.ClientInterface.Manager.ClientInterfaceWS.PaymentTypes.eCheck
@@ -455,18 +481,44 @@ Namespace B2P.PaymentLanding.Express.Web
                             x.VendorReferenceCode = BLL.SessionManager.TokenInfo.VendorReferenceCode
                         End If
 
+                        '****Code commented by RS*****
+                        'Dim ccpr As B2P.Payment.CreditCardPayment.CreditCardPaymentResults
 
+                        'ccpr = x.PayByCreditCard(card)
+                        '*************************************
                         Dim ccpr As B2P.Payment.CreditCardPayment.CreditCardPaymentResults
+                        Dim sc As B2P.ShoppingCart.Cart
+                        Dim ConfirmationNumber As String = String.Empty
+                        Dim AuthorizationCode As String = String.Empty
+                        Dim flagcheck As Boolean
 
-                        ccpr = x.PayByCreditCard(card)
+                        sc = BLL.SessionManager.ShoppingCartInfo
 
+                        If sc.ContainsTaxItems Then
+                            B2P.Common.Logging.LogError("Express Payment --> " & Request.Url.AbsoluteUri & ".", “Unexpected tax fee payment attempted ”, B2P.Common.Logging.NotifySupport.Yes)
+                            flagcheck = False
+                        End If
 
-                        If ccpr.Result = B2P.Payment.CreditCardPayment.CreditCardPaymentResults.Results.Success Then
+                        If sc.ContainsNonTaxItems Then
+                            x.Items = sc.GetCartItems(B2P.Payment.FeeCalculation.PaymentTypes.CreditCard, B2P.ShoppingCart.Cart.CartItemsTypes.Nontax)
+                            ccpr = x.PayByCreditCard(card)
+                            If ccpr.Result = B2P.Payment.CreditCardPayment.CreditCardPaymentResults.Results.Success Then
+                                ConfirmationNumber = ccpr.ConfirmationNumber
+                                AuthorizationCode = ccpr.AuthorizationCode
+                                flagcheck = True
+                            Else
+                                flagcheck = False
+                            End If
+                        End If
 
-                            'Added by Rs
-                            SavePropertyAddress(ccpr.ConfirmationNumber)
+                        'Commented by RS
+                        'If ccpr.Result = B2P.Payment.CreditCardPayment.CreditCardPaymentResults.Results.Success Then
 
-                            BLL.SessionManager.ConfirmationNumber = Utility.SafeEncode(ccpr.ConfirmationNumber)
+                        'Added by Rs
+                        If flagcheck Then
+                            SavePropertyAddress(ConfirmationNumber)
+
+                            BLL.SessionManager.ConfirmationNumber = Utility.SafeEncode(ConfirmationNumber)
                             BLL.SessionManager.PaymentDate = B2P.Payment.Utility.GetClientTime(BLL.SessionManager.ClientCode)
 
                             Dim b As New B2P.ClientInterface.Manager.ClientInterface.ServiceInformation
@@ -483,9 +535,9 @@ Namespace B2P.PaymentLanding.Express.Web
                                 c.AccountNumber1 = BLL.SessionManager.AccountNumber1
                                 c.AccountNumber2 = BLL.SessionManager.AccountNumber2
                                 c.AccountNumber3 = BLL.SessionManager.AccountNumber3
-                                c.ConfirmationNumber = ccpr.ConfirmationNumber
+                                c.ConfirmationNumber = ConfirmationNumber
                                 c.Amount = BLL.SessionManager.PaymentAmount
-                                c.AuthorizationCode = ccpr.AuthorizationCode
+                                c.AuthorizationCode = AuthorizationCode
                                 c.PaymentType = B2P.ClientInterface.Manager.ClientInterfaceWS.PaymentTypes.CreditCard
                                 c.ClientCode = BLL.SessionManager.ClientCode
                                 c.ProductName = BLL.SessionManager.LookupProduct
