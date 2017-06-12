@@ -397,7 +397,7 @@
                 <% If B2P.PaymentLanding.Express.BLL.SessionManager.ClientType = B2P.Cart.EClientType.NonLookup Then%>
                 // Check to see if amount is required
                 // Set the validator
-
+               
                 validator.addValidationItem(new ValidationItem("txtAmount", fieldTypes.NonEmptyField, true, "<%=GetGlobalResourceObject("WebResources", "ErrMsgRequired").ToString()%>"));
                 if ($("#txtAmount").val().trim() == "") {
                     // Set the validator
@@ -412,6 +412,7 @@
                 else {
                     var amt = parseFloat($("#txtAmount").val()).toFixed(2);
                     $("#txtAmount").val(amt);
+                    return true;
                 }
                 <%End If%>
 
