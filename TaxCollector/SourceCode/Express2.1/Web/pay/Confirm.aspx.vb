@@ -492,6 +492,25 @@ Namespace B2P.PaymentLanding.Express.Web
                         Dim AuthorizationCode As String = String.Empty
                         Dim flagcheck As Boolean
 
+                        '**********New Code for Debit vs Credit by RS************
+                        Dim BIN As String
+                        Dim cardtype As String
+                        Dim ct As B2P.Payment.FeeCalculation.PaymentTypes
+
+                        BIN = card.BINNumber
+                        cardtype = B2P.Common.Objects.CreditCard.GetCardType(BIN)
+
+                        If cardtype = B2P.Common.Enumerations.CardTypes.Credit Then
+                            ct = B2P.Payment.FeeCalculation.PaymentTypes.CreditCard
+                        ElseIf cardtype = B2P.Common.Enumerations.CardTypes.Debit Then
+                            ct = B2P.Payment.FeeCalculation.PaymentTypes.PinDebit
+                        Else
+                            flagcheck = False
+                            BLL.SessionManager.PaymentMade = False
+                            Response.Redirect("/pay/PaymentFailure.aspx", False)
+                        End If
+                        '*******************************************************
+
                         sc = BLL.SessionManager.ShoppingCartInfo
 
                         If sc.ContainsTaxItems Then
@@ -500,7 +519,7 @@ Namespace B2P.PaymentLanding.Express.Web
                         End If
 
                         If sc.ContainsNonTaxItems Then
-                            x.Items = sc.GetCartItems(B2P.Payment.FeeCalculation.PaymentTypes.CreditCard, B2P.ShoppingCart.Cart.CartItemsTypes.Nontax)
+                            x.Items = sc.GetCartItems(ct, B2P.ShoppingCart.Cart.CartItemsTypes.Nontax)
                             ccpr = x.PayByCreditCard(card)
                             If ccpr.Result = B2P.Payment.CreditCardPayment.CreditCardPaymentResults.Results.Success Then
                                 ConfirmationNumber = ccpr.ConfirmationNumber
