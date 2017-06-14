@@ -1,4 +1,5 @@
 ﻿Imports System
+Imports B2P.PaymentLanding.Express.BLL
 
 Namespace B2P.PaymentLanding.Express.Web
     Public Class PaymentFailure : Inherits SiteBasePage
@@ -12,11 +13,11 @@ Namespace B2P.PaymentLanding.Express.Web
             ' Save the payment and URLs before clearing the session
             If Not Me.IsPostBack Then
                 If BLL.SessionManager.IsSSOProduct Then
-                    ViewState("PaymentUrl") = "/sso/" & BLL.SessionManager.Token
-                    redirectUrl = "/sso/" & BLL.SessionManager.Token
+                    ViewState("PaymentUrl") = "/sso/"
+                    redirectUrl = "/sso/"
                 Else
-                    ViewState("PaymentUrl") = "/client/" & BLL.SessionManager.ClientCode
-                    redirectUrl = "/client/" & BLL.SessionManager.ClientCode
+                    ViewState("PaymentUrl") = "/pay/"
+                    redirectUrl = "/pay/"
                 End If
                 ViewState("RedirectUrl") = Utility.SafeEncode(redirectUrl.Trim)
             End If
@@ -34,6 +35,7 @@ Namespace B2P.PaymentLanding.Express.Web
         End Sub
 
         Private Sub btnTryAgain_Click(sender As Object, e As EventArgs) Handles btnTryAgain.Click
+            SessionManager.BreadCrumbMenuTab = Nothing
             Response.Redirect(ViewState("RedirectUrl").ToString, False)
         End Sub
     End Class

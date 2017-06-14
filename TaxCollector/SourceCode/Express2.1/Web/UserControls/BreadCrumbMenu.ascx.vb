@@ -182,7 +182,7 @@ Public Class BreadCrumbMenu
 
 
             htmlString.Append("<ul class='breadcrumb'>")
-            finalTab = tabList.Where(Function(t As BreadCrumbTab) (t.PageTag.Equals(PageTabName.PaymentSuccess.ToString(), System.StringComparison.InvariantCultureIgnoreCase) Or t.PageTag.Equals(PageTabName.PaymentFaild.ToString(), System.StringComparison.InvariantCultureIgnoreCase)) And t.IsVisited = True).FirstOrDefault()
+            finalTab = tabList.Where(Function(t As BreadCrumbTab) (t.PageTag.Equals(PageTabName.PaymentSuccess.ToString(), System.StringComparison.InvariantCultureIgnoreCase)) And t.IsVisited = True).FirstOrDefault()
             If Not finalTab Is Nothing Then
                 If Not PageTagName.Equals(PageTabName.PaymentSuccess.ToString(), System.StringComparison.InvariantCultureIgnoreCase) And Not PageTagName.Equals(PageTabName.PaymentFaild.ToString(), System.StringComparison.InvariantCultureIgnoreCase) Then
                     B2P.PaymentLanding.Express.BLL.SessionManager.Clear()
