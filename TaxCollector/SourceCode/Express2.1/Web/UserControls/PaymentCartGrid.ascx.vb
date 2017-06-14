@@ -92,13 +92,21 @@ Public Class PaymentCartGrid
     Protected Function GetAccountInformation(Index As Integer) As String
         Dim CartItem As B2P.Cart.Cart = BLL.SessionManager.ManageCart.Cart(Index)
         Dim accountInfo As StringBuilder = New StringBuilder()
+        Dim str As String = String.Empty
 
         For Each fields In CartItem.AccountIdFields
             If Not String.IsNullOrEmpty(fields.Value) Then
                 accountInfo.AppendFormat("{0}, ", fields.Value)
             End If
         Next
-        Return accountInfo.ToString().Trim().TrimEnd(",")
+
+        If accountInfo.ToString().Trim().TrimEnd(",").Length = 0 Then
+            str = String.Empty
+        Else
+            str = String.Format("{0}{1}", accountInfo.ToString().Trim().TrimEnd(","), "<br>")
+        End If
+
+        Return str
     End Function
     Protected Function FormatAmount(Amount As Double) As String
         Return String.Format("{0:C}", Amount)

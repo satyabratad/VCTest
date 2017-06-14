@@ -21,7 +21,7 @@
                 <tr id="trIndex" <%# Eval("Index") %>>
                     <td class="<%# GetCssClass(Eval("Index")) %>" style="align-content: center;"><%#CType(Eval("Index"), Integer) + 1%></td>
                     <td class="<%# GetCssClass(Eval("Index")) %>"><%# Eval("Item") %></td>
-                    <td class="<%# GetCssClass(Eval("Index")) %>"><%# GetAccountInformation(Eval("Index")) %><br>
+                    <td class="<%# GetCssClass(Eval("Index")) %>"><%# GetAccountInformation(Eval("Index")) %>
                         <strong><asp:Literal runat="server" Text="<%$ Resources:WebResources, CartGridCaption_PropAddress %>"></asp:Literal></strong><br>
                         <%# GetPropertyAddress(Eval("Index")) %>
                     </td>
@@ -128,7 +128,7 @@
                 <tr id="trIndex" <%# Eval("Index") %>>
                     <td class="<%# GetCssClass(Eval("Index")) %>" style="align-content: center;"><%# ctype(Eval("Index"), Integer) + 1%></td>
                     <td class="<%# GetCssClass(Eval("Index")) %>"><%# Eval("Item") %></td>
-                    <td class="<%# GetCssClass(Eval("Index")) %>"><%# GetAccountInformation(Eval("Index")) %><br>
+                    <td class="<%# GetCssClass(Eval("Index")) %>"><%# GetAccountInformation(Eval("Index")) %>
                         <strong><asp:Literal runat="server" Text="<%$ Resources:WebResources, CartGridCaption_PropAddress %>"></asp:Literal></strong><br>
                         <%# GetPropertyAddress(Eval("Index")) %>
                     </td>

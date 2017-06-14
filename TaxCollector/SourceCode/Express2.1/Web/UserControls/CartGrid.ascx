@@ -21,7 +21,7 @@
                 <tr id="trIndex" <%# Eval("Index") %>>
                     <td class="<%# GetCssClass(Eval("Index")) %>" style="align-content: center; cursor: pointer;"><a onclick="removeItems(<%# Eval("Index") %>);" title="Delete Item"><i class="fa fa-trash-o fa-lg" aria-hidden="true"></i></a></td>
                     <td class="<%# GetCssClass(Eval("Index")) %>"><%# Eval("Item") %></td>
-                    <td class="<%# GetCssClass(Eval("Index")) %>"><%# GetAccountInformation(Eval("Index")) %><br>
+                    <td class="<%# GetCssClass(Eval("Index")) %>"><%# GetAccountInformation(Eval("Index")) %>
                         <strong><asp:Literal runat="server" Text="<%$ Resources:WebResources, CartGridCaption_PropAddress %>"></asp:Literal></strong><br>
                         <%# GetPropertyAddress(Eval("Index")) %>
                     </td>
@@ -106,7 +106,7 @@
                   
                     
                     <td class="<%# GetCssClass(Eval("Index")) %>"><%# Eval("Item") %></td>
-                    <td class="<%# GetCssClass(Eval("Index")) %>"><%# GetAccountInformation(Eval("Index")) %><br>
+                    <td class="<%# GetCssClass(Eval("Index")) %>"><%# GetAccountInformation(Eval("Index")) %>
                         <strong><asp:Literal runat="server" Text="<%$ Resources:WebResources, CartGridCaption_PropAddress %>"></asp:Literal></strong><br>
                         <%# GetPropertyAddress(Eval("Index")) %>
                     </td>
