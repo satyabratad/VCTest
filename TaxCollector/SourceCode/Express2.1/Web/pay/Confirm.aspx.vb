@@ -359,11 +359,13 @@ Namespace B2P.PaymentLanding.Express.Web
                         sc = BLL.SessionManager.ShoppingCartInfo
 
                         If sc.ContainsTaxItems Then
-                            B2P.Common.Logging.LogError("Express Payment --> " & Request.Url.AbsoluteUri & ".", “Unexpected tax fee payment attempted ”, B2P.Common.Logging.NotifySupport.Yes)
                             flagcheck = False
+                            x.Items = sc.GetCartItems(B2P.Payment.FeeCalculation.PaymentTypes.BankAccount, B2P.ShoppingCart.Cart.CartItemsTypes.Tax)
+                            B2P.Common.Logging.LogError("Express Payment --> " & Request.Url.AbsoluteUri & ".", CreateMessageForTaxItems(x.Items), B2P.Common.Logging.NotifySupport.Yes)
+                            psmErrorMessage.ToggleStatusMessage(GetGlobalResourceObject("WebResources", "ErrMsgTaxItems").ToString(), StatusMessageType.Danger, StatusMessageSize.Normal, True, True)
                         End If
 
-                        If sc.ContainsNonTaxItems Then
+                        If sc.ContainsNonTaxItems And Not sc.ContainsTaxItems Then
                             x.Items = sc.GetCartItems(B2P.Payment.FeeCalculation.PaymentTypes.BankAccount, B2P.ShoppingCart.Cart.CartItemsTypes.Nontax)
                             bapr = x.PayByBankAccount(ba)
                             If bapr.Result = B2P.Payment.CreditCardPayment.CreditCardPaymentResults.Results.Success Then
@@ -429,10 +431,11 @@ Namespace B2P.PaymentLanding.Express.Web
                             'B2PSession.BankAccountReturn = bapr
                             Response.Redirect("/pay/PaymentComplete.aspx", False)
                         Else
-                            BLL.SessionManager.PaymentMade = False
-                            Response.Redirect("/pay/PaymentFailure.aspx", False)
+                            If Not flagcheck And Not sc.ContainsTaxItems Then
+                                BLL.SessionManager.PaymentMade = False
+                                Response.Redirect("/pay/PaymentFailure.aspx", False)
+                            End If
                         End If
-                    Else
                         Response.Redirect("/Errors/SessionExpired.aspx", False)
                     End If
                 Else
@@ -514,11 +517,13 @@ Namespace B2P.PaymentLanding.Express.Web
                         sc = BLL.SessionManager.ShoppingCartInfo
 
                         If sc.ContainsTaxItems Then
-                            B2P.Common.Logging.LogError("Express Payment --> " & Request.Url.AbsoluteUri & ".", “Unexpected tax fee payment attempted ”, B2P.Common.Logging.NotifySupport.Yes)
                             flagcheck = False
+                            x.Items = sc.GetCartItems(ct, B2P.ShoppingCart.Cart.CartItemsTypes.Tax)
+                            B2P.Common.Logging.LogError("Express Payment --> " & Request.Url.AbsoluteUri & ".", CreateMessageForTaxItems(x.Items), B2P.Common.Logging.NotifySupport.Yes)
+                            psmErrorMessage.ToggleStatusMessage(GetGlobalResourceObject("WebResources", "ErrMsgTaxItems").ToString(), StatusMessageType.Danger, StatusMessageSize.Normal, True, True)
                         End If
 
-                        If sc.ContainsNonTaxItems Then
+                        If sc.ContainsNonTaxItems And Not sc.ContainsTaxItems Then
                             x.Items = sc.GetCartItems(ct, B2P.ShoppingCart.Cart.CartItemsTypes.Nontax)
                             ccpr = x.PayByCreditCard(card)
                             If ccpr.Result = B2P.Payment.CreditCardPayment.CreditCardPaymentResults.Results.Success Then
@@ -586,9 +591,10 @@ Namespace B2P.PaymentLanding.Express.Web
                             'B2PSession.CreditCardReturn = ccpr
                             Response.Redirect("/pay/PaymentComplete.aspx", False)
                         Else
-                            BLL.SessionManager.PaymentMade = False
-                            Response.Redirect("/pay/PaymentFailure.aspx", False)
-
+                            If Not flagcheck And Not sc.ContainsTaxItems Then
+                                BLL.SessionManager.PaymentMade = False
+                                Response.Redirect("/pay/PaymentFailure.aspx", False)
+                            End If
                         End If
                     Else
                         Response.Redirect("/Errors/SessionExpired.aspx", False)
@@ -608,8 +614,21 @@ Namespace B2P.PaymentLanding.Express.Web
 
             End Try
         End Sub
+        'Added By RS
+        Private Function CreateMessageForTaxItems(ByVal Items As B2P.Payment.PaymentBase.TransactionItems) As String
+            Dim message As String = String.Empty
 
+            For value As Integer = 0 To Items.Count - 1
+                message = message + Items.Item(value).ProductName + ","
+            Next
 
+            If message.Trim().Length > 0 Then
+                message = message.TrimEnd(",")
+                message = String.Format(“Unexpected tax fee payment attempted for Client: {0} and Product(s): {1}", BLL.SessionManager.ClientCode, message)
+            End If           '
+
+            Return message
+        End Function
 
         Private Sub MapCart(Of T)(ByRef Param As T)
             Dim TransactionFee As Double = BLL.SessionManager.TransactionFee

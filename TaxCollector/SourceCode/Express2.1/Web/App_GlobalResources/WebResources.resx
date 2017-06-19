@@ -596,4 +596,7 @@
   <data name="lblZeroMessage" xml:space="preserve">
     <value>You have item(s) priced as $0.00 in the cart. Please edit the amount or delete the item(s) in order to continue.</value>
   </data>
+  <data name="ErrMsgTaxItems" xml:space="preserve">
+    <value>There was a problem with your payment, please contact the Customer Support.</value>
+  </data>
 </root>

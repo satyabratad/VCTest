@@ -776,6 +776,15 @@ Namespace Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to There was a problem with your payment, please contact the Customer Support..
+        '''</summary>
+        Friend Shared ReadOnly Property ErrMsgTaxItems() As String
+            Get
+                Return ResourceManager.GetString("ErrMsgTaxItems", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Invalid zip code..
         '''</summary>
         Friend Shared ReadOnly Property ErrMsgZipCode() As String

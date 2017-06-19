@@ -105,6 +105,15 @@ Namespace B2P.PaymentLanding.Express.Web
         Protected WithEvents ShoppingCart As Global.ShoppingCart
         
         '''<summary>
+        '''psmErrorMessage control.
+        '''</summary>
+        '''<remarks>
+        '''Auto-generated field.
+        '''To modify move field declaration from designer file to code-behind file.
+        '''</remarks>
+        Protected WithEvents psmErrorMessage As Global.B2P.PaymentLanding.Express.Web.StatusMessage
+        
+        '''<summary>
         '''litReviewPayment control.
         '''</summary>
         '''<remarks>

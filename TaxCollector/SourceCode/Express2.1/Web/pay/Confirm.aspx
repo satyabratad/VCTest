@@ -112,7 +112,7 @@
                                     <b2p:ShoppingCart runat="server" ID="ShoppingCart" />
                                 </div>
                                 <div class="col-xs-12 col-sm-12 ">
-                                   
+                                   <b2p:PaymentStatusMessage ID="psmErrorMessage" runat="server" />
                                     <div class="row">
                                         <div class="col-xs-6 col-sm-6 col-md-8 col-lg-8">
                                             <strong>
