@@ -436,6 +436,7 @@ Namespace B2P.PaymentLanding.Express.Web
                                 Response.Redirect("/pay/PaymentFailure.aspx", False)
                             End If
                         End If
+                    Else
                         Response.Redirect("/Errors/SessionExpired.aspx", False)
                     End If
                 Else
