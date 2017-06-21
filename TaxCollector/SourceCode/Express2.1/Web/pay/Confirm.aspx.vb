@@ -618,14 +618,17 @@ Namespace B2P.PaymentLanding.Express.Web
         'Added By RS
         Private Function CreateMessageForTaxItems(ByVal Items As B2P.Payment.PaymentBase.TransactionItems) As String
             Dim message As String = String.Empty
+            Dim products As String = String.Empty
+
+            message = String.Format(“Unexpected tax fee payment attempted for Client: {0}", BLL.SessionManager.ClientCode)
 
             For value As Integer = 0 To Items.Count - 1
-                message = message + Items.Item(value).ProductName + ","
+                products = products + Items.Item(value).ProductName + ","
             Next
 
-            If message.Trim().Length > 0 Then
-                message = message.TrimEnd(",")
-                message = String.Format(“Unexpected tax fee payment attempted for Client: {0} and Product(s): {1}", BLL.SessionManager.ClientCode, message)
+            If products.Trim().Length > 0 Then
+                products = products.TrimEnd(",")
+                message = String.Format(message + " and Product(s): {0}", products)
             End If           '
 
             Return message
