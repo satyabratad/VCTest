@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<Items>
-  <Item Text="Payouts (with Date Range)" Value="1" />
-  <Item Text="All Pending Payouts" Value="2" />
-  <Item Text="Payouts by Bank Account" Value="3" />
-
-</Items>

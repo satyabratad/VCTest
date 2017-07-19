@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<Items>
-  <Item Text="Transactions #1" Value="1" Selected="true" />
-  <Item Text="Transactions #2" Value="2" />
-  <Item Text="Transactions #3" Value="3"  />
-  <Item Text="Transactions #4" Value="4" />
-  <Item Text="Transactions #5" Value="5" />
-
-</Items>
